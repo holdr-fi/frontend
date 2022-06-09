@@ -103,6 +103,7 @@ function onClickConnect() {
             class="h-8 w-40 mx-auto"
             white
           />
+          <!--
           <div
             v-else
             class="
@@ -128,6 +129,7 @@ function onClickConnect() {
             >
             <span v-else>{{ $t('inclXInVeBal', [totalVeBalLabel]) }}</span>
           </div>
+          -->
         </div>
       </template>
       <template v-else>

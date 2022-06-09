@@ -12,12 +12,15 @@ const DEFAULT_NETWORK_ID =
     ? (Number(process.env.VUE_APP_NETWORK) as Network)
     : Network.MAINNET;
 
+console.log("process.env.VUE_APP_NETWORK", process.env.VUE_APP_NETWORK)
+
 export const networkId = ref<Network>(DEFAULT_NETWORK_ID);
 
 export const isMainnet = computed(() => networkId.value === Network.MAINNET);
 export const isPolygon = computed(() => networkId.value === Network.POLYGON);
 export const isArbitrum = computed(() => networkId.value === Network.ARBITRUM);
 export const isKovan = computed(() => networkId.value === Network.KOVAN);
+export const isRinkeby = computed(() => networkId.value === Network.RINKEBY);
 
 export const isL2 = computed(() => isPolygon.value || isArbitrum.value);
 
@@ -32,6 +35,8 @@ export function networkFor(key: string | number): Network {
   switch (key.toString()) {
     case '1':
       return Network.MAINNET;
+    case '4':
+      return Network.RINKEBY;
     case '42':
       return Network.KOVAN;
     case '137':
@@ -49,7 +54,9 @@ export function networkNameFor(network: Network): string {
 
 export function subdomainFor(network: Network): string {
   switch (network) {
-    case Network.MAINNET:
+    // case Network.MAINNET:
+    //   return 'app';
+    case Network.RINKEBY:
       return 'app';
     case Network.KOVAN:
       return 'kovan';

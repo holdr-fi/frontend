@@ -157,9 +157,11 @@ function navigateToCreatePool() {
         :isLoading="isInvestmentPoolsTableLoading"
       >
       </PoolsTable>
+      <!--
       <div v-if="isElementSupported" class="mt-16 p-4 lg:p-0">
         <FeaturedProtocols />
       </div>
+      -->
     </BalStack>
   </div>
 </template>
