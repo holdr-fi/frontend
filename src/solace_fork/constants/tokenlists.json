@@ -1,5 +1,5 @@
 {
-    "https://raw.githubusercontent.com/balancer-labs/assets/master/generated/listed.tokenlist.json": {
+    "https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/60965d1b4e6c8cfbcbea365fd682445ed46d43a7/src/solace_fork/constants/tokenlist.json": {
       "name": "Solace",
       "timestamp": "2022-06-09T00:00:00.000Z",
       "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png",

@@ -12,7 +12,7 @@ const DEFAULT_NETWORK_ID =
     ? (Number(process.env.VUE_APP_NETWORK) as Network)
     : Network.MAINNET;
 
-console.log("process.env.VUE_APP_NETWORK", process.env.VUE_APP_NETWORK)
+console.log('process.env.VUE_APP_NETWORK', process.env.VUE_APP_NETWORK);
 
 export const networkId = ref<Network>(DEFAULT_NETWORK_ID);
 
