@@ -68,6 +68,8 @@ export default class TokenListService {
   }
 
   async get(uri: string): Promise<TokenList> {
+    console.log("uri - ", uri);
+
     try {
       const [protocol, path] = uri.split('://');
 

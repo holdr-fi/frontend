@@ -26,6 +26,17 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
       'https://www.gemini.com/uniswap/manifest.json'
     ]
   },
+  '4': {
+    Balancer: {
+      Default:
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/tokenlists.json',
+      Vetted:
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/tokenlists.json'
+    },
+    External: [
+      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/tokenlists.json'
+    ]
+  },
   '42': {
     Balancer: {
       Default:
