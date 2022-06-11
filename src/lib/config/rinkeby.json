@@ -11,7 +11,7 @@
   "loggingRpc": "https://eth-rinkeby.alchemyapi.io/v2/{{ALCHEMY_KEY}}",
   "explorer": "https://rinkeby.etherscan.io",
   "explorerName": "Etherscan",
-  "subgraph": "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-rinkeby-v2",
+  "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/bebe",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "subgraphs": {
     "aave": "",
@@ -36,7 +36,7 @@
     "merkleOrchard": "0x0F3e0c4218b7b0108a3643cFe9D3ec0d4F57c54e",
     "multicall": "0x5ba1e12693dc8f9c48aad8770482f4739beed696",
     "authorizer": "0xA331D84eC860Bf466b4CdCcFb4aC09a1B43F3aE6",
-    "vault": "0xBA12222222228d8Ba445958a75a0704d566BF2C8",
+    "vault": "0x0FFf9f3044244048802B5AB4540e2014d1C0688A",
     "weightedPoolFactory": "0x8E9aa87E45e92bad84D5F8DD1bff34Fb92637dE9",
     "stablePoolFactory": "",
     "tokenFactory": "0xEaa391544B268018C0FA848204E984Bd7FF7f20c",

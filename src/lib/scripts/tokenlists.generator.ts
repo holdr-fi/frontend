@@ -11,9 +11,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 async function generate() {
-  // const tokenlists = JSON.parse(
-  //   fs.readFileSync('./src/solace_fork/constants/tokenlists.json').toString()
-  // );
   const tokenListService = new TokenListService(process.env.VUE_APP_NETWORK);
   const tokenlists = await tokenListService.getAll();
   fs.writeFileSync(`./public/data/tokenlists.json`, JSON.stringify(tokenlists));

@@ -5,7 +5,7 @@ import { useStore } from 'vuex';
 
 // Components
 import MyWallet from '@/components/cards/MyWallet/MyWallet.vue';
-import PairPriceGraph from '@/components/cards/PairPriceGraph/PairPriceGraph.vue';
+// import PairPriceGraph from '@/components/cards/PairPriceGraph/PairPriceGraph.vue';
 import TradeCard from '@/components/cards/TradeCard/TradeCard.vue';
 import TradeCardGP from '@/components/cards/TradeCardGP/TradeCardGP.vue';
 // import TrendingPairs from '@/components/cards/TrendingPairs/TrendingPairs.vue';
@@ -88,10 +88,10 @@ onMounted(() => {
         <template v-slot:trending-pairs>
           <TrendingPairs />
         </template>
-        -->
         <template v-slot:price-chart>
           <PairPriceGraph :toggleModal="togglePairPriceGraphModal" />
         </template>
+        -->
       </BalAccordion>
     </div>
 

@@ -6,7 +6,7 @@ import usePools from '@/composables/pools/usePools';
 import useStaking from '@/composables/staking/useStaking';
 import useDarkMode from '@/composables/useDarkMode';
 import useFathom from '@/composables/useFathom';
-import { useLock } from '@/composables/useLock';
+// import { useLock } from '@/composables/useLock';
 import { isL2 } from '@/composables/useNetwork';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import { EXTERNAL_LINKS } from '@/constants/links';
@@ -26,7 +26,7 @@ const {
 const { trackGoal, Goals } = useFathom();
 const { totalInvestedAmount, isLoadingUserPools } = usePools();
 const { darkMode } = useDarkMode();
-const { lockFiatValue, isLoadingLock } = useLock();
+// const { lockFiatValue, isLoadingLock } = useLock();
 const {
   userData: {
     totalStakedFiatValue,
@@ -54,18 +54,19 @@ const isStakingLoading = computed(() => {
 
 const totalInvestedLabel = computed((): string => {
   const value = bnum(totalInvestedAmount.value || '0')
-    .plus(lockFiatValue.value)
+    // .plus(lockFiatValue.value)
     .plus(totalStakedFiatValue.value)
     .toString();
   return fNum2(value, FNumFormats.fiat);
 });
 
-const totalVeBalLabel = computed((): string =>
-  fNum2(lockFiatValue.value, FNumFormats.fiat)
-);
+// const totalVeBalLabel = computed((): string =>
+//   fNum2(lockFiatValue.value, FNumFormats.fiat)
+// );
 
 const isLoadingLockAndStaking = computed(
-  (): boolean => (!isL2.value && isLoadingLock.value) || isStakingLoading.value
+  (): boolean => (!isL2.value) || isStakingLoading.value
+  // (): boolean => (!isL2.value && isLoadingLock.value) || isStakingLoading.value
 );
 
 const isLoadingTotalValue = computed(

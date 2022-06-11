@@ -6,6 +6,8 @@ const network = ((): Network => {
   switch (configService.network.key) {
     case '1':
       return Network.MAINNET;
+    case '4':
+      return Network.RINKEBY;
     case '42':
       return Network.KOVAN;
     case '137':
@@ -17,7 +19,24 @@ const network = ((): Network => {
   }
 })();
 
-export const balancer = new BalancerSDK({
+const balancer = new BalancerSDK({
   network,
-  rpcUrl: configService.rpc
+  rpcUrl: configService.rpc,
+  customSubgraphUrl: 'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
 });
+
+// @ts-ignore
+balancer.sor.config.addresses.contracts.vault =
+  '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
+
+// @ts-ignore
+balancer.sor.poolCacher.poolDataService.network.addresses.contracts.vault =
+  '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
+
+export { balancer };
+
+// export const balancer = new BalancerSDK({
+//   network,
+//   rpcUrl: configService.rpc,
+//   customSubgraphUrl: 'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
+// });

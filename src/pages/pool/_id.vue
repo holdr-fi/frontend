@@ -232,6 +232,7 @@ export default defineComponent({
     /**
      * QUERIES
      */
+
     const poolQuery = usePoolQuery(route.params.id as string);
     const poolSnapshotsQuery = usePoolSnapshotsQuery(
       route.params.id as string,

@@ -252,9 +252,6 @@ export default {
       const tokensMap = {};
       const tokens = [...tokenLists].map(list => list.tokens).flat();
 
-      console.log("tokenLists -", [...tokenLists]);
-      console.log("[...tokenLists].map(list => list.tokens) -", [...tokenLists].map(list => list.tokens));
-
       tokens.forEach(token => {
         const address: string = getAddress(token.address);
         const existingAddresses = Object.keys(tokensMap);

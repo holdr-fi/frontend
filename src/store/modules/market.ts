@@ -1,4 +1,5 @@
 import GasPriceService from '@/services/gas-price/gas-price.service';
+import { rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
 
 interface MarketState {
   gasPrice: number;
@@ -14,8 +15,15 @@ const state: MarketState = {
 
 const actions = {
   async getGasPrice({ commit }) {
-    const gasPrice = await gasPriceService.getLatest();
-    commit('setGasPrice', gasPrice?.price);
+    // const gasPrice = await gasPriceService.getLatest();
+    // console.log('gasPriceService', gasPriceService);
+    // commit('setGasPrice', gasPrice?.price);
+
+    const gasPrice = (
+      await rpcProviderService.jsonProvider.getGasPrice()
+    ).toNumber();
+
+    commit('setGasPrice', gasPrice);
   }
 };
 
