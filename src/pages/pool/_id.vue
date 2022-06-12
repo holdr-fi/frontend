@@ -72,6 +72,7 @@
           </div>
         </div>
 
+        <!--
         <BalAlert
           v-if="!appLoading && !loadingPool && missingPrices"
           type="warning"
@@ -86,6 +87,7 @@
           class="mt-2"
           block
         />
+        -->
         <template v-if="!appLoading && !loadingPool && isAffected">
           <BalAlert
             v-for="(warning, i) in warnings"
@@ -116,6 +118,7 @@
 
       <div class="col-span-2 order-2 lg:order-1">
         <div class="grid grid-cols-1 gap-y-8">
+          <!--
           <div class="px-1 lg:px-0">
             <PoolChart
               :pool="pool"
@@ -124,6 +127,7 @@
               :loading="isLoadingSnapshots"
             />
           </div>
+          -->
           <div class="mb-4 px-1 lg:px-0">
             <PoolStatCards :pool="pool" :loading="loadingPool" />
             <ApyVisionPoolLink
@@ -192,7 +196,7 @@ import useApp from '@/composables/useApp';
 import { isL2 } from '@/composables/useNetwork';
 import useNumbers from '@/composables/useNumbers';
 import { usePool } from '@/composables/usePool';
-import { usePoolWarning } from '@/composables/usePoolWarning';
+// import { usePoolWarning } from '@/composables/usePoolWarning';
 import useTokens from '@/composables/useTokens';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import { POOLS } from '@/constants/pools';
@@ -227,7 +231,7 @@ export default defineComponent({
     const { blockNumber, isKovan, isMainnet, isPolygon } = useWeb3();
     const { addAlert, removeAlert } = useAlerts();
     const { balancerTokenListTokens } = useTokens();
-    const { isAffected, warnings } = usePoolWarning(route.params.id as string);
+    // const { isAffected, warnings } = usePoolWarning(route.params.id as string);
 
     /**
      * QUERIES
@@ -453,8 +457,8 @@ export default defineComponent({
       isStablePhantomPool,
       copperNetworkPrefix,
       hasCustomToken,
-      isAffected,
-      warnings,
+      // isAffected,
+      // warnings,
       isL2,
       isStakablePool,
       // methods

@@ -100,7 +100,6 @@ export default function useSor({
   tokenOut,
   slippageBufferRate
 }: Props) {
-
   let sorManager: SorManager | undefined = undefined;
   const pools = ref<(Pool | SubgraphPoolBase)[]>([]);
   const sorReturn = ref<SorReturn>({

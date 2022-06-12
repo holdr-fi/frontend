@@ -1,7 +1,7 @@
 import { formatUnits } from 'ethers/lib/utils';
 import { flatten, keyBy } from 'lodash';
 import { UseQueryOptions } from 'react-query/types';
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useQuery } from 'vue-query';
 
 import { POOLS } from '@/constants/pools';
@@ -17,7 +17,7 @@ import useNetwork from '../useNetwork';
 import { isStablePhantom, lpTokensFor } from '../usePool';
 import useTokens from '../useTokens';
 import useUserSettings from '../useUserSettings';
-import useGaugesQuery from './useGaugesQuery';
+// import useGaugesQuery from './useGaugesQuery';
 
 type UserPoolsQueryResponse = {
   pools: PoolWithShares[];
@@ -41,10 +41,13 @@ export default function useUserPoolsQuery(
   const { account, isWalletReady } = useWeb3();
   const { currency } = useUserSettings();
   const { networkId } = useNetwork();
-  const { data: subgraphGauges } = useGaugesQuery();
+  // const { data: subgraphGauges } = useGaugesQuery();
+
+  const subgraphGauges = ref(undefined);
 
   const gaugeAddresses = computed(() =>
-    (subgraphGauges.value || []).map(gauge => gauge.id)
+    []
+    // (subgraphGauges.value || []).map(gauge => gauge.id)
   );
   /**
    * COMPUTED

@@ -17,7 +17,7 @@ import useNetwork from '../useNetwork';
 import { isStablePhantom, lpTokensFor } from '../usePool';
 import useTokens from '../useTokens';
 import useUserSettings from '../useUserSettings';
-import useGaugesQuery from './useGaugesQuery';
+// import useGaugesQuery from './useGaugesQuery';
 
 type PoolsQueryResponse = {
   pools: Pool[];
@@ -49,9 +49,11 @@ export default function usePoolsQuery(
   const { currency } = useUserSettings();
   const { appLoading } = useApp();
   const { networkId } = useNetwork();
-  const { data: subgraphGauges } = useGaugesQuery();
+  const subgraphGauges = ref(undefined);
+  // const { data: subgraphGauges } = useGaugesQuery();
   const gaugeAddresses = computed(() =>
-    (subgraphGauges.value || []).map(gauge => gauge.id)
+    []
+    // (subgraphGauges.value || []).map(gauge => gauge.id)
   );
 
   // DATA

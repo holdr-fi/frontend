@@ -41,7 +41,6 @@ export default function useWeb3() {
 
   // COMPUTED REFS + COMPUTED REFS
   const userNetworkConfig = computed(() => {
-
     try {
       if (chainId.value) return configService.getNetworkConfig(chainId.value);
       return null;

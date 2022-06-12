@@ -29,7 +29,6 @@ export default function usePoolQuery(
   isEnabled: Ref<boolean> = ref(true),
   options: QueryObserverOptions<Pool> = {}
 ) {
-
   /**
    * COMPOSABLES
    */
@@ -73,7 +72,6 @@ export default function usePoolQuery(
   const queryKey = QUERY_KEYS.Pools.Current(id, gaugeAddresses);
 
   const queryFn = async () => {
-
     let [pool] = await balancerSubgraphService.pools.get({
       where: {
         id: id.toLowerCase(),

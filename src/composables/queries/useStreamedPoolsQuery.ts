@@ -18,7 +18,7 @@ import { isStablePhantom } from '../usePool';
 import { getTimeTravelBlock } from '../useSnapshots';
 import useTokens from '../useTokens';
 import useUserSettings from '../useUserSettings';
-import useGaugesQuery from './useGaugesQuery';
+// import useGaugesQuery from './useGaugesQuery';
 import useQueryStreams from './useQueryStream';
 
 type FilterOptions = {
@@ -161,7 +161,8 @@ export default function useStreamedPoolsQuery(
 ) {
   const { priceQueryLoading, prices, tokens } = useTokens();
   const { currency } = useUserSettings();
-  const { data: subgraphGauges } = useGaugesQuery();
+  const subgraphGauges = ref(undefined);
+  // const { data: subgraphGauges } = useGaugesQuery();
   const isNotLoadingPrices = computed(() => {
     return !priceQueryLoading.value;
   });

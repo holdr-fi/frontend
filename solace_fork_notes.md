@@ -33,3 +33,13 @@ Modify BalancerSDK class object imported from @balancer-labs/sdk in src/lib/bala
 
 Changed vault address
 - src/lib/config/rinkeby.json
+
+Remove subgauge Subgraph query on frontpage
+- `isLoadingUserStakingData` is flag for pulling gauge data
+- Queries for "Unstaked pools" section on frontpage in `src/providers/local/staking/userUserStakingData.ts`
+- Forced early `return []` from multiple query functions
+- Commented out refetchUserStakingData variable
+- Commented out instances of useGaugesQuery()
+
+Removed redundant data queries
+- src/services/token/concerns/metadata.concern.ts

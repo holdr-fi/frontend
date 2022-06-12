@@ -19,11 +19,9 @@ function isActive(page: string): boolean {
 
 <template>
   <div class="desktop-links">
-    <!-- 
     <DesktopLinkItem to="/" :active="isActive('home')">
       {{ $t('invest') }}
     </DesktopLinkItem>
-    -->
     <DesktopLinkItem to="/trade" :active="isActive('trade')">
       {{ $t('trade') }}
     </DesktopLinkItem>

@@ -35,7 +35,8 @@ export default class MetadataConcern {
       address => !includesAddress(existingAddresses, address)
     );
     if (unknownAddresses.length > 0) {
-      const onchainMeta = await this.getMetaOnchain(unknownAddresses);
+      // const onchainMeta = await this.getMetaOnchain(unknownAddresses);
+      const onchainMeta = {};
       metaDict = { ...metaDict, ...onchainMeta };
     }
 

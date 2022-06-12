@@ -65,7 +65,8 @@ const totalInvestedLabel = computed((): string => {
 // );
 
 const isLoadingLockAndStaking = computed(
-  (): boolean => (!isL2.value) || isStakingLoading.value
+  (): boolean => isStakingLoading.value
+  // (): boolean => !isL2.value || isStakingLoading.value
   // (): boolean => (!isL2.value && isLoadingLock.value) || isStakingLoading.value
 );
 
@@ -99,12 +100,12 @@ function onClickConnect() {
           {{ totalInvestedLabel }}
         </div>
         <div v-if="!isL2" class="relative mt-2 inline-block">
+          <!--
           <BalLoadingBlock
             v-if="isLoadingTotalValue"
             class="h-8 w-40 mx-auto"
             white
           />
-          <!--
           <div
             v-else
             class="

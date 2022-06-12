@@ -28,7 +28,6 @@ export default function usePoolSnapshotsQuery(
   days: number,
   options: QueryObserverOptions<QueryResponse> = {}
 ) {
-
   /**
    * QUERY DEPENDENCIES
    */
