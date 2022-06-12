@@ -127,7 +127,6 @@
               :loading="isLoadingSnapshots"
             />
           </div>
-          -->
           <div class="mb-4 px-1 lg:px-0">
             <PoolStatCards :pool="pool" :loading="loadingPool" />
             <ApyVisionPoolLink
@@ -136,6 +135,7 @@
               :titleTokens="titleTokens"
             />
           </div>
+          -->
           <div class="mb-4">
             <h4 v-text="$t('poolComposition')" class="px-4 lg:px-0 mb-4" />
             <PoolBalancesCard :pool="pool" :loading="loadingPool" />
@@ -151,6 +151,7 @@
         v-if="!isLiquidityBootstrappingPool"
         class="order-1 lg:order-2 px-1 lg:px-0"
       >
+        <!--
         <StakingProvider :poolAddress="getAddressFromPoolId(id)">
           <BalStack vertical>
             <BalLoadingBlock
@@ -174,6 +175,7 @@
             />
           </BalStack>
         </StakingProvider>
+        -->
       </div>
     </div>
   </div>
@@ -187,7 +189,7 @@ import { useRoute } from 'vue-router';
 import * as PoolPageComponents from '@/components/contextual/pages/pool';
 import StakingIncentivesCard from '@/components/contextual/pages/pool/StakingIncentivesCard/StakingIncentivesCard.vue';
 import GauntletIcon from '@/components/images/icons/GauntletIcon.vue';
-import ApyVisionPoolLink from '@/components/links/ApyVisionPoolLink.vue';
+// import ApyVisionPoolLink from '@/components/links/ApyVisionPoolLink.vue';
 import APRTooltip from '@/components/tooltips/APRTooltip/APRTooltip.vue';
 import usePoolQuery from '@/composables/queries/usePoolQuery';
 import usePoolSnapshotsQuery from '@/composables/queries/usePoolSnapshotsQuery';
@@ -213,9 +215,9 @@ export default defineComponent({
     ...PoolPageComponents,
     GauntletIcon,
     APRTooltip,
-    StakingIncentivesCard,
-    StakingProvider,
-    ApyVisionPoolLink
+    // StakingIncentivesCard,
+    // StakingProvider,
+    // ApyVisionPoolLink
   },
 
   setup() {
@@ -227,7 +229,7 @@ export default defineComponent({
     const route = useRoute();
     const { fNum2 } = useNumbers();
     const { explorerLinks, isWalletReady } = useWeb3();
-    const { prices } = useTokens();
+    // const { prices } = useTokens();
     const { blockNumber, isKovan, isMainnet, isPolygon } = useWeb3();
     const { addAlert, removeAlert } = useAlerts();
     const { balancerTokenListTokens } = useTokens();
@@ -344,16 +346,16 @@ export default defineComponent({
     });
 
     const missingPrices = computed(() => {
-      if (pool.value) {
-        const tokensWithPrice = Object.keys(prices.value);
+      // if (pool.value) {
+      //   const tokensWithPrice = Object.keys(prices.value);
 
-        const tokens =
-          isStablePhantomPool.value && pool.value.mainTokens
-            ? pool.value.mainTokens
-            : pool.value.tokensList;
+      //   const tokens =
+      //     isStablePhantomPool.value && pool.value.mainTokens
+      //       ? pool.value.mainTokens
+      //       : pool.value.tokensList;
 
-        return !tokens.every(token => includesAddress(tokensWithPrice, token));
-      }
+      //   return !tokens.every(token => includesAddress(tokensWithPrice, token));
+      // }
       return false;
     });
 

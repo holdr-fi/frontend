@@ -51,8 +51,8 @@ export default function usePoolsQuery(
   const { networkId } = useNetwork();
   const subgraphGauges = ref(undefined);
   // const { data: subgraphGauges } = useGaugesQuery();
-  const gaugeAddresses = computed(() =>
-    []
+  const gaugeAddresses = computed(
+    () => []
     // (subgraphGauges.value || []).map(gauge => gauge.id)
   );
 

@@ -38,7 +38,7 @@ const { getProvider } = useWeb3();
 const {
   userData: {
     stakedSharesForProvidedPool,
-    refetchStakedShares,
+    refetchStakedShares
     // refetchUserStakingData
   },
   stakeBPT,

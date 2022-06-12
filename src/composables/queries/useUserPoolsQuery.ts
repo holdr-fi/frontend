@@ -45,8 +45,8 @@ export default function useUserPoolsQuery(
 
   const subgraphGauges = ref(undefined);
 
-  const gaugeAddresses = computed(() =>
-    []
+  const gaugeAddresses = computed(
+    () => []
     // (subgraphGauges.value || []).map(gauge => gauge.id)
   );
   /**
