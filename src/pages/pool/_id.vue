@@ -214,7 +214,7 @@ export default defineComponent({
   components: {
     ...PoolPageComponents,
     GauntletIcon,
-    APRTooltip,
+    APRTooltip
     // StakingIncentivesCard,
     // StakingProvider,
     // ApyVisionPoolLink

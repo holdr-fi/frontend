@@ -1,3 +1,10 @@
+*Aurora tesnet fork steps*
+
+1. Copy .env.aurora_testnet.development to .env.development
+2. Added new tokenlist @ src/solace_fork/constants/aurora_testnet_tokenlist.json
+3. Created aurora testnet config in `src/constants/tokenlists.ts` to point to new tokenlist 
+4. 
+
 *SOLACE FORK INSTRUCTIONS*
 
 Commented out redundant frontend components

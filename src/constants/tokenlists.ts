@@ -68,5 +68,16 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
         'https://raw.githubusercontent.com/balancer-labs/assets/refactor-for-multichain/generated/arbitrum.vetted.tokenlist.json'
     },
     External: ['https://tracer.finance/tokens']
-  }
+  },
+  '1313161555': {
+    Balancer: {
+      Default:
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_testnet_tokenlist.json',
+      Vetted:
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_testnet_tokenlist.json'
+    },
+    External: [
+      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_testnet_tokenlist.json'
+    ]
+  },
 };

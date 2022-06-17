@@ -1,4 +1,4 @@
-import GasPriceService from '@/services/gas-price/gas-price.service';
+// import GasPriceService from '@/services/gas-price/gas-price.service';
 import { rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
 
 interface MarketState {
@@ -6,7 +6,7 @@ interface MarketState {
   loading: boolean;
 }
 
-const gasPriceService = new GasPriceService();
+// const gasPriceService = new GasPriceService();
 
 const state: MarketState = {
   gasPrice: 0,
