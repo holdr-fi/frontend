@@ -30,6 +30,7 @@ export async function multicall<T>(
     ],
     provider
   );
+
   const itf = new Interface(abi);
   try {
     const res: [boolean, string][] = await multi.tryAggregate(

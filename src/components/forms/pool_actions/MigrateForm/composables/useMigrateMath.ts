@@ -1,4 +1,4 @@
-import { queryBatchSwapTokensIn } from '@balancer-labs/sdk';
+// import { queryBatchSwapTokensIn } from '@balancer-labs/sdk';
 import { BigNumber } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
 import { computed, Ref, ref } from 'vue';
@@ -13,6 +13,8 @@ import { balancerContractsService } from '@/services/balancer/contracts/balancer
 import PoolCalculator from '@/services/pool/calculator/calculator.sevice';
 import { Pool } from '@/services/pool/types';
 import { BatchSwap } from '@/types';
+
+import { queryBatchSwapTokensIn } from '../../../../../forked_node_modules/balancer-labs/sdk';
 
 export type MigrateMathResponse = ReturnType<typeof useMigrateMath>;
 

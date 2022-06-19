@@ -1,6 +1,12 @@
-import { BalancerSDK, Network } from '@balancer-labs/sdk';
-
+// import { BalancerSDK, BalancerSdkConfig, Network } from '@balancer-labs/sdk';
+// import { Sor } from '../forked_node_modules/balancer-labs/sdk'
 import { configService } from '@/services/config/config.service';
+
+import {
+  BalancerSDK,
+  BalancerSdkConfig,
+  Network
+} from '../forked_node_modules/balancer-labs/sdk';
 
 const network = ((): Network => {
   switch (configService.network.key) {
@@ -14,29 +20,102 @@ const network = ((): Network => {
       return Network.POLYGON;
     case '42161':
       return Network.ARBITRUM;
+    case '1313161554':
+      return 1313161554;
+    case '1313161555':
+      return 1313161555;
     default:
       return Network.MAINNET;
   }
 })();
 
-const balancer = new BalancerSDK({
-  network,
-  rpcUrl: configService.rpc,
-  customSubgraphUrl: 'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
-});
-
-// @ts-ignore
-balancer.sor.config.addresses.contracts.vault =
-  '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
-
-// @ts-ignore
-balancer.sor.poolCacher.poolDataService.network.addresses.contracts.vault =
-  '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
-
-export { balancer };
-
-// export const balancer = new BalancerSDK({
+// const balancer = new BalancerSDK({
 //   network,
 //   rpcUrl: configService.rpc,
 //   customSubgraphUrl: 'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
 // });
+
+const balancerConfig = ((): BalancerSdkConfig => {
+  switch (configService.network.key) {
+    case '4':
+      return {
+        network,
+        rpcUrl: configService.rpc,
+        customSubgraphUrl:
+          'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
+      };
+    case '1313161555':
+      return {
+        network,
+        rpcUrl: 'https://testnet.aurora.dev',
+        customSubgraphUrl:
+          'https://api.thegraph.com/subgraphs/name/kyzooghost/solace_pool'
+      };
+    default:
+      return {
+        network,
+        rpcUrl: configService.rpc,
+        customSubgraphUrl:
+          'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
+      };
+  }
+})();
+
+// const sor = new Sor(balancerConfig);
+
+const balancer = new BalancerSDK(balancerConfig);
+
+// const balancer = ((): BalancerSDK => {
+//   switch (configService.network.key) {
+//     case '4':
+//       return new BalancerSDK({
+//         network,
+//         rpcUrl: configService.rpc,
+//         customSubgraphUrl:
+//           'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
+//       });
+//     case '1313161555':
+//       return new BalancerSDK({
+//         network,
+//         rpcUrl: 'https://testnet.aurora.dev',
+//         customSubgraphUrl:
+//           'https://api.thegraph.com/subgraphs/name/kyzooghost/solace_pool'
+//       });
+//     default:
+//       return new BalancerSDK({
+//         network,
+//         rpcUrl: configService.rpc,
+//         customSubgraphUrl:
+//           'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
+//       });
+//   }
+// })();
+
+// @ts-ignore
+// balancer.sor.config.addresses.contracts.vault = ((): string => {
+//   switch (configService.network.key) {
+//     case '4':
+//       return '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
+//     case '1313161555':
+//       return '0x39526464ac81f75009a8c1e425f2340e7f1ddfd4';
+//     default:
+//       return '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
+//   }
+// })();
+
+// @ts-ignore
+// balancer.sor.poolCacher.poolDataService.network.addresses.contracts.vault = ((): string => {
+//   switch (configService.network.key) {
+//     case '4':
+//       return '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
+//     case '1313161555':
+//       return '0x39526464ac81f75009a8c1e425f2340e7f1ddfd4';
+//     default:
+//       return '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
+//   }
+// })();
+
+// balancer.sor.poolCacher.poolDataService.network.addresses.contracts.vault =
+// '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
+
+export { balancer };

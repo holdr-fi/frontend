@@ -79,5 +79,5 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
     External: [
       'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_testnet_tokenlist.json'
     ]
-  },
+  }
 };

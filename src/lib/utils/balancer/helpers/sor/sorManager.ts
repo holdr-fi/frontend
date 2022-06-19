@@ -1,11 +1,3 @@
-import {
-  PoolFilter,
-  SOR as SORV2,
-  SubgraphPoolBase,
-  SwapInfo,
-  SwapOptions,
-  SwapTypes
-} from '@balancer-labs/sdk';
 import { Pool } from '@balancer-labs/sor/dist/types';
 import { BigNumber } from '@ethersproject/bignumber';
 import { AddressZero } from '@ethersproject/constants';
@@ -14,6 +6,15 @@ import OldBigNumber from 'bignumber.js';
 
 import { NATIVE_ASSET_ADDRESS } from '@/constants/tokens';
 import { balancer } from '@/lib/balancer.sdk';
+
+import {
+  PoolFilter,
+  SOR as SORV2,
+  SubgraphPoolBase,
+  SwapInfo,
+  SwapOptions,
+  SwapTypes
+} from '../../../../../forked_node_modules/balancer-labs/sdk';
 
 const SWAP_COST = process.env.VUE_APP_SWAP_COST || '100000';
 

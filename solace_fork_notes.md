@@ -1,9 +1,17 @@
 *Aurora tesnet fork steps*
 
+Prerequisite - Deployed smart contracts and subgraph
+
 1. Copy .env.aurora_testnet.development to .env.development
-2. Added new tokenlist @ src/solace_fork/constants/aurora_testnet_tokenlist.json
+2. Added new tokenlist `src/solace_fork/constants/aurora_testnet_tokenlist.json`
 3. Created aurora testnet config in `src/constants/tokenlists.ts` to point to new tokenlist 
-4. 
+4. Added Aurora testnet switch cases for `src/lib/balancer.sdk.ts`
+5. Created config in `src/lib/config/aurora_testnet.json`
+6. Imported above config into `src/lib/config/index.ts`
+7. Forked @balancer-labs/sdk & associated dependency @balancer-labs/sor to `src/forked_node_modules`. Added config for Aurora and Aurora testnet, made forked @balancer-labs/sdk import from forked @balancer-labs/sor (Multiple SOR classes in the @balancer-labs/sor and @balancer-labs/sdk, also the @balancer-labs/sor in first level of node_modules is different to the @balancer-labs/sor which is a dependency of @balancer-labs/sdk)
+8. Changed imports from `@balancer-labs/sdk` to relative path of local forked version in `src/lib/utils/balancer/helpers/sor/sorManager.ts` and `src/components/forms/pool_actions/MigrateForm/composables/useMigrateMath.ts`. Some error about incorrect SOR type. Giving absolute path caused an error. 
+9. Deploy BatchRelayer.sol and MultiCall.sol contracts on Aurora testnet, provide addresses to `src/lib/config/aurora_testnet.json`
+10. Add Aurora config values in `src/constants/initialTokens.json`
 
 *SOLACE FORK INSTRUCTIONS*
 

@@ -43,6 +43,7 @@ export default class AllowancesConcern {
           allContractAllowances[i]
         ])
       );
+
       return result;
     } catch (error) {
       console.error('Failed to fetch allowances for:', account, error);
