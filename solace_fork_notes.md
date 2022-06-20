@@ -12,6 +12,8 @@ Prerequisite - Deployed smart contracts and subgraph
 8. Changed imports from `@balancer-labs/sdk` to relative path of local forked version in `src/lib/utils/balancer/helpers/sor/sorManager.ts` and `src/components/forms/pool_actions/MigrateForm/composables/useMigrateMath.ts`. Some error about incorrect SOR type. Giving absolute path caused an error. 
 9. Deploy BatchRelayer.sol and MultiCall.sol contracts on Aurora testnet, provide addresses to `src/lib/config/aurora_testnet.json`
 10. Add Aurora config values in `src/constants/initialTokens.json`
+11. Commented out line `npm run lint:fix` in `.husky/pre-commit` because it screamed errors at the forked dependencies, and stopped git commits. Couldn't find a way for `vue-cli-service lint` to ignore chosen folders - zero config?
+12. Commented out WS connection (listens to new blocks?) in `src/services/rpc-provider/rpc-provider.service.ts` and `src/services/web3/useWeb3.ts`
 
 *SOLACE FORK INSTRUCTIONS*
 
