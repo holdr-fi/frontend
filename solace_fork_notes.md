@@ -1,3 +1,38 @@
+*AWS deploy commands*
+
+```bash
+npm run build
+aws s3 rm s3://balancer.solace.fi --include "*" --recursive
+aws s3 cp --recursive --cache-control="max-age=86400" build/ s3://balancer.solace.fi/
+aws cloudfront create-invalidation --distribution-id E1V3D8UDKD2YUE --paths "/*"
+```
+
+*Aurora fork deploy steps*
+
+1. Removed the following code from `public/index.html` to silence undefined VUE_APP_GA_ID and VUE_APP_FATHOM_ID errors
+
+```html
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=<%= VUE_APP_GA_ID %>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '<%= VUE_APP_GA_ID %>', { 'client_storage': 'none', 'anonymize_ip': true });
+</script>
+
+<!-- Fathom Analytics -->
+<script src="https://quality-yellow.balancer.fi/script.js" data-spa="hash" data-site="<%= VUE_APP_FATHOM_SITE_ID %>" defer></script>
+
+<!-- Intercom -->
+<script>
+  window.intercomSettings = {
+    app_id: "odpifrqb",
+    custom_launcher_selector: '#intercom-activator'
+  };
+</script>
+```
+
 *Aurora fork steps*
 
 1. Deploy the following smart contracts: TimelockAuthorizer, Vault, BalancerHelpers, InvestmentPoolFactory, Multicall2, BatchRelayerLibrary, WeightedPoolFactory, WeightedPool2TokensFactory
@@ -74,3 +109,5 @@ Remove subgauge Subgraph query on frontpage
 
 Removed redundant data queries
 - src/services/token/concerns/metadata.concern.ts
+
+
