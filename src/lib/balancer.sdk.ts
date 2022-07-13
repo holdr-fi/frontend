@@ -44,6 +44,13 @@ const balancerConfig = ((): BalancerSdkConfig => {
         customSubgraphUrl:
           'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
       };
+    case '1313161554':
+      return {
+        network,
+        rpcUrl: 'https://mainnet.aurora.dev',
+        customSubgraphUrl:
+          'https://api.thegraph.com/subgraphs/name/kyzooghost/balancer_aurora_fork'
+      };
     case '1313161555':
       return {
         network,

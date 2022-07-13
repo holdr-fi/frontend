@@ -69,6 +69,17 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
     },
     External: ['https://tracer.finance/tokens']
   },
+  '1313161554': {
+    Balancer: {
+      Default:
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_tokenlist.json',
+      Vetted:
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_tokenlist.json'
+    },
+    External: [
+      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_tokenlist.json'
+    ]
+  },
   '1313161555': {
     Balancer: {
       Default:

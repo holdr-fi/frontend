@@ -1,0 +1,81 @@
+{
+    "key": "1313161554",
+    "chainId": 1313161554,
+    "chainName": "Aurora",
+    "name": "Aurora",
+    "shortName": "Aurora",
+    "network": "aurora",
+    "unknown": false,
+    "rpc": "https://mainnet.aurora.dev",
+    "ws": "",
+    "loggingRpc": "https://mainnet.aurora.dev",
+    "explorer": "https://aurorascan.dev/",
+    "explorerName": "AuroraScan",
+    "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/balancer_aurora_fork",
+    "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
+    "subgraphs": {
+      "aave": "",
+      "gauge": ""
+    },
+    "supportsEIP1559": false,
+    "supportsElementPools": false,
+    "nativeAsset": {
+      "name": "Ether",
+      "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "symbol": "ETH",
+      "decimals": 18,
+      "deeplinkId": "ether",
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+      "minTransactionBuffer": "0.05"
+    },
+    "addresses": {
+      "bFactory": "",
+      "bActions": "",
+      "dsProxyRegistry": "",
+      "merkleRedeem": "",
+      "merkleOrchard": "",
+      "multicall": "0x36C232005D7c237c1268AA8C8B51b7Eb59eB44ae",
+      "authorizer": "0x86aAC7a3cEa476769cbe6CBb04B2eE7A29560250",
+      "vault": "0x1Bee13139Ef9A5E1301f83Ca90d09C5289Ce3FC2",
+      "weightedPoolFactory": "0xEF7dd30092D812068047109e55DeF88b74522187",
+      "stablePoolFactory": "",
+      "tokenFactory": "",
+      "weth": "0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
+      "stETH": "",
+      "wstETH": "",
+      "lidoRelayer": "",
+      "balancerHelpers": "0x8598bcc3B5A24f9adE57c00681Fcbb49c8B7dA8b",
+      "batchRelayer": "0x2bb148Eb8973dD5dE928Ed215D5aF8e111C9e15D",
+      "gaugeFactory": "",
+      "balancerMinter": "",
+      "gaugeController": "",
+      "tokenAdmin": "",
+      "veBAL": "",
+      "veDelegationProxy": "",
+      "veBALHelpers": "",
+      "feeDistributor": ""
+    },
+    "keys": {
+      "infura": "",
+      "alchemy": ""
+    },
+    "strategies": {
+      "0": {
+        "type": "0",
+        "name": "stablePool"
+      },
+      "1": {
+        "type": "1",
+        "name": "weightedPool"
+      },
+      "2": {
+        "type": "2",
+        "name": "weightedPool"
+      }
+    },
+    "gauges": {
+      "type": 1,
+      "weight": 100
+    }
+  }
+  
