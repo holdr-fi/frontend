@@ -8,7 +8,8 @@ import useWeb3 from '@/services/web3/useWeb3';
 
 import AppNavAccountBtn from './AppNavAccountBtn.vue';
 import AppNavActivityBtn from './AppNavActivityBtn/AppNavActivityBtn.vue';
-import AppNavNetworkSelect from './AppNavNetworkSelect.vue';
+// Comment out to remove dropdown menu showing currently on Ethereum chain, when actually not
+// import AppNavNetworkSelect from './AppNavNetworkSelect.vue'; 
 
 /**
  * COMPOSABLES

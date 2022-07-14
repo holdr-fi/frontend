@@ -3,7 +3,7 @@
 ```bash
 npm run build
 aws s3 rm s3://balancer.solace.fi --include "*" --recursive
-aws s3 cp --recursive --cache-control="max-age=86400" build/ s3://balancer.solace.fi/
+aws s3 cp --recursive --cache-control="max-age=86400" dist/ s3://balancer.solace.fi/
 aws cloudfront create-invalidation --distribution-id E1V3D8UDKD2YUE --paths "/*"
 ```
 
@@ -32,6 +32,8 @@ aws cloudfront create-invalidation --distribution-id E1V3D8UDKD2YUE --paths "/*"
   };
 </script>
 ```
+
+2. Commented out initSentry function in `src/main.ts` to silence POST request to Sentry URL
 
 *Aurora fork steps*
 
