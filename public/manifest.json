@@ -1,7 +1,7 @@
 {
-  "short_name": "Balancer",
-  "name": "Balancer",
-  "description": "Swap tokens and manage your assets on Balancer Protocol",
+  "short_name": "Solace",
+  "name": "Solace",
+  "description": "DeFi is a Journey. Focus on Yields.",
   "providedBy": {
     "name": "Balancer Labs",
     "url": "https://balancer.fi"
@@ -13,7 +13,7 @@
       "type": "image/x-icon"
     }
   ],
-  "iconPath": "images/logos/logo512.png",
+  "iconPath": "images/logos/solace-circle-color.svg",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
