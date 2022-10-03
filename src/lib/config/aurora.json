@@ -7,6 +7,7 @@
     "network": "aurora",
     "unknown": false,
     "rpc": "https://mainnet.aurora.dev",
+    "publicRpc": "https://mainnet.aurora.dev",
     "ws": "",
     "loggingRpc": "https://mainnet.aurora.dev",
     "explorer": "https://aurorascan.dev/",
