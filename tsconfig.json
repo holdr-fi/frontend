@@ -7,6 +7,7 @@
     "files": true,
     "require": ["tsconfig-paths/register"],
     "compilerOptions": {
+      "module": "commonjs"
       // compilerOptions specified here will override those declared below,
       // but *only* in ts-node. Useful if you want ts-node and tsc to use
       // different options with a single tsconfig.json.
@@ -29,22 +30,11 @@
     "baseUrl": ".",
     "noImplicitAny": false,
     "resolveJsonModule": true,
-    "types": [
-      "node",
-      "webpack-env",
-      "jest"
-    ],
+    "types": ["node", "webpack-env", "jest"],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "src/**/*.ts",
@@ -53,7 +43,5 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
