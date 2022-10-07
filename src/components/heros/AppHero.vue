@@ -193,5 +193,6 @@ function onClickConnect() {
   @apply text-white text-center text-4xl md:text-5xl pb-2 font-display font-black;
   font-weight: 600;
   font-variation-settings: 'wght' 700;
+  font-family: system-ui;
 }
 </style>

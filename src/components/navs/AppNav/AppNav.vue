@@ -57,8 +57,9 @@ onUnmounted(() => {
           :to="{ name: 'home' }"
           @click="trackGoal(Goals.ClickNavLogo)"
         >
-          <AppIcon v-if="['xs', 'sm', 'md'].includes(bp)" />
-          <AppLogo v-else />
+          <!-- <AppIcon v-if="['xs', 'sm', 'md'].includes(bp)" />
+          <AppLogo v-else /> -->
+          <img src="/images/logos/solace-logo.svg" />
         </router-link>
 
         <DesktopLinks v-if="isDesktop" class="ml-8 font-medium" />
