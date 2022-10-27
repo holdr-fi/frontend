@@ -68,9 +68,6 @@ Prerequisite - Deployed smart contracts and subgraph
 
 *SOLACE FORK INSTRUCTIONS*
 
-Commented out redundant frontend components
-- Many Balancer features (such as veBAL) that we won't be needing in our fork
-
 Change config to Rinkeby
 - .env.development
 

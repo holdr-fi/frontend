@@ -1,7 +1,7 @@
 import { Network } from '@balancer-labs/sdk';
 
 import arbitrum from './arbitrum.json';
-import aurora from './aurora.json';
+import aurora from './aurora.json'; // SOLACE_TODO: Add Aurora subgraph gauge
 import aurora_testnet from './aurora_testnet.json';
 import docker from './docker.json';
 import homestead from './homestead.json';
@@ -89,6 +89,7 @@ const config: Record<Network | number, Config> = {
   [Network.ARBITRUM]: arbitrum,
   1313161554: aurora,
   1313161555: aurora_testnet,
+  // 80001: mumbai, SOLACE_TODO: add MUMBAI
   12345: test,
   // @ts-ignore
   17: docker

@@ -25,7 +25,6 @@ function isActive(page: string): boolean {
     <DesktopLinkItem to="/trade" :active="isActive('trade')">
       {{ $t('trade') }}
     </DesktopLinkItem>
-    <!-- 
     <DesktopLinkItem to="/vebal" :active="isActive('vebal')">
       veBAL
     </DesktopLinkItem> 
@@ -35,7 +34,6 @@ function isActive(page: string): boolean {
         <StarsIcon class="ml-1 h-5 w-4" />
       </div>
     </DesktopLinkItem>
-    -->
   </div>
 </template>
 

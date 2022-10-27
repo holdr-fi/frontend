@@ -7,7 +7,7 @@ import useNetwork from '@/composables/useNetwork';
 import QUERY_KEYS from '@/constants/queryKeys';
 
 import { configService } from '../config/config.service';
-// import { rpcProviderService } from '../rpc-provider/rpc-provider.service';
+import { rpcProviderService } from '../rpc-provider/rpc-provider.service';
 import { switchToAppNetwork } from './utils/helpers';
 import { Web3Plugin, Web3ProviderSymbol } from './web3.plugin';
 import { web3Service } from './web3.service';
@@ -22,7 +22,7 @@ function setBlockNumber(n: number): void {
 }
 
 /** INIT STATE */
-// rpcProviderService.initBlockListener(setBlockNumber);
+rpcProviderService.initBlockListener(setBlockNumber);
 
 export default function useWeb3() {
   const {
@@ -61,6 +61,11 @@ export default function useWeb3() {
   const isArbitrum = computed(
     () => appNetworkConfig.chainId === Network.ARBITRUM
   );
+
+  const isAurora = computed(
+    () => Number(appNetworkConfig.chainId) === 1313161554
+  );
+
   const isEIP1559SupportedNetwork = computed(
     () => appNetworkConfig.supportsEIP1559
   );
@@ -136,6 +141,7 @@ export default function useWeb3() {
     isKovan,
     isPolygon,
     isArbitrum,
+    isAurora,
     isEIP1559SupportedNetwork,
     isWalletConnecting,
 

@@ -3,7 +3,7 @@ import { computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-// import StakedPoolsTable from '@/components/contextual/pages/pools/StakedPoolsTable.vue';
+import StakedPoolsTable from '@/components/contextual/pages/pools/StakedPoolsTable.vue';
 import UnstakedPoolsTable from '@/components/contextual/pages/pools/UnstakedPoolsTable.vue';
 import TokenSearchInput from '@/components/inputs/TokenSearchInput.vue';
 import FeaturedProtocols from '@/components/sections/FeaturedProtocols.vue';
@@ -101,7 +101,7 @@ function navigateToCreatePool() {
         <BalStack vertical spacing="xl">
           <StakingProvider>
             <UnstakedPoolsTable :userPools="userPools" />
-            <!-- <StakedPoolsTable :userPools="userPools" /> -->
+            <StakedPoolsTable :userPools="userPools" />
           </StakingProvider>
           <BalStack vertical spacing="sm" v-if="migratableUserPools.length > 0">
             <h5 class="px-4 lg:px-0">{{ $t('poolsToMigrate') }}</h5>
@@ -157,11 +157,9 @@ function navigateToCreatePool() {
         :isLoading="isInvestmentPoolsTableLoading"
       >
       </PoolsTable>
-      <!--
-      <div v-if="isElementSupported" class="mt-16 p-4 lg:p-0">
+      <!-- <div v-if="isElementSupported" class="mt-16 p-4 lg:p-0">
         <FeaturedProtocols />
-      </div>
-      -->
+      </div> -->
     </BalStack>
   </div>
 </template>

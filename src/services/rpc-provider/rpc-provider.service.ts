@@ -6,7 +6,7 @@ import { configService } from '@/services/config/config.service';
 
 import { StaticJsonRpcBatchProvider } from './static-json-rpc-batch-provider';
 
-// type NewBlockHandler = (blockNumber: number) => any;
+type NewBlockHandler = (blockNumber: number) => any;
 
 export default class RpcProviderService {
   constructor(
@@ -18,10 +18,10 @@ export default class RpcProviderService {
     )
   ) {}
 
-  // public initBlockListener(newBlockHandler: NewBlockHandler): void {
-  //   const wsProvider = new WebSocketProvider(this.config.ws);
-  //   wsProvider.on('block', newBlockNumber => newBlockHandler(newBlockNumber));
-  // }
+  public initBlockListener(newBlockHandler: NewBlockHandler): void {
+    const wsProvider = new WebSocketProvider(this.config.ws);
+    wsProvider.on('block', newBlockNumber => newBlockHandler(newBlockNumber));
+  }
 
   public async getBlockNumber(): Promise<number> {
     return await this.jsonProvider.getBlockNumber();

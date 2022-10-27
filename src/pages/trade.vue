@@ -5,10 +5,10 @@ import { useStore } from 'vuex';
 
 // Components
 import MyWallet from '@/components/cards/MyWallet/MyWallet.vue';
-// import PairPriceGraph from '@/components/cards/PairPriceGraph/PairPriceGraph.vue';
+import PairPriceGraph from '@/components/cards/PairPriceGraph/PairPriceGraph.vue';
 import TradeCard from '@/components/cards/TradeCard/TradeCard.vue';
 import TradeCardGP from '@/components/cards/TradeCardGP/TradeCardGP.vue';
-// import TrendingPairs from '@/components/cards/TrendingPairs/TrendingPairs.vue';
+import TrendingPairs from '@/components/cards/TrendingPairs/TrendingPairs.vue';
 import Col3Layout from '@/components/layouts/Col3Layout.vue';
 import usePoolFilters from '@/composables/pools/usePoolFilters';
 import { ENABLE_LEGACY_TRADE_INTERFACE } from '@/composables/trade/constants';
@@ -77,21 +77,19 @@ onMounted(() => {
         v-if="upToLargeBreakpoint"
         :sections="[
           { title: 'My wallet', id: 'my-wallet' },
-          // { title: 'Trending pairs', id: 'trending-pairs' },
+          { title: 'Trending pairs', id: 'trending-pairs' },
           { title: 'Price chart', id: 'price-chart' }
         ]"
       >
         <template v-slot:my-wallet>
           <MyWallet />
         </template>
-        <!--
         <template v-slot:trending-pairs>
           <TrendingPairs />
         </template>
         <template v-slot:price-chart>
           <PairPriceGraph :toggleModal="togglePairPriceGraphModal" />
         </template>
-        -->
       </BalAccordion>
     </div>
 

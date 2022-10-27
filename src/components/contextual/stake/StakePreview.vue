@@ -38,8 +38,8 @@ const { getProvider } = useWeb3();
 const {
   userData: {
     stakedSharesForProvidedPool,
-    refetchStakedShares
-    // refetchUserStakingData
+    refetchStakedShares,
+    refetchUserStakingData
   },
   stakeBPT,
   unstakeBPT
@@ -128,7 +128,7 @@ async function handleSuccess({ receipt }) {
   isActionConfirmed.value = true;
   confirmationReceipt.value = receipt;
   await refetchStakedShares.value();
-  // await refetchUserStakingData.value();
+  await refetchUserStakingData.value();
   await queryClient.refetchQueries(['staking']);
   emit('success');
 }

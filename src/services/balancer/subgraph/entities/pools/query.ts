@@ -7,8 +7,8 @@ const defaultArgs = {
   orderBy: 'totalLiquidity',
   orderDirection: 'desc',
   where: {
-    totalShares_gt: 0.01
-    // id_not_in: POOLS.BlockList
+    totalShares_gt: 0.01,
+    id_not_in: POOLS.BlockList
   }
 };
 

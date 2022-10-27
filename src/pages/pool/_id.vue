@@ -71,8 +71,6 @@
             </BalTooltip>
           </div>
         </div>
-
-        <!--
         <BalAlert
           v-if="!appLoading && !loadingPool && missingPrices"
           type="warning"
@@ -87,7 +85,6 @@
           class="mt-2"
           block
         />
-        -->
         <template v-if="!appLoading && !loadingPool && isAffected">
           <BalAlert
             v-for="(warning, i) in warnings"
@@ -113,12 +110,9 @@
           block
         />
       </div>
-
       <div class="hidden lg:block" />
-
       <div class="col-span-2 order-2 lg:order-1">
         <div class="grid grid-cols-1 gap-y-8">
-          <!--
           <div class="px-1 lg:px-0">
             <PoolChart
               :pool="pool"
@@ -135,23 +129,19 @@
               :titleTokens="titleTokens"
             />
           </div>
-          -->
           <div class="mb-4">
             <h4 v-text="$t('poolComposition')" class="px-4 lg:px-0 mb-4" />
             <PoolBalancesCard :pool="pool" :loading="loadingPool" />
           </div>
-
           <div>
             <PoolTransactionsCard :pool="pool" :loading="loadingPool" />
           </div>
         </div>
       </div>
-
       <div
         v-if="!isLiquidityBootstrappingPool"
         class="order-1 lg:order-2 px-1 lg:px-0"
       >
-        <!--
         <StakingProvider :poolAddress="getAddressFromPoolId(id)">
           <BalStack vertical>
             <BalLoadingBlock
@@ -175,7 +165,6 @@
             />
           </BalStack>
         </StakingProvider>
-        -->
       </div>
     </div>
   </div>
@@ -189,7 +178,7 @@ import { useRoute } from 'vue-router';
 import * as PoolPageComponents from '@/components/contextual/pages/pool';
 import StakingIncentivesCard from '@/components/contextual/pages/pool/StakingIncentivesCard/StakingIncentivesCard.vue';
 import GauntletIcon from '@/components/images/icons/GauntletIcon.vue';
-// import ApyVisionPoolLink from '@/components/links/ApyVisionPoolLink.vue';
+import ApyVisionPoolLink from '@/components/links/ApyVisionPoolLink.vue';
 import APRTooltip from '@/components/tooltips/APRTooltip/APRTooltip.vue';
 import usePoolQuery from '@/composables/queries/usePoolQuery';
 import usePoolSnapshotsQuery from '@/composables/queries/usePoolSnapshotsQuery';
@@ -198,7 +187,7 @@ import useApp from '@/composables/useApp';
 import { isL2 } from '@/composables/useNetwork';
 import useNumbers from '@/composables/useNumbers';
 import { usePool } from '@/composables/usePool';
-// import { usePoolWarning } from '@/composables/usePoolWarning';
+import { usePoolWarning } from '@/composables/usePoolWarning';
 import useTokens from '@/composables/useTokens';
 import { EXTERNAL_LINKS } from '@/constants/links';
 import { POOLS } from '@/constants/pools';
@@ -210,14 +199,15 @@ interface PoolPageData {
   id: string;
 }
 
+
 export default defineComponent({
   components: {
     ...PoolPageComponents,
     GauntletIcon,
-    APRTooltip
-    // StakingIncentivesCard,
-    // StakingProvider,
-    // ApyVisionPoolLink
+    APRTooltip,
+    StakingIncentivesCard,
+    StakingProvider,
+    ApyVisionPoolLink
   },
 
   setup() {
@@ -229,11 +219,11 @@ export default defineComponent({
     const route = useRoute();
     const { fNum2 } = useNumbers();
     const { explorerLinks, isWalletReady } = useWeb3();
-    // const { prices } = useTokens();
+    const { prices } = useTokens();
     const { blockNumber, isKovan, isMainnet, isPolygon } = useWeb3();
     const { addAlert, removeAlert } = useAlerts();
     const { balancerTokenListTokens } = useTokens();
-    // const { isAffected, warnings } = usePoolWarning(route.params.id as string);
+    const { isAffected, warnings } = usePoolWarning(route.params.id as string);
 
     /**
      * QUERIES
@@ -346,16 +336,16 @@ export default defineComponent({
     });
 
     const missingPrices = computed(() => {
-      // if (pool.value) {
-      //   const tokensWithPrice = Object.keys(prices.value);
+      if (pool.value) {
+        const tokensWithPrice = Object.keys(prices.value);
 
-      //   const tokens =
-      //     isStablePhantomPool.value && pool.value.mainTokens
-      //       ? pool.value.mainTokens
-      //       : pool.value.tokensList;
+        const tokens =
+          isStablePhantomPool.value && pool.value.mainTokens
+            ? pool.value.mainTokens
+            : pool.value.tokensList;
 
-      //   return !tokens.every(token => includesAddress(tokensWithPrice, token));
-      // }
+        return !tokens.every(token => includesAddress(tokensWithPrice, token));
+      }
       return false;
     });
 
@@ -459,11 +449,11 @@ export default defineComponent({
       isStablePhantomPool,
       copperNetworkPrefix,
       hasCustomToken,
-      // isAffected,
-      // warnings,
+      isAffected,
+      warnings,
       isL2,
       isStakablePool,
-      // methods
+      // methods,
       fNum2,
       onNewTx,
       getAddressFromPoolId

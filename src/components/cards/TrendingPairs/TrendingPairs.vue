@@ -52,6 +52,7 @@ function formatToken({ address, symbol }: { address: string; symbol: string }) {
 }
 
 const trendingPairs = computed(() => {
+  // SOLACE_TODO: no tradePairSnapshots from aurora subgraph found from this function for some reason
   return (tradePairSnapshots.value || []).map(pairSnapshot => [
     formatToken(pairSnapshot.pair.token0),
     formatToken(pairSnapshot.pair.token1)
@@ -59,6 +60,7 @@ const trendingPairs = computed(() => {
 });
 
 const setTradePair = (pair: TrendingPair[]) => {
+  // SOLACE_TODO: check that assets exist on coingecko for this chain
   setTokenInAddress(pair[0].address);
   setTokenOutAddress(pair[1].address);
 };

@@ -38,7 +38,7 @@ export default defineComponent({
     /**
      * STATE
      */
-    const layout = ref('DefaultLayout');
+    const layout = ref('DefaultLayout'); // an instance property used to indicate a reference to HTML elements in the template
 
     /**
      * COMPOSABLES
@@ -103,19 +103,26 @@ export default defineComponent({
 </script>
 
 <template>
+  <!--
+    teleport target for modals throughout the app
+    -->
   <div id="modal" />
   <div id="app">
     <component :is="layout" />
-    <!--
     <VueQueryDevTools />
-    -->
     <WalletSelectModal
       :isVisible="isWalletSelectVisible"
       @close="toggleWalletSelectModal"
     />
     <Notifications />
+    <!--
+    Sidebar only available on mobile
+    -->
     <AppSidebar v-if="sidebarOpen" />
   </div>
+  <!--
+    a container for the redirect modal, reason for design is unknown
+    -->
   <GlobalModalContainer />
 </template>
 

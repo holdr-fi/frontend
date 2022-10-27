@@ -16,7 +16,7 @@ export default class BalancerSubgraphClient {
       const {
         data: { data }
       } = await axios.post(this.url, payload);
-      return data;
+      return data; // SOLACE_TODOO: aurora subgraph is not keeping track of pool snapshots from last 30 days, thus values are null
     } catch (error) {
       console.error(error);
     }

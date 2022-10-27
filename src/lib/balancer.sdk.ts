@@ -18,12 +18,14 @@ const network = ((): Network => {
       return Network.KOVAN;
     case '137':
       return Network.POLYGON;
+    case '80001':
+      return Network.MUMBAI;
     case '42161':
       return Network.ARBITRUM;
     case '1313161554':
-      return 1313161554;
+      return Network.AURORA;
     case '1313161555':
-      return 1313161555;
+      return Network.AURORA_TESTNET;
     default:
       return Network.MAINNET;
   }

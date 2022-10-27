@@ -47,6 +47,7 @@ export function useClaimsData() {
   const gaugePoolQueryEnabled = computed(
     (): boolean => gaugePoolIds?.value && gaugePoolIds.value?.length > 0
   );
+  // SOLACE_TODO: subgraphs.balancer appears to be an empty string when it has already been initialized in the json file?
   const gaugePoolQuery = useGraphQuery<GaugePoolQueryResponse>(
     subgraphs.balancer,
     ['claim', 'gauge', 'pools'],

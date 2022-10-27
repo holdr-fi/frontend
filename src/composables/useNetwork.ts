@@ -1,4 +1,5 @@
 import { Network } from '@balancer-labs/sdk';
+// import { Network } from '@/forked_node_modules/balancer-labs/sdk';
 import { computed, ref } from 'vue';
 
 import config from '@/lib/config';
@@ -19,6 +20,11 @@ export const isPolygon = computed(() => networkId.value === Network.POLYGON);
 export const isArbitrum = computed(() => networkId.value === Network.ARBITRUM);
 export const isKovan = computed(() => networkId.value === Network.KOVAN);
 export const isRinkeby = computed(() => networkId.value === Network.RINKEBY);
+export const isAurora = computed(() => Number(networkId.value) === 1313161554);
+export const isAuroraTestnet = computed(
+  () => Number(networkId.value) === 1313161555
+);
+export const isMumbai = computed(() => Number(networkId.value) === 80001);
 
 export const isL2 = computed(() => isPolygon.value || isArbitrum.value);
 
@@ -41,6 +47,12 @@ export function networkFor(key: string | number): Network {
       return Network.POLYGON;
     case '42161':
       return Network.ARBITRUM;
+    case '1313161554':
+      return 1313161554;
+    case '1313161555':
+      return 1313161555;
+    case '80001':
+      return 80001;
     default:
       throw new Error('Network not supported');
   }
@@ -50,7 +62,7 @@ export function networkNameFor(network: Network): string {
   return config[network].network;
 }
 
-export function subdomainFor(network: Network): string {
+export function subdomainFor(network: Network | number): string {
   switch (network) {
     // case Network.MAINNET:
     //   return 'app';
@@ -62,6 +74,12 @@ export function subdomainFor(network: Network): string {
       return 'polygon';
     case Network.ARBITRUM:
       return 'arbitrum';
+    case 1313161554:
+      return 'aurora';
+    case 1313161555:
+      return 'aurora-testnet';
+    case 80001:
+      return 'mumbai';
     default:
       throw new Error('Network not supported');
   }

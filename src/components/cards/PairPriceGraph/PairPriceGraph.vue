@@ -47,6 +47,8 @@ async function getPairPriceData(
     [_inputAsset, _outputAsset] = [_outputAsset, _inputAsset];
   }
   const aggregateBy = days === 1 ? 'hour' : 'day';
+
+  // SOLACE_TODO: check that assets exist on coingecko for this chain
   const getInputAssetData = coingeckoService.prices.getTokensHistorical(
     [_inputAsset],
     days,

@@ -30,7 +30,6 @@ const isHomePage = computed(() => route.path === '/');
     <div class="pb-16">
       <router-view :key="$route.path" />
     </div>
-    <!--
     <BalBtn
       v-if="isDesktop"
       id="intercom-activator"
@@ -41,7 +40,6 @@ const isHomePage = computed(() => route.path === '/');
     >
       <BalIcon name="message-square" size="lg" />
     </BalBtn>
-    -->
   </div>
 </template>
 

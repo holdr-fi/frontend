@@ -46,6 +46,7 @@ export default function useProtocolRewardsQuery(
    */
   const queryFn = async () => {
     try {
+      // SOLACE_TODO: feeDistributor contract is undefined on aurora
       return await feeDistributor.getClaimableBalances(account.value);
     } catch (error) {
       console.error('Failed to fetch claimable protocol balances', error);
