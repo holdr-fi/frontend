@@ -146,6 +146,7 @@ const dataMax = computed(() => {
   return (maxBy(priceData.value || [], v => v[1]) || [])[1] || 0;
 });
 
+// SOLACE_TODO: cannot get pair price from coingecko because of aurora token 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE
 const {
   isLoading: isLoadingPriceData,
   data: priceData,
