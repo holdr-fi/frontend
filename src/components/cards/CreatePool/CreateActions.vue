@@ -51,7 +51,6 @@ const createState = reactive<CreateState>({
 /*
  * COMPOSABLES
  */
-// const route = useRoute();
 const { t } = useI18n();
 const { explorerLinks } = useWeb3();
 const { networkConfig } = useConfig();

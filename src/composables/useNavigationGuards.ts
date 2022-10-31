@@ -19,6 +19,5 @@ export default function useNavigationGuards() {
     } else {
       next();
     }
-    next();
   });
 }

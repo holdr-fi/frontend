@@ -48,7 +48,6 @@ async function getPairPriceData(
   }
   const aggregateBy = days === 1 ? 'hour' : 'day';
 
-  // SOLACE_TODO: check that assets exist on coingecko for this chain
   const getInputAssetData = coingeckoService.prices.getTokensHistorical(
     [_inputAsset],
     days,
@@ -146,7 +145,6 @@ const dataMax = computed(() => {
   return (maxBy(priceData.value || [], v => v[1]) || [])[1] || 0;
 });
 
-// SOLACE_TODO: cannot get pair price from coingecko because of aurora token 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE
 const {
   isLoading: isLoadingPriceData,
   data: priceData,

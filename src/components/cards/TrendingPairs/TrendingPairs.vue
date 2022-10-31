@@ -60,7 +60,6 @@ const trendingPairs = computed(() => {
 });
 
 const setTradePair = (pair: TrendingPair[]) => {
-  // SOLACE_TODO: check that assets exist on coingecko for this chain
   setTokenInAddress(pair[0].address);
   setTokenOutAddress(pair[1].address);
 };

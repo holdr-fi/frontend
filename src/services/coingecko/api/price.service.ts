@@ -148,7 +148,6 @@ export class PriceService {
       );
       return results;
     } catch (error) {
-      // SOLACE_TODO: cannot fetch historical prices for aurora token 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE
       console.error('Unable to fetch token prices', addresses, error);
       throw error;
     }

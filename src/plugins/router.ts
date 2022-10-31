@@ -10,6 +10,8 @@ const GetVeBalPage = () =>
   import(/* webpackChunkName: "GetVeBalPage" */ '@/pages/get-vebal.vue');
 const HomePage = () =>
   import(/* webpackChunkName: "HomePage" */ '@/pages/index.vue');
+const BribePage = () =>
+  import(/* webpackChunkName: "BribePage" */ '@/pages/bribe.vue');
 const PoolPage = () =>
   import(/* webpackChunkName: "PoolPage" */ '@/pages/pool/_id.vue');
 const CreatePoolPage = () =>
@@ -55,6 +57,11 @@ const routes: RouteRecordRaw[] = [
     path: '/trade/:assetIn?/:assetOut?',
     name: 'trade',
     component: TradePage
+  },
+  {
+    path: '/bribe',
+    name: 'bribe',
+    component: BribePage
   },
   {
     path: '/swap/:assetIn?/:assetOut?',

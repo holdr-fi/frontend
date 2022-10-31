@@ -27,6 +27,9 @@ function isActive(page: string): boolean {
     </DesktopLinkItem>
     <DesktopLinkItem to="/vebal" :active="isActive('vebal')">
       veBAL
+    </DesktopLinkItem>
+    <DesktopLinkItem to="/bribe" :active="isActive('bribe')">
+      Bribes
     </DesktopLinkItem> 
     <DesktopLinkItem to="/claim" :active="isActive('claim')">
       <div class="flex items-center">

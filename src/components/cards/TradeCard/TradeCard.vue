@@ -134,8 +134,6 @@ export default defineComponent({
     } = useTradeState();
     const { slippage } = useUserSettings();
 
-    console.log('tokenInAddress', tokenInAddress);
-
     const exactIn = ref(true);
 
     const tradeSuccess = ref(false);

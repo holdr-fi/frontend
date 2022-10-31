@@ -113,6 +113,30 @@ export const TOKENS_KOVAN: TokenConstants = {
   }
 };
 
+export const TOKENS_AURORA: TokenConstants = {
+  Popular: {
+    Symbols: ['WBTC', 'DAI', 'USDC', 'BAL', 'AAVE', 'WETH']
+  },
+  Addresses: {
+    nativeAsset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    wNativeAsset: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
+    WETH: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
+    BAL: '0x0000000000000000000000000000000000000000' // SOLACE_TODO: no balancer token on aurora
+  }
+};
+
+export const TOKENS_MUMBAI: TokenConstants = {
+  Popular: {
+    Symbols: ['WBTC', 'DAI', 'USDC', 'BAL', 'AAVE', 'WETH']
+  },
+  Addresses: {
+    nativeAsset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+    wNativeAsset: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+    WETH: '0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa',
+    BAL: '0x0000000000000000000000000000000000000000' // SOLACE_TODO: no balancer token on mumbai
+  }
+};
+
 export const TOKENS_GENERIC: TokenConstants = {
   Popular: {
     Symbols: ['WBTC', 'DAI', 'USDC', 'BAL', 'AAVE', 'WETH']
@@ -129,7 +153,9 @@ const TOKENS_MAP = {
   [Network.KOVAN]: TOKENS_KOVAN,
   [Network.MAINNET]: TOKENS_MAINNET,
   [Network.POLYGON]: TOKENS_POLYGON,
-  [Network.ARBITRUM]: TOKENS_ARBITRUM
+  [Network.ARBITRUM]: TOKENS_ARBITRUM,
+  [80001]: TOKENS_MUMBAI,
+  [1313161554]: TOKENS_AURORA
 };
 
 export const TOKENS: TokenConstants = TOKENS_MAP[networkId.value]
