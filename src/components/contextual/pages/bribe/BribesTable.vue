@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getAddress } from '@ethersproject/address';
 import { compact } from 'lodash';
 import { computed, ref } from 'vue';
 
@@ -7,37 +6,27 @@ import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import BribeModal from '@/components/contextual/pages/bribe/BribeModal.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
 import useVeBal from '@/composables/useVeBAL';
-import { NATIVE_ASSET_ADDRESS } from '@/constants/tokens';
+import { Bribe } from '@/constants/bribe';
 import router from '@/plugins/router';
 import useWeb3 from '@/services/web3/useWeb3';
-
-interface Bribe {
-  id: string;
-  allocationPerVote: string;
-  totalRewards: string;
-}
-
-type Props = {
-  data?: Bribe[];
-};
-
-const props = withDefaults(defineProps<Props>(), {
-  data: () => []
-});
 
 const emit = defineEmits<{
   (e: 'clickedVote', token: string): void;
   (e: 'clickedAdd', bribe: Bribe): void;
-  (e: 'selectRewardToken', token: string): void;
-  (e: 'selectBribeForModal', bribe: Bribe): void;
 }>();
 
-const selectedBribeForModal = ref<Bribe | null>(null);
+const selectedBribeForModal = ref<Bribe | undefined>(undefined);
 
-const availableTokens = ['DAI', 'USDC', 'USDT', 'TUSD', 'SUSD', 'aBUSD'];
+const data = [
+  { id: 'A', allocationPerVote: '1', totalRewards: '5' },
+  { id: 'B', allocationPerVote: '1', totalRewards: '4' },
+  { id: 'C', allocationPerVote: '10', totalRewards: '3' },
+  { id: 'D', allocationPerVote: '19', totalRewards: '2' },
+  { id: 'E', allocationPerVote: '13', totalRewards: '1' }
+];
 
 const { upToLargeBreakpoint } = useBreakpoints();
-const { account, appNetworkConfig, isWalletReady } = useWeb3();
+const { isWalletReady } = useWeb3();
 const { veBalTokenInfo } = useVeBal();
 
 const columns = computed<ColumnDefinition<Bribe>[]>(() => [
@@ -90,21 +79,9 @@ function navigateToVeBAL(bribe: Bribe) {
   });
 }
 
-function selectRewardToken(token: string) {
-  let _token = token;
-  // special case for ETH where we want it to filter as WETH regardless
-  // as ETH is the native asset
-  if (getAddress(token) === NATIVE_ASSET_ADDRESS) {
-    _token = appNetworkConfig.addresses.weth;
-  }
-
-  emit('selectRewardToken', _token);
-}
-
 function selectBribe(bribe: Bribe) {
   selectedBribeForModal.value = bribe;
   emit('clickedAdd', bribe);
-  emit('selectBribeForModal', bribe);
 }
 </script>
 
@@ -185,10 +162,9 @@ function selectBribe(bribe: Bribe) {
   </BalCard>
   <teleport to="#modal">
     <BribeModal
-      v-if="selectedBribeForModal != null"
-      :rewardTokens="compact([...availableTokens, veBalTokenInfo?.address])"
-      @close="selectedBribeForModal = null"
-      @select="selectRewardToken"
+      v-if="selectedBribeForModal != undefined"
+      :selectedBribe="selectedBribeForModal"
+      @close="selectedBribeForModal = undefined"
     />
   </teleport>
 </template>

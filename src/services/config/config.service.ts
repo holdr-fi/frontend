@@ -41,6 +41,7 @@ export default class ConfigService {
   }
 
   public get network(): Config {
+    // SOLACE_TODO_WARN: Make sure networkId is 1313161554 when in production and 80001 when testing
     return configs[networkId.value];
   }
 

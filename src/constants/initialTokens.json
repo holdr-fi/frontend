@@ -15,6 +15,10 @@
     "input": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
     "output": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
   },
+  "80001": {
+    "input": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+    "output": "0x0Ab2e51763E84c5473C8001b39F745dfE8d4f9f9"
+  },
   "42161": {
     "input": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
     "output": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8"

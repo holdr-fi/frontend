@@ -31,12 +31,6 @@ const network = ((): Network => {
   }
 })();
 
-// const balancer = new BalancerSDK({
-//   network,
-//   rpcUrl: configService.rpc,
-//   customSubgraphUrl: 'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
-// });
-
 const balancerConfig = ((): BalancerSdkConfig => {
   switch (configService.network.key) {
     case '4':
@@ -45,6 +39,13 @@ const balancerConfig = ((): BalancerSdkConfig => {
         rpcUrl: configService.rpc,
         customSubgraphUrl:
           'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
+      };
+    case '80001':
+      return {
+        network,
+        rpcUrl: 'https://matic-mumbai.chainstacklabs.com',
+        customSubgraphUrl:
+          'https://api.thegraph.com/subgraphs/name/kyzooghost/solace-swap-test'
       };
     case '1313161554':
       return {
@@ -63,9 +64,9 @@ const balancerConfig = ((): BalancerSdkConfig => {
     default:
       return {
         network,
-        rpcUrl: configService.rpc,
+        rpcUrl: 'https://mainnet.aurora.dev',
         customSubgraphUrl:
-          'https://api.thegraph.com/subgraphs/name/kyzooghost/bebe'
+          'https://api.thegraph.com/subgraphs/name/kyzooghost/balancer_aurora_fork'
       };
   }
 })();

@@ -3,6 +3,13 @@ import { SUPPORTED_FIAT } from '@/constants/currency';
 import { PriceService } from './api/price.service';
 import { coingeckoClient } from './coingecko.client';
 
+const testnetToMainnetMapping = {
+  '42': '1',
+  '4': '1',
+  '1313161555': '1313161554',
+  '80001': '137'
+};
+
 export const getNativeAssetId = (chainId: string): string => {
   const mapping = {
     '1': 'ethereum',
@@ -12,7 +19,7 @@ export const getNativeAssetId = (chainId: string): string => {
     '1313161554': 'ethereum'
   };
 
-  return mapping[chainId] || 'ethereum';
+  return mapping[testnetToMainnetMapping[chainId] ?? chainId] || 'ethereum';
 };
 
 export const getPlatformId = (chainId: string): string => {
@@ -24,7 +31,7 @@ export const getPlatformId = (chainId: string): string => {
     '1313161554': 'aurora'
   };
 
-  return mapping[chainId] || 'ethereum';
+  return mapping[testnetToMainnetMapping[chainId] ?? chainId] || 'ethereum';
 };
 
 export class CoingeckoService {

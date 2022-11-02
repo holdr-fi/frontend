@@ -1,82 +1,82 @@
 {
-    "key": "80001",
-    "chainId": 80001,
-    "chainName": "Mumbai",
-    "name": "Mumbai",
-    "shortName": "Mumbai",
-    "network": "mumbai",
-    "unknown": false,
-    "rpc": "https://matic-mumbai.chainstacklabs.com",
-    "publicRpc": "https://matic-mumbai.chainstacklabs.com",
-    "ws": "",
-    "loggingRpc": "https://matic-mumbai.chainstacklabs.com",
-    "explorer": "https://mumbai.polygonscan.com/",
-    "explorerName": "Mumbai Polygonscan",
-    "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/solace-swap-test",
-    "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
-    "subgraphs": {
-      "aave": "",
-      "gauge": "https://api.thegraph.com/subgraphs/name/kyzooghost/solace-swap-gauges-test"
+  "key": "80001",
+  "chainId": 80001,
+  "chainName": "Mumbai",
+  "name": "Mumbai",
+  "shortName": "Mumbai",
+  "network": "mumbai",
+  "unknown": false,
+  "rpc": "https://matic-mumbai.chainstacklabs.com",
+  "publicRpc": "https://matic-mumbai.chainstacklabs.com",
+  "ws": "",
+  "loggingRpc": "https://matic-mumbai.chainstacklabs.com",
+  "explorer": "https://mumbai.polygonscan.com/",
+  "explorerName": "Mumbai Polygonscan",
+  "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/solace-swap-test",
+  "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
+  "subgraphs": {
+    "aave": "",
+    "gauge": "https://api.thegraph.com/subgraphs/name/kyzooghost/solace-swap-gauges-test"
+  },
+  "supportsEIP1559": true,
+  "supportsElementPools": false,
+  "nativeAsset": {
+    "name": "Matic",
+    "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+    "symbol": "MATIC",
+    "decimals": 18,
+    "deeplinkId": "matic",
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0/logo.png",
+    "minTransactionBuffer": "0.1"
+  },
+  "addresses": {
+    "bFactory": "",
+    "bActions": "",
+    "dsProxyRegistry": "",
+    "merkleRedeem": "",
+    "merkleOrchard": "",
+    "multicall": "0x4B00137E5847130BB61a33343A149034F6D1C90c",
+    "authorizer": "0x8Cbe43b05CCd66c23cc784e2adC2A06438f7Ba4F",
+    "vault": "0x7e5D79D67A1dAc16E8024B99c4B8A8Ec37C5eA2B",
+    "weightedPoolFactory": "0x6eEc5D0A3110adb7521C5Ea11A1057CAc90F600F",
+    "stablePoolFactory": "",
+    "tokenFactory": "0x1eF265AdBff2EB6456f886E5474C6c06edAFF2F7",
+    "weth": "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
+    "stETH": "",
+    "wstETH": "",
+    "lidoRelayer": "",
+    "balancerHelpers": "0xCab1ba899A583345858A473852f3D568A446e34D",
+    "batchRelayer": "0x57CD5F41AAa779BD90b1aa098F2662a90fa9e42F",
+    "gaugeFactory": "0xeE6aEd29Dbab9E56819134E9F76FC9e492CD8Bd4",
+    "balancerMinter": "0x8b00937694e737950a7766B17767c87a77C62fD4",
+    "gaugeController": "0xe9fBFdDFfa5152Bbe4eB5e38e4fA1aD8b5c893Dd",
+    "tokenAdmin": "0x7D405EECD88331493F137D84fAD2A068bfd9ECDC",
+    "veBAL": "0xC3Ba2291E0A3C87A83eC9A259BaBA3779738A47d",
+    "veDelegationProxy": "0xB1eA266623A98be4f6E0E76d531DbBB1D32cf266",
+    "veBALHelpers": "",
+    "feeDistributor": "0x59429CF1A0123d7a7B86bAe455E6662E1B731813",
+    "bribe": "0x6E97a32F28C6A0336f7aCdCdC72Eac5e5320D15e"
+  },
+  "keys": {
+    "infura": "",
+    "alchemy": ""
+  },
+  "strategies": {
+    "0": {
+      "type": "0",
+      "name": "stablePool"
     },
-    "supportsEIP1559": true,
-    "supportsElementPools": false,
-    "nativeAsset": {
-      "name": "Matic",
-      "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-      "symbol": "MATIC",
-      "decimals": 18,
-      "deeplinkId": "matic",
-      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0/logo.png",
-      "minTransactionBuffer": "0.1"
+    "1": {
+      "type": "1",
+      "name": "weightedPool"
     },
-    "addresses": {
-      "bFactory": "",
-      "bActions": "",
-      "dsProxyRegistry": "",
-      "merkleRedeem": "",
-      "merkleOrchard": "",
-      "multicall": "0x4B00137E5847130BB61a33343A149034F6D1C90c",
-      "authorizer": "0x8Cbe43b05CCd66c23cc784e2adC2A06438f7Ba4F",
-      "vault": "0x7e5D79D67A1dAc16E8024B99c4B8A8Ec37C5eA2B",
-      "weightedPoolFactory": "0x6eEc5D0A3110adb7521C5Ea11A1057CAc90F600F",
-      "stablePoolFactory": "",
-      "tokenFactory": "0x1eF265AdBff2EB6456f886E5474C6c06edAFF2F7",
-      "weth": "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
-      "stETH": "",
-      "wstETH": "",
-      "lidoRelayer": "",
-      "balancerHelpers": "0xCab1ba899A583345858A473852f3D568A446e34D",
-      "batchRelayer": "0x57CD5F41AAa779BD90b1aa098F2662a90fa9e42F",
-      "gaugeFactory": "0xeE6aEd29Dbab9E56819134E9F76FC9e492CD8Bd4",
-      "balancerMinter": "0x8b00937694e737950a7766B17767c87a77C62fD4",
-      "gaugeController": "0xe9fBFdDFfa5152Bbe4eB5e38e4fA1aD8b5c893Dd",
-      "tokenAdmin": "0x7D405EECD88331493F137D84fAD2A068bfd9ECDC",
-      "veBAL": "0xC3Ba2291E0A3C87A83eC9A259BaBA3779738A47d",
-      "veDelegationProxy": "0xB1eA266623A98be4f6E0E76d531DbBB1D32cf266",
-      "veBALHelpers": "",
-      "feeDistributor": "0x59429CF1A0123d7a7B86bAe455E6662E1B731813"
-    },
-    "keys": {
-      "infura": "",
-      "alchemy": ""
-    },
-    "strategies": {
-      "0": {
-        "type": "0",
-        "name": "stablePool"
-      },
-      "1": {
-        "type": "1",
-        "name": "weightedPool"
-      },
-      "2": {
-        "type": "2",
-        "name": "weightedPool"
-      }
-    },
-    "gauges": {
-      "type": 2,
-      "weight": 100
+    "2": {
+      "type": "2",
+      "name": "weightedPool"
     }
+  },
+  "gauges": {
+    "type": 2,
+    "weight": 100
   }
-  
+}

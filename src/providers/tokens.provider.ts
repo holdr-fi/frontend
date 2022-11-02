@@ -449,7 +449,6 @@ export default {
         TOKENS.Addresses.BAL,
         TOKENS.Addresses.wNativeAsset
       ]);
-
       await injectTokens(tokensToInject);
       state.loading = false;
     });

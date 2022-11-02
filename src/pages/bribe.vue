@@ -7,27 +7,11 @@ import Hero from '@/components/contextual/pages/bribe/Hero.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isVeBalSupported } from '@/composables/useVeBAL';
 
-// SOLACE_TODO: finish bribe page, copy table thing from index.vue
-
 /**
  * DATA
  */
 
-const data = [
-  { id: 'A', allocationPerVote: '1', totalRewards: '5' },
-  { id: 'B', allocationPerVote: '1', totalRewards: '4' },
-  { id: 'C', allocationPerVote: '10', totalRewards: '3' },
-  { id: 'D', allocationPerVote: '19', totalRewards: '2' },
-  { id: 'E', allocationPerVote: '13', totalRewards: '1' }
-];
-
-const selectedRewardToken = ref<string | null>(null);
-
 const { upToLargeBreakpoint } = useBreakpoints();
-
-function selectRewardToken(token: string) {
-  selectedRewardToken.value = token;
-}
 </script>
 
 <template>
@@ -61,7 +45,7 @@ function selectRewardToken(token: string) {
         :noBorder="upToLargeBreakpoint"
         noPad
       >
-        <BribesTable :data="data" @selectRewardToken="selectRewardToken" />
+        <BribesTable />
       </BalCard>
     </BalStack>
   </div>

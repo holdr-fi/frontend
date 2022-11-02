@@ -66,6 +66,8 @@ export default function useWeb3() {
     () => Number(appNetworkConfig.chainId) === 1313161554
   );
 
+  const isMumbai = computed(() => Number(appNetworkConfig.chainId) === 80001);
+
   const isEIP1559SupportedNetwork = computed(
     () => appNetworkConfig.supportsEIP1559
   );
@@ -142,6 +144,7 @@ export default function useWeb3() {
     isPolygon,
     isArbitrum,
     isAurora,
+    isMumbai,
     isEIP1559SupportedNetwork,
     isWalletConnecting,
 

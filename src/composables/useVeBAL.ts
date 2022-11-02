@@ -1,7 +1,12 @@
 import { differenceInSeconds, sub } from 'date-fns';
 import { computed, ref } from 'vue';
 
-import { isKovan, isMainnet, isAurora } from '@/composables/useNetwork';
+import {
+  isAurora,
+  isKovan,
+  isMainnet,
+  isMumbai
+} from '@/composables/useNetwork';
 import { POOLS } from '@/constants/pools';
 import { bnum } from '@/lib/utils';
 
@@ -18,7 +23,7 @@ const showRedirectModal = ref(false);
  * COMPUTED
  */
 export const isVeBalSupported = computed(
-  () => isMainnet.value || isKovan.value || isAurora.value
+  () => isMainnet.value || isKovan.value || isAurora.value || isMumbai.value
 );
 
 /**

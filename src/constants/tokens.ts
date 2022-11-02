@@ -133,7 +133,7 @@ export const TOKENS_MUMBAI: TokenConstants = {
     nativeAsset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     wNativeAsset: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
     WETH: '0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa',
-    BAL: '0x0000000000000000000000000000000000000000' // SOLACE_TODO: no balancer token on mumbai
+    BAL: '0xEc1Fdb4E9f07111103F1EB3a60C314bd8E657c0d'
   }
 };
 

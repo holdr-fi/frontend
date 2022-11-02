@@ -64,6 +64,7 @@ export interface Config {
     veDelegationProxy: string;
     veBALHelpers: string;
     feeDistributor: string;
+    bribe: string;
   };
   keys: {
     infura: string;
@@ -91,7 +92,6 @@ const config: Record<Network | number, Config> = {
   1313161554: aurora,
   1313161555: aurora_testnet,
   80001: mumbai,
-  // 80001: mumbai, SOLACE_TODO: add MUMBAI
   12345: test,
   // @ts-ignore
   17: docker
