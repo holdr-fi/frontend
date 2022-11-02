@@ -69,6 +69,15 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
     },
     External: ['https://tracer.finance/tokens']
   },
+  '80001': {
+    Balancer: {
+      Default:
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/mumbai_tokenlist.json',
+      Vetted:
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/mumbai_tokenlist.json',
+    },
+    External: ['https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/mumbai_tokenlist.json']
+  },
   '1313161554': {
     Balancer: {
       Default:

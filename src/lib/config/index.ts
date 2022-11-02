@@ -6,13 +6,14 @@ import aurora_testnet from './aurora_testnet.json';
 import docker from './docker.json';
 import homestead from './homestead.json';
 import kovan from './kovan.json';
+import mumbai from './mumbai.json';
 import polygon from './polygon.json';
 import rinkeby from './rinkeby.json';
 import test from './test.json';
 
 export interface Config {
   key: string;
-  chainId: Network | 12345 | 17;
+  chainId: Network | 12345 | 17 | 1313161554 | 1313161555 | 80001;
   chainName: string;
   name: string;
   shortName: string;
@@ -89,6 +90,7 @@ const config: Record<Network | number, Config> = {
   [Network.ARBITRUM]: arbitrum,
   1313161554: aurora,
   1313161555: aurora_testnet,
+  80001: mumbai,
   // 80001: mumbai, SOLACE_TODO: add MUMBAI
   12345: test,
   // @ts-ignore

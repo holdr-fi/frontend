@@ -1,0 +1,48 @@
+{
+    "name": "Solace",
+    "timestamp": "2022-06-09T00:00:00.000Z",
+    "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png",
+    "keywords": [
+      "solace",
+      "listed"
+    ],
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0
+    },
+    "tokens": [
+      {
+        "address": "0xEc1Fdb4E9f07111103F1EB3a60C314bd8E657c0d",
+        "chainId": 80001,
+        "name": "Solace Swap Governance Token",
+        "symbol": "SWP",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png"
+      },
+      {
+        "address": "0x0Ab2e51763E84c5473C8001b39F745dfE8d4f9f9",
+        "chainId": 80001,
+        "name": "ETH",
+        "symbol": "ETH",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png"
+      },
+      {
+        "address": "0x701beEf241d4EFe9263bFCEf298329F874Ac4e77",
+        "chainId": 80001,
+        "name": "RND0",
+        "symbol": "RND0",
+        "decimals": 18,
+        "logoURI": "https://liferunners.wpenginepowered.com/wp-content/uploads/2015/07/question-mark-150x150.png"
+      },
+      {
+        "address": "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
+        "chainId": 80001,
+        "name": "Wrapped Matic",
+        "symbol": "WMATIC",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0/logo.png"
+      }
+    ]
+  }
