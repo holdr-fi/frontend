@@ -34,6 +34,7 @@ const navLinks = [
   { label: t('invest'), path: '/' },
   { label: t('trade'), path: '/trade' },
   { label: 'veBAL', path: '/vebal' },
+  { label: 'Bribe', path: '/bribe' },
   { label: t('claim'), path: '/claim' }
 ];
 

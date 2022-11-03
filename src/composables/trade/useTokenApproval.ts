@@ -24,7 +24,6 @@ export default function useTokenApproval(
   const approving = ref(false);
   const approved = ref(false);
   const { addTransaction } = useTransactions();
-  const { t } = useI18n();
 
   /**
    * COMPOSABLES
@@ -91,9 +90,7 @@ export default function useTokenApproval(
       id: tx.hash,
       type: 'tx',
       action: 'approve',
-      summary: t('transactionSummary.approveForTrading', [
-        tokens.value[tokenInAddress.value]?.symbol
-      ]),
+      summary: `Approve ${tokens.value[tokenInAddress.value]?.symbol}`,
       details: {
         contractAddress: tokenInAddress.value,
         spender

@@ -1,126 +1,90 @@
-<script setup lang="ts">
-import { TransactionReceipt } from '@ethersproject/abstract-provider';
-import { computed, onBeforeMount, reactive, ref } from 'vue';
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+  PropType,
+  ref
+} from 'vue';
 
 import TokenInput from '@/components/inputs/TokenInput/TokenInput.vue';
 import useTokenApproval from '@/composables/trade/useTokenApproval';
 import useEthers from '@/composables/useEthers';
-import { dateTimeLabelFor } from '@/composables/useTime';
 import useTokens from '@/composables/useTokens';
 import useTransactions from '@/composables/useTransactions';
 import { Bribe } from '@/constants/bribe';
 import { isPositive } from '@/lib/utils/validations';
 import { bribeService } from '@/services/bribe/bribe.service';
-import useWeb3 from '@/services/web3/useWeb3';
-import { TransactionActionState } from '@/types/transactions';
 import { configService } from '@/services/config/config.service';
 
 //SOLACE_TODO: flesh out the bribe modal's logic
 
-type Props = {
-  open: boolean;
-  selectedBribe: Bribe | undefined;
-};
-
-const props = withDefaults(defineProps<Props>(), {
-  open: false,
-  selectedBribe: undefined
-});
-
-const { addTransaction } = useTransactions();
-const { txListener, getTxConfirmedAt } = useEthers();
-const { tokens, balances, getToken, approvalRequired } = useTokens();
-
-const emit = defineEmits<{
-  (e: 'close'): void;
-  (e: 'success'): void;
-  (e: 'selectRewardToken'): void;
-}>();
-
-const txState = reactive<TransactionActionState>({
-  init: false,
-  confirming: false,
-  confirmed: false,
-  confirmedAt: ''
-});
-
-const rewardAmount = ref<string>('');
-const selectedRewardToken = ref<string>('');
-const excludedTokens = ref<string[]>([]);
-const isValidAmount = ref<boolean>(true);
-const tokenApproval = useTokenApproval(
-  selectedRewardToken,
-  rewardAmount,
-  tokens
-);
-
-const isTokenApproved = computed(() => {
-  if (configService.network.addresses.bribe == '') return false;
-  if (tokenApproval.approved.value) {
-    return true;
-  }
-
-  return !approvalRequired(
-    selectedRewardToken.value,
-    rewardAmount.value,
-    configService.network.addresses.bribe
-  );
-});
-
-const { account, appNetworkConfig } = useWeb3();
-const inputRules = [v => !v || isPositive()];
-
-const transactionInProgress = computed(
-  (): boolean => txState.init || txState.confirming
-);
-
-async function handleTransaction(tx) {
-  addTransaction({
-    id: tx.hash,
-    type: 'tx',
-    action: 'voteForGauge',
-    summary: 'Adding to bribe',
-    details: {
-      rewardAmount: rewardAmount.value
-    }
-  });
-
-  txListener(tx, {
-    onTxConfirmed: async (receipt: TransactionReceipt) => {
-      txState.receipt = receipt;
-
-      const confirmedAt = await getTxConfirmedAt(receipt);
-      txState.confirmedAt = dateTimeLabelFor(confirmedAt);
-      txState.confirmed = true;
-      txState.confirming = false;
-      emit('success');
+export default defineComponent({
+  components: { TokenInput },
+  emits: ['close', 'success', 'selectRewardToken'],
+  props: {
+    open: {
+      type: Boolean,
+      default: false
     },
-    onTxFailed: () => {
-      console.error('Vote failed');
-      txState.error = {
-        title: 'Vote Failed',
-        description: 'Vote failed for an unknown reason'
-      };
-      txState.confirming = false;
+    selectedBribe: {
+      type: Object as PropType<Bribe>,
+      default: undefined
     }
-  });
-}
+  },
+  setup(props, { emit }) {
+    const { addTransaction } = useTransactions();
+    const { txListener, getTxConfirmedAt } = useEthers();
+    const { tokens, balances, getToken, approvalRequired } = useTokens();
 
-function handleValidity(isValid: boolean) {
-  isValidAmount.value = isValid;
-}
+    const rewardAmount = ref<string>('');
+    const selectedRewardToken = ref<string>('');
+    const excludedTokens = ref<string[]>([]);
+    const isValidAmount = ref<boolean>(true);
+    const tokenApproval = useTokenApproval(
+      selectedRewardToken,
+      rewardAmount,
+      tokens
+    );
+    const isTokenApproved = computed(() => {
+      if (configService.network.addresses.bribe == '') return false;
+      return !approvalRequired(
+        selectedRewardToken.value,
+        rewardAmount.value,
+        configService.network.addresses.bribe
+      );
+    });
+    const inputRules = [v => !v || isPositive()];
 
-async function getWhitelistedTokens() {
-  const whiteListedTokens = await bribeService.getWhitelistedTokens();
-  console.log('whiteListedTokens', whiteListedTokens);
-  const blackListedTokens = Object.keys(tokens.value).filter(
-    token => !whiteListedTokens.includes(token)
-  );
-  excludedTokens.value = blackListedTokens;
-}
+    async function approveToken(): Promise<void> {
+      await tokenApproval.approveSpender(configService.network.addresses.bribe);
+    }
+    function handleValidity(isValid: boolean) {
+      isValidAmount.value = isValid;
+    }
+    async function getWhitelistedTokens() {
+      const whiteListedTokens = await bribeService.getWhitelistedTokens();
+      const blackListedTokens = Object.keys(tokens.value).filter(
+        token => !whiteListedTokens.includes(token)
+      );
+      excludedTokens.value = blackListedTokens;
+    }
+    onBeforeMount(() => {
+      getWhitelistedTokens();
+    });
 
-onBeforeMount(() => {
-  getWhitelistedTokens();
+    return {
+      rewardAmount,
+      selectedRewardToken,
+      excludedTokens,
+      isValidAmount,
+      tokenApproval,
+      isTokenApproved,
+      approveToken,
+      handleValidity,
+      inputRules
+    };
+  }
 });
 </script>
 
@@ -136,7 +100,12 @@ onBeforeMount(() => {
           :excludedTokens="excludedTokens"
           name="rewardAmount"
         />
-        <BalBtn v-if="isTokenApproved" :label="'Approve'" block />
+        <BalBtn
+          v-if="!isTokenApproved"
+          :label="'Approve'"
+          block
+          @click.prevent="approveToken"
+        />
         <BalBtn
           v-else
           :disabled="!isValidAmount || selectedRewardToken == ''"

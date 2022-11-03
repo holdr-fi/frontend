@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { compact } from 'lodash';
 import { computed, ref } from 'vue';
 
 import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import BribeModal from '@/components/contextual/pages/bribe/BribeModal.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
-import useVeBal from '@/composables/useVeBAL';
 import { Bribe } from '@/constants/bribe';
 import router from '@/plugins/router';
 import useWeb3 from '@/services/web3/useWeb3';
@@ -27,7 +25,6 @@ const data = [
 
 const { upToLargeBreakpoint } = useBreakpoints();
 const { isWalletReady } = useWeb3();
-const { veBalTokenInfo } = useVeBal();
 
 const columns = computed<ColumnDefinition<Bribe>[]>(() => [
   {
@@ -36,21 +33,23 @@ const columns = computed<ColumnDefinition<Bribe>[]>(() => [
     accessor: 'id',
     Cell: 'poolNameCell',
     align: 'center',
-    width: 350
+    width: 250
   },
   {
     name: 'Allocation Per Vote',
     Cell: 'allocationPerVoteCell',
     id: 'allocationPerVote',
     accessor: 'allocationPerVote',
-    align: 'center'
+    align: 'center',
+    width: 150
   },
   {
     name: 'Total Rewards',
     Cell: 'totalRewardsCell',
     accessor: 'totalRewards',
     align: 'center',
-    id: 'totalRewards'
+    id: 'totalRewards',
+    width: 150
   },
   {
     name: '',
