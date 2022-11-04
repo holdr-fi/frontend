@@ -1,11 +1,5 @@
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onBeforeMount,
-  PropType,
-  ref
-} from 'vue';
+import { computed, defineComponent, onBeforeMount, PropType, ref } from 'vue';
 
 import TokenInput from '@/components/inputs/TokenInput/TokenInput.vue';
 import useTokenApproval from '@/composables/trade/useTokenApproval';
@@ -13,6 +7,7 @@ import useEthers from '@/composables/useEthers';
 import useTokens from '@/composables/useTokens';
 import useTransactions from '@/composables/useTransactions';
 import { Bribe } from '@/constants/bribe';
+import { bnum } from '@/lib/utils';
 import { isPositive } from '@/lib/utils/validations';
 import { bribeService } from '@/services/bribe/bribe.service';
 import { configService } from '@/services/config/config.service';
@@ -35,12 +30,18 @@ export default defineComponent({
   setup(props, { emit }) {
     const { addTransaction } = useTransactions();
     const { txListener, getTxConfirmedAt } = useEthers();
-    const { tokens, balances, getToken, approvalRequired } = useTokens();
+    const {
+      tokens,
+      balances,
+      getToken,
+      approvalRequired,
+      balanceFor
+    } = useTokens();
 
     const rewardAmount = ref<string>('');
     const selectedRewardToken = ref<string>('');
     const excludedTokens = ref<string[]>([]);
-    const isValidAmount = ref<boolean>(true);
+    // const isValidAmount = ref<boolean>(true);
     const tokenApproval = useTokenApproval(
       selectedRewardToken,
       rewardAmount,
@@ -54,14 +55,21 @@ export default defineComponent({
         configService.network.addresses.bribe
       );
     });
+
+    const isValidAmount = computed(() => {
+      const _isValidAmount =
+        bnum(rewardAmount.value).gt(bnum(0)) &&
+        bnum(rewardAmount.value).isLessThanOrEqualTo(
+          balanceFor(selectedRewardToken.value)
+        );
+      return rewardAmount.value !== '' && isTokenApproved && _isValidAmount;
+    });
     const inputRules = [v => !v || isPositive()];
 
     async function approveToken(): Promise<void> {
       await tokenApproval.approveSpender(configService.network.addresses.bribe);
     }
-    function handleValidity(isValid: boolean) {
-      isValidAmount.value = isValid;
-    }
+
     async function getWhitelistedTokens() {
       const whiteListedTokens = await bribeService.getWhitelistedTokens();
       const blackListedTokens = Object.keys(tokens.value).filter(
@@ -81,7 +89,6 @@ export default defineComponent({
       tokenApproval,
       isTokenApproved,
       approveToken,
-      handleValidity,
       inputRules
     };
   }
@@ -96,9 +103,10 @@ export default defineComponent({
         <TokenInput
           v-model:amount="rewardAmount"
           v-model:address="selectedRewardToken"
-          @update:isValid="handleValidity($event)"
           :excludedTokens="excludedTokens"
           name="rewardAmount"
+          :rules="inputRules"
+          :disabled="selectedRewardToken == ''"
         />
         <BalBtn
           v-if="!isTokenApproved"

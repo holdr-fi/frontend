@@ -41,7 +41,7 @@ const {
  */
 const classes = computed(() => ({
   ['h-72']: !isWalletReady.value && !isWalletConnecting.value,
-  ['h-40']: isWalletReady.value || isWalletConnecting.value
+  ['h-56']: isWalletReady.value || isWalletConnecting.value
 }));
 
 const isStakingLoading = computed(() => {
@@ -84,6 +84,7 @@ function onClickConnect() {
   <div :class="['app-hero', classes]">
     <div class="w-full max-w-2xl mx-auto">
       <template v-if="isWalletReady || isWalletConnecting">
+        <h4 class="pb-3">See Proposal for Balancer Friendly Fork</h4>
         <h1
           v-text="$t('myBalancerInvestments')"
           class="text-base font-medium text-white opacity-90 font-body mb-2"
@@ -130,6 +131,7 @@ function onClickConnect() {
         </div>
       </template>
       <template v-else>
+        <h4 class="pb-3">See Proposal for Balancer Friendly Fork</h4>
         <h1 v-text="$t('ammPlatform')" class="headline" />
         <div class="flex justify-center mt-4">
           <BalBtn
