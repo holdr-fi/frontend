@@ -132,7 +132,7 @@ export default {
         networkConfig.addresses.vault,
         networkConfig.addresses.wstETH,
         configService.network.addresses.veBAL,
-        configService.network.addresses.bribe
+        configService.network.addresses.bribe // SOLACE_TODO: add any contracts that need allowance
       ]),
       injectedPrices: {}
     });

@@ -55,7 +55,10 @@
     "veDelegationProxy": "",
     "veBALHelpers": "",
     "feeDistributor": "",
-    "bribe": ""
+    "bribe": "",
+    "bribeVault": "",
+    "rewardDistributor": "",
+    "votingEscrow": ""
   },
   "keys": {
     "infura": "",

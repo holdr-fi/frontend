@@ -57,7 +57,6 @@ export interface Config {
     balancerHelpers: string;
     batchRelayer: string;
     veBAL: string;
-    gaugeController: string;
     gaugeFactory: string;
     balancerMinter: string;
     tokenAdmin: string;
@@ -65,6 +64,10 @@ export interface Config {
     veBALHelpers: string;
     feeDistributor: string;
     bribe: string;
+    bribeVault: string;
+    rewardDistributor: string;
+    votingEscrow: string;
+    gaugeController: string;
   };
   keys: {
     infura: string;
