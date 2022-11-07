@@ -17,13 +17,7 @@ const emit = defineEmits<{
 const selectedBribeForModal = ref<Bribe | undefined>(undefined);
 const bribeTokens = ref<string[]>([]);
 
-const data = [
-  { id: 'A', allocationPerVote: '1', totalRewards: '5' },
-  { id: 'B', allocationPerVote: '1', totalRewards: '4' },
-  { id: 'C', allocationPerVote: '10', totalRewards: '3' },
-  { id: 'D', allocationPerVote: '19', totalRewards: '2' },
-  { id: 'E', allocationPerVote: '13', totalRewards: '1' }
-];
+const data = ref<Bribe[]>([]);
 
 const { upToLargeBreakpoint } = useBreakpoints();
 const { isWalletReady } = useWeb3();
@@ -32,7 +26,7 @@ const columns = computed<ColumnDefinition<Bribe>[]>(() => [
   {
     name: 'Name',
     id: 'bribeName',
-    accessor: 'id',
+    accessor: 'gaugeId',
     Cell: 'poolNameCell',
     align: 'center',
     width: 250
@@ -56,7 +50,7 @@ const columns = computed<ColumnDefinition<Bribe>[]>(() => [
   {
     name: '',
     Cell: 'voteBribeCell',
-    accessor: 'id',
+    accessor: 'gaugeId',
     align: 'center',
     id: 'vote',
     width: 150,
@@ -65,7 +59,7 @@ const columns = computed<ColumnDefinition<Bribe>[]>(() => [
   {
     name: '',
     Cell: 'addBribeCell',
-    accessor: 'id',
+    accessor: 'gaugeId',
     align: 'center',
     id: 'add',
     width: 150,
@@ -74,7 +68,7 @@ const columns = computed<ColumnDefinition<Bribe>[]>(() => [
 ]);
 
 function navigateToVeBAL(bribe: Bribe) {
-  emit('clickedVote', bribe.id);
+  emit('clickedVote', bribe.gaugeId);
   router.push({
     name: 'vebal'
   });
@@ -89,9 +83,16 @@ async function init() {
   const depositBribeData = await bribeService.getDepositBribe();
   const proposalsAndGauges = depositBribeData.data.proposalsAndGauges;
   const proposals = proposalsAndGauges.map(item => item.proposal);
-  // const deadlines = await Promise.all(
-  //   proposals.map(proposal => bribeService.proposalDeadlines(proposal))
-  // );
+  const deadlines = await Promise.all(
+    proposals.map(proposal => bribeService.proposalDeadlines(proposal))
+  );
+  data.value = proposalsAndGauges.map((item, index) => ({
+    gaugeId: item.gauge,
+    proposalId: item.proposal,
+    allocationPerVote: item.allocationPerVote ?? '0',
+    totalRewards: item.totalRewards ?? '0',
+    deadline: deadlines[index]
+  }));
   const tokens = depositBribeData.data.tokens;
   bribeTokens.value = tokens;
 }
@@ -123,15 +124,15 @@ onBeforeMount(() => {
       <template v-slot:poolNameCell="bribe">
         <div
           class="px-6 py-4 -mt-1 flex items-center font-numeric"
-          :key="bribe.id"
+          :key="bribe.gaugeId"
         >
-          <span>{{ bribe.id }}</span>
+          <span>{{ bribe.gaugeId }}</span>
         </div>
       </template>
       <template v-slot:allocationPerVoteCell="bribe">
         <div
           class="px-6 py-4 -mt-1 flex items-center font-numeric"
-          :key="bribe.id"
+          :key="bribe.gaugeId"
         >
           <span>{{ bribe.allocationPerVote }}</span>
         </div>
@@ -139,7 +140,7 @@ onBeforeMount(() => {
       <template v-slot:totalRewardsCell="bribe">
         <div
           class="px-6 py-4 -mt-1 flex items-center font-numeric"
-          :key="bribe.id"
+          :key="bribe.gaugeId"
         >
           <span>{{ bribe.totalRewards }}</span>
         </div>
@@ -169,6 +170,7 @@ onBeforeMount(() => {
             flat
             block
             @click.prevent="selectBribe(bribe)"
+            :disabled="Number(bribe.deadline) * 1000 < Date.now()"
           >
             Add Bribe
           </BalBtn>

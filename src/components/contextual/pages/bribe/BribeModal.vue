@@ -1,4 +1,5 @@
 <script lang="ts">
+import { parseUnits } from '@ethersproject/units';
 import {
   computed,
   defineComponent,
@@ -8,21 +9,24 @@ import {
   watch
 } from 'vue';
 
+import TxActionBtn from '@/components/btns/TxActionBtn/TxActionBtn.vue';
 import TokenInput from '@/components/inputs/TokenInput/TokenInput.vue';
 import useTokenApproval from '@/composables/trade/useTokenApproval';
 import useEthers from '@/composables/useEthers';
 import useTokens from '@/composables/useTokens';
 import useTransactions from '@/composables/useTransactions';
 import { Bribe } from '@/constants/bribe';
+import { TOKENS } from '@/constants/tokens';
 import { bnum } from '@/lib/utils';
 import { isPositive } from '@/lib/utils/validations';
 import { bribeService } from '@/services/bribe/bribe.service';
 import { configService } from '@/services/config/config.service';
+import useWeb3 from '@/services/web3/useWeb3';
 
 //SOLACE_TODO: flesh out the bribe modal's logic
 
 export default defineComponent({
-  components: { TokenInput },
+  components: { TokenInput, TxActionBtn },
   emits: ['close', 'success', 'selectRewardToken'],
   props: {
     open: {
@@ -41,6 +45,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { addTransaction } = useTransactions();
     const { txListener, getTxConfirmedAt } = useEthers();
+    const { getProvider } = useWeb3();
     const {
       tokens,
       balances,
@@ -52,7 +57,12 @@ export default defineComponent({
     const rewardAmount = ref<string>('');
     const selectedRewardToken = ref<string>('');
     const excludedTokens = ref<string[]>([]);
-    // const isValidAmount = ref<boolean>(true);
+    const passedDeadline = ref<boolean>(false);
+
+    const bribeRef = computed(() => {
+      return props.selectedBribe;
+    });
+
     const tokenApproval = useTokenApproval(
       selectedRewardToken,
       rewardAmount,
@@ -81,6 +91,31 @@ export default defineComponent({
       await tokenApproval.approveSpender(configService.network.addresses.bribe);
     }
 
+    function callDepositBribe() {
+      const isDepositingNativeAsset =
+        selectedRewardToken.value === TOKENS.Addresses.nativeAsset;
+      if (isDepositingNativeAsset) {
+        return bribeService.depositBribe(
+          getProvider(),
+          parseUnits(
+            rewardAmount.value,
+            getToken(selectedRewardToken.value).decimals
+          ),
+          props.selectedBribe?.proposalId ?? ''
+        );
+      } else {
+        return bribeService.depositBribeERC20(
+          getProvider(),
+          props.selectedBribe?.proposalId ?? '',
+          selectedRewardToken.value,
+          parseUnits(
+            rewardAmount.value,
+            getToken(selectedRewardToken.value).decimals
+          )
+        );
+      }
+    }
+
     async function init() {
       const blackListedTokens = Object.keys(tokens.value).filter(
         token => !props.bribeTokens.includes(token)
@@ -88,19 +123,30 @@ export default defineComponent({
       excludedTokens.value = blackListedTokens;
     }
 
+    watch(bribeRef, () => {
+      if (bribeRef.value)
+        passedDeadline.value =
+          Number(bribeRef.value?.deadline) * 1000 < Date.now();
+    });
+
     onBeforeMount(() => {
       init();
     });
 
     return {
       rewardAmount,
+      chosenBribe: props.selectedBribe,
       selectedRewardToken,
       excludedTokens,
       isValidAmount,
       tokenApproval,
       isTokenApproved,
+      passedDeadline,
+      inputRules,
+      TOKENS,
       approveToken,
-      inputRules
+      callDepositBribe,
+      getToken
     };
   }
 });
@@ -125,12 +171,28 @@ export default defineComponent({
           block
           @click.prevent="approveToken"
         />
-        <BalBtn
+        <TxActionBtn
           v-else
-          :disabled="!isValidAmount || selectedRewardToken == ''"
+          :disabled="
+            !isValidAmount ||
+              selectedRewardToken == '' ||
+              !chosenBribe ||
+              passedDeadline
+          "
           :label="'Add Bribe'"
           color="gradient"
-          block
+          :summary="
+            `Deposit ${rewardAmount} ${
+              getToken(selectedRewardToken)?.symbol
+            } as bribe`
+          "
+          :action="
+            selectedRewardToken === TOKENS.Addresses.nativeAsset
+              ? 'depositBribe'
+              : 'depositBribeERC20'
+          "
+          :actionFn="callDepositBribe"
+          :confirmingLabel="'Adding to Bribe'"
         />
       </BalStack>
     </BalStack>

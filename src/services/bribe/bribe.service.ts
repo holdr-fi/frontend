@@ -1,13 +1,15 @@
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 import { BigNumber } from '@ethersproject/bignumber';
 import { Contract } from '@ethersproject/contracts';
+import { Web3Provider } from '@ethersproject/providers';
 import axios from 'axios';
 
+import { ClaimParams } from '@/constants/bribe';
 import BribeAbi from '@/lib/abi/Bribe.json';
+import { sendTransaction } from '@/lib/utils/balancer/web3';
 import { configService } from '@/services/config/config.service';
 import { rpcProviderService } from '@/services/rpc-provider/rpc-provider.service';
 import { web3Service } from '@/services/web3/web3.service';
-import { ClaimParams } from '@/constants/bribe';
 
 export class BribeService {
   bribeContract: Contract;
@@ -72,27 +74,41 @@ export class BribeService {
   }
 
   public depositBribe(
+    userProvider: Web3Provider,
     maticAmount: BigNumber,
     proposal: string
   ): Promise<TransactionResponse> {
-    return this.bribeContract.depositBribe(proposal, { value: maticAmount });
+    return sendTransaction(
+      userProvider,
+      this.bribeContract.address,
+      this.bribeAbi,
+      'depositBribe',
+      [proposal],
+      { value: maticAmount }
+    );
   }
 
-  public depositBribeErc20(
+  public depositBribeERC20(
+    userProvider: Web3Provider,
     proposal: string,
     tokenAddress: string,
     amount: BigNumber
   ): Promise<TransactionResponse> {
-    return this.web3.sendTransaction(
+    return sendTransaction(
+      userProvider,
       this.bribeContract.address,
       this.bribeAbi,
-      'depositBribeErc20',
+      'depositBribeERC20',
       [proposal, tokenAddress, amount]
     );
   }
 
-  public claim(claims: ClaimParams[]): Promise<TransactionResponse> {
-    return this.web3.sendTransaction(
+  public claim(
+    userProvider: Web3Provider,
+    claims: ClaimParams[]
+  ): Promise<TransactionResponse> {
+    return sendTransaction(
+      userProvider,
       this.bribeContract.address,
       this.bribeAbi,
       'claim',

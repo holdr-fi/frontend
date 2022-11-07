@@ -45,7 +45,9 @@ export type TransactionAction =
   | 'increaseLock'
   | 'unlock'
   | 'voteForGauge'
-  | 'stake';
+  | 'stake'
+  | 'depositBribe'
+  | 'depositBribeERC20';
 
 export type TransactionType = 'order' | 'tx';
 

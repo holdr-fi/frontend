@@ -1,9 +1,11 @@
 import { BigNumber } from '@ethersproject/bignumber';
 
 export interface Bribe {
-  id: string;
+  gaugeId: string;
+  proposalId: string;
   allocationPerVote: string;
   totalRewards: string;
+  deadline: string;
 }
 
 export type Claim = {

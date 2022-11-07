@@ -65,7 +65,8 @@ const totalVeBalLabel = computed((): string =>
 );
 
 const isLoadingLockAndStaking = computed(
-  (): boolean => (!isL2.value && isLoadingLock.value) || isStakingLoading.value);
+  (): boolean => (!isL2.value && isLoadingLock.value) || isStakingLoading.value
+);
 
 const isLoadingTotalValue = computed(
   (): boolean => isLoadingUserPools.value || isLoadingLockAndStaking.value
@@ -84,7 +85,15 @@ function onClickConnect() {
   <div :class="['app-hero', classes]">
     <div class="w-full max-w-2xl mx-auto">
       <template v-if="isWalletReady || isWalletConnecting">
-        <h4 class="pb-3">See Proposal for Balancer Friendly Fork</h4>
+        <h4 class="pb-3">
+          <BalLink
+            href="https://www.notion.so/solacefi/Holdr-Friendly-Fork-Proposal-d6d6805fe17d447280bc20742eb19b26"
+            external
+            noStyle
+          >
+            Click here to see proposal for Holdr
+          </BalLink>
+        </h4>
         <h1
           v-text="$t('myBalancerInvestments')"
           class="text-base font-medium text-white opacity-90 font-body mb-2"
@@ -131,7 +140,15 @@ function onClickConnect() {
         </div>
       </template>
       <template v-else>
-        <h4 class="pb-3">See Proposal for Balancer Friendly Fork</h4>
+        <h4 class="pb-3">
+          <BalLink
+            href="https://www.notion.so/solacefi/Holdr-Friendly-Fork-Proposal-d6d6805fe17d447280bc20742eb19b26"
+            external
+            noStyle
+          >
+            Click here to see proposal for Holdr
+          </BalLink>
+        </h4>
         <h1 v-text="$t('ammPlatform')" class="headline" />
         <div class="flex justify-center mt-4">
           <BalBtn
