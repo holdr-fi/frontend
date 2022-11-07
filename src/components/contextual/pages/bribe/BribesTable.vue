@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 
 import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import BribeModal from '@/components/contextual/pages/bribe/BribeModal.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { Bribe } from '@/constants/bribe';
 import router from '@/plugins/router';
+import { bribeService } from '@/services/bribe/bribe.service';
 import useWeb3 from '@/services/web3/useWeb3';
 
 const emit = defineEmits<{
@@ -14,6 +15,7 @@ const emit = defineEmits<{
 }>();
 
 const selectedBribeForModal = ref<Bribe | undefined>(undefined);
+const bribeTokens = ref<string[]>([]);
 
 const data = [
   { id: 'A', allocationPerVote: '1', totalRewards: '5' },
@@ -82,6 +84,21 @@ function selectBribe(bribe: Bribe) {
   selectedBribeForModal.value = bribe;
   emit('clickedAdd', bribe);
 }
+
+async function init() {
+  const depositBribeData = await bribeService.getDepositBribe();
+  const proposalsAndGauges = depositBribeData.data.proposalsAndGauges;
+  const proposals = proposalsAndGauges.map(item => item.proposal);
+  // const deadlines = await Promise.all(
+  //   proposals.map(proposal => bribeService.proposalDeadlines(proposal))
+  // );
+  const tokens = depositBribeData.data.tokens;
+  bribeTokens.value = tokens;
+}
+
+onBeforeMount(() => {
+  init();
+});
 </script>
 
 <template>
@@ -163,6 +180,7 @@ function selectBribe(bribe: Bribe) {
     <BribeModal
       v-if="selectedBribeForModal != undefined"
       :selectedBribe="selectedBribeForModal"
+      :bribeTokens="bribeTokens"
       @close="selectedBribeForModal = undefined"
     />
   </teleport>

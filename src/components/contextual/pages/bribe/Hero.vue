@@ -1,8 +1,62 @@
 <script setup lang="ts">
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+  PropType,
+  ref,
+  watch
+} from 'vue';
 
-/**
- * COMPOSABLES
- */
+import useTokens from '@/composables/useTokens';
+import useVeBal from '@/composables/useVeBAL';
+import { TOKENS } from '@/constants/tokens';
+import { bribeService } from '@/services/bribe/bribe.service';
+import { configService } from '@/services/config/config.service';
+
+const {
+  tokens,
+  balances,
+  getToken,
+  approvalRequired,
+  balanceFor
+} = useTokens();
+const { veBalBalance } = useVeBal();
+const balanceInBAL = ref<string>('0');
+const balanceInVeBAL = ref<string>('0');
+const epochEnd = ref<string>('');
+
+watch(balances, () => {
+  balanceInBAL.value = balances.value[TOKENS.Addresses.BAL];
+});
+
+watch(veBalBalance, () => {
+  balanceInVeBAL.value = veBalBalance.value;
+});
+
+function calculateEpochEnd(timestamp: number) {
+  const diff = timestamp * 1000 - Date.now();
+  let seconds = parseInt((diff / 1000).toString());
+  const days = parseInt((seconds / 86400).toString());
+  seconds = seconds % 86400;
+  const hours = parseInt((seconds / 3600).toString());
+  seconds = seconds % 3600;
+  const minutes = parseInt((seconds / 60).toString());
+  seconds = seconds % 60;
+
+  epochEnd.value = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+async function init() {
+  const epochEndData = await bribeService.epochEnd();
+  setInterval(() => {
+    calculateEpochEnd(epochEndData.data);
+  }, 1000);
+}
+
+onBeforeMount(() => {
+  init();
+});
 </script>
 
 <template>
@@ -10,18 +64,10 @@
     <div class="hero-content">
       <BalCard>
         <div class="label font-medium">
-          VeBAL Balance
-        </div>
-        <div class="value">
-          <span class="font-bold truncate">000</span>
-        </div>
-      </BalCard>
-      <BalCard>
-        <div class="label font-medium">
           BAL Balance
         </div>
         <div class="value">
-          <span class="font-bold truncate">000</span>
+          <span class="font-bold truncate">{{ balanceInBAL }}</span>
         </div>
       </BalCard>
       <BalCard>
@@ -29,18 +75,18 @@
           Total Vote Power
         </div>
         <div class="value">
-          <span class="font-bold truncate">000</span>
+          <span class="font-bold truncate">{{ balanceInVeBAL }}</span>
         </div>
       </BalCard>
       <BalCard>
         <div class="flex items-center">
           <p class="text-sm text-gray-500 inline mr-1">
-            Voting period ends
+            Voting period ends in
           </p>
         </div>
         <p class="text-lg font-semibold tabular-nums">
           <span>
-            time
+            {{ epochEnd }}
           </span>
         </p>
       </BalCard>

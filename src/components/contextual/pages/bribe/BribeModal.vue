@@ -1,5 +1,12 @@
 <script lang="ts">
-import { computed, defineComponent, onBeforeMount, PropType, ref } from 'vue';
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+  PropType,
+  ref,
+  watch
+} from 'vue';
 
 import TokenInput from '@/components/inputs/TokenInput/TokenInput.vue';
 import useTokenApproval from '@/composables/trade/useTokenApproval';
@@ -25,6 +32,10 @@ export default defineComponent({
     selectedBribe: {
       type: Object as PropType<Bribe>,
       default: undefined
+    },
+    bribeTokens: {
+      type: Array as PropType<string[]>,
+      default: () => []
     }
   },
   setup(props, { emit }) {
@@ -70,15 +81,15 @@ export default defineComponent({
       await tokenApproval.approveSpender(configService.network.addresses.bribe);
     }
 
-    async function getWhitelistedTokens() {
-      const whiteListedTokens = await bribeService.getWhitelistedTokens();
+    async function init() {
       const blackListedTokens = Object.keys(tokens.value).filter(
-        token => !whiteListedTokens.includes(token)
+        token => !props.bribeTokens.includes(token)
       );
       excludedTokens.value = blackListedTokens;
     }
+
     onBeforeMount(() => {
-      getWhitelistedTokens();
+      init();
     });
 
     return {
