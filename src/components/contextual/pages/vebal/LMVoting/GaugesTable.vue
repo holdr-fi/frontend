@@ -10,6 +10,7 @@ import useBreakpoints from '@/composables/useBreakpoints';
 import { networkNameFor } from '@/composables/useNetwork';
 import useNumbers from '@/composables/useNumbers';
 import {
+  addressFor,
   isStableLike,
   isUnknownType,
   orderedPoolTokens,

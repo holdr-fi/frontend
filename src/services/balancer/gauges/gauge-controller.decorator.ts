@@ -175,9 +175,7 @@ export class GaugeControllerDecorator {
    * so the network key can only be kovan (42) or mainnet (1).
    */
   private getNetwork(): Network {
-    return this.config.env.NETWORK === Network.KOVAN
-      ? Network.KOVAN
-      : Network.MAINNET;
+    return Number(this.config.env.NETWORK) === 80001 ? 80001 : 1313161554;
   }
 
   private resetMulticaller(): Multicaller {

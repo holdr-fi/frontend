@@ -91,7 +91,10 @@ export default function useVeBal() {
     balanceFor(networkConfig.addresses.veBAL)
   );
 
-  const lockablePoolId = computed(() => POOLS.IdsMap?.['B-80BAL-20WETH']);
+  const lockablePoolId = computed(() => {
+    // SOLACE_TODO: ADD POOL ID MAP TO aurora
+    return POOLS.IdsMap?.['B-80BAL-20WETH'];
+  });
 
   return {
     // computed

@@ -140,7 +140,7 @@ export function poolURLFor(
     return `https://app.element.fi/pools/${addressFor(poolId)}`;
   }
 
-  return `${urlFor(network)}/pool/${poolId}`;
+  return `${window.location.origin}/#/pool/${poolId}`;
 }
 
 /**

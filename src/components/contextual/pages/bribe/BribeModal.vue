@@ -23,8 +23,6 @@ import { bribeService } from '@/services/bribe/bribe.service';
 import { configService } from '@/services/config/config.service';
 import useWeb3 from '@/services/web3/useWeb3';
 
-//SOLACE_TODO: frontend needs to flesh out the bribe modal's logic
-
 export default defineComponent({
   components: { TokenInput, TxActionBtn },
   emits: ['close', 'success', 'selectRewardToken'],
@@ -69,11 +67,11 @@ export default defineComponent({
       tokens
     );
     const isTokenApproved = computed(() => {
-      if (configService.network.addresses.bribe == '') return false;
+      if (configService.network.addresses.bribeVault == '') return false;
       return !approvalRequired(
         selectedRewardToken.value,
         rewardAmount.value,
-        configService.network.addresses.bribe
+        configService.network.addresses.bribeVault
       );
     });
 
@@ -88,7 +86,9 @@ export default defineComponent({
     const inputRules = [v => !v || isPositive()];
 
     async function approveToken(): Promise<void> {
-      await tokenApproval.approveSpender(configService.network.addresses.bribe);
+      await tokenApproval.approveSpender(
+        configService.network.addresses.bribeVault
+      );
     }
 
     function callDepositBribe() {

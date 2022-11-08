@@ -29,7 +29,7 @@ const EIP1559_UNSUPPORTED_REGEX = /network does not support EIP-1559/i;
 
 export default class Web3Service {
   appProvider: JsonRpcProvider;
-  ensProvider: JsonRpcProvider;
+  // ensProvider: JsonRpcProvider;
   userProvider!: ComputedRef<Web3Provider>;
 
   constructor(
@@ -37,7 +37,7 @@ export default class Web3Service {
     private readonly config: ConfigService = configService
   ) {
     this.appProvider = this.rpcProviderService.jsonProvider;
-    this.ensProvider = this.rpcProviderService.getJsonProvider(Network.MAINNET);
+    // this.ensProvider = this.rpcProviderService.getJsonProvider(Network.MAINNET);
   }
 
   public setUserProvider(provider: ComputedRef<Web3Provider>) {
@@ -45,19 +45,21 @@ export default class Web3Service {
   }
 
   async getEnsName(address: string): Promise<string | null> {
-    try {
-      return await this.ensProvider.lookupAddress(address);
-    } catch (error) {
-      return null;
-    }
+    // try {
+    //   return await this.ensProvider.lookupAddress(address);
+    // } catch (error) {
+    //   return null;
+    // }
+    return null;
   }
 
   async getEnsAvatar(address: string): Promise<string | null> {
-    try {
-      return await resolveENSAvatar(this.ensProvider, address);
-    } catch (error) {
-      return null;
-    }
+    // try {
+    //   return await resolveENSAvatar(this.ensProvider, address);
+    // } catch (error) {
+    //   return null;
+    // }
+    return null;
   }
 
   async getProfile(address: string): Promise<Web3Profile> {

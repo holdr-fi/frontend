@@ -331,6 +331,38 @@ const POOLS_ARBITRUM: Pools = {
   }
 };
 
+const POOLS_MUMBAI: Pools = {
+  IdsMap: {}, // SOLACE_TODO: mumbai missing B-80BAL-20WETH map
+  Pagination: {
+    PerPage: 10,
+    PerPool: 10,
+    PerPoolInitial: 5
+  },
+  DelegateOwner: '0xba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1b',
+  ZeroAddress: '0x0000000000000000000000000000000000000000',
+  DynamicFees: {
+    Gauntlet: []
+  },
+  BlockList: [''],
+  ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
+  Stable: {
+    AllowList: [
+      '0xf695b07661b2a8b83c52bab38d37dfefdeb4dfbb000200000000000000000000' // mai,
+    ]
+  },
+  Investment: {
+    AllowList: ['']
+  },
+  Factories: {
+    '0xf695b07661b2a8b83c52bab38d37dfefdeb4dfbb': 'weightedPool' // Weighted
+  },
+  Stakable: {
+    AllowList: [
+      '0xf695b07661b2a8b83c52bab38d37dfefdeb4dfbb000200000000000000000000'
+    ]
+  }
+};
+
 const POOLS_GENERIC: Pools = {
   IdsMap: {},
   Pagination: {
@@ -407,12 +439,13 @@ const POOLS_GENERIC: Pools = {
     AllowList: []
   }
 };
-
+// SOLACE_TODO: add AURORA pools
 const POOLS_MAP = {
   [Network.KOVAN]: POOLS_KOVAN,
   [Network.MAINNET]: POOLS_MAINNET,
   [Network.POLYGON]: POOLS_POLYGON,
-  [Network.ARBITRUM]: POOLS_ARBITRUM
+  [Network.ARBITRUM]: POOLS_ARBITRUM,
+  [80001]: POOLS_MUMBAI
 };
 export const POOLS: Pools = POOLS_MAP[networkId.value]
   ? POOLS_MAP[networkId.value]
