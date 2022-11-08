@@ -342,4 +342,5 @@ export const POOLS = [
   ...ARBITRUM_POOLS,
   ...POLYGON_POOLS,
   ...KOVAN_POOLS
+  // SOLACE_TODO: Add Aurora and mumbai pools
 ];

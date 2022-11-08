@@ -2,20 +2,22 @@ import { Duration, Interval, intervalToDuration, nextThursday } from 'date-fns';
 import { computed, onUnmounted, ref } from 'vue';
 
 import {
-  KOVAN_VOTING_GAUGES,
-  MAINNET_VOTING_GAUGES,
+  AURORA_VOTING_GAUGES,
+  MUMBAI_VOTING_GAUGES,
   VotingGauge
 } from '@/constants/voting-gauges';
 
 import useGaugeVotesQuery from './queries/useGaugeVotesQuery';
-import { isKovan } from './useNetwork';
+import { isMumbai } from './useNetwork';
 
 export default function useVotingGauges() {
   // Hard coded list of voting gauges
+
+  // SOLACE_TODO_WARN: HARDCODED
   const _votingGauges = computed((): VotingGauge[] =>
-    isKovan.value
-      ? (KOVAN_VOTING_GAUGES as VotingGauge[])
-      : (MAINNET_VOTING_GAUGES as VotingGauge[])
+    isMumbai.value
+      ? (MUMBAI_VOTING_GAUGES as VotingGauge[])
+      : (AURORA_VOTING_GAUGES as VotingGauge[])
   );
 
   // Fetch onchain votes data for given votingGauges

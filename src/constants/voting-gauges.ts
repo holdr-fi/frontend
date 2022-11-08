@@ -1,5 +1,6 @@
-import { Network } from '@balancer-labs/sdk';
+// import { Network } from '@balancer-labs/sdk';
 
+import { Network } from '@/forked_node_modules/balancer-labs/sdk';
 import { PoolToken } from '@/services/pool/types';
 import { PoolType } from '@/services/pool/types';
 
@@ -24,6 +25,14 @@ export const KOVAN_VOTING_GAUGES: VotingGauge[] = (ALL_VOTING_GAUGES as VotingGa
 
 export const MAINNET_VOTING_GAUGES: VotingGauge[] = (ALL_VOTING_GAUGES as VotingGauge[]).filter(
   gauge => gauge.network !== Network.KOVAN
+);
+
+export const MUMBAI_VOTING_GAUGES: VotingGauge[] = (ALL_VOTING_GAUGES as VotingGauge[]).filter(
+  gauge => gauge.network === Network.MUMBAI
+);
+
+export const AURORA_VOTING_GAUGES: VotingGauge[] = (ALL_VOTING_GAUGES as VotingGauge[]).filter(
+  gauge => gauge.network !== Network.MUMBAI
 );
 
 export const VEBAL_VOTING_GAUGE:

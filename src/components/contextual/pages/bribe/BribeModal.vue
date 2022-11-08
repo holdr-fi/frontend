@@ -23,7 +23,7 @@ import { bribeService } from '@/services/bribe/bribe.service';
 import { configService } from '@/services/config/config.service';
 import useWeb3 from '@/services/web3/useWeb3';
 
-//SOLACE_TODO: flesh out the bribe modal's logic
+//SOLACE_TODO: frontend needs to flesh out the bribe modal's logic
 
 export default defineComponent({
   components: { TokenInput, TxActionBtn },

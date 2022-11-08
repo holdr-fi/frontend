@@ -241,7 +241,6 @@ export default defineComponent({
     }
 
     async function populateInitialTokens(): Promise<void> {
-      // SOLACE_TODO: check that assets exist on coingecko for this chain
       let assetIn = router.currentRoute.value.params.assetIn as string;
       if (assetIn === nativeAsset.deeplinkId) assetIn = nativeAsset.address;
       else if (isAddress(assetIn)) assetIn = getAddress(assetIn);

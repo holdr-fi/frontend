@@ -94,7 +94,7 @@ const config: Record<Network | number, Config> = {
   [Network.ARBITRUM]: arbitrum,
   1313161554: aurora,
   1313161555: aurora_testnet,
-  80001: mumbai, // SOLACE_TODO: Add this
+  80001: mumbai,
   12345: test,
   // @ts-ignore
   17: docker
