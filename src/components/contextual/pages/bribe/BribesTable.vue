@@ -81,12 +81,13 @@ function selectBribe(bribe: Bribe) {
 
 async function init() {
   const depositBribeData = await bribeService.getDepositBribe();
-  const proposalsInfo = depositBribeData.data;
-  const proposals = proposalsInfo.map(item => item.proposal);
+  const _data = depositBribeData.data;
+  const proposalInfo = _data.proposalInfo;
+  const proposals = proposalInfo.map(item => item.proposal);
   const deadlines = await Promise.all(
     proposals.map(proposal => bribeService.proposalDeadlines(proposal))
   );
-  data.value = proposalsInfo.map((item, index) => ({
+  data.value = proposalInfo.map((item, index) => ({
     gaugeName: item.gaugeName,
     gaugeId: item.gauge,
     poolId: item.pool,
@@ -140,12 +141,12 @@ onBeforeMount(() => {
           <span>{{ bribe.usdValuePerVote }}</span>
         </div>
       </template>
-      <template v-slot:totalRewardsCell="bribe">
+      <template v-slot:totalUsdValueCell="bribe">
         <div
           class="px-6 py-4 -mt-1 flex items-center font-numeric"
           :key="bribe.gaugeId"
         >
-          <span>{{ bribe.totalRewards }}</span>
+          <span>{{ bribe.totalUsdValue }}</span>
         </div>
       </template>
       <template v-slot:voteBribeCell="bribe">

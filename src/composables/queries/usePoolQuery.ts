@@ -80,6 +80,8 @@ export default function usePoolQuery(
       }
     });
 
+    console.log('pool', pool);
+
     if (isBlocked(pool)) throw new Error('Pool not allowed');
 
     const isStablePhantomPool = isStablePhantom(pool.poolType);

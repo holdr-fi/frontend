@@ -37,6 +37,7 @@ export default function useGaugeVotesQuery(
    */
   const queryFn = async (): Promise<VotingGaugeWithVotes[]> => {
     try {
+      // SOLACE_TODO: failed
       return await gaugeControllerDecorator.decorateWithVotes(
         votingGauges,
         account.value
