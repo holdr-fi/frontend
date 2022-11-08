@@ -180,7 +180,9 @@ export default {
       })
     );
 
-    const tokenAddresses = computed((): string[] => Object.keys(tokens.value));
+    const tokenAddresses = computed((): string[] => {
+      return Object.keys(tokens.value);
+    });
 
     const wrappedNativeAsset = computed(
       (): TokenInfo => getToken(TOKENS.Addresses.wNativeAsset)
@@ -192,6 +194,7 @@ export default {
      * The prices, balances and allowances maps provide dynamic
      * metadata for each token in the tokens state array.
      ****************************************************************/
+
     const {
       data: priceData,
       isSuccess: priceQuerySuccess,
@@ -451,6 +454,15 @@ export default {
         TOKENS.Addresses.wNativeAsset
       ]);
       await injectTokens(tokensToInject);
+
+      if (configService.network.chainId === 80001) {
+        await injectPrices({
+          '0xEc1Fdb4E9f07111103F1EB3a60C314bd8E657c0d': {
+            usd: 1
+          }
+        });
+      }
+
       state.loading = false;
     });
 

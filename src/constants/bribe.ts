@@ -1,10 +1,13 @@
 import { BigNumber } from '@ethersproject/bignumber';
 
 export interface Bribe {
+  gaugeName: string;
+  votes: string;
   gaugeId: string;
+  poolId: string;
   proposalId: string;
-  allocationPerVote: string;
-  totalRewards: string;
+  usdValuePerVote: string;
+  totalUsdValue: string;
   deadline: string;
 }
 

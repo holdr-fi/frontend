@@ -26,25 +26,25 @@ const columns = computed<ColumnDefinition<Bribe>[]>(() => [
   {
     name: 'Name',
     id: 'bribeName',
-    accessor: 'gaugeId',
+    accessor: 'gaugeName',
     Cell: 'poolNameCell',
     align: 'center',
     width: 250
   },
   {
-    name: 'Allocation Per Vote',
-    Cell: 'allocationPerVoteCell',
-    id: 'allocationPerVote',
-    accessor: 'allocationPerVote',
+    name: 'USD Value Per Vote',
+    Cell: 'usdValuePerVoteCell',
+    id: 'usdValuePerVote',
+    accessor: 'usdValuePerVote',
     align: 'center',
     width: 150
   },
   {
-    name: 'Total Rewards',
-    Cell: 'totalRewardsCell',
-    accessor: 'totalRewards',
+    name: 'Total USD Value',
+    Cell: 'totalUsdValueCell',
+    accessor: 'totalUsdValue',
     align: 'center',
-    id: 'totalRewards',
+    id: 'totalUsdValue',
     width: 150
   },
   {
@@ -81,16 +81,19 @@ function selectBribe(bribe: Bribe) {
 
 async function init() {
   const depositBribeData = await bribeService.getDepositBribe();
-  const proposalsAndGauges = depositBribeData.data.proposalsAndGauges;
-  const proposals = proposalsAndGauges.map(item => item.proposal);
+  const proposalsInfo = depositBribeData.data;
+  const proposals = proposalsInfo.map(item => item.proposal);
   const deadlines = await Promise.all(
     proposals.map(proposal => bribeService.proposalDeadlines(proposal))
   );
-  data.value = proposalsAndGauges.map((item, index) => ({
+  data.value = proposalsInfo.map((item, index) => ({
+    gaugeName: item.gaugeName,
     gaugeId: item.gauge,
+    poolId: item.pool,
     proposalId: item.proposal,
-    allocationPerVote: item.allocationPerVote ?? '0',
-    totalRewards: item.totalRewards ?? '0',
+    usdValuePerVote: item.USDValuePerVote ?? '0',
+    totalUsdValue: item.totalUSDValue ?? '0',
+    votes: item.votes,
     deadline: deadlines[index]
   }));
   const tokens = depositBribeData.data.tokens;
@@ -126,15 +129,15 @@ onBeforeMount(() => {
           class="px-6 py-4 -mt-1 flex items-center font-numeric"
           :key="bribe.gaugeId"
         >
-          <span>{{ bribe.gaugeId }}</span>
+          <span>{{ bribe.gaugeName }}</span>
         </div>
       </template>
-      <template v-slot:allocationPerVoteCell="bribe">
+      <template v-slot:usdValuePerVoteCell="bribe">
         <div
           class="px-6 py-4 -mt-1 flex items-center font-numeric"
           :key="bribe.gaugeId"
         >
-          <span>{{ bribe.allocationPerVote }}</span>
+          <span>{{ bribe.usdValuePerVote }}</span>
         </div>
       </template>
       <template v-slot:totalRewardsCell="bribe">
