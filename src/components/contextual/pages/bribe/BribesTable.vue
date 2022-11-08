@@ -1,13 +1,28 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import BribeModal from '@/components/contextual/pages/bribe/BribeModal.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { Bribe } from '@/constants/bribe';
 import router from '@/plugins/router';
-import { bribeService } from '@/services/bribe/bribe.service';
 import useWeb3 from '@/services/web3/useWeb3';
+
+/**
+ * TYPES
+ */
+type Props = {
+  data: Bribe[];
+  bribeTokens: string[];
+};
+
+/**
+ * PROPS & EMITS
+ */
+const props = withDefaults(defineProps<Props>(), {
+  data: () => [],
+  bribeTokens: () => []
+});
 
 const emit = defineEmits<{
   (e: 'clickedVote', token: string): void;
@@ -15,9 +30,6 @@ const emit = defineEmits<{
 }>();
 
 const selectedBribeForModal = ref<Bribe | undefined>(undefined);
-const bribeTokens = ref<string[]>([]);
-
-const data = ref<Bribe[]>([]);
 
 const { upToLargeBreakpoint } = useBreakpoints();
 const { isWalletReady } = useWeb3();
@@ -78,32 +90,6 @@ function selectBribe(bribe: Bribe) {
   selectedBribeForModal.value = bribe;
   emit('clickedAdd', bribe);
 }
-
-async function init() {
-  const depositBribeData = await bribeService.getDepositBribe();
-  const _data = depositBribeData.data;
-  const proposalInfo = _data.proposalInfo;
-  const proposals = proposalInfo.map(item => item.proposal);
-  const deadlines = await Promise.all(
-    proposals.map(proposal => bribeService.proposalDeadlines(proposal))
-  );
-  data.value = proposalInfo.map((item, index) => ({
-    gaugeName: item.gaugeName,
-    gaugeId: item.gauge,
-    poolId: item.pool,
-    proposalId: item.proposal,
-    usdValuePerVote: item.USDValuePerVote ?? '0',
-    totalUsdValue: item.totalUSDValue ?? '0',
-    votes: item.votes,
-    deadline: deadlines[index]
-  }));
-  const tokens = depositBribeData.data.tokens;
-  bribeTokens.value = tokens;
-}
-
-onBeforeMount(() => {
-  init();
-});
 </script>
 
 <template>
@@ -116,7 +102,7 @@ onBeforeMount(() => {
     <BalTable
       :key="data"
       :columns="columns"
-      :data="data"
+      :data="props.data"
       skeleton-class="h-64"
       sticky="both"
       :square="upToLargeBreakpoint"
@@ -186,7 +172,7 @@ onBeforeMount(() => {
     <BribeModal
       v-if="selectedBribeForModal != undefined"
       :selectedBribe="selectedBribeForModal"
-      :bribeTokens="bribeTokens"
+      :bribeTokens="props.bribeTokens"
       @close="selectedBribeForModal = undefined"
     />
   </teleport>

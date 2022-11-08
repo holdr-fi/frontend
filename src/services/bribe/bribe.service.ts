@@ -109,8 +109,8 @@ export class BribeService {
   ): Promise<TransactionResponse> {
     return sendTransaction(
       userProvider,
-      this.bribeContract.address,
-      this.bribeAbi,
+      this.rewardContract.address,
+      this.rewardDistributorAbi,
       'claim',
       [claims]
     );

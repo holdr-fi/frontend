@@ -49,7 +49,9 @@ export function useLock() {
     lockPool.value != null ? getToken(lockPool.value.address) : null
   );
 
-  const lock = computed(() => lockQuery.data.value);
+  const lock = computed(() => {
+    return lockQuery.data.value;
+  });
 
   const poolShares = computed(
     (): BigNumber =>

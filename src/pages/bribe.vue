@@ -1,17 +1,48 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 
 import BribesTable from '@/components/contextual/pages/bribe/BribesTable.vue';
-// import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
+import ClaimTable from '@/components/contextual/pages/bribe/ClaimTable.vue';
 import Hero from '@/components/contextual/pages/bribe/Hero.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
 import { isVeBalSupported } from '@/composables/useVeBAL';
+import { Bribe } from '@/constants/bribe';
+import { bribeService } from '@/services/bribe/bribe.service';
 
 /**
  * DATA
  */
 
 const { upToLargeBreakpoint } = useBreakpoints();
+const seeClaims = ref(false);
+const data = ref<Bribe[]>([]);
+const bribeTokens = ref<string[]>([]);
+
+async function init() {
+  const depositBribeData = await bribeService.getDepositBribe();
+  const _data = depositBribeData.data;
+  const proposalInfo = _data.proposalInfo;
+  const proposals = proposalInfo.map(item => item.proposal);
+  const deadlines = await Promise.all(
+    proposals.map(proposal => bribeService.proposalDeadlines(proposal))
+  );
+  data.value = proposalInfo.map((item, index) => ({
+    gaugeName: item.gaugeName,
+    gaugeId: item.gauge,
+    poolId: item.pool,
+    proposalId: item.proposal,
+    usdValuePerVote: item.USDValuePerVote ?? '0',
+    totalUsdValue: item.totalUSDValue ?? '0',
+    votes: item.votes,
+    deadline: deadlines[index]
+  }));
+  const tokens = depositBribeData.data.tokens;
+  bribeTokens.value = tokens;
+}
+
+onBeforeMount(() => {
+  init();
+});
 </script>
 
 <template>
@@ -22,30 +53,24 @@ const { upToLargeBreakpoint } = useBreakpoints();
   </div>
   <div class="lg:container lg:mx-auto pt-10 md:pt-12">
     <BalStack vertical spacing="sm">
-      <h3 class="px-4 lg:px-0">Bribe Market</h3>
-      <!-- <BalStack vertical>
-        <div class="px-4 lg:px-0">
-          <h3 class="mb-3">{{ $t('investmentPools') }}</h3>
-          <div
-            class="flex flex-col md:flex-row w-full justify-between items-end lg:items-center"
-          >
-            <TokenSearchInput
-              v-model="selectedTokens"
-              :loading="isLoadingPools"
-              @add="addSelectedToken"
-              @remove="removeSelectedToken"
-              class="w-full md:w-2/3"
-            />
-          </div>
-        </div>
-      </BalStack> -->
+      <BalStack justify="between">
+        <h3 class="px-4 lg:px-0">Bribe Market</h3>
+        <BalBtn size="sm" @click.prevent="seeClaims = !seeClaims">{{
+          !seeClaims ? 'See My Claims' : 'See Bribes'
+        }}</BalBtn>
+      </BalStack>
       <BalCard
         shadow="lg"
         :square="upToLargeBreakpoint"
         :noBorder="upToLargeBreakpoint"
         noPad
       >
-        <BribesTable />
+        <BribesTable
+          v-if="!seeClaims"
+          :data="data"
+          :bribeTokens="bribeTokens"
+        />
+        <ClaimTable v-else />
       </BalCard>
     </BalStack>
   </div>

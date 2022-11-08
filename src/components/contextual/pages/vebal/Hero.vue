@@ -57,7 +57,7 @@ function navigateToGetVeBAL() {
           >
             {{ $t('veBAL.hero.buttons.getVeBAL') }}
           </BalBtn>
-          <BalBtn
+          <!-- <BalBtn
             tag="a"
             href="https://docs.balancer.fi/ecosystem/vebal-and-gauges"
             target="_blank"
@@ -72,7 +72,7 @@ function navigateToGetVeBAL() {
               size="sm"
               class="ml-px group-hover:text-pink-500 transition-colors"
             />
-          </BalBtn>
+          </BalBtn> -->
         </div>
       </div>
       <div class="coins">
