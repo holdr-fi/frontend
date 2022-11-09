@@ -332,7 +332,10 @@ const POOLS_ARBITRUM: Pools = {
 };
 
 const POOLS_MUMBAI: Pools = {
-  IdsMap: {}, // SOLACE_TODO: mumbai missing B-80BAL-20WETH map
+  IdsMap: {
+    'B-80BAL-20WETH':
+      '0xf695b07661b2a8b83c52bab38d37dfefdeb4dfbb000200000000000000000000'
+  },
   Pagination: {
     PerPage: 10,
     PerPool: 10,
@@ -354,7 +357,7 @@ const POOLS_MUMBAI: Pools = {
     AllowList: ['']
   },
   Factories: {
-    '0xf695b07661b2a8b83c52bab38d37dfefdeb4dfbb': 'weightedPool' // Weighted
+    '0x6eEc5D0A3110adb7521C5Ea11A1057CAc90F600F': 'weightedPool' // Weighted
   },
   Stakable: {
     AllowList: [
