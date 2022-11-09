@@ -408,7 +408,7 @@
     "modals": {
         "veBalRedirectModal": {
             "title": "Proceed to Aurora",
-            "description": "Getting and using veHLDR to vest and vote must be performed on Aurora. \n\n You can still earn liquidity mining incentives on Arbitrum and Polygon by investing in eligible pools. However to vote to direct emissions to your favored pools and to earn the protocol fees, you will need to use veHLDR on Aurora by locking B-80BAL-20WETH."
+            "description": "Getting and using veHLDR to vest and vote must be performed on Aurora. \n\n You can still earn liquidity mining incentives on Arbitrum and Polygon by investing in eligible pools. However to vote to direct emissions to your favored pools and to earn the protocol fees, you will need to use veHLDR on Aurora by locking 80HLDR-20WNEAR."
         }
     },
     "month": "month",
@@ -667,11 +667,11 @@
             },
             "tokens": {
                 "balWETH": "BAL + WETH",
-                "lpToken": "B-80BAL-20WETH",
+                "lpToken": "80HLDR-20WNEAR",
                 "veBAL": "veHLDR"
             },
             "tokenInfo": {
-                "balWETH": "Invest / add liquidity to the 80% BAL / 20% WETH pool to get the B-80BAL-20WETH LP token.",
+                "balWETH": "Invest / add liquidity to the 80% BAL / 20% WETH pool to get the 80HLDR-20WNEAR LP token.",
                 "lpToken": "Lock up the LP tokens from the 80% BAL / 20% WETH pool for up to a year to get veHLDR. The longer you lock, the more veHLDR you get.",
                 "veBAL": "Use veHLDR to earn extra on your staked pools. Only some pools are eligible for staking. Check any pools that you are in, and stake it to earn liquidity mining incentives. You can also use veHLDR to vote to direct future liquidity mining emissions"
             },
@@ -684,10 +684,10 @@
             "title": "My veHLDR",
             "cards": {
                 "myLpToken": {
-                    "label": "My B-80BAL-20WETH"
+                    "label": "My 80HLDR-20WNEAR"
                 },
                 "myLockedLpToken": {
-                    "label": "My locked B-80BAL-20WETH"
+                    "label": "My locked 80HLDR-20WNEAR"
                 },
                 "lockedEndDate": {
                     "label": "Locked until",
@@ -697,7 +697,7 @@
                     "label": "My veHLDR",
                     "secondaryText": "{0} of all veHLDR"
                 },
-                "myExpiredLockTooltip": "Your previous lockup period has expired, so you no longer have any veHLDR or voting power. You will no longer get boosted yields on staked pools or on your locked 80% BAL / 20% WETH pool. However, you’ll still get the minimum 1.0x rate. Tap the plus icon to extend your lock on B-80BAL-20WETH LP tokens to get veHLDR for higher yields and voting power. Tap the minus icon to redeem your LP tokens."
+                "myExpiredLockTooltip": "Your previous lockup period has expired, so you no longer have any veHLDR or voting power. You will no longer get boosted yields on staked pools or on your locked 80% BAL / 20% WETH pool. However, you’ll still get the minimum 1.0x rate. Tap the plus icon to extend your lock on 80HLDR-20WNEAR LP tokens to get veHLDR for higher yields and voting power. Tap the minus icon to redeem your LP tokens."
             }
         },
         "communityVeBAL": {
@@ -728,7 +728,7 @@
             "votingPeriod": "Voting period ends: {0}d {1}h {2}m {3}s",
             "votingPeriodTooltip": "There is a weekly vote for veHLDR holders which ends at 0:00 UTC on Thursdays. This vote determines the HLDR incentives allocation for all Stakers in these pools for the next week. Although you don’t have to vote to get a boosted yield, your vote can help you earn more by voting on pools where you are a Staker.",
             "votingPeriodCountdown": "{0}d : {1}h : {2}m : {3}s",
-            "votingPowerExpiredTooltip": "Your previous lock period has expired, so you no longer have any veHLDR or voting power. Any votes that have been allocated in the past will no longer count. Lock up B-80BAL-20WETH LP tokens to get veHLDR for higher yields and voting power.",
+            "votingPowerExpiredTooltip": "Your previous lock period has expired, so you no longer have any veHLDR or voting power. Any votes that have been allocated in the past will no longer count. Lock up 80HLDR-20WNEAR LP tokens to get veHLDR for higher yields and voting power.",
             "table": {
                 "chain": "Chain",
                 "assets": "Assets",

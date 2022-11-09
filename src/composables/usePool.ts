@@ -178,10 +178,10 @@ export function totalAprLabel(aprs: PoolAPRs, boost?: string): string {
 }
 
 /**
- * @summary Checks if given pool is BAL 80/20 pool (veBAL)
+ * @summary Checks if given pool is veHLDR (veBAL)
  */
 export function isVeBalPool(poolId: string): boolean {
-  return POOLS.IdsMap['B-80BAL-20WETH'] === poolId;
+  return POOLS.IdsMap['80HLDR-20WNEAR'] === poolId;
 }
 
 /**
