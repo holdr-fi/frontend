@@ -121,7 +121,8 @@ export const TOKENS_AURORA: TokenConstants = {
     nativeAsset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     wNativeAsset: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
     WETH: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
-    BAL: '0x0000000000000000000000000000000000000000' // SOLACE_TODO: add balancer token on aurora
+    BAL: '0x0000000000000000000000000000000000000000', // SOLACE_TODO: add balancer token on aurora
+    bbaUSD: '0x0000000000000000000000000000000000000000'
   }
 };
 
@@ -133,7 +134,8 @@ export const TOKENS_MUMBAI: TokenConstants = {
     nativeAsset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     wNativeAsset: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
     WETH: '0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa',
-    BAL: '0xEc1Fdb4E9f07111103F1EB3a60C314bd8E657c0d'
+    BAL: '0xEc1Fdb4E9f07111103F1EB3a60C314bd8E657c0d',
+    bbaUSD: '0x0000000000000000000000000000000000000000'
   }
 };
 

@@ -188,7 +188,6 @@ export class AprConcern {
 
   private async calcVeBalAPR(prices: TokenPrices): Promise<string> {
     if (!isVeBalPool(this.pool.id) || isKovan.value) return '0';
-
     const veBalApr = new this.VeBalAprCalcClass();
     return await veBalApr.calc(
       this.pool.totalLiquidity,
