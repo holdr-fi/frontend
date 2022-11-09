@@ -130,7 +130,7 @@ function onClickConnect() {
               transition-colors
               rounded-bl rounded-tr
             "
-            @click="router.push({ name: 'vebal' })"
+            @click="router.push({ name: 'vehldr' })"
           >
             <span v-if="lockFiatValue === '0'"
               >{{ lockFiatValue }} {{ $t('veBAL.hero.tokens.veBAL') }}</span

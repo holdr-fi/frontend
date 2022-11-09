@@ -35,15 +35,6 @@ const columns = computed<ColumnDefinition<{ name: string; amount: string }>[]>(
       accessor: 'humanAmount',
       align: 'center',
       width: 150
-    },
-    {
-      name: '',
-      Cell: 'claimCell',
-      accessor: 'claim',
-      align: 'center',
-      id: 'claim',
-      width: 150,
-      hidden: !isWalletReady.value
     }
   ]
 );
@@ -91,6 +82,22 @@ watch(claims, () => {
     :noBorder="upToLargeBreakpoint"
     noPad
   >
+    <div
+      v-if="isWalletReady && readableClaims.length > 0"
+      class="px-2 py-4 flex justify-center"
+    >
+      <BalBtn
+        color="blue"
+        :outline="true"
+        size="sm"
+        class="hover:text-white hover:bg-blue-500 focus:text-white"
+        flat
+        block
+        @click.prevent="callClaim"
+      >
+        Claim
+      </BalBtn>
+    </div>
     <BalTable
       :key="data"
       :columns="columns"
@@ -117,21 +124,6 @@ watch(claims, () => {
           :key="claim.name"
         >
           <span>{{ claim.humanAmount }}</span>
-        </div>
-      </template>
-      <template>
-        <div v-if="isWalletReady" class="px-2 py-4 flex justify-center">
-          <BalBtn
-            color="blue"
-            :outline="true"
-            size="sm"
-            class="hover:text-white hover:bg-blue-500 focus:text-white"
-            flat
-            block
-            @click.prevent="callClaim"
-          >
-            Claim
-          </BalBtn>
         </div>
       </template>
     </BalTable>

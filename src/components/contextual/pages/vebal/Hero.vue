@@ -21,11 +21,11 @@ const benefits = computed(() => [
 /**
  * METHODS
  */
-function navigateToGetVeBAL() {
+function navigateToGetVeHLDR() {
   router.push({
-    name: 'get-vebal',
+    name: 'get-vehldr',
     query: {
-      returnRoute: 'vebal'
+      returnRoute: 'vehldr'
     }
   });
 }
@@ -52,7 +52,7 @@ function navigateToGetVeBAL() {
         <div class="flex mt-6">
           <BalBtn
             color="gradient"
-            @click="navigateToGetVeBAL"
+            @click="navigateToGetVeHLDR"
             class="mr-3 hero-btn"
           >
             {{ $t('veBAL.hero.buttons.getVeBAL') }}

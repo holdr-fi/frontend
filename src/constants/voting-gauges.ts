@@ -28,12 +28,12 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       id: '0xf695b07661b2a8b83c52bab38d37dfefdeb4dfbb000200000000000000000000',
       address: '0xF695b07661B2a8B83C52BAB38d37DFEFdEb4dfBb',
       poolType: 'Stable',
-      symbol: 'veBAL',
+      symbol: 'veHLDR',
       tokens: [
         {
           address: '0xC3Ba2291E0A3C87A83eC9A259BaBA3779738A47d',
           weight: 'null',
-          symbol: 'veBAL'
+          symbol: 'veHLDR'
         }
       ]
     },

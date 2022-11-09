@@ -64,7 +64,7 @@ onBeforeMount(() => {
     <div class="hero-content">
       <BalCard>
         <div class="label font-medium">
-          BAL Balance
+          HLDR Balance
         </div>
         <div class="value">
           <span class="font-bold truncate">{{ balanceInBAL }}</span>

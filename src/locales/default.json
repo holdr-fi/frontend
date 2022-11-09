@@ -12,7 +12,6 @@
         "pools-fetch-error": "Failed to fetch pools.",
         "price-fetch-error": "Our pricing provider, CoinGecko, is currently down.",
         "retry-label": "Refresh to try again",
-        "boostedPools": "Increased yields, greater capital efficiency, deeper liquidity. Try Balancer Boosted pools now →",
         "vebalL2": "Staking is live on Polygon and Arbitrum. Incentives for eligible pools will resume on April 28."
     },
     "allow": "Allow",
@@ -35,7 +34,7 @@
         "InsufficientValidTo": "The order you are signing is already expired. This can happen if you set a short expiration in the settings and waited too long before signing the transaction. Please try again.",
         "InsufficientFunds": "The account doesn't have enough funds.",
         "UnsupportedToken": "One of the tokens you are trading is unsupported.",
-        "WrongOwner": "The signature is invalid.\n\nIt's likely that the signing method provided by your wallet doesn't comply with the standards required by Balancer.\n\nCheck whether your Wallet app supports off-chain signing (EIP-712 or ETHSIGN).",
+        "WrongOwner": "The signature is invalid.\n\nIt's likely that the signing method provided by your wallet doesn't comply with the standards required by this protocol.\n\nCheck whether your Wallet app supports off-chain signing (EIP-712 or ETHSIGN).",
         "NotFound": "Token pair selected has insufficient liquidity.",
         "OrderNotFound": "The order you are trying to cancel does not exist.",
         "AlreadyCancelled": "Order is already cancelled.",
@@ -94,9 +93,9 @@
     "changeTheme": "Change theme",
     "claim": "Claim",
     "claimAll": "Claim all",
-    "claimBAL": "Claim $BAL for",
+    "claimBAL": "Claim $HLDR for",
     "claiming": "Claiming...",
-    "claimSuccess": "You successfully claimed $BAL!",
+    "claimSuccess": "You successfully claimed $HLDR!",
     "classic": "Classic",
     "clearTransactions": "Clear transactions",
     "clickHere": "Click here",
@@ -138,8 +137,8 @@
         "enterTokenPrice": "Enter the estimated current price of {0} in $USD",
         "existingPoolInfo": "There’s already another pool with exactly the same tokens and fee structure. It’s recommended to add your liquidity to the other pool or to go back and change your Pool Creation parameters in a material way to avoid fractured liquidity and lower profits for both pools.",
         "fixedFeeRadioLabel": "Permanently fix fees to the initial rate",
-        "governanceFees": "Allow Balancer governance to manage fees",
-        "governanceFeesTooltip": "Enable this to give Balancer governance the ability to dynamically manage the fees of this pool in order to maximize profits. But note, Balancer governance is under no obligation to actually manage the fees and will likely only do so if there is significant trading volume.",
+        "governanceFees": "Allow this protocol's governance to manage fees",
+        "governanceFeesTooltip": "Enable this to give this protocol governance the ability to dynamically manage the fees of this pool in order to maximize profits. But note, this protocol's governance is under no obligation to actually manage the fees and will likely only do so if there is significant trading volume.",
         "invalidInitialWeightsInfo": "One or more tokens has an initial weight less than 1% which may cause funding to fail. If the token has a missing price, enter in a price. Otherwise, adjust the initial balances in the previous step.",
         "invalidInitialWeightsTitle": "Invalid initial weight",
         "maxInitialLiquidity": "Max initial liquidity",
@@ -223,11 +222,11 @@
     "dynamicSwapFeeLabel": "Dynamic swap fees: Currently <b>{0}</b>",
     "docs": "Docs",
     "earnings": "Earnings",
-    "earnBAL": "Earn $BAL when swapping eligible tokens",
+    "earnBAL": "Earn $HLDR when swapping eligible tokens",
     "editoAbout": "Earn more on your Ethereum-based assets. Add tokens to pools and earn compounding fees when people trade on the exchange utilizing your liquidity.",
     "editoTitle": "Put your money to work",
     "effectivePrice": "Effective price:",
-    "emptyInvestmentPools": "You have not joined any Balancer investment pools.",
+    "emptyInvestmentPools": "You have not joined any investment pools.",
     "emptyInvestmentPoolsLink": "View investment pools ->",
     "enterAmount": "Enter amount",
     "enterAPrice": "Enter a price",
@@ -244,13 +243,13 @@
     "exploreBalancerV1Pools": "Explore V1 pools ->",
     "explorePools": "Explore pools",
     "featuredProtocol": "Featured ecosystem protocol",
-    "featuredProtocols": { 
+    "featuredProtocols": {
         "title": "Featured ecosystem protocols",
         "Copper": "Copper offers an intuitive UI for creating, managing & tracking Balancer Liquidity Bootstrapping Pools (LBPs) on a transparent and user-friendly platform.",
         "Element": "An open source protocol for fixed & variable yield markets, Element enables efficient trading with a Balancer Pool that minimizes slippage and impermanent loss.",
         "Sense": "Sense is a protocol for DeFi yield primitives, and Sense Space, an AMM built on Balancer, facilitates efficient trading between yield and principle tokens.",
-        "Tracer": "An open-source protocol for derivative markets, Tracer DAO utilizes Balancer Protocol for aggregated liquidity and creating a market for leveraged tokens."        
-    }, 
+        "Tracer": "An open-source protocol for derivative markets, Tracer DAO utilizes Balancer Protocol for aggregated liquidity and creating a market for leveraged tokens."
+    },
     "fees": "fees",
     "feesManagedByGauntlet": "Liquidity providers earn dynamic swap fees on every trade utilizing the liquidity in this pool. Dynamic swap fees are controlled by governance and are currently set by Gauntlet.",
     "feesTime": "Fees ({0})",
@@ -300,7 +299,7 @@
     "home": "Home",
     "hourAbbrev": "h",
     "incentiveToken": "Incentive token",
-    "inclXInVeBal": "Incl. {0} in veBAL",
+    "inclXInVeBal": "Incl. {0} in veHLDR",
     "initialBPT": "Initial BPT",
     "initialWeight": "Initial weight",
     "insufficientBalance": "Not enough funds",
@@ -347,34 +346,34 @@
             }
         }
     },
-    "investmentPool": "Investment pool",
-    "investmentPools": "Investment pools",
-    "investmentPoolsAbout": "Stake your assets to get $BAL tokens for participating in Balancer V2 liquidity mining.",
+    "investmentPool": "Liquidity pool",
+    "investmentPools": "Liquidity pools",
+    "investmentPoolsAbout": "Stake your assets to get $HLDR tokens for participating in liquidity mining.",
     "investmentPoolsAboutLink": "Learn more ->",
-    "investmentSettled": "Your investment has settled",
+    "investmentSettled": "Your liquidity has settled",
     "investmentSuccess": "Your tokens have been added to this pool, and you have received a new LP token representing this investment.",
-    "investmentTooltip": "Confirm investment into this pool",
+    "investmentTooltip": "Confirm liquidity into this pool",
     "inYourWallet": "In your wallet",
     "isRequired": "is required",
     "joinPool": "Join pool",
     "language": "Language",
     "learnMore": "Learn more",
-    "lockToGetVeBAL": "Lock this to get veBAL",
+    "lockToGetVeBAL": "Lock this to get veHLDR",
     "light": "Light",
     "liquidityBootstrappingPool": "Liquidity Bootstrapping Pool",
     "liquidityIncentives": "liquidity incentives",
     "liquidityMining": "Liquidity mining",
     "liquidityMiningAPR": "Liquidity Mining APR",
     "liquidityMiningIncentives": "Liquidity mining incentives",
-    "liquidityMiningIncentivesCopy": "Liquidity incentives on {0} are paused for 1 week during its upgrade to the veBAL system. Incentives will resume on April 28.",
+    "liquidityMiningIncentivesCopy": "Liquidity incentives on {0} are paused for 1 week during its upgrade to the veHLDR system. Incentives will resume on April 28.",
     "liquidityMiningPopover": {
-        "airdropEligibility": "People who provide liquidity to eligible investment pools or trade on eligible token pairs receive weekly $BAL distributions as incentives. $BAL token holders own the Balancer Protocol and can help shape its future by voting on governance proposals.",
+        "airdropEligibility": "People who provide liquidity to eligible investment pools or trade on eligible token pairs receive weekly $HLDR distributions as incentives. $HLDR token holders own the protocol and can help shape its future by voting on governance proposals.",
         "airdropExplainer": "Weekly distributions from liquidity mining on {0} are airdropped on Wednesdays, sent directly to your wallet using disperse.app",
         "claimFreezeWarning": {
             "description": "Since you have several weeks' worth of tokens unclaimed, your screen may appear to freeze after pressing the claim button while it is processed. Just leave your browser open and your wallet will eventually pop open for you to complete the claim.",
             "title": "Too many claims"
         },
-        "networksExplainer": "Switch networks in the header to see your current cumulative $BAL incentives on {0} and {1}.",
+        "networksExplainer": "Switch networks in the header to see your current cumulative $HLDR incentives on {0} and {1}.",
         "noRewards": {
             "description": "Certain eligible pools have ‘liquidity mining’ token incentives which are distributed to investors weekly in proportion to their contribution.",
             "title": "You have no token incentives to claim"
@@ -385,7 +384,7 @@
         },
         "title": "Token incentives"
     },
-    "liquidityProviderCopy": "People who provide liquidity to eligible investment pools or trade on eligible token pairs receive weekly $BAL distributions as incentives. $BAL token holders own the Balancer Protocol and can help shape its future by voting on governance proposals.",
+    "liquidityProviderCopy": "People who provide liquidity to eligible liquidity pools or trade on eligible token pairs receive weekly $HLDR distributions as incentives. $HLDR token holders own the protocol and can help shape its future by voting on governance proposals.",
     "loading": "Loading...",
     "loadingBestPrice": "Looking for the best price...",
     "loadMore": "Load more",
@@ -408,8 +407,8 @@
     "migrate": "Migrate",
     "modals": {
         "veBalRedirectModal": {
-            "title": "Proceed to mainnet",
-            "description": "Getting and using veBAL to vest and vote must be performed on the Ethereum mainnet. \n\n You can still earn liquidity mining incentives on Arbitrum and Polygon by investing in eligible pools. However to vote to direct emissions to your favored pools and to earn the protocol fees, you will need to use veBAL on Ethereum Mainnet by locking B-80BAL-20WETH."
+            "title": "Proceed to Aurora",
+            "description": "Getting and using veHLDR to vest and vote must be performed on Aurora. \n\n You can still earn liquidity mining incentives on Arbitrum and Polygon by investing in eligible pools. However to vote to direct emissions to your favored pools and to earn the protocol fees, you will need to use veHLDR on Aurora by locking B-80BAL-20WETH."
         }
     },
     "month": "month",
@@ -477,13 +476,13 @@
     "pages": {
         "claim": {
             "title": "Claim your liquidity mining incentives",
-            "description": "The Balancer protocol and partners provide incentives to attract liquidity in eligible pools. Stakers in these pools accumulate incentives every block. People with veBAL get a boosted rate—up to 2.5x extra.",
+            "description": "The Holdr protocol and partners provide incentives to attract liquidity in eligible pools. Stakers in these pools accumulate incentives every block. People with veHLDR get a boosted rate—up to 2.5x extra.",
             "descriptionL2": "The Balancer protocol and partners provide incentives to attract liquidity in certain pools (the ones with the sparkle icons). On Polygon and Arbitrum, invest in these pools and stake the LP tokens to receive incentives.",
             "transitionInfo": {
-                "title": "veBAL liquidity mining incentives are live!",
-                "titleL2": "Transition to new veBAL tokenomics",
-                "description": "Token earnings accumulate every block and can be claimed at any time. Stake LP tokens in eligible pools to get incentives. Get veBAL to boost your yield and to vote on which pool should get token emissions for the next week.",
-                "descriptionL2": "Liquidity mining on Polygon & Arbitrum will be soon moving to the veBAL emission's system. When this happens, you'll need to stake your LP tokens in eligible pools to continue receiving liquidity mining incentives."
+                "title": "veHLDR liquidity mining incentives are live!",
+                "titleL2": "Transition to new veHLDR tokenomics",
+                "description": "Token earnings accumulate every block and can be claimed at any time. Stake LP tokens in eligible pools to get incentives. Get veHLDR to boost your yield and to vote on which pool should get token emissions for the next week.",
+                "descriptionL2": "Liquidity mining on Polygon & Arbitrum will be soon moving to the veHLDR emission's system. When this happens, you'll need to stake your LP tokens in eligible pools to continue receiving liquidity mining incentives."
             },
             "titles": {
                 "incentivesOnOtherNetworks": "Incentives on other networks",
@@ -597,7 +596,7 @@
     "proportionalSuggestion": "Proportional suggestion",
     "proportionalWithdrawal": "Proportional withdrawal",
     "protocolFees": "Protocol fees",
-    "protocolEarnings": "Protocol & veBAL earnings",
+    "protocolEarnings": "Protocol & veHLDR earnings",
     "rank": "Rank (1{0})",
     "receipt": "Receipt",
     "receive": "Receive",
@@ -659,7 +658,7 @@
     "symbol": "Symbol",
     "veBAL": {
         "hero": {
-            "eyebrow": "Introducing veBAL",
+            "eyebrow": "Introducing veHLDR",
             "title": "Extra earnings & voting power",
             "benefits": {
                 "earn": "Earn your share of protocol revenue",
@@ -669,20 +668,20 @@
             "tokens": {
                 "balWETH": "BAL + WETH",
                 "lpToken": "B-80BAL-20WETH",
-                "veBAL": "veBAL"
+                "veBAL": "veHLDR"
             },
             "tokenInfo": {
                 "balWETH": "Invest / add liquidity to the 80% BAL / 20% WETH pool to get the B-80BAL-20WETH LP token.",
-                "lpToken": "Lock up the LP tokens from the 80% BAL / 20% WETH pool for up to a year to get veBAL. The longer you lock, the more veBAL you get.",
-                "veBAL": "Use veBAL to earn extra on your staked pools. Only some pools are eligible for staking. Check any pools that you are in, and stake it to earn liquidity mining incentives. You can also use veBAL to vote to direct future liquidity mining emissions"
+                "lpToken": "Lock up the LP tokens from the 80% BAL / 20% WETH pool for up to a year to get veHLDR. The longer you lock, the more veHLDR you get.",
+                "veBAL": "Use veHLDR to earn extra on your staked pools. Only some pools are eligible for staking. Check any pools that you are in, and stake it to earn liquidity mining incentives. You can also use veHLDR to vote to direct future liquidity mining emissions"
             },
             "buttons": {
-                "getVeBAL": "Get veBAL",
+                "getVeBAL": "Get veHLDR",
                 "learnMore": "Learn more"
             }
         },
         "myVeBAL": {
-            "title": "My veBAL",
+            "title": "My veHLDR",
             "cards": {
                 "myLpToken": {
                     "label": "My B-80BAL-20WETH"
@@ -695,24 +694,24 @@
                     "secondaryText": "{0} days"
                 },
                 "myVeBAL": {
-                    "label": "My veBAL",
-                    "secondaryText": "{0} of all veBAL"
+                    "label": "My veHLDR",
+                    "secondaryText": "{0} of all veHLDR"
                 },
-                "myExpiredLockTooltip": "Your previous lockup period has expired, so you no longer have any veBAL or voting power. You will no longer get boosted yields on staked pools or on your locked 80% BAL / 20% WETH pool. However, you’ll still get the minimum 1.0x rate. Tap the plus icon to extend your lock on B-80BAL-20WETH LP tokens to get veBAL for higher yields and voting power. Tap the minus icon to redeem your LP tokens."
+                "myExpiredLockTooltip": "Your previous lockup period has expired, so you no longer have any veHLDR or voting power. You will no longer get boosted yields on staked pools or on your locked 80% BAL / 20% WETH pool. However, you’ll still get the minimum 1.0x rate. Tap the plus icon to extend your lock on B-80BAL-20WETH LP tokens to get veHLDR for higher yields and voting power. Tap the minus icon to redeem your LP tokens."
             }
         },
         "communityVeBAL": {
-            "title": "Community veBAL",
+            "title": "Community veHLDR",
             "cards": {
-                "totalVeBAL": "Total veBAL",
+                "totalVeBAL": "Total veHLDR",
                 "avgLockUpPeriod": "Ave. lock-up period",
-                "effectiveBalLocked": "Effective BAL locked",
-                "shareOfBalLocked": "Share of BAL locked"
+                "effectiveBalLocked": "Effective HLDR locked",
+                "shareOfBalLocked": "Share of HLDR locked"
             },
             "stats": {
                 "currentWeekVoting": "Current week voting",
                 "nextWeekVoting": "Next week voting",
-                "balIncentives": "BAL incentives"
+                "balIncentives": "HLDR incentives"
             },
             "table": {
                 "poolGauge": "Pool gauge",
@@ -722,14 +721,14 @@
         },
         "liquidityMining": {
             "title": "Pools eligible for liquidity mining",
-            "description": "Liquidity incentives are directed by the community of veBAL holders. If you hold veBAL, vote below on any pools across Ethereum and Layer 2’s. Your vote will persist until you change it and editing a pool can only be done once in 10 days.",
+            "description": "Liquidity incentives are directed by the community of veHLDR holders. If you hold veHLDR, vote below on any pools across Ethereum and Layer 2’s. Your vote will persist until you change it and editing a pool can only be done once in 10 days.",
             "myUnallocatedVotes": "My unallocated votes:",
-            "myUnallocatedVotesTooltip": "veBAL holders can vote for a single pool or multiple pools in whatever weights they choose, up to their max of 100%. Note: If you’ve previously voted for a pool but no longer have any veBAL, your votes will not count.",
+            "myUnallocatedVotesTooltip": "veHLDR holders can vote for a single pool or multiple pools in whatever weights they choose, up to their max of 100%. Note: If you’ve previously voted for a pool but no longer have any veHLDR, your votes will not count.",
             "unallocatedVotes": "My unallocated votes: {0}.",
             "votingPeriod": "Voting period ends: {0}d {1}h {2}m {3}s",
-            "votingPeriodTooltip": "There is a weekly vote for veBAL holders which ends at 0:00 UTC on Thursdays. This vote determines the BAL incentives allocation for all Stakers in these pools for the next week. Although you don’t have to vote to get a boosted yield, your vote can help you earn more by voting on pools where you are a Staker.",
+            "votingPeriodTooltip": "There is a weekly vote for veHLDR holders which ends at 0:00 UTC on Thursdays. This vote determines the HLDR incentives allocation for all Stakers in these pools for the next week. Although you don’t have to vote to get a boosted yield, your vote can help you earn more by voting on pools where you are a Staker.",
             "votingPeriodCountdown": "{0}d : {1}h : {2}m : {3}s",
-            "votingPowerExpiredTooltip": "Your previous lock period has expired, so you no longer have any veBAL or voting power. Any votes that have been allocated in the past will no longer count. Lock up B-80BAL-20WETH LP tokens to get veBAL for higher yields and voting power.",
+            "votingPowerExpiredTooltip": "Your previous lock period has expired, so you no longer have any veHLDR or voting power. Any votes that have been allocated in the past will no longer count. Lock up B-80BAL-20WETH LP tokens to get veHLDR for higher yields and voting power.",
             "table": {
                 "chain": "Chain",
                 "assets": "Assets",
@@ -770,16 +769,16 @@
                         "description": "You won't be able to make any edits to this vote allocation for {0}"
                     },
                     "noVeBal": {
-                        "title": "You need some veBAL to vote on gauges",
-                        "description": "Get veBAL by locking up LP tokens from the 80% BAL / 20% WETH pool."
+                        "title": "You need some veHLDR to vote on gauges",
+                        "description": "Get veHLDR by locking up LP tokens from the 80% BAL / 20% WETH pool."
                     },
                     "veBalLockTooShort": {
-                        "title": "veBAL not locked for 7 days.",
-                        "description": "You must have veBAL locked for more than 7 days to vote on gagues."
+                        "title": "veHLDR not locked for 7 days.",
+                        "description": "You must have veHLDR locked for more than 7 days to vote on gagues."
                     },
                     "veBalVoteOverLimitWarning": {
-                        "title": "You may be wasting your vote: veBAL cap hit",
-                        "description": "Distributions to veBAL holders of weekly emissions are capped at 10%. Any votes exceeding this amount at Thursday 0:00 UTC will not be counted."
+                        "title": "You may be wasting your vote: veHLDR cap hit",
+                        "description": "Distributions to veHLDR holders of weekly emissions are capped at 10%. Any votes exceeding this amount at Thursday 0:00 UTC will not be counted."
                     }
                 },
                 "errors": {
@@ -789,9 +788,9 @@
         },
         "notSupported": {
             "title": "Locking is unavailable on this network",
-            "description": "Get veBAL on Ethereum Mainnet"
+            "description": "Get veHLDR on Aurora"
         },
-        "votingTransitionDescription": "Liquidity mining emissions as directed by veBAL holders start on 7 April 2022 at 0:00 UTC! Voting is now live, so get veBAL and vote for pools. Your vote will persist until you edit. Editing can only be done once in 10 days."
+        "votingTransitionDescription": "Liquidity mining emissions as directed by veHLDR holders start on 7 April 2022 at 0:00 UTC! Voting is now live, so get veHLDR and vote for pools. Your vote will persist until you edit. Editing can only be done once in 10 days."
     },
     "getVeBAL": {
         "lockableTokens": {
@@ -803,27 +802,27 @@
             "steps": {
                 "investPart1": "Invest in the",
                 "investPart2": "pool.",
-                "lock": "Lock-up the resulting LP token ({0}). The longer you lock (1 year max), the more veBAL you get."
+                "lock": "Lock-up the resulting LP token ({0}). The longer you lock (1 year max), the more veHLDR you get."
             },
             "earn": {
-                "boost": "veBAL holders get boosted liquidity mining yields (up to 2.5x) and increased voting power.",
+                "boost": "veHLDR holders get boosted liquidity mining yields (up to 2.5x) and increased voting power.",
                 "voting": "Use this voting power to choose which pool gauges get allocated liquidity mining incentives. Vote on the pools where you have added liquidity to earn more yield."
             }
         },
         "myVeBAL": {
-            "title": "My veBAL",
+            "title": "My veHLDR",
             "lockedEndDate": "Locked until",
             "expiredOn": "Expired on",
-            "percentVeBAL": "% of total veBAL"
+            "percentVeBAL": "% of total veHLDR"
         },
         "lockForm": {
-            "title": "Lock to get veBAL",
+            "title": "Lock to get veHLDR",
             "lockAmount": {
                 "title": "How much do you want to lock?"
             },
             "lockEndDate": {
                 "title": "Lock until",
-                "tooltip": "The longer you lock your stake, the more veBAL voting power you get (up to 4 years). You can extend the lock later. Be careful, locking is not reversible."
+                "tooltip": "The longer you lock your stake, the more veHLDR voting power you get (up to 4 years). You can extend the lock later. Be careful, locking is not reversible."
             },
             "summary": {
                 "receive": {
@@ -871,7 +870,7 @@
                     "explainer": "Lock-up end dates can only be on Thursdays at 0:00 UTC. To get as close as possible to a 1 year lock, locking on Thursday is recommended.",
                     "table": {
                         "lockPeriod": "Lock period",
-                        "totalVeBAL": "Total veBAL"
+                        "totalVeBAL": "Total veHLDR"
                     }
                 },
                 "increasedLockAmount": "Increased lock amount",
@@ -902,14 +901,14 @@
                     "loadingLabel": "Confirm lock in wallet"
                 }
             },
-            "returnToVeBalPage": "Return to veBAL page"
+            "returnToVeBalPage": "Return to veHLDR page"
         },
         "notSupported": {
             "title": "Locking is unavailable on this network",
-            "description": "Get veBAL on Ethereum Mainnet"
+            "description": "Get veHLDR on Aurora"
         }
     },
-    "getVeBALToVote": "Get veBAL to vote",
+    "getVeBALToVote": "Get veHLDR to vote",
     "unlockVeBAL": {
         "expiredLockableTokens": {
             "title": "Expired locked tokens"
@@ -942,11 +941,11 @@
                     "loadingLabel": "Confirm unlock in wallet"
                 }
             },
-            "returnToVeBalPage": "Return to veBAL page"
+            "returnToVeBalPage": "Return to veHLDR page"
         },
         "notSupported": {
             "title": "Unlocking is unavailable on this network",
-            "description": "Unlock on Ethereum Mainnet"
+            "description": "Unlock on Aurora"
         }
     },
     "tableShowsBalancerV2Pools": "This table shows only Balancer V2 pools.",
@@ -991,8 +990,8 @@
             "total": "The total value in {0} you’ll be withdrawing from this pool."
         },
         "veBalApr": {
-            "title": "Max locking/veBAL APR",
-            "breakdown1": "BAL",
+            "title": "Max locking/veHLDR APR",
+            "breakdown1": "HLDR",
             "breakdown2": "bb-a-USD"
         }
     },
@@ -1192,7 +1191,7 @@
         "preview": {
             "loadingLabel": {
                 "withdraw": "Confirm withdrawal in wallet"
-            }, 
+            },
             "titles": {
                 "confirmed": "Withdrawal confirmed",
                 "default": "Withdrawal preview"

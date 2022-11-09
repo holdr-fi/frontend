@@ -122,13 +122,13 @@ const routes: RouteRecordRaw[] = [
     redirect: '/'
   },
   {
-    path: '/vebal',
-    name: 'vebal',
+    path: '/vehldr',
+    name: 'vehldr',
     component: VeBalPage
   },
   {
-    path: '/get-vebal',
-    name: 'get-vebal',
+    path: '/get-vehldr',
+    name: 'get-vehldr',
     component: GetVeBalPage,
     meta: { layout: 'FocusedLayout' }
   },

@@ -9,7 +9,7 @@ export default function useNavigationGuards() {
   const { setSidebarOpen } = useSidebar();
 
   router.beforeEach((to, from, next) => {
-    if (to.name == 'vebal') {
+    if (to.name == 'vehldr') {
       if (isVeBalSupported.value) next();
       else {
         setSidebarOpen(false);

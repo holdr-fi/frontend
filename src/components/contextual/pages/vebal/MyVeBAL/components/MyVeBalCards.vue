@@ -97,7 +97,7 @@ const cards = computed(() => {
       plusIconTo: {
         name: 'invest',
         params: { id: lockablePoolId.value },
-        query: { returnRoute: 'vebal' }
+        query: { returnRoute: 'vehldr' }
       }
     },
     {
@@ -110,7 +110,7 @@ const cards = computed(() => {
         ? fNum2(props.veBalLockInfo?.lockedAmount ?? '0', FNumFormats.token)
         : '—',
       showPlusIcon: isWalletReady.value ? true : false,
-      plusIconTo: { name: 'get-vebal', query: { returnRoute: 'vebal' } },
+      plusIconTo: { name: 'get-vehldr', query: { returnRoute: 'vehldr' } },
       showUnlockIcon: isExpired ? true : false
     },
     {
@@ -124,7 +124,7 @@ const cards = computed(() => {
             ])
           : '-',
       showPlusIcon: hasExistingLock ? true : false,
-      plusIconTo: { name: 'get-vebal', query: { returnRoute: 'vebal' } }
+      plusIconTo: { name: 'get-vehldr', query: { returnRoute: 'vehldr' } }
     },
     {
       id: 'myVeBAL',

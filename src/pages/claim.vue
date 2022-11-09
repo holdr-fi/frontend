@@ -300,7 +300,7 @@ onBeforeMount(async () => {
         {{ $t('noClaimableIncentives') }}
       </BalBlankSlate>
 
-      <h2 class="font-body font-bold text-2xl mt-8">
+      <!-- <h2 class="font-body font-bold text-2xl mt-8">
         {{ $t('pages.claim.titles.incentivesOnOtherNetworks') }}
       </h2>
       <BalFlexGrid class="mt-4" flexWrap>
@@ -318,7 +318,7 @@ onBeforeMount(async () => {
           />
           {{ $t('pages.claim.btns.claimOn') }} {{ network.name }}
         </BalBtn>
-      </BalFlexGrid>
+      </BalFlexGrid> -->
 
       <template v-if="isWalletReady">
         <h2 :class="['font-body font-bold text-2xl mt-8']">

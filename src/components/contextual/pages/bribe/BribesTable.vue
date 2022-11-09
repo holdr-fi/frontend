@@ -79,10 +79,10 @@ const columns = computed<ColumnDefinition<Bribe>[]>(() => [
   }
 ]);
 
-function navigateToVeBAL(bribe: Bribe) {
+function navigateToVeHLDR(bribe: Bribe) {
   emit('clickedVote', bribe.gaugeId);
   router.push({
-    name: 'vebal'
+    name: 'vehldr'
   });
 }
 
@@ -144,7 +144,7 @@ function selectBribe(bribe: Bribe) {
             class="hover:text-white hover:bg-blue-500 focus:text-white focus:bg-blue-500"
             flat
             block
-            @click.prevent="navigateToVeBAL(bribe)"
+            @click.prevent="navigateToVeHLDR(bribe)"
           >
             Vote
           </BalBtn>

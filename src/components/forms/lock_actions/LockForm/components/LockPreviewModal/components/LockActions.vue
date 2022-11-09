@@ -232,7 +232,7 @@ onBeforeMount(async () => {
       </div>
       <BalBtn
         tag="router-link"
-        :to="{ name: 'vebal' }"
+        :to="{ name: 'vehldr' }"
         color="gray"
         outline
         block

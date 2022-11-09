@@ -212,7 +212,7 @@ watch(blockNumber, async () => {
       <BalBtn
         v-if="lockablePoolId === pool.id"
         tag="router-link"
-        :to="{ name: 'get-vebal' }"
+        :to="{ name: 'get-vehldr' }"
         color="gradient"
         block
         class="mt-2 flex"

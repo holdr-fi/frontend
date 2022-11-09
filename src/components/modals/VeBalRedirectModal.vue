@@ -19,7 +19,7 @@ const { showRedirectModal, setShowRedirectModal } = useVeBAL();
 /**
  * COMPUTED
  */
-const mainnetURL = computed((): string => `${urlFor(Network.MAINNET)}/vebal`);
+const mainnetURL = computed((): string => `${urlFor(Network.MAINNET)}/hldr`); // SOLACE_TODO: route to aurora domain when available
 
 /**
  * METHODS
