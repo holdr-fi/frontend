@@ -251,7 +251,7 @@ onBeforeMount(async () => {
         <div v-else class="flex items-center mt-6 mb-2">
           <BalAsset :address="balToken?.address" />
           <h3 class="text-xl ml-2">
-            Balancer (BAL) {{ $t('earnings').toLowerCase() }}
+            Holdr (HLDR) {{ $t('earnings').toLowerCase() }}
           </h3>
         </div>
         <BalClaimsTable

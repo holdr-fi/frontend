@@ -121,7 +121,7 @@ export const TOKENS_AURORA: TokenConstants = {
     nativeAsset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
     wNativeAsset: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
     WETH: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
-    BAL: '0x0000000000000000000000000000000000000000', // SOLACE_TODO: add balancer token on aurora
+    BAL: '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA',
     bbaUSD: '0x0000000000000000000000000000000000000000'
   }
 };

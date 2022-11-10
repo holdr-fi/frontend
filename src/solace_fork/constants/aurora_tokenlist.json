@@ -13,6 +13,14 @@
     },
     "tokens": [
       {
+        "address": "0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA",
+        "chainId": 1313161554,
+        "name": "Holdr Governance Token",
+        "symbol": "HLDR",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png"
+      },
+      {
         "address": "0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
         "chainId": 1313161554,
         "name": "Tether USD",

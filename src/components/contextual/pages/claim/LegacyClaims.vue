@@ -314,6 +314,7 @@ async function claimAvailableRewards() {
         @actionClick="claimError = null"
       />
     </div>
+<!-- 
     <div v-if="!isAirdrop">
       <div class="mb-4">
         <div class="font-semibold mb-2">
@@ -372,5 +373,6 @@ async function claimAvailableRewards() {
     <div v-else class="mt-4 text-sm px-3 pb-3">
       <div>{{ $t('liquidityMiningPopover.airdropEligibility') }}</div>
     </div>
+-->
   </div>
 </template>
