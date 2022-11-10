@@ -13,7 +13,7 @@ const router = useRouter();
  * COMPUTED
  */
 const benefits = computed(() => [
-  t('veBAL.hero.benefits.boost'),
+  // t('veBAL.hero.benefits.boost'),
   t('veBAL.hero.benefits.vote'),
   t('veBAL.hero.benefits.earn')
 ]);
@@ -35,7 +35,7 @@ function navigateToGetVeHLDR() {
   <div class="w-full bg-gray-850 hero-container">
     <div class="hero-content">
       <div
-        class="hero-text py-8 lg:py-4 xl:pt-0 px-4 lg:px-8 2xl:px-0 max-w-md"
+        class="hero-text py-8 lg:py-4 xl:pt-0 px-4 lg:px-8 2xl:px-0 w-full max-w-2xl mx-auto"
       >
         <p class="text-white font-medium mb-3">
           {{ $t('veBAL.hero.eyebrow') }}
@@ -57,75 +57,6 @@ function navigateToGetVeHLDR() {
           >
             {{ $t('veBAL.hero.buttons.getVeBAL') }}
           </BalBtn>
-          <!-- <BalBtn
-            tag="a"
-            href="https://docs.balancer.fi/ecosystem/vebal-and-gauges"
-            target="_blank"
-            rel="noreferrer"
-            color="white"
-            class="hero-btn"
-            outline
-          >
-            {{ $t('veBAL.hero.buttons.learnMore') }}
-            <BalIcon
-              name="arrow-up-right"
-              size="sm"
-              class="ml-px group-hover:text-pink-500 transition-colors"
-            />
-          </BalBtn> -->
-        </div>
-      </div>
-      <div class="coins">
-        <div class="coin group">
-          <div class="coin-wrapper w-full">
-            <BalImage
-              class="graphic"
-              width="330"
-              height="377"
-              :src="require('@/assets/images/coins/coins-1.png')"
-              alt="BAL and WETH tokens"
-            />
-          </div>
-          <div class="caption">
-            <p class="inline mr-1">{{ $t('veBAL.hero.tokens.balWETH') }}</p>
-            <BalTooltip iconSize="xs" textAlign="left" class="mt-1">
-              {{ $t('veBAL.hero.tokenInfo.balWETH') }}
-            </BalTooltip>
-          </div>
-        </div>
-        <div class="coin group">
-          <div class="coin-wrapper">
-            <BalImage
-              class="graphic"
-              width="330"
-              height="377"
-              :src="require('@/assets/images/coins/coins-2.png')"
-              alt="B-80BAL-20WETH LP token"
-            />
-          </div>
-          <div class="caption">
-            <p class="inline mr-1">{{ $t('veBAL.hero.tokens.lpToken') }}</p>
-            <BalTooltip iconSize="xs" textAlign="left" class="mt-1">
-              {{ $t('veBAL.hero.tokenInfo.lpToken') }}
-            </BalTooltip>
-          </div>
-        </div>
-        <div class="coin group">
-          <div class="coin-wrapper">
-            <BalImage
-              class="graphic"
-              width="330"
-              height="377"
-              :src="require('@/assets/images/coins/coins-3.png')"
-              alt="veBAL token"
-            />
-          </div>
-          <div class="caption">
-            <p class="inline mr-1">{{ $t('veBAL.hero.tokens.veBAL') }}</p>
-            <BalTooltip iconSize="xs" textAlign="left" class="mt-1">
-              {{ $t('veBAL.hero.tokenInfo.veBAL') }}
-            </BalTooltip>
-          </div>
         </div>
       </div>
     </div>

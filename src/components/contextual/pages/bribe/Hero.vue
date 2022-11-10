@@ -8,6 +8,7 @@ import {
   watch
 } from 'vue';
 
+import useNumbers from '@/composables/useNumbers';
 import useTokens from '@/composables/useTokens';
 import useVeBal from '@/composables/useVeBAL';
 import { TOKENS } from '@/constants/tokens';
@@ -22,9 +23,10 @@ const {
   balanceFor
 } = useTokens();
 const { veBalBalance } = useVeBal();
-const balanceInBAL = ref<string>('0');
-const balanceInVeBAL = ref<string>('0');
-const epochEnd = ref<string>('');
+const { fNum } = useNumbers();
+const balanceInBAL = ref<string>('-');
+const balanceInVeBAL = ref<string>('-');
+const epochEnd = ref<string>('-');
 
 watch(balances, () => {
   balanceInBAL.value = balances.value[TOKENS.Addresses.BAL];
@@ -67,7 +69,9 @@ onBeforeMount(() => {
           HLDR Balance
         </div>
         <div class="value">
-          <span class="font-bold truncate">{{ balanceInBAL }}</span>
+          <span class="font-bold truncate">{{
+            balanceInBAL != '-' ? fNum(balanceInBAL, 'token') : balanceInBAL
+          }}</span>
         </div>
       </BalCard>
       <BalCard>
@@ -75,7 +79,11 @@ onBeforeMount(() => {
           Total Vote Power
         </div>
         <div class="value">
-          <span class="font-bold truncate">{{ balanceInVeBAL }}</span>
+          <span class="font-bold truncate">{{
+            balanceInVeBAL != '-'
+              ? fNum(balanceInVeBAL, 'token')
+              : balanceInVeBAL
+          }}</span>
         </div>
       </BalCard>
       <BalCard>
