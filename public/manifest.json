@@ -1,6 +1,6 @@
 {
-  "short_name": "Solace",
-  "name": "Solace",
+  "short_name": "Holdr",
+  "name": "Holdr",
   "description": "DeFi is a Journey. Focus on Yields.",
   "providedBy": {
     "name": "Balancer Labs",
@@ -13,7 +13,7 @@
       "type": "image/x-icon"
     }
   ],
-  "iconPath": "images/logos/solace-circle-color.svg",
+  "iconPath": "images/logos/holdr-logo.svg",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

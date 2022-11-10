@@ -51,6 +51,8 @@ function calculateEpochEnd(timestamp: number) {
 
 async function init() {
   const epochEndData = await bribeService.epochEnd();
+  balanceInBAL.value = balances.value[TOKENS.Addresses.BAL];
+  balanceInVeBAL.value = veBalBalance.value;
   setInterval(() => {
     calculateEpochEnd(epochEndData.data);
   }, 1000);
@@ -106,7 +108,7 @@ onBeforeMount(() => {
 .hero-container {
   @apply bg-cover bg-center flex items-center justify-center text-center px-4;
   transition: all 0.3s ease-in-out;
-  background-image: url('/images/backgrounds/bg-header.svg');
+  background-image: url('/images/backgrounds/bg-header.png');
 }
 .hero-content {
   @apply flex flex-col gap-3 justify-center md:flex-row md:items-center max-w-screen-2xl mx-auto md:gap-4 lg:gap-8 py-4 md:py-8 w-full;

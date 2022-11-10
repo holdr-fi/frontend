@@ -120,10 +120,10 @@ function onClickConnect() {
               flex
               items-center
               px-3
-              text-yellow-500 text-sm
+              text-blue-500 text-sm
               font-medium
               cursor-pointer
-              border border-yellow-500
+              border border-blue-500
               group
               hover:text-white
               focus:text-white
@@ -180,11 +180,11 @@ function onClickConnect() {
 .app-hero {
   @apply bg-cover bg-center flex items-center justify-center text-center px-4;
   transition: all 0.3s ease-in-out;
-  background-image: url('/images/backgrounds/bg-header.svg');
+  background-image: url('/images/backgrounds/bg-header.png');
 }
 
 .vebal-banner::before {
-  @apply border border-yellow-500;
+  @apply border border-blue-500;
   content: '';
   width: 16px;
   height: 6px;
@@ -194,7 +194,7 @@ function onClickConnect() {
   border-top-left-radius: 8px;
 }
 .vebal-banner::after {
-  @apply border border-yellow-500;
+  @apply border border-blue-500;
   content: '';
   width: 16px;
   height: 6px;

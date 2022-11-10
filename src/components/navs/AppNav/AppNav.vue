@@ -59,7 +59,7 @@ onUnmounted(() => {
         >
           <!-- <AppIcon v-if="['xs', 'sm', 'md'].includes(bp)" />
           <AppLogo v-else /> -->
-          <img src="/images/logos/solace-logo.svg" />
+          <img src="/images/logos/holdr-logo.svg" />
         </router-link>
 
         <DesktopLinks v-if="isDesktop" class="ml-8 font-medium" />
