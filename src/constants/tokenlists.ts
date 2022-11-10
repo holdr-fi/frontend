@@ -29,12 +29,12 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
   '4': {
     Balancer: {
       Default:
-        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/tokenlists.json',
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/tokenlists.json',
       Vetted:
-        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/tokenlists.json'
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/tokenlists.json'
     },
     External: [
-      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/tokenlists.json'
+      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/tokenlists.json'
     ]
   },
   '42': {
@@ -72,32 +72,34 @@ export const TOKEN_LIST_MAP: TokenListMapByNetwork = {
   '80001': {
     Balancer: {
       Default:
-        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/mumbai_tokenlist.json',
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/mumbai_tokenlist.json',
       Vetted:
-        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/mumbai_tokenlist.json',
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/mumbai_tokenlist.json'
     },
-    External: ['https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/mumbai_tokenlist.json']
+    External: [
+      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/mumbai_tokenlist.json'
+    ]
   },
   '1313161554': {
     Balancer: {
       Default:
-        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_tokenlist.json',
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/aurora_tokenlist.json',
       Vetted:
-        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_tokenlist.json'
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/aurora_tokenlist.json'
     },
     External: [
-      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_tokenlist.json'
+      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/aurora_tokenlist.json'
     ]
   },
   '1313161555': {
     Balancer: {
       Default:
-        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_testnet_tokenlist.json',
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/aurora_testnet_tokenlist.json',
       Vetted:
-        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_testnet_tokenlist.json'
+        'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/aurora_testnet_tokenlist.json'
     },
     External: [
-      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/solace_fork/constants/aurora_testnet_tokenlist.json'
+      'https://raw.githubusercontent.com/solace-fi/balancer-frontend-v2/develop/src/holdr_fork/constants/aurora_testnet_tokenlist.json'
     ]
   }
 };

@@ -2,9 +2,8 @@
 
 ```bash
 npm run build
-aws s3 rm s3://balancer.solace.fi --include "*" --recursive
-aws s3 cp --recursive --cache-control="max-age=86400" dist/ s3://balancer.solace.fi/
-aws cloudfront create-invalidation --distribution-id E1V3D8UDKD2YUE --paths "/*"
+aws s3 rm s3://app.holdr.fi --include "*" --recursive
+aws s3 cp --recursive build/ s3://app.holdr.fi/
 ```
 
 *Aurora fork deploy steps*
@@ -40,7 +39,7 @@ aws cloudfront create-invalidation --distribution-id E1V3D8UDKD2YUE --paths "/*"
 1. Deploy the following smart contracts: TimelockAuthorizer, Vault, BalancerHelpers, InvestmentPoolFactory, Multicall2, BatchRelayerLibrary, WeightedPoolFactory, WeightedPool2TokensFactory
 2. Deploy Aurora subgraph
 3. Copy .env.aurora_testnet.development to .env.development
-4. Added new tokenlist `src/solace_fork/constants/aurora_testnet_tokenlist.json`
+4. Added new tokenlist `src/holdr_fork/constants/aurora_testnet_tokenlist.json`
 5. Created aurora testnet config in `src/constants/tokenlists.ts` to point to new tokenlist 
 6. Added Aurora testnet switch cases for `src/lib/balancer.sdk.ts`
 7. Created config in `src/lib/config/aurora_testnet.json`
@@ -53,7 +52,7 @@ aws cloudfront create-invalidation --distribution-id E1V3D8UDKD2YUE --paths "/*"
 Prerequisite - Deployed smart contracts and subgraph
 
 1. Copy .env.aurora_testnet.development to .env.development
-2. Added new tokenlist `src/solace_fork/constants/aurora_testnet_tokenlist.json`
+2. Added new tokenlist `src/holdr_fork/constants/aurora_testnet_tokenlist.json`
 3. Created aurora testnet config in `src/constants/tokenlists.ts` to point to new tokenlist 
 4. Added Aurora testnet switch cases for `src/lib/balancer.sdk.ts`
 5. Created config in `src/lib/config/aurora_testnet.json`
@@ -66,7 +65,7 @@ Prerequisite - Deployed smart contracts and subgraph
 11. Commented out line `npm run lint:fix` in `.husky/pre-commit` because it screamed errors at the forked dependencies, and stopped git commits. Couldn't find a way for `vue-cli-service lint` to ignore chosen folders - zero config?
 12. Commented out WS connection (listens to new blocks?) in `src/services/rpc-provider/rpc-provider.service.ts` and `src/services/web3/useWeb3.ts`
 
-*SOLACE FORK INSTRUCTIONS*
+*FORK INSTRUCTIONS*
 
 Change config to Rinkeby
 - .env.development

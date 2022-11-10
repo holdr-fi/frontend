@@ -77,15 +77,14 @@ export class VeBalAprCalc {
         address: this.config.network.addresses.veBAL,
         function: 'totalSupply()',
         abi: veBalAbi
-      })
-      // SOLACE_COMMENT: Commented out following to remove invalid smart contract query.
-      // .call({
-      //   key: 'bbaUSDPrice',
-      //   address: this.bbAUSDAddress,
-      //   function: 'getRate',
-      //   abi: StablePhantomAbi
-      // });
-
+      });
+    // SOLACE_COMMENT: Commented out following to remove invalid smart contract query.
+    // .call({
+    //   key: 'bbaUSDPrice',
+    //   address: this.bbAUSDAddress,
+    //   function: 'getRate',
+    //   abi: StablePhantomAbi
+    // });
 
     const result = await multicaller.execute();
 

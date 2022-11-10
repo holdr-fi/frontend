@@ -368,7 +368,6 @@ const POOLS_MUMBAI: Pools = {
   }
 };
 
-// SOLACE_TODO - Add pools when deployed
 const POOLS_AURORA: Pools = {
   IdsMap: {
     '80HLDR-20WNEAR': '0x0000000000000000000000000000000000000000'
@@ -396,7 +395,7 @@ const POOLS_AURORA: Pools = {
   Factories: {
     '0xDD1591D7BdF0E3ddEa4b4377cf03373700BED38e': 'weightedPool', // Weighted
     '0xB2f941B85791e47FAa6391Cdef36A3BBaD19b73E': 'stablePool',
-    '0x1001e599ff9079717E176f224de7f1a27eACD3C2': 'liquidityBootstrappingPool',
+    '0x1001e599ff9079717E176f224de7f1a27eACD3C2': 'liquidityBootstrappingPool'
   },
   Stakable: {
     AllowList: [
@@ -481,7 +480,6 @@ const POOLS_GENERIC: Pools = {
     AllowList: []
   }
 };
-// SOLACE_TODO: add AURORA pools
 const POOLS_MAP = {
   [Network.KOVAN]: POOLS_KOVAN,
   [Network.MAINNET]: POOLS_MAINNET,
