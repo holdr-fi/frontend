@@ -240,6 +240,7 @@ export default defineComponent({
       }
     }
 
+    // SOLACE_TODO: populate initial tokens via localstorage
     async function populateInitialTokens(): Promise<void> {
       let assetIn = router.currentRoute.value.params.assetIn as string;
       if (assetIn === nativeAsset.deeplinkId) assetIn = nativeAsset.address;
