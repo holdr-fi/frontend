@@ -59,19 +59,25 @@ export default class WeightedPoolService {
     const seedTokens = this.calculateTokenWeights(tokens);
     const swapFeeScaled = scale(new BigNumber(swapFee), 18);
 
+    // SOLACE_EDIT - Added array of zero address here, because WeightedPoolV2.create requires 'rateProvider address[]' array.
     const params = [
       name,
       symbol,
       tokenAddresses,
       seedTokens,
+      new Array(seedTokens.length).fill(
+        '0x0000000000000000000000000000000000000000'
+      ),
       swapFeeScaled.toString(),
       owner
     ];
 
+    // SOLACE_EDIT - Used WeightedPoolFactoryV2 ABI, and commented out WeightedPoolFactoryV1 ABI.
     return sendTransaction(
       provider,
       weightedPoolFactoryAddress,
-      WeightedPoolFactory__factory.abi,
+      WeightedPoolFactoryV2ABI,
+      // WeightedPoolFactory__factory.abi,
       'create',
       params
     );
@@ -202,3 +208,135 @@ export default class WeightedPoolService {
     );
   }
 }
+
+// SOLACE_EDIT - Pasted WeightedPoolFactory V2 ABI here, to replace WeightedPoolFactory V1 ABI in calling WeightedPool.create tx.
+const WeightedPoolFactoryV2ABI = [
+  {
+    inputs: [
+      { internalType: 'contract IVault', name: 'vault', type: 'address' },
+      {
+        internalType: 'contract IProtocolFeePercentagesProvider',
+        name: 'protocolFeeProvider',
+        type: 'address'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'constructor'
+  },
+  { anonymous: false, inputs: [], name: 'FactoryDisabled', type: 'event' },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'pool', type: 'address' }
+    ],
+    name: 'PoolCreated',
+    type: 'event'
+  },
+  {
+    inputs: [
+      { internalType: 'string', name: 'name', type: 'string' },
+      { internalType: 'string', name: 'symbol', type: 'string' },
+      { internalType: 'contract IERC20[]', name: 'tokens', type: 'address[]' },
+      {
+        internalType: 'uint256[]',
+        name: 'normalizedWeights',
+        type: 'uint256[]'
+      },
+      {
+        internalType: 'contract IRateProvider[]',
+        name: 'rateProviders',
+        type: 'address[]'
+      },
+      { internalType: 'uint256', name: 'swapFeePercentage', type: 'uint256' },
+      { internalType: 'address', name: 'owner', type: 'address' }
+    ],
+    name: 'create',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'disable',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'bytes4', name: 'selector', type: 'bytes4' }],
+    name: 'getActionId',
+    outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getAuthorizer',
+    outputs: [
+      { internalType: 'contract IAuthorizer', name: '', type: 'address' }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getCreationCode',
+    outputs: [{ internalType: 'bytes', name: '', type: 'bytes' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getCreationCodeContracts',
+    outputs: [
+      { internalType: 'address', name: 'contractA', type: 'address' },
+      { internalType: 'address', name: 'contractB', type: 'address' }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getPauseConfiguration',
+    outputs: [
+      { internalType: 'uint256', name: 'pauseWindowDuration', type: 'uint256' },
+      { internalType: 'uint256', name: 'bufferPeriodDuration', type: 'uint256' }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getProtocolFeePercentagesProvider',
+    outputs: [
+      {
+        internalType: 'contract IProtocolFeePercentagesProvider',
+        name: '',
+        type: 'address'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getVault',
+    outputs: [{ internalType: 'contract IVault', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'isDisabled',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'pool', type: 'address' }],
+    name: 'isPoolFromFactory',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function'
+  }
+];

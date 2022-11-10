@@ -368,6 +368,43 @@ const POOLS_MUMBAI: Pools = {
   }
 };
 
+// SOLACE_TODO - Add pools when deployed
+const POOLS_AURORA: Pools = {
+  IdsMap: {
+    '80HLDR-20WNEAR': '0x0000000000000000000000000000000000000000'
+  },
+  Pagination: {
+    PerPage: 10,
+    PerPool: 10,
+    PerPoolInitial: 5
+  },
+  DelegateOwner: '0xba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1ba1b',
+  ZeroAddress: '0x0000000000000000000000000000000000000000',
+  DynamicFees: {
+    Gauntlet: []
+  },
+  BlockList: [''],
+  ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
+  Stable: {
+    AllowList: [
+      '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000' // mai,
+    ]
+  },
+  Investment: {
+    AllowList: ['']
+  },
+  Factories: {
+    '0xDD1591D7BdF0E3ddEa4b4377cf03373700BED38e': 'weightedPool', // Weighted
+    '0xB2f941B85791e47FAa6391Cdef36A3BBaD19b73E': 'stablePool',
+    '0x1001e599ff9079717E176f224de7f1a27eACD3C2': 'liquidityBootstrappingPool',
+  },
+  Stakable: {
+    AllowList: [
+      '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000' // TEST - TEST2 pool
+    ]
+  }
+};
+
 const POOLS_GENERIC: Pools = {
   IdsMap: {},
   Pagination: {
@@ -450,7 +487,8 @@ const POOLS_MAP = {
   [Network.MAINNET]: POOLS_MAINNET,
   [Network.POLYGON]: POOLS_POLYGON,
   [Network.ARBITRUM]: POOLS_ARBITRUM,
-  [80001]: POOLS_MUMBAI
+  [80001]: POOLS_MUMBAI,
+  [1313161554]: POOLS_AURORA
 };
 export const POOLS: Pools = POOLS_MAP[networkId.value]
   ? POOLS_MAP[networkId.value]
