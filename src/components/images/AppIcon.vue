@@ -31,9 +31,9 @@ const useDarkLogo = computed(() => (props.forceDark ? true : darkMode.value));
 <template>
   <img
     v-if="useDarkLogo"
-    src="~@/assets/images/logo-dark.svg"
+    src="~@/assets/images/holdr-logo.svg"
     width="30"
     class="mr-2"
   />
-  <img v-else src="~@/assets/images/logo-light.svg" width="30" class="mr-2" />
+  <img v-else src="~@/assets/images/holdr-logo.svg" width="30" class="mr-2" />
 </template>

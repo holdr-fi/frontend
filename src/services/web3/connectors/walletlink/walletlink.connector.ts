@@ -11,7 +11,7 @@ export class WalletLinkConnector extends Connector {
     const configService = new ConfigService();
     const walletLink = new WalletLink({
       appName: 'Balancer',
-      appLogoUrl: '~@/assets/images/logo-dark.svg',
+      appLogoUrl: '~@/assets/images/holdr-logo.svg',
       darkMode: false
     });
     const provider = walletLink.makeWeb3Provider(

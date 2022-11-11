@@ -99,7 +99,7 @@ watch(blockNumber, async () => {
       </div>
     </div>
 
-    <div class="grid grid-col-1 text-sm mt-5">
+    <!-- <div class="grid grid-col-1 text-sm mt-5">
       <span class="text-gray-500 px-4 pb-1 font-medium">Ecosystem</span>
       <BalLink
         v-for="link in ecosystemLinks"
@@ -112,13 +112,13 @@ watch(blockNumber, async () => {
         {{ link.label }}
         <BalIcon name="arrow-up-right" size="sm" class="ml-1 text-gray-500" />
       </BalLink>
-    </div>
+    </div> -->
 
     <div class="mt-6 px-4">
-      <div id="intercom-activator" class="side-bar-btn">
+      <!-- <div id="intercom-activator" class="side-bar-btn">
         <IntercomIcon />
         <span class="ml-2">Chat for help</span>
-      </div>
+      </div> -->
       <div class="side-bar-btn mt-2" @click="toggleDarkMode">
         <MoonIcon v-if="!darkMode" class="mr-2" />
         <SunIcon v-else class="mr-2" />
@@ -126,7 +126,7 @@ watch(blockNumber, async () => {
       </div>
     </div>
 
-    <div class="mt-4 px-4 grid grid-rows-1 grid-flow-col auto-cols-min gap-2">
+    <!-- <div class="mt-4 px-4 grid grid-rows-1 grid-flow-col auto-cols-min gap-2">
       <BalLink
         v-for="link in socialLinks"
         :key="link.component"
@@ -167,7 +167,7 @@ watch(blockNumber, async () => {
         App: v{{ version }}
         <BalIcon name="arrow-up-right" size="xs" class="ml-1" />
       </BalLink>
-    </div>
+    </div> -->
   </div>
 </template>
 
