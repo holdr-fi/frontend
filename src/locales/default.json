@@ -116,7 +116,7 @@
     "copperLaunchPromo": {
         "buttonLabel": "View this auction on Copper",
         "description": "Copper is the platform for FLAs—a simple crowdfunding mechanism that enables projects and ideas from across the world to raise money from individuals without barriers to entry.",
-        "poweredByBalancer": "Copper is built on Balancer V2 and uses Liquidity Bootstrapping Pools to power its FLAs",
+        "poweredByBalancer": "Copper is built on Holdr V2 and uses Liquidity Bootstrapping Pools to power its FLAs",
         "title": "A Copper fair launch auction pool (FLA)"
     },
     "continueAnyway": "Continue anyway",
@@ -245,10 +245,10 @@
     "featuredProtocol": "Featured ecosystem protocol",
     "featuredProtocols": {
         "title": "Featured ecosystem protocols",
-        "Copper": "Copper offers an intuitive UI for creating, managing & tracking Balancer Liquidity Bootstrapping Pools (LBPs) on a transparent and user-friendly platform.",
-        "Element": "An open source protocol for fixed & variable yield markets, Element enables efficient trading with a Balancer Pool that minimizes slippage and impermanent loss.",
-        "Sense": "Sense is a protocol for DeFi yield primitives, and Sense Space, an AMM built on Balancer, facilitates efficient trading between yield and principle tokens.",
-        "Tracer": "An open-source protocol for derivative markets, Tracer DAO utilizes Balancer Protocol for aggregated liquidity and creating a market for leveraged tokens."
+        "Copper": "Copper offers an intuitive UI for creating, managing & tracking Holdr Liquidity Bootstrapping Pools (LBPs) on a transparent and user-friendly platform.",
+        "Element": "An open source protocol for fixed & variable yield markets, Element enables efficient trading with a Holdr Pool that minimizes slippage and impermanent loss.",
+        "Sense": "Sense is a protocol for DeFi yield primitives, and Sense Space, an AMM built on Holdr, facilitates efficient trading between yield and principle tokens.",
+        "Tracer": "An open-source protocol for derivative markets, Tracer DAO utilizes Holdr Protocol for aggregated liquidity and creating a market for leveraged tokens."
     },
     "fees": "fees",
     "feesManagedByGauntlet": "Liquidity providers earn dynamic swap fees on every trade utilizing the liquidity in this pool. Dynamic swap fees are controlled by governance and are currently set by Gauntlet.",
@@ -288,14 +288,14 @@
             "header": "The fees on this transaction exceed 20% of the trade amount."
         }
     },
-    "goToBalancerV1Site": "Go to the Balancer V1 site ->",
+    "goToBalancerV1Site": "Go to the Holdr V1 site ->",
     "goToMigratedPool": "Go to migrated pool",
     "governance": "Governance",
     "grants": "Grants",
     "highGasFees": "High gas fees? Here's a helping hand",
     "highPriceImpact": "High price impact",
     "highPriceImpactDetailed": "This trade is significantly moving the market price.",
-    "highRiskPool": "This is a higher-risk pool that contains one or more unlisted tokens. A liquidity pool is only as good as its weakest token! If a token were blacklisted, infinitely minted, frozen, or exploited in any other way, the value of this pool could go to 0. Balancer Labs is never liable for losses incurred through using our UI or the Balancer protocol. Be careful, and do your own research!",
+    "highRiskPool": "This is a higher-risk pool that contains one or more unlisted tokens. A liquidity pool is only as good as its weakest token! If a token were blacklisted, infinitely minted, frozen, or exploited in any other way, the value of this pool could go to 0. Holdr Labs is never liable for losses incurred through using our UI or the Holdr protocol. Be careful, and do your own research!",
     "home": "Home",
     "hourAbbrev": "h",
     "incentiveToken": "Incentive token",
@@ -326,7 +326,7 @@
                 "default": "Investment preview"
             },
             "tooltips": {
-                "approval": "You must approve {0} to invest this token on Balancer. Approvals are required once per token, per wallet."
+                "approval": "You must approve {0} to invest this token on Holdr. Approvals are required once per token, per wallet."
             }
         },
         "warning": {
@@ -450,7 +450,7 @@
     "noInvestments": "No investments",
     "noInvestmentsPool": "No investments in this pool",
     "noNativeCurrency": "You’ll need some {0} for gas fees in order to transact on {1}.",
-    "noNativeCurrencyEthereum": "You’ll need some {0} for gas fees in order to do most basic transactions on {1}. However, you may continue to trade any tokens you’ve previously approved for use on Balancer with this wallet, by using the ‘trade gasless’ option.",
+    "noNativeCurrencyEthereum": "You’ll need some {0} for gas fees in order to do most basic transactions on {1}. However, you may continue to trade any tokens you’ve previously approved for use on Holdr with this wallet, by using the ‘trade gasless’ option.",
     "noPoolsFound": "No pools found",
     "noPriceImpact": "Best price",
     "noPriceImpactTip": "Adding tokens proportionally gets you the best price.",
@@ -477,7 +477,7 @@
         "claim": {
             "title": "Claim your liquidity mining incentives",
             "description": "The Holdr protocol and partners provide incentives to attract liquidity in eligible pools. Stakers in these pools accumulate incentives every block. People with veHLDR get a boosted rate—up to 2.5x extra.",
-            "descriptionL2": "The Balancer protocol and partners provide incentives to attract liquidity in certain pools (the ones with the sparkle icons). On Polygon and Arbitrum, invest in these pools and stake the LP tokens to receive incentives.",
+            "descriptionL2": "The Holdr protocol and partners provide incentives to attract liquidity in certain pools (the ones with the sparkle icons). On Polygon and Arbitrum, invest in these pools and stake the LP tokens to receive incentives.",
             "transitionInfo": {
                 "title": "veHLDR liquidity mining incentives are live!",
                 "titleL2": "Transition to new veHLDR tokenomics",
@@ -559,16 +559,16 @@
     "poolValue": "Pool value",
     "poolWarnings": {
         "bugWarning20220513": {
-            "title": "This pool contains double-entrypoint tokens, which have been found to be incompatible with Balancer. It is currently not possible to withdraw all assets from the pool proportionally. While it is possible to withdraw in a single asset, liquidity providers are advised to wait. A mechanism is being implemented to allow for proportional withdrawals. <a href=\"https://forum.balancer.fi/t/medium-severity-bug-found/3161\" target=\"blank\" rel=\"noreferrer\" class=\"underline\">Learn more </a>"
+            "title": "This pool contains double-entrypoint tokens, which have been found to be incompatible with Holdr. It is currently not possible to withdraw all assets from the pool proportionally. While it is possible to withdraw in a single asset, liquidity providers are advised to wait. A mechanism is being implemented to allow for proportional withdrawals. <a href=\"https://forum.balancer.fi/t/medium-severity-bug-found/3161\" target=\"blank\" rel=\"noreferrer\" class=\"underline\">Learn more </a>"
         },
         "poolOwnerVulnWarningGovernance": {
-            "title": "This pool is affected by a vulnerability disclosed <a href=\"https://forum.balancer.fi/t/vulnerability-disclosure/3179\" target=\"blank\" rel=\"noreferrer\" class=\"underline\">here</a>. Funds are safe insofar as the exploit would have to be initiated by Balancer Governance itself. A new version of the pool will be deployed in the next few weeks that can be migrated to."
+            "title": "This pool is affected by a vulnerability disclosed <a href=\"https://forum.balancer.fi/t/vulnerability-disclosure/3179\" target=\"blank\" rel=\"noreferrer\" class=\"underline\">here</a>. Funds are safe insofar as the exploit would have to be initiated by Holdr Governance itself. A new version of the pool will be deployed in the next few weeks that can be migrated to."
         },
         "poolOwnerVulnWarningEcosystem": {
-            "title": "This pool is affected by a vulnerability disclosed <a href=\"https://forum.balancer.fi/t/vulnerability-disclosure/3179\" target=\"blank\" rel=\"noreferrer\" class=\"underline\">here</a>. Funds are safe insofar as the exploit would have to be initiated by a multisig composed of known participants in the Balancer ecosystem."
+            "title": "This pool is affected by a vulnerability disclosed <a href=\"https://forum.balancer.fi/t/vulnerability-disclosure/3179\" target=\"blank\" rel=\"noreferrer\" class=\"underline\">here</a>. Funds are safe insofar as the exploit would have to be initiated by a multisig composed of known participants in the Holdr ecosystem."
         },
         "poolOwnerVulnWarningEcosystemMigrate": {
-            "title": "This pool is affected by a vulnerability disclosed <a href=\"https://forum.balancer.fi/t/vulnerability-disclosure/3179\" target=\"blank\" rel=\"noreferrer\" class=\"underline\">here</a>. Funds are safe insofar as the exploit would have to be initiated by a multisig composed of known participants in the Balancer ecosystem. A new version of the pool will be deployed in the next few weeks that can be migrated to."
+            "title": "This pool is affected by a vulnerability disclosed <a href=\"https://forum.balancer.fi/t/vulnerability-disclosure/3179\" target=\"blank\" rel=\"noreferrer\" class=\"underline\">here</a>. Funds are safe insofar as the exploit would have to be initiated by a multisig composed of known participants in the Holdr ecosystem. A new version of the pool will be deployed in the next few weeks that can be migrated to."
         }
     },
     "popularBases": "Popular:",
@@ -611,13 +611,13 @@
     "seeMore": "See more",
     "seeOnExplorer": "See on explorer",
     "seePools": "See pools",
-    "seeV1BalancerInvestments": "Want to see your Balancer V1 investments?",
+    "seeV1BalancerInvestments": "Want to see your Holdr V1 investments?",
     "select": "Select",
     "selectToken": "Select token",
     "sell": "Sell",
     "send": "Send",
     "settings": "Settings",
-    "setUpEthereumWallet": "Balancer is a DeFi app on Ethereum. Set up an Ethereum Wallet to Invest and Trade here.",
+    "setUpEthereumWallet": "Holdr is a DeFi app on Ethereum. Set up a Wallet to Invest and Trade here.",
     "singleToken": "Single token",
     "singleTokenMax": "Single token max",
     "slippageTolerance": "Slippage tolerance",
@@ -948,7 +948,7 @@
             "description": "Unlock on Aurora"
         }
     },
-    "tableShowsBalancerV2Pools": "This table shows only Balancer V2 pools.",
+    "tableShowsBalancerV2Pools": "This table shows only Holdr V2 pools.",
     "theme": "Theme",
     "yieldAprRewards": {
         "apr": {
@@ -978,7 +978,7 @@
     "tokensLowerCase": "tokens",
     "tokensParen": "Token(s)",
     "tokenPrices": "Token prices",
-    "tokenWarning": "Balancer Labs is not liable for any losses you might incur as a direct or indirect result of adding liquidity to this pool. Do not add deflationary tokens, tokens with transfer fees, or any other non-ERC20-conforming tokens. Please acknowlege before continuing.",
+    "tokenWarning": "Holdr Labs is not liable for any losses you might incur as a direct or indirect result of adding liquidity to this pool. Do not add deflationary tokens, tokens with transfer fees, or any other non-ERC20-conforming tokens. Please acknowlege before continuing.",
     "tokenWarningTitle": "You have added a custom token",
     "tooltips": {
         "invest": {
@@ -1014,13 +1014,13 @@
             "wrapUnwrap": "This option has been disabled because Wrap/Unwrap transactions always require a gas transaction."
         },
         "label": "Trade gasless",
-        "tooltip": "‘Trade gasless’ on the Balancer CoW Protocol for free signature trades, MEV protection, and the best prices with intelligent trade routing across DeFi exchanges. Turn it off to trade only through Balancer liquidity pools using gas."
+        "tooltip": "‘Trade gasless’ on the Holdr CoW Protocol for free signature trades, MEV protection, and the best prices with intelligent trade routing across DeFi exchanges. Turn it off to trade only through Holdr liquidity pools using gas."
     },
     "tradeInterface": "Trade interface",
-    "tradeInterfaceTooltip": "Choose Balancer for the best liquidity across Balancer V1 and V2 pools. Choose Gnosis to buy and sell tokens using gas-less orders while enjoying MEV protection.",
+    "tradeInterfaceTooltip": "Choose Holdr for the best liquidity across Holdr V1 and V2 pools. Choose Gnosis to buy and sell tokens using gas-less orders while enjoying MEV protection.",
     "tradeLiquidity": "Trade liquidity",
     "tradeSettled": "Your trade has settled",
-    "tradesThroughWeth": "Trades from ETH route through Balancer liquidity pools and incur gas fees.",
+    "tradesThroughWeth": "Trades from ETH route through Holdr liquidity pools and incur gas fees.",
     "tradeSubmissionError": {
         "actionLabel": "Dismiss",
         "title": "An error has occurred"
@@ -1052,11 +1052,11 @@
                 "title": "Approve Lido relayer"
             },
             "tokenApproval": {
-                "content": "Your permission is required to trade this token on Balancer. Approvals are required once per token, per wallet.",
+                "content": "Your permission is required to trade this token on Holdr. Approvals are required once per token, per wallet.",
                 "title": "Approve {0}"
             },
             "sign": {
-                "content": "Upon your signature, the Balancer CoW Protocol will find an optimal route amongst other traders or DeFi exchanges, with MEV protection.",
+                "content": "Upon your signature, the Holdr CoW Protocol will find an optimal route amongst other traders or DeFi exchanges, with MEV protection.",
                 "title": "Sign a free message to trade"
             },
             "trade": {
@@ -1149,8 +1149,8 @@
     },
     "transactionType": "Transaction type",
     "unallocated": "Unallocated",
-    "unavailableOnNetwork": "Sorry! Balancer is not available on this network",
-    "unavailableOnNetworkWithName": "Sorry! Balancer is not available on {0}",
+    "unavailableOnNetwork": "Sorry! Holdr is not available on this network",
+    "unavailableOnNetworkWithName": "Sorry! Holdr is not available on {0}",
     "unsupportedNetwork": "Unsupported network",
     "unknown": "Unknown",
     "unknownPoolType": "Unknown pool type",

@@ -3,7 +3,7 @@
 ```bash
 npm run build
 aws s3 rm s3://app.holdr.fi --include "*" --recursive
-aws s3 cp --recursive build/ s3://app.holdr.fi/
+aws s3 cp --recursive dist/ s3://app.holdr.fi/
 ```
 
 *Aurora fork deploy steps*
