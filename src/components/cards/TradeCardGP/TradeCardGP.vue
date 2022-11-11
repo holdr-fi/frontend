@@ -402,8 +402,8 @@ export default defineComponent({
     }
 
     // INIT
-    onBeforeMount(() => {
-      populateInitialTokens();
+    onBeforeMount(async () => {
+      await populateInitialTokens();
       setInitialized(true);
     });
 
