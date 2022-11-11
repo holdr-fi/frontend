@@ -31,7 +31,7 @@
         dark:to-gray-850
       "
     >
-      <h6>{{ $t('newToEthereum') }}</h6>
+      <!-- <h6>{{ $t('newToEthereum') }}</h6>
       <p class="text-sm">
         {{ $t('setUpEthereumWallet') }}
         <BalLink :href="EXTERNAL_LINKS.Ethereum.Wallets" external>
@@ -40,7 +40,7 @@
             ><BalIcon name="arrow-up-right" size="sm"
           /></span>
         </BalLink>
-      </p>
+      </p> -->
     </div>
   </BalModal>
 </template>
