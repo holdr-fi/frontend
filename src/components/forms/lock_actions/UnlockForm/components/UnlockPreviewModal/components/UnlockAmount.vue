@@ -9,7 +9,7 @@ import { Pool } from '@/services/pool/types';
  * TYPES
  */
 type Props = {
-  lockablePool: Pool;
+  lockablePool?: Pool;
   totalLpTokens: string;
 };
 
@@ -28,14 +28,16 @@ const { fNum2 } = useNumbers();
  * COMPUTED
  */
 const poolWeightsLabel = computed(() =>
-  props.lockablePool.tokens
-    .map(token => {
-      const weightLabel = formatWeightLabel(token.weight);
-      const symbol = token.symbol ?? getToken(token.address).symbol;
+  props.lockablePool
+    ? props.lockablePool.tokens
+        .map(token => {
+          const weightLabel = formatWeightLabel(token.weight);
+          const symbol = token.symbol ?? getToken(token.address).symbol;
 
-      return `${weightLabel} ${symbol}`;
-    })
-    .join(' / ')
+          return `${weightLabel} ${symbol}`;
+        })
+        .join(' / ')
+    : ''
 );
 
 /**
@@ -66,7 +68,7 @@ function formatWeightLabel(weight: string) {
       </div>
       <div class="grid gap-1 grid-cols-2">
         <BalAsset
-          v-for="tokenAddress in lockablePool.tokenAddresses"
+          v-for="tokenAddress in lockablePool?.tokensList"
           :key="tokenAddress"
           :address="tokenAddress"
           :size="30"

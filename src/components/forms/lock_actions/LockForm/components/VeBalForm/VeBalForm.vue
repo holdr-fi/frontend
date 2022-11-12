@@ -23,8 +23,8 @@ import Summary from './components/Summary.vue';
  * TYPES
  */
 type Props = {
-  lockablePool: Pool;
-  lockablePoolTokenInfo: TokenInfo;
+  lockablePool?: Pool;
+  lockablePoolTokenInfo: TokenInfo | null;
   veBalLockInfo?: VeBalLockInfo;
 };
 
@@ -67,7 +67,7 @@ const { balanceFor } = useTokens();
  * COMPUTED
  */
 const lockablePoolBptBalance = computed(() =>
-  balanceFor(props.lockablePool.address)
+  props.lockablePool ? balanceFor(props.lockablePool.address) : '0'
 );
 
 const submissionDisabled = computed(() => {
@@ -138,11 +138,13 @@ function handleShowPreviewModal() {
     </template>
 
     <LockAmount
+      v-if="lockablePool && lockablePoolTokenInfo"
       :lockablePool="lockablePool"
       :lockablePoolTokenInfo="lockablePoolTokenInfo"
     />
 
     <LockEndDate
+      v-if="veBalLockInfo"
       :minLockEndDateTimestamp="minLockEndDateTimestamp"
       :maxLockEndDateTimestamp="maxLockEndDateTimestamp"
       :veBalLockInfo="veBalLockInfo"
@@ -171,7 +173,12 @@ function handleShowPreviewModal() {
   </BalCard>
   <teleport to="#modal">
     <LockPreviewModal
-      v-if="showPreviewModal"
+      v-if="
+        showPreviewModal &&
+          lockablePool &&
+          lockablePoolTokenInfo &&
+          veBalLockInfo
+      "
       :lockablePool="lockablePool"
       :lockablePoolTokenInfo="lockablePoolTokenInfo"
       :lockAmount="lockAmount"

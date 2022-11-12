@@ -5,13 +5,14 @@ import { PRETTY_DATE_FORMAT } from '@/components/forms/lock_actions/constants';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import useVeBal from '@/composables/useVeBAL';
 import { VeBalLockInfo } from '@/services/balancer/contracts/contracts/veBAL';
+import BigNumber from 'bignumber.js';
 
 /**
  * TYPES
  */
 type Props = {
-  fiatTotalLpTokens: string;
-  veBalLockInfo: VeBalLockInfo;
+  fiatTotalLpTokens?: BigNumber;
+  veBalLockInfo?: VeBalLockInfo;
 };
 
 /**
@@ -41,7 +42,8 @@ const { veBalTokenInfo } = useVeBal();
           {{ $t('unlockVeBAL.previewModal.summary.totalToUnlock') }}
         </div>
         <div>
-          {{ fNum2(fiatTotalLpTokens, FNumFormats.fiat) }}
+          <!-- {{ fNum2(fiatTotalLpTokens, FNumFormats.fiat) }} -->
+          {{ fiatTotalLpTokens }}
         </div>
       </div>
       <div class="summary-item-row">
@@ -53,7 +55,7 @@ const { veBalTokenInfo } = useVeBal();
           {{ veBalTokenInfo.symbol }}
         </div>
       </div>
-      <div class="summary-item-row">
+      <div class="summary-item-row" v-if="veBalLockInfo != undefined">
         <div>
           {{ $t('unlockVeBAL.previewModal.summary.expiredOn') }}
         </div>

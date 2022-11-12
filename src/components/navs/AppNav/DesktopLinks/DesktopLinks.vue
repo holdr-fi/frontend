@@ -30,13 +30,16 @@ function isActive(page: string): boolean {
     </DesktopLinkItem>
     <DesktopLinkItem to="/bribe" :active="isActive('bribe')">
       Bribe
-    </DesktopLinkItem> 
+    </DesktopLinkItem>
     <DesktopLinkItem to="/claim" :active="isActive('claim')">
       <div class="flex items-center">
         {{ $t('claim') }}
         <StarsIcon class="ml-1 h-5 w-4" />
       </div>
     </DesktopLinkItem>
+    <!-- <DesktopLinkItem to="/lbp" :active="isActive('lbp')">
+      HLDR Sale
+    </DesktopLinkItem> -->
   </div>
 </template>
 

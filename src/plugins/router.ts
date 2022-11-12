@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
 const ClaimPage = () =>
   import(/* webpackChunkName: "ClaimPage" */ '@/pages/claim.vue');
+const LbpPage = () =>
+  import(/* webpackChunkName: "LbpPage" */ '@/pages/lbp.vue');
 const CookiesPolicyPage = () =>
   import(
     /* webpackChunkName: "CookiesPolicyPage" */ '@/pages/cookies-policy.vue'
@@ -62,6 +64,11 @@ const routes: RouteRecordRaw[] = [
     path: '/bribe',
     name: 'bribe',
     component: BribePage
+  },
+  {
+    path: '/lbp',
+    name: 'lbp',
+    component: LbpPage
   },
   {
     path: '/swap/:assetIn?/:assetOut?',

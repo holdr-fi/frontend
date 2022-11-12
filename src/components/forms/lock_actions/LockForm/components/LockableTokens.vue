@@ -12,8 +12,8 @@ import { TokenInfo } from '@/types/TokenList';
  * TYPES
  */
 type Props = {
-  lockablePool: Pool;
-  lockablePoolTokenInfo: TokenInfo;
+  lockablePool?: Pool;
+  lockablePoolTokenInfo: TokenInfo | null;
   veBalLockInfo?: VeBalLockInfo;
 };
 
@@ -31,13 +31,17 @@ const { fNum2 } = useNumbers();
 /**
  * COMPUTED
  */
-const bptBalance = computed(() => balanceFor(props.lockablePool.address));
+const bptBalance = computed(() =>
+  props.lockablePool ? balanceFor(props.lockablePool.address) : '0'
+);
 
 const fiatTotal = computed((): string =>
-  bnum(props.lockablePool.totalLiquidity)
-    .div(props.lockablePool.totalShares)
-    .times(bptBalance.value)
-    .toString()
+  props.lockablePool
+    ? bnum(props.lockablePool.totalLiquidity)
+        .div(props.lockablePool.totalShares)
+        .times(bptBalance.value)
+        .toString()
+    : '0'
 );
 </script>
 
@@ -50,14 +54,15 @@ const fiatTotal = computed((): string =>
     </div>
     <div class="-mt-2 p-4">
       <div class="flex justify-between">
-        <div>{{ lockablePoolTokenInfo.symbol }}</div>
+        <div>{{ lockablePoolTokenInfo?.symbol }}</div>
         <div>{{ fNum2(bptBalance, FNumFormats.token) }}</div>
       </div>
       <div class="flex justify-between text-gray-500">
-        <div>{{ lockablePoolTokenInfo.name }}</div>
+        <div>{{ lockablePoolTokenInfo?.name }}</div>
         <div>{{ fNum2(fiatTotal, FNumFormats.fiat) }}</div>
       </div>
       <BalLink
+        v-if="lockablePool != undefined"
         tag="router-link"
         :to="{ name: 'invest', params: { id: lockablePool.id } }"
         external
@@ -65,7 +70,7 @@ const fiatTotal = computed((): string =>
       >
         {{
           $t('getVeBAL.lockableTokens.getMoreVeBAL', [
-            lockablePoolTokenInfo.symbol
+            lockablePoolTokenInfo?.symbol
           ])
         }}
       </BalLink>

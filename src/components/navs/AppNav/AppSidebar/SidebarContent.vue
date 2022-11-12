@@ -35,7 +35,8 @@ const navLinks = [
   { label: t('trade'), path: '/trade' },
   { label: 'veHLDR', path: '/vehldr' },
   { label: 'Bribe', path: '/bribe' },
-  { label: t('claim'), path: '/claim' }
+  { label: t('claim'), path: '/claim' },
+  // { label: 'HlDR Sale', path: '/lbp' }
 ];
 
 const ecosystemLinks = [

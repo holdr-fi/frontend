@@ -10,16 +10,17 @@ import { TokenInfo } from '@/types/TokenList';
 import UnlockActions from './components/UnlockActions.vue';
 import UnlockAmount from './components/UnlockAmount.vue';
 import UnlockSummary from './components/UnlockSummary.vue';
+import BigNumber from 'bignumber.js';
 
 /**
  * TYPES
  */
 type Props = {
-  lockablePool: Pool;
-  lockablePoolTokenInfo: TokenInfo;
-  veBalLockInfo: VeBalLockInfo;
+  lockablePool?: Pool;
+  lockablePoolTokenInfo?: TokenInfo;
+  veBalLockInfo?: VeBalLockInfo;
   totalLpTokens: string;
-  fiatTotalLpTokens: string;
+  fiatTotalLpTokens?: BigNumber;
 };
 
 /**

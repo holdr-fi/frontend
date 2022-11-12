@@ -20,7 +20,7 @@ import { TransactionActionInfo } from '@/types/transactions';
  * TYPES
  */
 type Props = {
-  lockablePoolTokenInfo: TokenInfo;
+  lockablePoolTokenInfo?: TokenInfo;
   totalLpTokens: string;
 };
 
@@ -81,9 +81,8 @@ async function handleTransaction(tx: TransactionResponse): Promise<void> {
     id: tx.hash,
     type: 'tx',
     action: 'unlock',
-    summary: `${fNum2(props.totalLpTokens, FNumFormats.token)} ${
-      props.lockablePoolTokenInfo.symbol
-    }`,
+    summary: `${fNum2(props.totalLpTokens, FNumFormats.token)} ${props
+      .lockablePoolTokenInfo?.symbol ?? ''}`,
     details: {
       totalLpTokens: props.totalLpTokens
     }

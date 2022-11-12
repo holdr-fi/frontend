@@ -9,8 +9,8 @@ import { TokenInfo } from '@/types/TokenList';
  * TYPES
  */
 type Props = {
-  lockablePool: Pool;
-  lockablePoolTokenInfo: TokenInfo;
+  lockablePool?: Pool;
+  lockablePoolTokenInfo: TokenInfo | null;
 };
 
 /**
@@ -27,7 +27,7 @@ const { t } = useI18n();
  * COMPUTED
  */
 const steps = computed(() => [
-  t('getVeBAL.howToLock.steps.lock', [props.lockablePoolTokenInfo.symbol]),
+  t('getVeBAL.howToLock.steps.lock', [props.lockablePoolTokenInfo?.symbol]),
   t('getVeBAL.howToLock.earn.boost'),
   t('getVeBAL.howToLock.earn.voting')
 ]);
@@ -60,11 +60,12 @@ const steps = computed(() => [
             <li>
               {{ $t('getVeBAL.howToLock.steps.investPart1') }}
               <BalLink
+                v-if="lockablePool"
                 tag="router-link"
                 :to="{ name: 'invest', params: { id: lockablePool.id } }"
                 external
               >
-                {{ lockablePoolTokenInfo.symbol }}
+                {{ lockablePoolTokenInfo?.symbol }}
               </BalLink>
               {{ $t('getVeBAL.howToLock.steps.investPart2') }}
             </li>

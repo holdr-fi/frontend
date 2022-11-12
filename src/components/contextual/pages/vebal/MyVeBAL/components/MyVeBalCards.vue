@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { differenceInDays, format } from 'date-fns';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { PRETTY_DATE_FORMAT } from '@/components/forms/lock_actions/constants';
@@ -18,8 +18,8 @@ import { TokenInfo } from '@/types/TokenList';
  * TYPES
  */
 type Props = {
-  lockablePool: Pool;
-  lockablePoolTokenInfo: TokenInfo;
+  lockablePool?: Pool;
+  lockablePoolTokenInfo?: TokenInfo;
   veBalLockInfo?: VeBalLockInfo;
 };
 
@@ -46,10 +46,16 @@ const { isWalletReady } = useWeb3();
  * COMPUTED
  */
 const poolShares = computed(() =>
-  bnum(props.lockablePool.totalLiquidity).div(props.lockablePool.totalShares)
+  props.lockablePool
+    ? bnum(props.lockablePool.totalLiquidity).div(
+        props.lockablePool.totalShares
+      )
+    : bnum(0)
 );
 
-const bptBalance = computed(() => balanceFor(props.lockablePool.address));
+const bptBalance = computed(() =>
+  props.lockablePool ? balanceFor(props.lockablePool.address) : '0'
+);
 
 const fiatTotal = computed(() =>
   poolShares.value.times(bptBalance.value).toString()
@@ -74,16 +80,18 @@ const totalExpiredLpTokens = computed(() =>
 );
 
 const fiatTotalExpiredLpTokens = computed(() =>
-  bnum(props.lockablePool.totalLiquidity)
-    .div(props.lockablePool.totalShares)
-    .times(totalExpiredLpTokens.value)
+  props.lockablePool
+    ? bnum(props.lockablePool.totalLiquidity)
+        .div(props.lockablePool.totalShares)
+        .times(totalExpiredLpTokens.value)
+    : bnum(0)
 );
 
 const cards = computed(() => {
   const hasExistingLock = props.veBalLockInfo?.hasExistingLock;
   const isExpired = props.veBalLockInfo?.isExpired;
 
-  return [
+  const _cards = [
     {
       id: 'myLpToken',
       label: t('veBAL.myVeBAL.cards.myLpToken.label'),
@@ -149,6 +157,8 @@ const cards = computed(() => {
         : '—'
     }
   ];
+
+  return _cards;
 });
 </script>
 
