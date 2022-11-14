@@ -87,7 +87,7 @@ function onClickConnect() {
       <template v-if="isWalletReady || isWalletConnecting">
         <h4 class="pb-3">
           <BalLink
-            href="https://www.notion.so/solacefi/Holdr-Friendly-Fork-Proposal-d6d6805fe17d447280bc20742eb19b26"
+            href="https://forum.balancer.fi/t/holdr-friendly-fork-proposal/3983"
             external
             noStyle
           >
@@ -142,7 +142,7 @@ function onClickConnect() {
       <template v-else>
         <h4 class="pb-3">
           <BalLink
-            href="https://www.notion.so/solacefi/Holdr-Friendly-Fork-Proposal-d6d6805fe17d447280bc20742eb19b26"
+            href="https://forum.balancer.fi/t/holdr-friendly-fork-proposal/3983"
             external
             noStyle
           >
