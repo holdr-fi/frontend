@@ -40,7 +40,7 @@ export class BribeService {
       this.rewardDistributorAbi,
       this.provider
     );
-    this.apiUrl = 'https://v6jd9srk2c.execute-api.us-west-2.amazonaws.com/dev/';
+    this.apiUrl = 'https://api.holdr.fi/bribe/';
   }
 
   async getWhitelistedTokens(): Promise<string[]> {

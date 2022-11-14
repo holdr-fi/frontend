@@ -37,9 +37,9 @@ function isActive(page: string): boolean {
         <StarsIcon class="ml-1 h-5 w-4" />
       </div>
     </DesktopLinkItem>
-    <!-- <DesktopLinkItem to="/lbp" :active="isActive('lbp')">
+    <DesktopLinkItem to="/lbp" :active="isActive('lbp')">
       HLDR Sale
-    </DesktopLinkItem> -->
+    </DesktopLinkItem>
   </div>
 </template>
 

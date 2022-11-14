@@ -36,7 +36,7 @@ const navLinks = [
   { label: 'veHLDR', path: '/vehldr' },
   { label: 'Bribe', path: '/bribe' },
   { label: t('claim'), path: '/claim' },
-  // { label: 'HlDR Sale', path: '/lbp' }
+  { label: 'HlDR Sale', path: '/lbp' }
 ];
 
 const ecosystemLinks = [
