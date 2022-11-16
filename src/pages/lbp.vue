@@ -7,15 +7,6 @@ import { useTradeState } from '@/composables/trade/useTradeState';
 import useTokens from '@/composables/useTokens';
 import router from '@/plugins/router';
 
-type SwapInfo = {
-  description: string;
-  tokenIn: string;
-  tokenOut: string;
-  decimalsIn: number;
-  decimalsOut: number;
-  rate: number; // For 1 of tokenIn (adjusted for decimals), how much tokenOut do we get?
-};
-
 const store = useStore();
 const { prices, tokens } = useTokens();
 const {
@@ -27,45 +18,42 @@ const {
   setTokenOutAddress
 } = useTradeState();
 const saleEnd = ref<string>('-');
-const ethPrice = ref<number>(0);
-const priceInUSD = ref<number>(0);
+const price = ref<string>('-');
 const wNearAddress = ref<string>('');
 const hldrAddress = ref<string>('');
+const loading = ref<boolean>(true);
 
-function calculateEnd(seconds: number) {
+function calculateEnd(timestamp: number) {
+  const diff = timestamp * 1000 - Date.now();
+  let seconds = parseInt((diff / 1000).toString());
   const days = parseInt((seconds / 86400).toString());
   seconds = seconds % 86400;
   const hours = parseInt((seconds / 3600).toString());
   seconds = seconds % 3600;
   const minutes = parseInt((seconds / 60).toString());
-  seconds = Math.floor(seconds % 60);
+  seconds = seconds % 60;
 
   saleEnd.value = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
 async function init() {
-  const remainingSecondsData = await axios.get('https://api.holdr.fi/lbp/time');
+  const timestampData = await axios.get('https://api.holdr.fi/lbp/time');
   const priceData = await axios.get('https://api.holdr.fi/lbp/price');
-  const remainingSeconds = remainingSecondsData.data;
-  calculateEnd(remainingSeconds);
-  const _prices: SwapInfo[] = priceData.data;
-  console.log(tokens)
+  const _price = priceData.data;
+  price.value = _price;
+  const timestamp = timestampData.data;
   const wNEAR = Object.values(tokens.value).find(p => p.symbol === 'NEAR');
   const HLDR = Object.values(tokens.value).find(p => p.symbol === 'HLDR');
   if (HLDR) hldrAddress.value = HLDR.address;
   if (wNEAR) wNearAddress.value = wNEAR.address;
+  loading.value = false;
+  setInterval(() => {
+    calculateEnd(timestamp);
+  }, 1000);
 }
 
 onBeforeMount(() => {
   init();
-});
-
-watch([prices, tokens], () => {
-  const foundEth = Object.values(tokens.value).find(p => p.symbol === 'ETH');
-  if (foundEth && prices.value[foundEth.address]) {
-    const _ethPrice = prices.value[foundEth.address].usd;
-    ethPrice.value = _ethPrice;
-  }
 });
 
 function redirectToTradePage() {
@@ -91,19 +79,18 @@ watch(tokenOutAddress, () => {
   <div class="w-full">
     <div class="hero-content justify-center">
       <h2 class="mb-3">
-        HLDR Token Sale
+        HLDR Liquidity Bootstrapping Pool
       </h2>
       <h3 class="mb-3">Time Remaining: {{ saleEnd }}</h3>
       <h3 class="mb-3">
         Starting Price
       </h3>
-      <h3>
-        Current Price
-      </h3>
+      <h3>Current Price: ${{ price }}</h3>
       <BalStack class="flex items-center">
         <BalBtn
           @click.prevent="redirectToTradePage"
           :disabled="!wNearAddress || !hldrAddress"
+          :loading="loading"
         >
           Buy HLDR
         </BalBtn>
