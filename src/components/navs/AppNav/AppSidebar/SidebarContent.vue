@@ -36,7 +36,7 @@ const navLinks = [
   { label: 'veHLDR', path: '/vehldr' },
   { label: 'Bribe', path: '/bribe' },
   { label: t('claim'), path: '/claim' },
-  { label: 'HLDR Token Launch', path: '/lbp' }
+  { label: 'HLDR Token Launch', path: '/lbp', special: true }
 ];
 
 const ecosystemLinks = [
@@ -94,6 +94,7 @@ watch(blockNumber, async () => {
         v-for="link in navLinks"
         :key="link.label"
         class="side-bar-link"
+        :class="[link.special ? 'special rocket-ship' : '']"
         @click="navTo(link.path)"
       >
         {{ link.label }}
@@ -183,6 +184,63 @@ watch(blockNumber, async () => {
 
 .social-link {
   @apply w-11 h-11 xs:w-12 xs:h-12  rounded-full bg-gray-850 hover:bg-gray-800 flex items-center justify-center text-white cursor-pointer;
+}
+
+.rocket-ship {
+  animation: bounce 1s infinite;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translate(15%, -15%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.special {
+  background-image: url('/images/backgrounds/hldr.png');
+  background-size: 100%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: yellow 1px 0 15px;
+  background-repeat: repeat;
+  background-size: cover;
+  animation: shine 15s linear infinite;
+}
+
+@-webkit-keyframes shine {
+  0% {
+    text-shadow: rgba(255, 226, 10, 0.5) 1px 0 3px;
+    background-position: 0 0;
+  }
+  50% {
+    text-shadow: rgba(255, 226, 10, 0.9) 1px 0 9px;
+  }
+  100% {
+    text-shadow: rgba(255, 226, 10, 0.5) 1px 0 3px;
+    background-position: 1300px 0;
+  }
+}
+@keyframes shine {
+  0% {
+    text-shadow: rgba(255, 226, 10, 0.5) 1px 0 3px;
+    background-position: 0 0;
+  }
+  50% {
+    text-shadow: rgba(255, 226, 10, 0.9) 1px 0 9px;
+  }
+  100% {
+    text-shadow: rgba(255, 226, 10, 0.5) 1px 0 3px;
+    background-position: 1300px 0;
+  }
 }
 
 .social-link > svg {
