@@ -36,7 +36,7 @@ const navLinks = [
   { label: 'veHLDR', path: '/vehldr' },
   { label: 'Bribe', path: '/bribe' },
   { label: t('claim'), path: '/claim' },
-  { label: 'LBP', path: '/lbp' }
+  { label: 'HLDR Token Launch', path: '/lbp' }
 ];
 
 const ecosystemLinks = [

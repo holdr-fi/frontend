@@ -32,13 +32,14 @@ function isActive(page: string): boolean {
       Bribe
     </DesktopLinkItem>
     <DesktopLinkItem to="/claim" :active="isActive('claim')">
-      <div class="flex items-center">
+      <!-- <div class="flex items-center">
         {{ $t('claim') }}
         <StarsIcon class="ml-1 h-5 w-4" />
-      </div>
+      </div> -->
+      {{ $t('claim') }}
     </DesktopLinkItem>
     <DesktopLinkItem to="/lbp" :active="isActive('lbp')">
-      LBP
+      HLDR Token Launch
     </DesktopLinkItem>
   </div>
 </template>
