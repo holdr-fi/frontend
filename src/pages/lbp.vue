@@ -65,6 +65,7 @@ const wNearAddress = ref<string>('');
 const hldrAddress = ref<string>('');
 const loading = ref<boolean>(true);
 const showPriceGraphModal = ref(false);
+const numTokens = ref(0);
 
 const error = computed(() => {
   if (trading.isBalancerTrade.value) {
@@ -158,33 +159,7 @@ const tradeDisabled = computed(() => {
   return hasValidationError || hasGnosisErrors || hasBalancerErrors;
 });
 
-const priceData = ref<[string, number][]>([
-  ['2022/11/16 00:00', 1.0],
-  ['2022/11/16 01:00', 0.959],
-  ['2022/11/16 02:00', 0.92],
-  ['2022/11/16 03:00', 0.882],
-  ['2022/11/16 04:00', 0.847],
-  ['2022/11/16 05:00', 0.813],
-  ['2022/11/16 06:00', 0.781],
-  ['2022/11/16 07:00', 0.751],
-  ['2022/11/16 08:00', 0.722],
-  ['2022/11/16 09:00', 0.695],
-  ['2022/11/16 10:00', 0.67],
-  ['2022/11/16 11:00', 0.647],
-  ['2022/11/16 12:00', 0.625],
-  ['2022/11/16 13:00', 0.605],
-  ['2022/11/16 14:00', 0.587],
-  ['2022/11/16 15:00', 0.57],
-  ['2022/11/16 16:00', 0.556],
-  ['2022/11/16 17:00', 0.542],
-  ['2022/11/16 18:00', 0.531],
-  ['2022/11/16 19:00', 0.521],
-  ['2022/11/16 20:00', 0.514],
-  ['2022/11/16 21:00', 0.508],
-  ['2022/11/16 22:00', 0.503],
-  ['2022/11/16 23:00', 0.501],
-  ['2022/11/16 24:00', 0.5]
-]);
+const priceData = ref<[string, number][]>([]);
 
 function calculateEnd(timestamp: number) {
   const diff = timestamp * 1000 - Date.now();
@@ -200,11 +175,15 @@ function calculateEnd(timestamp: number) {
 }
 
 async function init() {
-  const timestampData = await axios.get('https://api.holdr.fi/lbp/time');
-  // const priceData = await axios.get('https://api.holdr.fi/lbp/price');
-  // const _price = priceData.data;
-  // price.value = _price;
-  const timestamp = timestampData.data;
+  const [_timestampData, _priceData, _tokens] = await Promise.all([
+    axios.get('https://api.holdr.fi/lbp/time'),
+    axios.get('https://api.holdr.fi/lbp/price'),
+    axios.get('https://api.holdr.fi/lbp/tokens')
+  ]);
+  const _price = _priceData.data;
+  priceData.value = _price;
+  numTokens.value = _tokens.data;
+  const timestamp = _timestampData.data;
   const wNEAR = Object.values(tokens.value).find(p => p.symbol === 'NEAR');
   const HLDR = Object.values(tokens.value).find(p => p.symbol === 'HLDR');
   if (HLDR) hldrAddress.value = HLDR.address;
@@ -299,7 +278,9 @@ onBeforeUnmount(() => {
           </p>
           <BalLoadingBlock v-if="priceData.length == 0" />
           <p v-else class="text-lg font-semibold tabular-nums text-center">
-            <span> {{ priceData[priceData.length - 1][1] }} NEAR </span>
+            <span>
+              {{ fNum(priceData[priceData.length - 1][1], 'token') }} NEAR
+            </span>
           </p>
         </BalCard>
         <BalCard class="mt-4">
@@ -307,10 +288,10 @@ onBeforeUnmount(() => {
             Tokens Remaining:
           </p>
           <p class="text-lg font-semibold tabular-nums text-center">
-            <span> {{ fNum(300000, 'token') }} </span>
+            <span> {{ fNum(numTokens, 'token') }} </span>
           </p>
           <BalProgressBar
-            :width="(300000 / 1200000) * 100"
+            :width="(numTokens / 1200000) * 100"
             :buffer-width="0"
             :color="'green'"
             class="mt-2"
