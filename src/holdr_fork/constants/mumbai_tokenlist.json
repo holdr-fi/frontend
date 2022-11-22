@@ -43,6 +43,22 @@
         "symbol": "WMATIC",
         "decimals": 18,
         "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0/logo.png"
+      },
+      {
+        "address": "0x76e6Ab0F386A8Fcd727DcA6ce5C266D651458590",
+        "chainId": 80001,
+        "name": "Holdr Governance Token",
+        "symbol": "HLDR",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png"
+      },
+      {
+        "address": "0x0Ab2e51763E84c5473C8001b39F745dfE8d4f9f9",
+        "chainId": 80001,
+        "name": "USD Coin",
+        "symbol": "USDC",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
       }
     ]
   }
