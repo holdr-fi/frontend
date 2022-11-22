@@ -177,8 +177,8 @@ function calculateEnd(timestamp: number) {
 async function init() {
   const [_timestampData, _priceData, _tokens] = await Promise.all([
     axios.get('https://api.holdr.fi/lbp/time'),
-    axios.get('https://api.holdr.fi/lbp/price'),
-    axios.get('https://api.holdr.fi/lbp/tokens')
+    axios.get('https://api.holdr.fi/lbp/priceHistory'),
+    axios.get('https://api.holdr.fi/lbp/tokensRemaining')
   ]);
   const _price = _priceData.data;
   priceData.value = _price;
