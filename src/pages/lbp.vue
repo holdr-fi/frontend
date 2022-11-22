@@ -61,7 +61,7 @@ const saleEnd = ref<string>('-');
 const previousInputAddress = ref<string>('');
 const previousOutputAddress = ref<string>('');
 
-const wNearAddress = ref<string>('');
+const usdcAddress = ref<string>('');
 const hldrAddress = ref<string>('');
 const loading = ref<boolean>(true);
 const showPriceGraphModal = ref(false);
@@ -184,13 +184,13 @@ async function init() {
   priceData.value = _price;
   numTokens.value = _tokens.data;
   const timestamp = _timestampData.data;
-  const wNEAR = Object.values(tokens.value).find(p => p.symbol === 'NEAR');
+  const usdc = Object.values(tokens.value).find(p => p.symbol === 'USDC');
   const HLDR = Object.values(tokens.value).find(p => p.symbol === 'HLDR');
   if (HLDR) hldrAddress.value = HLDR.address;
-  if (wNEAR) wNearAddress.value = wNEAR.address;
+  if (usdc) usdcAddress.value = usdc.address;
   previousInputAddress.value = tokenInAddress.value;
   previousOutputAddress.value = tokenOutAddress.value;
-  setTokenInAddress(wNearAddress.value);
+  setTokenInAddress(usdcAddress.value);
   setTokenOutAddress(hldrAddress.value);
   loading.value = false;
   setInterval(() => {
@@ -279,7 +279,7 @@ onBeforeUnmount(() => {
           <BalLoadingBlock v-if="priceData.length == 0" />
           <p v-else class="text-lg font-semibold tabular-nums text-center">
             <span>
-              {{ fNum(priceData[priceData.length - 1][1], 'token') }} NEAR
+              {{ fNum(priceData[priceData.length - 1][1], 'usd') }}
             </span>
           </p>
         </BalCard>
@@ -311,7 +311,7 @@ onBeforeUnmount(() => {
         </template>
         <div class="mb-2">
           <SoloTradePair
-            v-if="hldrAddress && wNearAddress"
+            v-if="hldrAddress && usdcAddress"
             v-model:tokenInAmount="tokenInAmount"
             v-model:tokenInAddress="tokenInAddress"
             v-model:tokenOutAmount="tokenOutAmount"
@@ -359,7 +359,7 @@ onBeforeUnmount(() => {
           <BalBtn
             v-else
             :label="$t('preview')"
-            :disabled="tradeDisabled || !(hldrAddress && wNearAddress)"
+            :disabled="tradeDisabled || !(hldrAddress && usdcAddress)"
             color="gradient"
             block
             @click.prevent="handlePreviewButton"
@@ -378,11 +378,11 @@ onBeforeUnmount(() => {
       </BalCard>
 
       <template #gutterRight>
-        <BalLoadingBlock v-if="!wNearAddress || !hldrAddress" :class="'h-64'" />
+        <BalLoadingBlock v-if="!usdcAddress || !hldrAddress" :class="'h-64'" />
         <CustomPairPriceGraph
           v-else
           :priceData="priceData"
-          :tokenInAddress="wNearAddress"
+          :tokenInAddress="usdcAddress"
           :tokenOutAddress="hldrAddress"
           :toggleModal="togglePairPriceGraphModal"
         />
@@ -404,7 +404,7 @@ onBeforeUnmount(() => {
       <div class="graph-modal">
         <CustomPairPriceGraph
           :priceData="priceData"
-          :tokenInAddress="wNearAddress"
+          :tokenInAddress="usdcAddress"
           :tokenOutAddress="hldrAddress"
           :toggleModal="togglePairPriceGraphModal"
           isModal
