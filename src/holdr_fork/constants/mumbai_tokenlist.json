@@ -29,14 +29,6 @@
         "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png"
       },
       {
-        "address": "0x701beEf241d4EFe9263bFCEf298329F874Ac4e77",
-        "chainId": 80001,
-        "name": "RND0",
-        "symbol": "RND0",
-        "decimals": 18,
-        "logoURI": "https://liferunners.wpenginepowered.com/wp-content/uploads/2015/07/question-mark-150x150.png"
-      },
-      {
         "address": "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
         "chainId": 80001,
         "name": "Wrapped Matic",
@@ -53,12 +45,12 @@
         "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png"
       },
       {
-        "address": "0x0Ab2e51763E84c5473C8001b39F745dfE8d4f9f9",
+        "address": "0x701beEf241d4EFe9263bFCEf298329F874Ac4e77",
         "chainId": 80001,
-        "name": "USD Coin",
+        "name": "RND0",
         "symbol": "USDC",
         "decimals": 18,
-        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
+        "logoURI": "https://liferunners.wpenginepowered.com/wp-content/uploads/2015/07/question-mark-150x150.png"
       }
     ]
   }
