@@ -39,6 +39,8 @@ const UnlockVeBalPage = () =>
 const VeBalPage = () =>
   import(/* webpackChunkName: "VeBalPage" */ '@/pages/vebal.vue');
 
+const AnalyticsPage = () =>
+  import(/* webpackChunkName: "AnalyticsPage" */ '@/pages/analytics.vue');
 declare module 'vue-router' {
   interface RouteMeta {
     layout?: string;
@@ -149,6 +151,11 @@ const routes: RouteRecordRaw[] = [
     path: '/claim',
     name: 'claim',
     component: ClaimPage
+  },
+  {
+    path: '/analytics',
+    name: 'analytics',
+    component: AnalyticsPage
   }
 ];
 

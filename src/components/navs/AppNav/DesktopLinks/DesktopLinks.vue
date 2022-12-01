@@ -48,6 +48,9 @@ function isActive(page: string): boolean {
         />
       </div>
     </DesktopLinkItem>
+    <DesktopLinkItem to="/analytics" :active="isActive('analytics')">
+      Analytics
+    </DesktopLinkItem>
   </div>
 </template>
 
