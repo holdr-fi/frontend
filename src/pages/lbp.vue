@@ -17,6 +17,7 @@ import useTrading from '@/composables/trade/useTrading';
 import useValidation, {
   TradeValidation
 } from '@/composables/trade/useValidation';
+import { isMumbai } from '@/composables/useNetwork';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import useTokens from '@/composables/useTokens';
 import { ApiErrorCodes } from '@/services/gnosis/errors/OperatorError';
@@ -67,7 +68,7 @@ const loading = ref<boolean>(true);
 const showPriceGraphModal = ref(false);
 const numTokens = ref(0);
 
-const showLbp = ref(false);
+const showLbp = ref(true);
 
 const error = computed(() => {
   if (trading.isBalancerTrade.value) {
@@ -177,10 +178,11 @@ function calculateEnd(timestamp: number) {
 }
 
 async function init() {
+  const url = `https://api.holdr.fi/lbp${isMumbai ? '-testnet' : ''}`;
   const [_timestampData, _priceData, _tokens] = await Promise.all([
-    axios.get('https://api.holdr.fi/lbp/time'),
-    axios.get('https://api.holdr.fi/lbp/priceHistory'),
-    axios.get('https://api.holdr.fi/lbp/tokensRemaining')
+    axios.get(`${url}/time`),
+    axios.get(`${url}/priceHistory`),
+    axios.get(`${url}/tokensRemaining`)
   ]);
   const _price = _priceData.data;
   priceData.value = _price;
@@ -398,7 +400,6 @@ onBeforeUnmount(() => {
       </div>
     </BalCard>
   </div>
-
 
   <teleport to="#modal">
     <TradePreviewModalGP

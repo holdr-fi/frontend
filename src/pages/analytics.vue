@@ -1,4 +1,35 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import axios from 'axios';
+import { onBeforeMount, ref } from 'vue';
+
+import { isMumbai } from '@/composables/useNetwork';
+
+const data = ref<any[]>(Array(13).fill(0));
+
+async function init() {
+  const url = `https://api.holdr.fi/analytics${isMumbai ? '-mumbai' : ''}`;
+  const dataArray = await Promise.all([
+    axios.get(`${url}/poolcount`),
+    axios.get(`${url}/lpcount`),
+    axios.get(`${url}/tvl`),
+    axios.get(`${url}/tokenholders`),
+    axios.get(`${url}/tokensminted`),
+    axios.get(`${url}/tokenholdersandlp`),
+    axios.get(`${url}/24hvolume`),
+    axios.get(`${url}/7dvolume`),
+    axios.get(`${url}/totalvehldr`),
+    axios.get(`${url}/totalhpt`),
+    axios.get(`${url}/lockedhpt`),
+    axios.get(`${url}/lockedtime`),
+    axios.get(`${url}/percentagehptlocked`)
+  ]);
+  data.value = dataArray.map((d: any) => d.data);
+}
+
+onBeforeMount(() => {
+  init();
+});
+</script>
 
 <template>
   <div class="lg:container lg:mx-auto pt-10 md:pt-12">
@@ -9,7 +40,7 @@
           24H Volume
         </div>
         <div class="value text-center">
-          <span class="truncate text-5xl">hi</span>
+          <span class="truncate text-5xl">{{ data[6] }}</span>
         </div>
       </BalCard>
       <BalCard square class="p-8">
@@ -17,7 +48,7 @@
           7D Volume
         </div>
         <div class="value text-center">
-          <span class="truncate text-5xl">hi</span>
+          <span class="truncate text-5xl">{{ data[7] }}</span>
         </div>
       </BalCard>
     </div>
@@ -28,7 +59,7 @@
           Total veHLDR
         </div>
         <div class="value text-center">
-          <span class="truncate text-lg">hi</span>
+          <span class="truncate text-lg">{{ data[8] }}</span>
         </div>
       </BalCard>
       <BalCard square>
@@ -36,7 +67,7 @@
           80HLDR-20WNEAR Locked
         </div>
         <div class="value text-center">
-          <span class="truncate text-lg">hi</span>
+          <span class="truncate text-lg">{{ data[10] }}</span>
         </div>
       </BalCard>
       <BalCard square>
@@ -44,7 +75,7 @@
           80HLDR-20WNEAR
         </div>
         <div class="value text-center">
-          <span class="truncate text-lg">hi</span>
+          <span class="truncate text-lg">{{ data[9] }}</span>
         </div>
       </BalCard>
       <BalCard square>
@@ -52,7 +83,7 @@
           Percentage Locked
         </div>
         <div class="value text-center">
-          <span class="truncate text-lg">hi</span>
+          <span class="truncate text-lg">{{ data[12] }}</span>
         </div>
       </BalCard>
       <BalCard square>
@@ -60,7 +91,7 @@
           veHLDR Average Lock Time
         </div>
         <div class="value text-center">
-          <span class="truncate text-lg">hi</span>
+          <span class="truncate text-lg">{{ data[11] }}</span>
         </div>
       </BalCard>
     </div>
@@ -71,7 +102,7 @@
           Total Value Locked
         </div>
         <div class="value text-center">
-          <span class="truncate text-3xl">hi</span>
+          <span class="truncate text-3xl">{{ data[2] }}</span>
         </div>
       </BalCard>
       <BalCard square class="p-5">
@@ -79,7 +110,7 @@
           # Pools
         </div>
         <div class="value text-center">
-          <span class="truncate text-3xl">hi</span>
+          <span class="truncate text-3xl">{{ data[0] }}</span>
         </div>
       </BalCard>
       <BalCard square class="p-5">
@@ -87,7 +118,7 @@
           LPs
         </div>
         <div class="value text-center">
-          <span class="truncate text-3xl">hi</span>
+          <span class="truncate text-3xl">{{ data[1] }}</span>
         </div>
       </BalCard>
     </div>
@@ -98,7 +129,7 @@
           HLDR Minted
         </div>
         <div class="value text-center">
-          <span class="truncate text-3xl">hi</span>
+          <span class="truncate text-3xl"> {{ data[4] }} </span>
         </div>
       </BalCard>
       <BalCard square class="p-5">
@@ -106,7 +137,7 @@
           # HLDR Holders
         </div>
         <div class="value text-center">
-          <span class="truncate text-3xl">hi</span>
+          <span class="truncate text-3xl">{{ data[3] }}</span>
         </div>
       </BalCard>
       <BalCard square class="p-5">
@@ -114,7 +145,7 @@
           # HLDR Holders and LPs
         </div>
         <div class="value text-center">
-          <span class="truncate text-3xl">hi</span>
+          <span class="truncate text-3xl">{{ data[5] }}</span>
         </div>
       </BalCard>
     </div>
