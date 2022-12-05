@@ -37,7 +37,7 @@ watch(veBalBalance, () => {
 });
 
 function calculateEpochEnd(timestamp: number) {
-  const diff = timestamp * 1000 - Date.now();
+  const diff = Math.max(timestamp * 1000 - Date.now(), 0);
   let seconds = parseInt((diff / 1000).toString());
   const days = parseInt((seconds / 86400).toString());
   seconds = seconds % 86400;

@@ -67,6 +67,8 @@ const loading = ref<boolean>(true);
 const showPriceGraphModal = ref(false);
 const numTokens = ref(0);
 
+const showLbp = ref(false);
+
 const error = computed(() => {
   if (trading.isBalancerTrade.value) {
     if (errorMessage.value === TradeValidation.NO_LIQUIDITY) {
@@ -162,7 +164,7 @@ const tradeDisabled = computed(() => {
 const priceData = ref<[string, number][]>([]);
 
 function calculateEnd(timestamp: number) {
-  const diff = timestamp * 1000 - Date.now();
+  const diff = Math.max(timestamp * 1000 - Date.now(), 0);
   let seconds = parseInt((diff / 1000).toString());
   const days = parseInt((seconds / 86400).toString());
   seconds = seconds % 86400;
@@ -258,7 +260,7 @@ onBeforeUnmount(() => {
       HLDR Liquidity Bootstrapping Pool
     </h1>
   </div>
-  <div class="hero-content justify-center">
+  <div v-if="showLbp" class="hero-content justify-center">
     <Col3Layout class="mt-8  w-full">
       <template #gutterLeft>
         <BalCard>
@@ -389,6 +391,14 @@ onBeforeUnmount(() => {
       </template>
     </Col3Layout>
   </div>
+  <div v-else class="lg:container lg:mx-auto pt-10 md:pt-12">
+    <BalCard square class="p-8">
+      <div class="text-center">
+        <span class="text-3xl">Coming Soon</span>
+      </div>
+    </BalCard>
+  </div>
+
 
   <teleport to="#modal">
     <TradePreviewModalGP
