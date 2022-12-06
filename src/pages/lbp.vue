@@ -20,11 +20,13 @@ import useValidation, {
 import { isMumbai } from '@/composables/useNetwork';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import useTokens from '@/composables/useTokens';
+import useUserSettings from '@/composables/useUserSettings';
 import { ApiErrorCodes } from '@/services/gnosis/errors/OperatorError';
 
 const store = useStore();
 const { tokens } = useTokens();
 const { fNum, fNum2 } = useNumbers();
+const { slippage, setSlippage } = useUserSettings();
 const { t } = useI18n();
 
 const exactIn = ref(true);
@@ -61,6 +63,7 @@ const saleEnd = ref<string>('-');
 
 const previousInputAddress = ref<string>('');
 const previousOutputAddress = ref<string>('');
+const previousSlippage = ref<string>('');
 
 const usdcAddress = ref<string>('');
 const hldrAddress = ref<string>('');
@@ -221,8 +224,10 @@ async function init() {
   const HLDR = Object.values(tokens.value).find(p => p.symbol === 'HLDR');
   if (HLDR) hldrAddress.value = HLDR.address;
   if (usdc) usdcAddress.value = usdc.address;
+  previousSlippage.value = slippage.value;
   previousInputAddress.value = tokenInAddress.value;
   previousOutputAddress.value = tokenOutAddress.value;
+  setSlippage('0.05');
   setTokenInAddress(usdcAddress.value);
   setTokenOutAddress(hldrAddress.value);
   loading.value = false;
@@ -277,6 +282,9 @@ watch(tokenOutAddress, () => {
 });
 
 onBeforeUnmount(() => {
+  setSlippage(
+    previousSlippage.value == '0.05' ? '0.01' : previousSlippage.value
+  );
   if (!previousInputAddress.value || !previousOutputAddress.value) return;
   store.commit('trade/setInputAsset', previousInputAddress.value);
   store.commit('trade/setOutputAsset', previousOutputAddress.value);
