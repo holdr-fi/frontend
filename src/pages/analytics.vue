@@ -9,19 +9,19 @@ const data = ref<any[]>(Array(13).fill(0));
 async function init() {
   const url = `https://api.holdr.fi/analytics${isMumbai ? '-mumbai' : ''}`;
   const dataArray = await Promise.all([
-    axios.get(`${url}/poolcount`),
-    axios.get(`${url}/lpcount`),
-    axios.get(`${url}/tvl`),
-    axios.get(`${url}/tokenholders`),
-    axios.get(`${url}/tokensminted`),
-    axios.get(`${url}/tokenholdersandlp`),
-    axios.get(`${url}/24hvolume`),
-    axios.get(`${url}/7dvolume`),
-    axios.get(`${url}/totalvehldr`),
-    axios.get(`${url}/totalhpt`),
-    axios.get(`${url}/lockedhpt`),
-    axios.get(`${url}/lockedtime`),
-    axios.get(`${url}/percentagehptlocked`)
+    axios.get(`${url}/pools/poolcount`),
+    axios.get(`${url}/pools/lpcount`),
+    axios.get(`${url}/pools/tvl`),
+    axios.get(`${url}/governance/tokenholders`),
+    axios.get(`${url}/governance/tokensminted`),
+    axios.get(`${url}/governance/tokenholdersandlp`),
+    axios.get(`${url}/exchange/24hvolume`),
+    axios.get(`${url}/exchange/7dvolume`),
+    axios.get(`${url}/vehldr/totalvehldr`),
+    axios.get(`${url}/vehldr/totalhpt`),
+    axios.get(`${url}/vehldr/lockedhpt`),
+    axios.get(`${url}/vehldr/locktime`),
+    axios.get(`${url}/vehldr/percentagehptlocked`)
   ]);
   data.value = dataArray.map((d: any) => d.data);
 }

@@ -3,10 +3,15 @@ import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
+import IconDiscord from '@/components/icons/IconDiscord.vue';
+import IconGithub from '@/components/icons/IconGithub.vue';
+import IconMirror from '@/components/icons/IconMirror.vue';
+import IconTwitter from '@/components/icons/IconTwitter.vue';
 import AppLogo from '@/components/images/AppLogo.vue';
 import useApp from '@/composables/useApp';
 import useConfig from '@/composables/useConfig';
 import useDarkMode from '@/composables/useDarkMode';
+import { EXTERNAL_LINKS } from '@/constants/links';
 import { sleep } from '@/lib/utils';
 import useWeb3 from '@/services/web3/useWeb3';
 
@@ -53,17 +58,6 @@ const ecosystemLinks = [
   }
 ];
 
-const socialLinks = [
-  { component: 'TwitterIcon', url: 'https://twitter.com/BalancerLabs' },
-  { component: 'DiscordIcon', url: 'https://discord.balancer.fi/' },
-  { component: 'MediumIcon', url: 'https://medium.com/balancer-protocol' },
-  {
-    component: 'YoutubeIcon',
-    url: 'https://www.youtube.com/channel/UCBRHug6Hu3nmbxwVMt8x_Ow'
-  },
-  { component: 'GithubIcon', url: 'https://github.com/balancer-labs/' }
-];
-
 /**
  * METHODS
  */
@@ -94,11 +88,17 @@ watch(blockNumber, async () => {
       <div
         v-for="link in navLinks"
         :key="link.label"
-        class="side-bar-link"
+        class="side-bar-link flex items-center gap-2"
         :class="[link.special ? 'special rocket-ship' : '']"
         @click="navTo(link.path)"
       >
         {{ link.label }}
+        <img
+          v-if="link.special"
+          src="@/assets/images/icons/rocket.svg"
+          class="rocket-ship"
+          width="24"
+        />
       </div>
     </div>
 
@@ -129,23 +129,18 @@ watch(blockNumber, async () => {
       </div>
     </div>
 
-    <!-- <div class="mt-4 px-4 grid grid-rows-1 grid-flow-col auto-cols-min gap-2">
-      <BalLink
-        v-for="link in socialLinks"
-        :key="link.component"
-        :href="link.url"
-        class="social-link"
-        noStyle
-        external
-      >
-        <component :is="link.component" />
+    <div class="mt-6 flex gap-3 justify-center">
+      <BalLink :href="EXTERNAL_LINKS.Balancer.Social.Twitter" external noStyle>
+        <IconTwitter />
       </BalLink>
-      <BalLink
-        href="mailto:contact@balancer.finance"
-        class="social-link"
-        noStyle
-      >
-        <EmailIcon />
+      <BalLink :href="EXTERNAL_LINKS.Balancer.Social.Discord" external noStyle>
+        <IconDiscord />
+      </BalLink>
+      <BalLink :href="EXTERNAL_LINKS.Balancer.Social.Mirror" external noStyle>
+        <IconMirror />
+      </BalLink>
+      <BalLink :href="EXTERNAL_LINKS.Balancer.Social.Github" external noStyle>
+        <IconGithub />
       </BalLink>
     </div>
 
@@ -159,18 +154,7 @@ watch(blockNumber, async () => {
           {{ networkConfig.name }}: Block {{ blockNumber }}
         </span>
       </div>
-      <BalLink
-        :href="
-          `https://github.com/balancer-labs/frontend-v2/releases/tag/${version}`
-        "
-        class="text-gray-300 flex items-center mt-2"
-        external
-        noStyle
-      >
-        App: v{{ version }}
-        <BalIcon name="arrow-up-right" size="xs" class="ml-1" />
-      </BalLink>
-    </div> -->
+    </div>
   </div>
 </template>
 

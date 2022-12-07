@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
+import Footer from '@/components/footer/Footer.vue';
 import AppHero from '@/components/heros/AppHero.vue';
 import AppNav from '@/components/navs/AppNav/AppNav.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
@@ -30,16 +31,7 @@ const isHomePage = computed(() => route.path === '/');
     <div class="pb-16">
       <router-view :key="$route.path" />
     </div>
-    <!-- <BalBtn
-      v-if="isDesktop"
-      id="intercom-activator"
-      circle
-      size="lg"
-      color="blue"
-      class="fixed bottom-0 right-0 m-4 z-100"
-    >
-      <BalIcon name="message-square" size="lg" />
-    </BalBtn> -->
+    <Footer />
   </div>
 </template>
 
