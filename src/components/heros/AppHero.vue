@@ -85,7 +85,7 @@ function onClickConnect() {
   <div :class="['app-hero', classes]">
     <div class="w-full max-w-2xl mx-auto">
       <template v-if="isWalletReady || isWalletConnecting">
-        <h4 class="pb-3">
+        <h4 class="pb-3 text-white">
           <BalLink
             href="https://forum.balancer.fi/t/holdr-friendly-fork-proposal/3983"
             external
@@ -140,7 +140,7 @@ function onClickConnect() {
         </div>
       </template>
       <template v-else>
-        <h4 class="pb-3">
+        <h4 class="pb-3 text-white">
           <BalLink
             href="https://forum.balancer.fi/t/holdr-friendly-fork-proposal/3983"
             external

@@ -2,7 +2,13 @@ export const EXTERNAL_LINKS = {
   Balancer: {
     Home: 'https://balancer.fi',
     BalForGas:
-      'https://docs.balancer.finance/core-concepts/bal-balancer-governance-token/bal-for-gas'
+      'https://docs.balancer.finance/core-concepts/bal-balancer-governance-token/bal-for-gas',
+    Social: {
+      Discord: 'https://discord.gg/jjwUvr4CzK',
+      Github: 'https://github.com/holdr-fi/',
+      Mirror: 'https://mirror.xyz/0xEF013a60f765f34b0FD7C5aAf83b9C65BB10A9af',
+      Twitter: 'https://twitter.com/HoldrFi'
+    }
   },
   Gauntlet: {
     Home: 'https://gauntlet.network'
