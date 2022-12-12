@@ -113,11 +113,11 @@ export default defineComponent({
   <div id="app">
     <div class="top-banner" v-if="showTopBanner">
       <div>
-        Developed for the Balancer Friendly Fork Proposal
+        Balancer DAO officially approved Holdr's Friendly Fork status
         <BalLink
           class="link-blue"
           external
-          href="https://forum.balancer.fi/t/holdr-friendly-fork-proposal/3983"
+          href="https://snapshot.org/#/balancer.eth/proposal/0x12bf815724bdd20ad69b788d55c6755e4767a859629d32e722c18767e1a44724"
           >(Learn more)</BalLink
         >
       </div>
