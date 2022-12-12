@@ -73,7 +73,7 @@ const numTokens = ref(0);
 
 const showLbp = ref(false); // SOLACE_TODO: turn LBP on or off
 
-const message = ref('Please Wait...');
+const message = ref('');
 
 const error = computed(() => {
   if (trading.isBalancerTrade.value) {
@@ -210,26 +210,21 @@ async function init() {
 }
 
 onBeforeMount(() => {
-  const now = Date.now();
   const startlbp = 1671024600000;
   const endlbp = 1671199200000;
-  if (startlbp <= now && now <= endlbp) {
-    showLbp.value = true;
-  }
-  message.value = 'Coming Soon';
-  if (showLbp.value) {
-    setInterval(() => {
-      const newNow = Date.now();
-      console.log(newNow)
-      if (startlbp <= newNow && newNow <= endlbp) {
-        showLbp.value = true;
-      } else {
-        message.value = 'LBP is over';
-        showLbp.value = false;
-      }
-    }, 1000);
-    init();
-  }
+  init();
+  setInterval(() => {
+    const newNow = Date.now();
+    if (startlbp > newNow) {
+      showLbp.value = false;
+      message.value = 'Coming Soon';
+    } else if (endlbp < newNow) {
+      showLbp.value = false;
+      message.value = 'LBP has Ended';
+    } else {
+      showLbp.value = true;
+    }
+  }, 1000);
 });
 
 function trade() {
@@ -429,9 +424,10 @@ onBeforeUnmount(() => {
   </div>
   <div v-else class="lg:container lg:mx-auto pt-10 md:pt-12">
     <BalCard square class="p-8">
-      <div class="text-center">
+      <div v-if="message.length > 0" class="text-center">
         <span class="text-3xl">{{ message }}</span>
       </div>
+      <BalLoadingBlock v-else />
     </BalCard>
   </div>
 

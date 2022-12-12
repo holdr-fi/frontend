@@ -85,7 +85,7 @@ function onClickConnect() {
   <div :class="['app-hero', classes]">
     <div class="w-full max-w-2xl mx-auto">
       <template v-if="isWalletReady || isWalletConnecting">
-        <h4 class="pb-3 text-white">
+        <!-- <h4 class="pb-3 text-white">
           <BalLink
             href="https://forum.balancer.fi/t/holdr-friendly-fork-proposal/3983"
             external
@@ -93,7 +93,7 @@ function onClickConnect() {
           >
             Click here to see proposal for Holdr
           </BalLink>
-        </h4>
+        </h4> -->
         <h1
           v-text="$t('myBalancerInvestments')"
           class="text-base font-medium text-white opacity-90 font-body mb-2"
@@ -140,7 +140,7 @@ function onClickConnect() {
         </div>
       </template>
       <template v-else>
-        <h4 class="pb-3 text-white">
+        <!-- <h4 class="pb-3 text-white">
           <BalLink
             href="https://forum.balancer.fi/t/holdr-friendly-fork-proposal/3983"
             external
@@ -148,7 +148,7 @@ function onClickConnect() {
           >
             Click here to see proposal for Holdr
           </BalLink>
-        </h4>
+        </h4> -->
         <h1 v-text="$t('ammPlatform')" class="headline" />
         <div class="flex justify-center mt-4">
           <BalBtn

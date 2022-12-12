@@ -59,6 +59,8 @@ export default defineComponent({
     const { newRouteHandler: updateBgColorFor } = useBackgroundColor();
     const { sidebarOpen } = useSidebar();
 
+    const showTopBanner = ref(true);
+
     // ADD FEATURE ALERT HERE
     // const featureAlert: Alert = {
     //   id: 'vebal-gap',
@@ -95,6 +97,7 @@ export default defineComponent({
       // computed
       isWalletSelectVisible,
       sidebarOpen,
+      showTopBanner,
       // methods
       toggleWalletSelectModal
     };
@@ -108,6 +111,18 @@ export default defineComponent({
     -->
   <div id="modal" />
   <div id="app">
+    <div class="top-banner" v-if="showTopBanner">
+      <div>
+        Developed for the Balancer Friendly Fork Proposal
+        <BalLink
+          class="link-blue"
+          external
+          href="https://forum.balancer.fi/t/holdr-friendly-fork-proposal/3983"
+          >(Learn more)</BalLink
+        >
+      </div>
+      <BalBtn size="xs" @click="showTopBanner = false">X</BalBtn>
+    </div>
     <component :is="layout" />
     <VueQueryDevTools />
     <WalletSelectModal
@@ -133,5 +148,9 @@ export default defineComponent({
 
 #intercom-activator {
   z-index: 2147483004;
+}
+
+.top-banner {
+  @apply bg-gray-100 text-gray-600 text-sm text-center py-2 gap-2 flex justify-center;
 }
 </style>
