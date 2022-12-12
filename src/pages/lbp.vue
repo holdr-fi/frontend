@@ -71,7 +71,9 @@ const loading = ref<boolean>(true);
 const showPriceGraphModal = ref(false);
 const numTokens = ref(0);
 
-const showLbp = ref(false);
+const showLbp = ref(false); // SOLACE_TODO: turn LBP on or off
+
+const message = ref('Please Wait...');
 
 const error = computed(() => {
   if (trading.isBalancerTrade.value) {
@@ -181,7 +183,7 @@ function calculateEnd(timestamp: number) {
 }
 
 async function init() {
-  const url = `https://api.holdr.fi/lbp${isMumbai ? '-testnet' : ''}`;
+  const url = `https://api.holdr.fi/lbp`;
   const [_timestampData, _priceData, _tokens] = await Promise.all([
     axios.get(`${url}/time`),
     axios.get(`${url}/priceHistory`),
@@ -208,7 +210,26 @@ async function init() {
 }
 
 onBeforeMount(() => {
-  init();
+  const now = Date.now();
+  const startlbp = 1671024600000;
+  const endlbp = 1671199200000;
+  if (startlbp <= now && now <= endlbp) {
+    showLbp.value = true;
+  }
+  message.value = 'Coming Soon';
+  if (showLbp.value) {
+    setInterval(() => {
+      const newNow = Date.now();
+      console.log(newNow)
+      if (startlbp <= newNow && newNow <= endlbp) {
+        showLbp.value = true;
+      } else {
+        message.value = 'LBP is over';
+        showLbp.value = false;
+      }
+    }, 1000);
+    init();
+  }
 });
 
 function trade() {
@@ -378,7 +399,12 @@ onBeforeUnmount(() => {
           />
         </div>
         <BalStack class="flex flex-col justify-center gap-4">
-          <BalLink external noStyle class="mx-auto">
+          <BalLink
+            external
+            noStyle
+            class="mx-auto"
+            href="https://mirror.xyz/0xEF013a60f765f34b0FD7C5aAf83b9C65BB10A9af/8T4t5eAnNWrSaQFsVXNfp8h1_TgO88OHkX9d8ve_2zU"
+          >
             More Information
             <BalIcon
               name="arrow-up-right"
@@ -404,7 +430,7 @@ onBeforeUnmount(() => {
   <div v-else class="lg:container lg:mx-auto pt-10 md:pt-12">
     <BalCard square class="p-8">
       <div class="text-center">
-        <span class="text-3xl">Coming Soon</span>
+        <span class="text-3xl">{{ message }}</span>
       </div>
     </BalCard>
   </div>

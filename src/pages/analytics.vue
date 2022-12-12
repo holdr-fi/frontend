@@ -21,8 +21,8 @@ function convertSeconds(seconds: number) {
 }
 
 async function init() {
-  const url = `https://api.holdr.fi/analytics${isMumbai ? '-mumbai' : ''}`;
-  const dataArray = await Promise.all([
+  const url = `https://api.holdr.fi/analytics`;
+  const dataArray = await Promise.allSettled([
     axios.get(`${url}/pools/poolcount`),
     axios.get(`${url}/pools/lpcount`),
     axios.get(`${url}/pools/tvl`),
@@ -37,7 +37,7 @@ async function init() {
     axios.get(`${url}/vehldr/locktime`),
     axios.get(`${url}/vehldr/percentagehptlocked`)
   ]);
-  data.value = dataArray.map((d: any) => d.data);
+  data.value = dataArray.map((d: any) => d?.value?.data ?? 0);
 }
 
 onBeforeMount(() => {
