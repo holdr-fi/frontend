@@ -112,16 +112,20 @@ export default defineComponent({
   <div id="modal" />
   <div id="app">
     <div class="top-banner" v-if="showTopBanner">
-      <div>
+      <div></div>
+      <div class="banner-text">
         Balancer DAO officially approved Holdr's Friendly Fork status
-        <BalLink
-          class="link-blue"
+        <BalBtn
           external
+          color="gradient"
+          size="xs"
           href="https://snapshot.org/#/balancer.eth/proposal/0x12bf815724bdd20ad69b788d55c6755e4767a859629d32e722c18767e1a44724"
-          >(Learn more)</BalLink
+          >Learn More</BalBtn
         >
       </div>
-      <BalBtn size="xs" @click="showTopBanner = false">X</BalBtn>
+      <div class="banner-text">
+        <BalBtn size="xs" @click="showTopBanner = false" color="white">Close</BalBtn>
+      </div>
     </div>
     <component :is="layout" />
     <VueQueryDevTools />
@@ -151,6 +155,10 @@ export default defineComponent({
 }
 
 .top-banner {
-  @apply bg-gray-100 text-gray-600 text-sm text-center py-2 gap-2 flex justify-center;
+  @apply bg-gray-100 text-gray-600  gap-2 flex justify-between px-3;
+}
+
+.banner-text {
+  @apply text-sm text-center py-2
 }
 </style>
