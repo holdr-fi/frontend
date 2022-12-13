@@ -114,11 +114,13 @@ export default defineComponent({
     <div class="top-banner" v-if="showTopBanner">
       <div></div>
       <div class="banner-text">
-        Balancer DAO officially approved Holdr's Friendly Fork status
+        <div class="my-auto">Balancer DAO officially approved Holdr's Friendly Fork status</div>
         <BalBtn
-          external
-          color="gradient"
           size="xs"
+          target="_blank"
+          tag="a"
+          rel="noreferrer"
+          color="gradient"
           href="https://snapshot.org/#/balancer.eth/proposal/0x12bf815724bdd20ad69b788d55c6755e4767a859629d32e722c18767e1a44724"
           >Learn More</BalBtn
         >
@@ -155,10 +157,10 @@ export default defineComponent({
 }
 
 .top-banner {
-  @apply bg-gray-100 text-gray-600  gap-2 flex justify-between px-3;
+  @apply bg-gray-100 text-gray-600 flex justify-between px-3;
 }
 
 .banner-text {
-  @apply text-sm text-center py-2
+  @apply text-sm text-center py-2 flex gap-2;
 }
 </style>
