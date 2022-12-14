@@ -261,8 +261,15 @@ export default defineComponent({
         trading.isGnosisTrade.value && trading.gnosis.hasValidationError.value;
       const hasBalancerErrors =
         trading.isBalancerTrade.value && isHighPriceImpact.value;
+      const notSwappable =
+        trading.isPleaseWrapFirst.value || trading.isPleaseSwapInNear.value;
 
-      return hasValidationError || hasGnosisErrors || hasBalancerErrors;
+      return (
+        hasValidationError ||
+        hasGnosisErrors ||
+        hasBalancerErrors ||
+        notSwappable
+      );
     });
 
     const title = computed(() => {
@@ -333,6 +340,20 @@ export default defineComponent({
             label: t('accept')
           };
         }
+      }
+
+      if (trading.wrapType.value === WrapType.PleaseWrapFirst) {
+        return {
+          header: 'Wrap Near first',
+          body: 'You need to wrap your Near into WNear.'
+        };
+      }
+
+      if (trading.wrapType.value === WrapType.PleaseSwapInNear) {
+        return {
+          header: 'Swap in Near',
+          body: 'You can only swap your WNear for Near.'
+        };
       }
 
       return undefined;

@@ -128,12 +128,14 @@ export default {
       injectedTokens: {
         [networkConfig.nativeAsset.address]: nativeAsset
       },
+      // SOLACE_TODO: add any contracts that will ever need allowance
       allowanceContracts: compact([
         networkConfig.addresses.vault,
         networkConfig.addresses.wstETH,
         configService.network.addresses.veBAL,
+        configService.network.addresses.hnear,
         configService.network.addresses.bribe,
-        configService.network.addresses.bribeVault // SOLACE_TODO: add any contracts that will ever need allowance
+        configService.network.addresses.bribeVault
       ]),
       injectedPrices: {}
     });

@@ -299,7 +299,10 @@ export default function useSor({
 
     if (wrapType.value !== WrapType.NonWrap) {
       const wrapper =
-        wrapType.value === WrapType.Wrap ? tokenOutAddress : tokenInAddress;
+        wrapType.value === WrapType.Wrap ||
+        wrapType.value === WrapType.PleaseWrapFirst
+          ? tokenOutAddress
+          : tokenInAddress;
 
       if (exactIn.value) {
         tokenInAmountInput.value = amount;
@@ -313,9 +316,21 @@ export default function useSor({
       } else {
         tokenOutAmountInput.value = amount;
 
+        let oppositeWrapType = WrapType.Unwrap;
+
+        if (wrapType.value === WrapType.Wrap) {
+          oppositeWrapType = WrapType.Unwrap;
+        } else if (wrapType.value === WrapType.Unwrap) {
+          oppositeWrapType = WrapType.Wrap;
+        } else if (wrapType.value === WrapType.PleaseWrapFirst) {
+          oppositeWrapType = WrapType.PleaseSwapInNear;
+        } else if (wrapType.value === WrapType.PleaseSwapInNear) {
+          oppositeWrapType = WrapType.PleaseWrapFirst;
+        }
+
         const inputAmount = await getWrapOutput(
           wrapper,
-          wrapType.value === WrapType.Wrap ? WrapType.Unwrap : WrapType.Wrap,
+          oppositeWrapType,
           parseFixed(amount, tokenOutDecimals)
         );
         tokenInAmountInput.value = formatFixed(inputAmount, tokenOutDecimals);

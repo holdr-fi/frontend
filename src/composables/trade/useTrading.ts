@@ -47,6 +47,12 @@ export default function useTrading(
   );
   const isWrap = computed(() => wrapType.value === WrapType.Wrap);
   const isUnwrap = computed(() => wrapType.value === WrapType.Unwrap);
+  const isPleaseWrapFirst = computed(
+    () => wrapType.value === WrapType.PleaseWrapFirst
+  );
+  const isPleaseSwapInNear = computed(
+    () => wrapType.value === WrapType.PleaseSwapInNear
+  );
 
   const tokenIn = computed(() => getToken(tokenInAddressInput.value));
 
@@ -287,6 +293,8 @@ export default function useTrading(
     // computed
     isWrap,
     isUnwrap,
+    isPleaseWrapFirst,
+    isPleaseSwapInNear,
     isEthTrade,
     tokenIn,
     tokenOut,
