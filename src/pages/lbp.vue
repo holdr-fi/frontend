@@ -6,9 +6,9 @@ import { useI18n } from 'vue-i18n';
 import { useStore } from 'vuex';
 
 import CustomPairPriceGraph from '@/components/contextual/pages/lbp/CustomPairPriceGraph.vue';
+import CustomTradePreviewModalGP from '@/components/contextual/pages/lbp/CustomTradePreviewModalGP.vue';
 import SoloTradePair from '@/components/contextual/pages/lbp/SoloTradePair.vue';
 import Col3Layout from '@/components/layouts/Col3Layout.vue';
-import TradePreviewModalGP from '@/components/modals/TradePreviewModalGP.vue';
 import TradeSettingsPopover, {
   TradeSettingsContext
 } from '@/components/popovers/TradeSettingsPopover.vue';
@@ -432,7 +432,7 @@ onBeforeUnmount(() => {
   </div>
 
   <teleport to="#modal">
-    <TradePreviewModalGP
+    <CustomTradePreviewModalGP
       v-if="modalTradePreviewIsOpen"
       :trading="trading"
       @trade="trade"
