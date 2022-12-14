@@ -18,7 +18,7 @@ const seeClaims = ref(false);
 const data = ref<Bribe[]>([]);
 const bribeTokens = ref<string[]>([]);
 
-const showBribeMarket = ref(true);
+const showBribeMarket = ref(false);
 
 async function init() {
   const depositBribeData = await bribeService.getDepositBribe();

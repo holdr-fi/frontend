@@ -71,7 +71,9 @@ const loading = ref<boolean>(true);
 const showPriceGraphModal = ref(false);
 const numTokens = ref(0);
 
-const showLbp = ref(true);
+const showLbp = ref(false); // SOLACE_TODO: turn LBP on or off
+
+const message = ref('');
 
 const error = computed(() => {
   if (trading.isBalancerTrade.value) {
@@ -177,48 +179,19 @@ function calculateEnd(timestamp: number) {
   const minutes = parseInt((seconds / 60).toString());
   seconds = seconds % 60;
 
-  // saleEnd.value = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  saleEnd.value = '1D 1H 30M 30S';
+  saleEnd.value = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
 async function init() {
-  const url = `https://api.holdr.fi/lbp${isMumbai ? '-testnet' : ''}`;
+  const url = `https://api.holdr.fi/lbp`;
   const [_timestampData, _priceData, _tokens] = await Promise.all([
     axios.get(`${url}/time`),
     axios.get(`${url}/priceHistory`),
     axios.get(`${url}/tokensRemaining`)
   ]);
-  // const _price = _priceData.data;
-  // priceData.value = _price;
-  priceData.value = [
-    ['2022/11/16 00:00', 0.1],
-    ['2022/11/16 01:00', 0.0979],
-    ['2022/11/16 02:00', 0.0959],
-    ['2022/11/16 03:00', 0.0939],
-    ['2022/11/16 04:00', 0.092],
-    ['2022/11/16 05:00', 0.0901],
-    ['2022/11/16 06:00', 0.0883],
-    ['2022/11/16 07:00', 0.0865],
-    ['2022/11/16 08:00', 0.0847],
-    ['2022/11/16 09:00', 0.083],
-    ['2022/11/16 10:00', 0.0813],
-    ['2022/11/16 11:00', 0.0797],
-    ['2022/11/16 12:00', 0.0781],
-    ['2022/11/16 13:00', 0.0766],
-    ['2022/11/16 14:00', 0.0751],
-    ['2022/11/16 15:00', 0.0736],
-    ['2022/11/16 16:00', 0.0722],
-    ['2022/11/16 17:00', 0.0709],
-    ['2022/11/16 18:00', 0.0695],
-    ['2022/11/16 19:00', 0.0683],
-    ['2022/11/16 20:00', 0.067],
-    ['2022/11/16 21:00', 0.0658],
-    ['2022/11/16 22:00', 0.0647],
-    ['2022/11/16 23:00', 0.0636],
-    ['2022/11/16 24:00', 0.0625]
-  ];
-  // numTokens.value = _tokens.data;
-  numTokens.value = 1187820;
+  const _price = _priceData.data;
+  priceData.value = _price;
+  numTokens.value = _tokens.data;
   const timestamp = _timestampData.data;
   const usdc = Object.values(tokens.value).find(p => p.symbol === 'USDC');
   const HLDR = Object.values(tokens.value).find(p => p.symbol === 'HLDR');
@@ -237,7 +210,21 @@ async function init() {
 }
 
 onBeforeMount(() => {
+  const startlbp = 1671024600000;
+  const endlbp = 1671199200000;
   init();
+  setInterval(() => {
+    const newNow = Date.now();
+    if (startlbp > newNow) {
+      showLbp.value = false;
+      message.value = 'Coming Soon';
+    } else if (endlbp < newNow) {
+      showLbp.value = false;
+      message.value = 'LBP has Ended';
+    } else {
+      showLbp.value = true;
+    }
+  }, 1000);
 });
 
 function trade() {
@@ -407,7 +394,12 @@ onBeforeUnmount(() => {
           />
         </div>
         <BalStack class="flex flex-col justify-center gap-4">
-          <BalLink external noStyle class="mx-auto">
+          <BalLink
+            external
+            noStyle
+            class="mx-auto"
+            href="https://mirror.xyz/0xEF013a60f765f34b0FD7C5aAf83b9C65BB10A9af/8T4t5eAnNWrSaQFsVXNfp8h1_TgO88OHkX9d8ve_2zU"
+          >
             More Information
             <BalIcon
               name="arrow-up-right"
@@ -432,9 +424,10 @@ onBeforeUnmount(() => {
   </div>
   <div v-else class="lg:container lg:mx-auto pt-10 md:pt-12">
     <BalCard square class="p-8">
-      <div class="text-center">
-        <span class="text-3xl">Coming Soon</span>
+      <div v-if="message.length > 0" class="text-center">
+        <span class="text-3xl">{{ message }}</span>
       </div>
+      <BalLoadingBlock v-else />
     </BalCard>
   </div>
 
