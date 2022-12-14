@@ -44,6 +44,8 @@
     "weth": "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
     "stETH": "",
     "wstETH": "",
+    "near": "",
+    "hnear": "",
     "lidoRelayer": "",
     "balancerHelpers": "0xCab1ba899A583345858A473852f3D568A446e34D",
     "batchRelayer": "0x57CD5F41AAa779BD90b1aa098F2662a90fa9e42F",

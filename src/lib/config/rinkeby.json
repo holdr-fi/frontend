@@ -43,6 +43,8 @@
     "weth": "0xc778417e063141139fce010982780140aa0cd5ab",
     "stETH": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
     "wstETH": "0xba453033d328bfdd7799a4643611b616d80ddd97",
+    "near": "",
+    "hnear": "",
     "lidoRelayer": "",
     "balancerHelpers": "0x94905e703fEAd7f0fD0eEe355D267eE909784e6d",
     "batchRelayer": "0xeF606F58A4FD0fCcb066c6203d0994694d3eB2D3",
