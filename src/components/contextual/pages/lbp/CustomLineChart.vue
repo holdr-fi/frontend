@@ -6,6 +6,7 @@
         {{ currentValue }}
       </h3>
       <span
+        v-if="!projection"
         :class="{
           'text-green-400': change >= 0,
           'text-red-400': change < 0,
@@ -74,6 +75,10 @@ export default defineComponent({
     data: {
       type: Array as PropType<ChartData[]>,
       required: true
+    },
+    projection: {
+      type: Boolean,
+      default: () => false
     },
     onAxisMoved: {
       type: Function
@@ -236,7 +241,7 @@ export default defineComponent({
         },
         nameGap: 25
       },
-        color: props.color,
+      color: props.color,
       // Controls the boundaries of the chart from the HTML defined rectangle
       grid: props.customGrid || {
         left: '2.5%',
