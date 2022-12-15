@@ -114,7 +114,12 @@ const showLiquidityAlert = computed(() => {
 });
 
 const excludedTokens = computed((): string[] => {
-  return [nativeAsset.address, ...tokensList.value];
+  // excluded NEAR with 24 decimals from pool creation
+  return [
+    nativeAsset.address,
+    configService.network.addresses.near,
+    ...tokensList.value
+  ];
 });
 
 const maxTokenAmountReached = computed(() => {
