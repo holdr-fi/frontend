@@ -9,6 +9,8 @@ import useTailwind from '@/composables/useTailwind';
 import useTokens from '@/composables/useTokens';
 import useWeb3 from '@/services/web3/useWeb3';
 
+import CustomLineChart from './CustomLineChart.vue';
+
 const chartTimespans = [
   {
     option: '1d',
@@ -33,9 +35,10 @@ const chartTimespans = [
 ];
 
 type Props = {
+  projection?: boolean;
   tokenInAddress: string;
   tokenOutAddress: string;
-  priceData?: [string, number][];
+  priceData?: [string, number, number][];
   isLoadingPriceData?: boolean;
   failedToLoadPriceData?: boolean;
   isModal?: boolean;
@@ -53,7 +56,7 @@ const tailwind = useTailwind();
 const chartHeight = ref(
   upToLargeBreakpoint ? (props.isModal ? 250 : 75) : props.isModal ? 250 : 100
 );
-const activeTimespan = ref(chartTimespans[0]);
+const activeTimespan = ref(chartTimespans[1]);
 const appLoading = computed(() => store.state.app.loading);
 
 const inputSym = computed(() => {
@@ -100,6 +103,7 @@ const isNegativeTrend = computed(() => {
 });
 
 const chartColors = computed(() => {
+  if (props.projection) return [tailwind.theme.colors.blue['100']];
   let color = tailwind.theme.colors.green['400'];
   if (isNegativeTrend.value) color = tailwind.theme.colors.red['400'];
   return [color];
@@ -155,7 +159,12 @@ const chartGrid = computed(() => {
           v-if="!failedToLoadPriceData && !(isLoadingPriceData || appLoading)"
           class="flex"
         >
-          <h6 class="font-medium">{{ outputSym }}/{{ inputSym }}</h6>
+          <h6 class="font-medium">
+            {{ outputSym }}/{{ inputSym }} ({{
+              projection ? 'Projected' : 'Historical'
+            }}
+            Price)
+          </h6>
         </div>
         <div
           v-if="failedToLoadPriceData && tokenOutAddress"
@@ -177,20 +186,16 @@ const chartGrid = computed(() => {
           v-if="!failedToLoadPriceData && !isLoadingPriceData"
           class="flex-col"
         >
-          <BalLineChart
+          <CustomLineChart
             :data="chartData"
             :height="chartHeight"
             :show-legend="false"
             :color="chartColors"
             :custom-grid="chartGrid"
-            :axis-label-formatter="{ yAxis: '0.000000' }"
-            :wrapper-class="[
-              'flex flex-row lg:flex-col',
-              {
-                'flex-row': !isModal,
-                'flex-col': isModal
-              }
-            ]"
+            :axis-label-formatter="({ yAxis: '0.000000' } as any)"
+            :wrapper-class="
+              `flex flex-row lg:flex-col ${isModal ? 'flex-col' : 'flex-row'}`
+            "
             :show-tooltip="!upToLargeBreakpoint || isModal"
             hide-y-axis
             hide-x-axis
@@ -206,7 +211,7 @@ const chartGrid = computed(() => {
             ]"
             v-if="isModal"
           >
-            <div>
+            <!-- <div>
               <button
                 v-for="timespan in chartTimespans"
                 @click="activeTimespan = timespan"
@@ -229,7 +234,7 @@ const chartGrid = computed(() => {
               >
                 {{ timespan.option }}
               </button>
-            </div>
+            </div> -->
             <div :class="{ 'mt-4': isModal }">
               <span class="text-sm text-gray-500 mr-4"
                 >Low: {{ dataMin.toPrecision(6) }}</span

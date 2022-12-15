@@ -167,7 +167,10 @@ const tradeDisabled = computed(() => {
   return hasValidationError || hasGnosisErrors || hasBalancerErrors;
 });
 
-const priceData = ref<[string, number][]>([]);
+const historicalPriceData = ref<[string, number, number][]>([]);
+const projectedPriceData = ref<[string, number, number][]>([]);
+
+const isProjection = ref(false);
 
 function calculateEnd(timestamp: number) {
   const diff = Math.max(timestamp * 1000 - Date.now(), 0);
@@ -184,13 +187,19 @@ function calculateEnd(timestamp: number) {
 
 async function init() {
   const url = `https://api.holdr.fi/lbp`;
-  const [_timestampData, _priceData, _tokens] = await Promise.all([
+  const [
+    _timestampData,
+    _priceData,
+    _projectedPrices,
+    _tokens
+  ] = await Promise.all([
     axios.get(`${url}/time`),
     axios.get(`${url}/priceHistory`),
+    axios.get(`${url}/priceProjection`),
     axios.get(`${url}/tokensRemaining`)
   ]);
-  const _price = _priceData.data;
-  priceData.value = _price;
+  historicalPriceData.value = _priceData.data;
+  projectedPriceData.value = _projectedPrices.data;
   numTokens.value = _tokens.data;
   const timestamp = _timestampData.data;
   const usdc = Object.values(tokens.value).find(p => p.symbol === 'USDC');
@@ -256,7 +265,9 @@ function onPriceGraphModalClose() {
   showPriceGraphModal.value = false;
 }
 
-function togglePairPriceGraphModal() {
+function togglePairPriceGraphModal(showProjectionVerion: boolean) {
+  if (showProjectionVerion) isProjection.value = true;
+  else isProjection.value = false;
   showPriceGraphModal.value = !showPriceGraphModal.value;
 }
 
@@ -304,10 +315,15 @@ onBeforeUnmount(() => {
           <p class="text-sm text-gray-500 inline mr-1 text-center">
             Current Price:
           </p>
-          <BalLoadingBlock v-if="priceData.length == 0" />
+          <BalLoadingBlock v-if="historicalPriceData.length == 0" />
           <p v-else class="text-lg font-semibold tabular-nums text-center">
             <span>
-              {{ fNum(priceData[priceData.length - 1][1], 'usd') }}
+              {{
+                fNum(
+                  historicalPriceData[historicalPriceData.length - 1][1],
+                  'usd'
+                )
+              }}
             </span>
           </p>
         </BalCard>
@@ -412,13 +428,21 @@ onBeforeUnmount(() => {
 
       <template #gutterRight>
         <BalLoadingBlock v-if="!usdcAddress || !hldrAddress" :class="'h-64'" />
-        <CustomPairPriceGraph
-          v-else
-          :priceData="priceData"
-          :tokenInAddress="usdcAddress"
-          :tokenOutAddress="hldrAddress"
-          :toggleModal="togglePairPriceGraphModal"
-        />
+        <BalStack vertical v-else>
+          <CustomPairPriceGraph
+            :priceData="historicalPriceData"
+            :tokenInAddress="usdcAddress"
+            :tokenOutAddress="hldrAddress"
+            :toggleModal="() => togglePairPriceGraphModal(false)"
+          />
+          <CustomPairPriceGraph
+            :projection="true"
+            :priceData="projectedPriceData"
+            :tokenInAddress="usdcAddress"
+            :tokenOutAddress="hldrAddress"
+            :toggleModal="() => togglePairPriceGraphModal(true)"
+          />
+        </BalStack>
       </template>
     </Col3Layout>
   </div>
@@ -444,10 +468,11 @@ onBeforeUnmount(() => {
     <BalModal :show="showPriceGraphModal" @close="onPriceGraphModalClose">
       <div class="graph-modal">
         <CustomPairPriceGraph
-          :priceData="priceData"
+          :projection="isProjection"
+          :priceData="isProjection ? projectedPriceData : historicalPriceData"
           :tokenInAddress="usdcAddress"
           :tokenOutAddress="hldrAddress"
-          :toggleModal="togglePairPriceGraphModal"
+          :toggleModal="() => togglePairPriceGraphModal(true)"
           isModal
           :onCloseModal="onPriceGraphModalClose"
         />
