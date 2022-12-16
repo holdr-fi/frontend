@@ -28,17 +28,17 @@ export const isNativeAssetWrap = (
 
 export const getWrapAction = (tokenIn: string, tokenOut: string): WrapType => {
   const nativeAddress = configService.network.nativeAsset.address;
-  const { weth, stETH, wstETH, near, hnear } = configService.network.addresses;
+  const { weth, stETH, wstETH, near, wnear } = configService.network.addresses;
 
   if (tokenIn === nativeAddress && tokenOut === weth) return WrapType.Wrap;
   if (tokenIn === stETH && tokenOut === wstETH) return WrapType.Wrap;
-  if (tokenIn === near && tokenOut === hnear) return WrapType.Wrap;
-  if (tokenIn === near && tokenOut !== hnear) return WrapType.PleaseWrapFirst;
+  if (tokenIn === near && tokenOut === wnear) return WrapType.Wrap;
+  if (tokenIn === near && tokenOut !== wnear) return WrapType.PleaseWrapFirst;
 
   if (tokenOut === nativeAddress && tokenIn === weth) return WrapType.Unwrap;
   if (tokenOut === stETH && tokenIn === wstETH) return WrapType.Unwrap;
-  if (tokenOut === near && tokenIn === hnear) return WrapType.Unwrap;
-  if (tokenOut === near && tokenIn !== hnear) return WrapType.PleaseSwapInNear;
+  if (tokenOut === near && tokenIn === wnear) return WrapType.Unwrap;
+  if (tokenOut === near && tokenIn !== wnear) return WrapType.PleaseSwapInNear;
 
   return WrapType.NonWrap;
 };
@@ -49,7 +49,7 @@ export const getWrapOutput = (
   wrapAmount: BigNumberish
 ): BigNumber => {
   if (wrapType === WrapType.NonWrap) throw new Error('Invalid wrap type');
-  const { weth, wstETH, hnear } = configService.network.addresses;
+  const { weth, wstETH, wnear } = configService.network.addresses;
 
   if (wrapper === weth) return BigNumber.from(wrapAmount);
   if (wrapper === wstETH) {
@@ -57,7 +57,7 @@ export const getWrapOutput = (
       ? getWstETHByStETH(wrapAmount)
       : getStETHByWstETH(wrapAmount);
   }
-  if (wrapper === hnear) {
+  if (wrapper === wnear) {
     return wrapType === WrapType.Wrap
       ? BigNumber.from(wrapAmount)
           .div('1000000')
@@ -81,7 +81,7 @@ export async function wrap(
       return wrapNative(network, web3, amount);
     } else if (wrapper === configs[network].addresses.wstETH) {
       return wrapLido(network, web3, amount);
-    } else if (wrapper === configs[network].addresses.hnear) {
+    } else if (wrapper === configs[network].addresses.wnear) {
       return wrapNear(network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');
@@ -102,7 +102,7 @@ export async function unwrap(
       return unwrapNative(network, web3, amount);
     } else if (wrapper === configs[network].addresses.wstETH) {
       return unwrapLido(network, web3, amount);
-    } else if (wrapper === configs[network].addresses.hnear) {
+    } else if (wrapper === configs[network].addresses.wnear) {
       return unwrapNear(network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');
@@ -177,7 +177,7 @@ const wrapNear = async (
 ): Promise<TransactionResponse> =>
   sendTransaction(
     web3,
-    configs[network].addresses.hnear,
+    configs[network].addresses.wnear,
     ['function deposit(uint256 amount) nonpayable'],
     'deposit',
     [amount]
@@ -190,7 +190,7 @@ const unwrapNear = async (
 ): Promise<TransactionResponse> =>
   sendTransaction(
     web3,
-    configs[network].addresses.hnear,
+    configs[network].addresses.wnear,
     ['function withdraw(uint256 amount) nonpayable'],
     'withdraw',
     [amount]
