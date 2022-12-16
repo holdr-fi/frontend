@@ -26,7 +26,6 @@ export const isNativeAssetWrap = (
   return tokenIn === nativeAddress && tokenOut === weth;
 };
 
-// SOLACE_INFO: This function is used to determine if the swap is a wrap or unwrap
 export const getWrapAction = (tokenIn: string, tokenOut: string): WrapType => {
   const nativeAddress = configService.network.nativeAsset.address;
   const { weth, stETH, wstETH, near, hnear } = configService.network.addresses;
@@ -60,7 +59,9 @@ export const getWrapOutput = (
   }
   if (wrapper === hnear) {
     return wrapType === WrapType.Wrap
-      ? BigNumber.from(wrapAmount).div('1000000')
+      ? BigNumber.from(wrapAmount)
+          .div('1000000')
+          .mul('1000000')
       : wrapType === WrapType.PleaseWrapFirst ||
         wrapType === WrapType.PleaseSwapInNear
       ? Zero
@@ -179,8 +180,7 @@ const wrapNear = async (
     configs[network].addresses.hnear,
     ['function deposit(uint256 amount) nonpayable'],
     'deposit',
-    [],
-    { value: amount }
+    [amount]
   );
 
 const unwrapNear = async (
