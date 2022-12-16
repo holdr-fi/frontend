@@ -45,7 +45,7 @@
     "stETH": "",
     "wstETH": "",
     "near": "0x0D6889Aaa61e01E7C886DB95512e6D608fe85F30",
-    "hnear": "0x1e68Ff3D38F16f397883b7F8445ddF675A3A729d",
+    "wnear": "0x1e68Ff3D38F16f397883b7F8445ddF675A3A729d",
     "lidoRelayer": "",
     "balancerHelpers": "0xCab1ba899A583345858A473852f3D568A446e34D",
     "batchRelayer": "0x57CD5F41AAa779BD90b1aa098F2662a90fa9e42F",

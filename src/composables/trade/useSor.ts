@@ -312,7 +312,17 @@ export default function useSor({
           wrapType.value,
           parseFixed(amount, tokenInDecimals)
         );
-        tokenOutAmountInput.value = formatFixed(outputAmount, tokenInDecimals);
+        // SOLACE_INFO: special case if the wrap output is near, we need to format it with 24 decimals instead of wnear's 18
+        if (
+          tokenOutAddressInput.value == configService.network.addresses.near
+        ) {
+          tokenOutAmountInput.value = formatFixed(outputAmount, 24);
+        } else {
+          tokenOutAmountInput.value = formatFixed(
+            outputAmount,
+            tokenInDecimals
+          );
+        }
       } else {
         tokenOutAmountInput.value = amount;
 
