@@ -393,9 +393,9 @@ const POOLS_AURORA: Pools = {
     AllowList: ['']
   },
   Factories: {
-    '0xDD1591D7BdF0E3ddEa4b4377cf03373700BED38e': 'weightedPool', // Weighted
-    '0xB2f941B85791e47FAa6391Cdef36A3BBaD19b73E': 'stablePool',
-    '0x1001e599ff9079717E176f224de7f1a27eACD3C2': 'liquidityBootstrappingPool'
+    '0xdd1591d7bdf0e3ddea4b4377cf03373700bed38e': 'weightedPool', // Weighted
+    '0xb2f941b85791e47faa6391cdef36a3bbad19b73e': 'stablePool',
+    '0x1001e599ff9079717e176f224de7f1a27eacd3c2': 'liquidityBootstrappingPool'
   },
   Stakable: {
     AllowList: [
