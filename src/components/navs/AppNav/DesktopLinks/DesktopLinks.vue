@@ -38,16 +38,16 @@ function isActive(page: string): boolean {
       </div> -->
       {{ $t('claim') }}
     </DesktopLinkItem>
-    <DesktopLinkItem to="/lbp" :active="isActive('lbp')" class="special">
+    <!-- <DesktopLinkItem to="/lbp" :active="isActive('lbp')" class="special">
       <div class="flex items-center gap-2">
         HLDR Token Launch
-        <!-- <img
+        <img
           src="@/assets/images/icons/rocket.svg"
           class="rocket-ship"
           width="24"
-        /> -->
+        />
       </div>
-    </DesktopLinkItem>
+    </DesktopLinkItem> -->
     <!-- <DesktopLinkItem to="/analytics" :active="isActive('analytics')">
       Analytics
     </DesktopLinkItem> -->

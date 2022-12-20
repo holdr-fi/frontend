@@ -41,7 +41,7 @@ const navLinks = [
   { label: 'veHLDR', path: '/vehldr' },
   { label: 'Bribe', path: '/bribe' },
   { label: t('claim'), path: '/claim' },
-  { label: 'HLDR Token Launch', path: '/lbp' }
+  // { label: 'HLDR Token Launch', path: '/lbp' }
   // { label: 'Analytics', path: '/analytics' }
 ];
 
