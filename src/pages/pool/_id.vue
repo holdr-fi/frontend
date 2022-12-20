@@ -72,7 +72,12 @@
           </div>
         </div>
         <BalAlert
-          v-if="!appLoading && !loadingPool && missingPrices"
+          v-if="
+            !appLoading &&
+              !loadingPool &&
+              missingPrices &&
+              !doesPoolHaveExemptedTokens
+          "
           type="warning"
           :title="$t('noPriceInfo')"
           class="mt-2"
@@ -115,6 +120,7 @@
         <div class="grid grid-cols-1 gap-y-8">
           <div class="px-1 lg:px-0">
             <PoolChart
+              v-if="!doesPoolHaveExemptedTokens"
               :pool="pool"
               :historicalPrices="historicalPrices"
               :snapshots="snapshots"
@@ -193,12 +199,12 @@ import { EXTERNAL_LINKS } from '@/constants/links';
 import { POOLS } from '@/constants/pools';
 import { getAddressFromPoolId, includesAddress } from '@/lib/utils';
 import StakingProvider from '@/providers/local/staking/staking.provider';
+import { configService } from '@/services/config/config.service';
 import useWeb3 from '@/services/web3/useWeb3';
 
 interface PoolPageData {
   id: string;
 }
-
 
 export default defineComponent({
   components: {
@@ -233,6 +239,19 @@ export default defineComponent({
     const poolSnapshotsQuery = usePoolSnapshotsQuery(
       route.params.id as string,
       30
+    );
+
+    // list of tokens that do not need prices fetched for
+    const exemptedTokens = computed(() => [
+      configService.network.addresses.wnear
+    ]);
+
+    const doesPoolHaveExemptedTokens = computed(() =>
+      exemptedTokens.value.some(token =>
+        titleTokens.value
+          .map(t => t[0].toUpperCase())
+          .includes(token.toUpperCase())
+      )
     );
 
     /**
@@ -453,6 +472,7 @@ export default defineComponent({
       warnings,
       isL2,
       isStakablePool,
+      doesPoolHaveExemptedTokens,
       // methods,
       fNum2,
       onNewTx,
