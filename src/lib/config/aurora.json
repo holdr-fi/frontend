@@ -16,7 +16,7 @@
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "subgraphs": {
     "aave": "",
-    "gauge": ""
+    "gauge": "https://api.thegraph.com/subgraphs/name/kyzooghost/holdr-gauges-subgraph"
   },
   "supportsEIP1559": false,
   "supportsElementPools": false,
@@ -40,7 +40,7 @@
     "vault": "0x364d44dFc31b3d7b607797B514348d57Ad0D784E",
     "weightedPoolFactory": "0xDD1591D7BdF0E3ddEa4b4377cf03373700BED38e",
     "stablePoolFactory": "0xB2f941B85791e47FAa6391Cdef36A3BBaD19b73E",
-    "tokenFactory": "",
+    "tokenFactory": "0xe04F421e4D05e0f57e79e0a6EFcB357aD6Eb0bEe",
     "weth": "0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
     "stETH": "",
     "wstETH": "0xb9181fEaDeaf6720Ef15644493BDcDfC07ac659b",
@@ -48,19 +48,19 @@
     "wnear": "0x6BB0c4d909a84d118B5e6c4b17117e79E621ae94",
     "lidoRelayer": "",
     "balancerHelpers": "0x751BD585c36708127646FC74C56cC11fba3d5cfB",
-    "batchRelayer": "0x2bb148Eb8973dD5dE928Ed215D5aF8e111C9e15D",
-    "gaugeFactory": "",
-    "balancerMinter": "",
-    "gaugeController": "",
+    "batchRelayer": "0xf5e5465Ade4aa0F29eC08c29Cd6C96C859B50c4b",
+    "gaugeFactory": "0x868655EC4230fF619e1d484fc51e97b5887694d1",
+    "balancerMinter": "0xe7678E32B6d9610CfB63A18091cD00c4A3b029B9",
+    "gaugeController": "0x2B69fc5903B3a9eFeBF88ff23A90B229A9791674",
     "tokenAdmin": "0x95c3f6B1001Fc46DcA5bc4041e74a4E5bF7D580f",
-    "veBAL": "",
-    "veDelegationProxy": "",
-    "veBALHelpers": "",
+    "veBAL": "0x5ed1e3D53AfdB0d0bc8661e056dffCD51c95bb9D",
+    "veDelegationProxy": "0xB0b7387dFb2b086596FF75e05aC5D4846590e412",
+    "veBALHelpers": "0xeaA4620EcfEeD4cfb2A9aBa02e55C3Ef4465bb47",
     "feeDistributor": "",
     "bribe": "",
     "bribeVault": "",
     "rewardDistributor": "",
-    "votingEscrow": ""
+    "votingEscrow": "0x5ed1e3D53AfdB0d0bc8661e056dffCD51c95bb9D"
   },
   "keys": {
     "infura": "",
@@ -81,7 +81,7 @@
     }
   },
   "gauges": {
-    "type": 1,
+    "type": 2,
     "weight": 100
   }
 }

@@ -1,5 +1,7 @@
 import { getAddress } from '@ethersproject/address';
 import { formatUnits } from '@ethersproject/units';
+import BigNumber from 'bignumber.js';
+import { Console } from 'console';
 
 import { toUnixTimestamp } from '@/composables/useTime';
 import { getPreviousEpoch } from '@/composables/useVeBAL';
@@ -32,11 +34,10 @@ export class VeBalAprCalc {
       bbaUSDPrice,
       veBalCurrentSupply
     } = await this.getData();
-
     const aggregateWeeklyRevenue = this.calcAggregateWeeklyRevenue(
-      balAmount,
-      bbAUSDAmount,
-      bbaUSDPrice,
+      balAmount || '0.0',
+      bbAUSDAmount || '0.0',
+      bbaUSDPrice || '0.0',
       prices
     );
 
@@ -57,34 +58,44 @@ export class VeBalAprCalc {
     const epochBeforeLast = toUnixTimestamp(getPreviousEpoch(1).getTime());
     const multicaller = new Multicaller();
 
-    multicaller
-      .call({
-        key: 'balAmount',
-        address: this.config.network.addresses.feeDistributor,
-        function: 'getTokensDistributedInWeek',
-        abi: FeeDistributorABI,
-        params: [this.balAddress, epochBeforeLast]
-      })
-      .call({
-        key: 'bbAUSDAmount',
-        address: this.config.network.addresses.feeDistributor,
-        function: 'getTokensDistributedInWeek',
-        abi: FeeDistributorABI,
-        params: [this.bbAUSDAddress, epochBeforeLast]
-      })
-      .call({
+    if (this.config.network.addresses.feeDistributor !== '') {
+      multicaller
+        .call({
+          key: 'balAmount',
+          address: this.config.network.addresses.feeDistributor,
+          function: 'getTokensDistributedInWeek',
+          abi: FeeDistributorABI,
+          params: [this.balAddress, epochBeforeLast]
+        })
+        // HOLDR_COMMENT: Commented out following to remove invalid smart contract query.
+        // .call({
+        //   key: 'bbAUSDAmount',
+        //   address: this.config.network.addresses.feeDistributor,
+        //   function: 'getTokensDistributedInWeek',
+        //   abi: FeeDistributorABI,
+        //   params: [this.bbAUSDAddress, epochBeforeLast]
+        // })
+        .call({
+          key: 'veBalCurrentSupply',
+          address: this.config.network.addresses.veBAL,
+          function: 'totalSupply()',
+          abi: veBalAbi
+        });
+      // HOLDR_COMMENT: Commented out following to remove invalid smart contract query.
+      // .call({
+      //   key: 'bbaUSDPrice',
+      //   address: this.bbAUSDAddress,
+      //   function: 'getRate',
+      //   abi: StablePhantomAbi
+      // });
+    } else {
+      multicaller.call({
         key: 'veBalCurrentSupply',
         address: this.config.network.addresses.veBAL,
         function: 'totalSupply()',
         abi: veBalAbi
       });
-    // SOLACE_COMMENT: Commented out following to remove invalid smart contract query.
-    // .call({
-    //   key: 'bbaUSDPrice',
-    //   address: this.bbAUSDAddress,
-    //   function: 'getRate',
-    //   abi: StablePhantomAbi
-    // });
+    }
 
     const result = await multicaller.execute();
 
@@ -101,6 +112,10 @@ export class VeBalAprCalc {
     bbaUSDPrice: string,
     prices: TokenPrices
   ) {
+    if (parseInt(balAmount, 10) == 0 && parseInt(bbAUSDAmount, 10) == 0) {
+      return new BigNumber(0);
+    }
+
     const balPrice = prices[this.balAddress];
 
     const balValue = bnum(balAmount).times(balPrice.usd);
