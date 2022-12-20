@@ -41,7 +41,7 @@ const navLinks = [
   { label: 'veHLDR', path: '/vehldr' },
   { label: 'Bribe', path: '/bribe' },
   { label: t('claim'), path: '/claim' },
-  { label: 'HLDR Token Launch', path: '/lbp', special: true }
+  { label: 'HLDR Token Launch', path: '/lbp' }
   // { label: 'Analytics', path: '/analytics' }
 ];
 
@@ -89,16 +89,15 @@ watch(blockNumber, async () => {
         v-for="link in navLinks"
         :key="link.label"
         class="side-bar-link flex items-center gap-2"
-        :class="[link.special ? 'special rocket-ship' : '']"
         @click="navTo(link.path)"
       >
         {{ link.label }}
-        <img
+        <!-- <img
           v-if="link.special"
           src="@/assets/images/icons/rocket.svg"
           class="rocket-ship"
           width="24"
-        />
+        /> -->
       </div>
     </div>
 
@@ -171,11 +170,11 @@ watch(blockNumber, async () => {
   @apply w-11 h-11 xs:w-12 xs:h-12  rounded-full bg-gray-850 hover:bg-gray-800 flex items-center justify-center text-white cursor-pointer;
 }
 
-.rocket-ship {
+/* .rocket-ship {
   animation: bounce 1s infinite;
   animation-duration: 1s;
   animation-iteration-count: infinite;
-}
+} */
 
 @keyframes bounce {
   0%,
@@ -189,7 +188,7 @@ watch(blockNumber, async () => {
   }
 }
 
-.special {
+/* .special {
   background-image: url('/images/backgrounds/hldr.png');
   background-size: 100%;
   color: transparent;
@@ -199,7 +198,7 @@ watch(blockNumber, async () => {
   background-repeat: repeat;
   background-size: cover;
   animation: shine 15s linear infinite;
-}
+} */
 
 @-webkit-keyframes shine {
   0% {

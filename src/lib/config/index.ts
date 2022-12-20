@@ -54,7 +54,7 @@ export interface Config {
     stETH: string;
     wstETH: string;
     near: string;
-    hnear: string;
+    wnear: string;
     lidoRelayer: string;
     balancerHelpers: string;
     batchRelayer: string;

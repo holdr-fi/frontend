@@ -382,7 +382,15 @@ const POOLS_AURORA: Pools = {
   DynamicFees: {
     Gauntlet: []
   },
-  BlockList: [''],
+  BlockList: [
+    '0xa4e7b92342349c35d66acc8439f77f91190c016f000200000000000000000006',
+    '0x3d411aca8af71b74f86bf7f9562fb5b5549cd8f100010000000000000000000d',
+    '0x05f51281512018d968ea0b7f8832ca13a03676f0000100000000000000000008',
+    '0x047990b3db7668977f2a4ebd9b083bfb1699feb9000200000000000000000009',
+    '0x306b82e9822e3addc743f8c7d45199e804a49fc000020000000000000000000b',
+    '0x223881f7885881a7190129340d0897305012c26000020000000000000000000c',
+    '0xe6aa6d040b662e001a4a4dd7a9678e39944d8c2e00010000000000000000000e'
+  ],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
@@ -393,9 +401,9 @@ const POOLS_AURORA: Pools = {
     AllowList: ['']
   },
   Factories: {
-    '0xDD1591D7BdF0E3ddEa4b4377cf03373700BED38e': 'weightedPool', // Weighted
-    '0xB2f941B85791e47FAa6391Cdef36A3BBaD19b73E': 'stablePool',
-    '0x1001e599ff9079717E176f224de7f1a27eACD3C2': 'liquidityBootstrappingPool'
+    '0xdd1591d7bdf0e3ddea4b4377cf03373700bed38e': 'weightedPool', // Weighted
+    '0xb2f941b85791e47faa6391cdef36a3bbad19b73e': 'stablePool',
+    '0x1001e599ff9079717e176f224de7f1a27eacd3c2': 'liquidityBootstrappingPool'
   },
   Stakable: {
     AllowList: [

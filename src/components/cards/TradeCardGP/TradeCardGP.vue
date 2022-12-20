@@ -345,14 +345,14 @@ export default defineComponent({
       if (trading.wrapType.value === WrapType.PleaseWrapFirst) {
         return {
           header: 'Wrap Near first',
-          body: 'You need to wrap your Near into WNear.'
+          body: 'Please wrap NEAR into wNEAR, then perform your trade with wNEAR.'
         };
       }
 
       if (trading.wrapType.value === WrapType.PleaseSwapInNear) {
         return {
           header: 'Swap in Near',
-          body: 'You can only swap your WNear for Near.'
+          body: 'Please swap into wNEAR, then unwrap wNEAR into NEAR.'
         };
       }
 

@@ -41,11 +41,11 @@ function isActive(page: string): boolean {
     <DesktopLinkItem to="/lbp" :active="isActive('lbp')" class="special">
       <div class="flex items-center gap-2">
         HLDR Token Launch
-        <img
+        <!-- <img
           src="@/assets/images/icons/rocket.svg"
           class="rocket-ship"
           width="24"
-        />
+        /> -->
       </div>
     </DesktopLinkItem>
     <!-- <DesktopLinkItem to="/analytics" :active="isActive('analytics')">
@@ -59,11 +59,11 @@ function isActive(page: string): boolean {
   @apply grid gap-6 grid-flow-col grid-rows-1 h-full content-center;
 }
 
-.rocket-ship {
+/* .rocket-ship {
   animation: bounce 1s infinite;
   animation-duration: 1s;
   animation-iteration-count: infinite;
-}
+} */
 
 @keyframes bounce {
   0%,
@@ -77,7 +77,7 @@ function isActive(page: string): boolean {
   }
 }
 
-.special {
+/* .special {
   background-image: url('/images/backgrounds/hldr.png');
   background-size: 100%;
   color: transparent;
@@ -86,7 +86,7 @@ function isActive(page: string): boolean {
   background-repeat: repeat;
   background-size: cover;
   animation: shine 15s linear infinite;
-}
+} */
 
 @-webkit-keyframes shine {
   0% {

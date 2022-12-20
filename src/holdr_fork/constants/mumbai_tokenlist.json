@@ -51,6 +51,22 @@
         "symbol": "USDC",
         "decimals": 18,
         "logoURI": "https://liferunners.wpenginepowered.com/wp-content/uploads/2015/07/question-mark-150x150.png"
+      },
+      {
+        "address": "0x0D6889Aaa61e01E7C886DB95512e6D608fe85F30",
+        "chainId": 80001,
+        "name": "NEAR",
+        "symbol": "NEAR",
+        "decimals": 24,
+        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/near/info/logo.png"
+      },
+      {
+        "address": "0x1e68Ff3D38F16f397883b7F8445ddF675A3A729d",
+        "chainId": 80001,
+        "name": "Wrapped NEAR",
+        "symbol": "wNEAR",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/near/info/logo.png"
       }
     ]
   }

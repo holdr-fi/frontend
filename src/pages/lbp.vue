@@ -71,7 +71,7 @@ const loading = ref<boolean>(true);
 const showPriceGraphModal = ref(false);
 const numTokens = ref(0);
 
-const showLbp = ref(false); // SOLACE_TODO: turn LBP on or off
+const showLbp = ref(false);
 
 const message = ref('');
 

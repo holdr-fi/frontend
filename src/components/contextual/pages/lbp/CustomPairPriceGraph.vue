@@ -187,6 +187,7 @@ const chartGrid = computed(() => {
           class="flex-col"
         >
           <CustomLineChart
+            :projection="projection"
             :data="chartData"
             :height="chartHeight"
             :show-legend="false"
@@ -244,11 +245,11 @@ const chartGrid = computed(() => {
               >
             </div>
           </div>
-          <div class="-mt-2 lg:mt-2" v-else>
+          <!-- <div class="-mt-2 lg:mt-2" v-else>
             <span class="text-sm text-gray-500 w-full flex justify-end">{{
               activeTimespan.option
             }}</span>
-          </div>
+          </div> -->
         </div>
       </div>
     </BalCard>

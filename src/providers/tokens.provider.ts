@@ -133,7 +133,7 @@ export default {
         networkConfig.addresses.vault,
         networkConfig.addresses.wstETH,
         configService.network.addresses.veBAL,
-        configService.network.addresses.hnear,
+        configService.network.addresses.wnear,
         configService.network.addresses.bribe,
         configService.network.addresses.bribeVault
       ]),
