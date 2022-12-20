@@ -382,7 +382,7 @@ const POOLS_AURORA: Pools = {
   DynamicFees: {
     Gauntlet: []
   },
-  BlockList: [],
+  BlockList: [''],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
