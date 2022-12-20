@@ -78,6 +78,7 @@ export class StakingRewardsService {
 
   private async getRelativeWeightsForGauges(gaugeAddresses: string[]) {
     const timestamp = getUnixTime(new Date());
+
     if (configService.network.chainId === Network.KOVAN) {
       return await this.gaugeController.getRelativeWeights(
         gaugeAddresses,
@@ -102,6 +103,7 @@ export class StakingRewardsService {
     if (isL2.value) return {};
     const gaugeAddresses = gauges.map(gauge => gauge.id);
     const balAddress = TOKENS.Addresses.BAL;
+
     const [
       inflationRate,
       relativeWeights,
@@ -129,7 +131,7 @@ export class StakingRewardsService {
       if (!balAddress) return nilApr;
 
       const totalSupply = bnum(totalSupplies[getAddress(gauge.id)]);
-      const balPrice = prices[getAddress(balAddress)].usd;
+      const balPrice = prices[getAddress(balAddress)]?.usd || '0';
 
       const gaugeBALApr = calculateGaugeApr({
         gaugeAddress: getAddress(gauge.id),

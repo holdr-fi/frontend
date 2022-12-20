@@ -111,6 +111,10 @@ export function calculateGaugeApr({
     .times(52)
     .times(balPrice);
 
+  if (bptPrice.toString() === '0') {
+    return '0';
+  }
+
   // bal apr
   const apr = yearlyReward.div(bptPrice).toString();
 

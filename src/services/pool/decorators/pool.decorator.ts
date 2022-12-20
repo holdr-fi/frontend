@@ -49,8 +49,8 @@ export class PoolDecorator {
         prices,
         currency,
         protocolFeePercentage,
-        gaugeBALAprs[pool.id],
-        gaugeRewardTokenAprs[pool.id]
+        gaugeBALAprs[pool.id] || { ['min']: '0', ['max']: '0' },
+        gaugeRewardTokenAprs[pool.id] || '0'
       );
 
       return poolService.pool;
