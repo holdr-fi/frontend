@@ -666,13 +666,13 @@
                 "vote": "Vote to direct liquidity mining emissions"
             },
             "tokens": {
-                "balWETH": "BAL + WETH",
+                "balWETH": "HLDR + WNEAR",
                 "lpToken": "80HLDR-20WNEAR",
                 "veBAL": "veHLDR"
             },
             "tokenInfo": {
-                "balWETH": "Invest / add liquidity to the 80% BAL / 20% WETH pool to get the 80HLDR-20WNEAR LP token.",
-                "lpToken": "Lock up the LP tokens from the 80% BAL / 20% WETH pool for up to a year to get veHLDR. The longer you lock, the more veHLDR you get.",
+                "balWETH": "Invest / add liquidity to the 80% HLDR / 20% WNEAR pool to get the 80HLDR-20WNEAR LP token.",
+                "lpToken": "Lock up the LP tokens from the 80% HLDR / 20% WNEAR pool for up to a year to get veHLDR. The longer you lock, the more veHLDR you get.",
                 "veBAL": "Use veHLDR to earn extra on your staked pools. Only some pools are eligible for staking. Check any pools that you are in, and stake it to earn liquidity mining incentives. You can also use veHLDR to vote to direct future liquidity mining emissions"
             },
             "buttons": {
@@ -697,7 +697,7 @@
                     "label": "My veHLDR",
                     "secondaryText": "{0} of all veHLDR"
                 },
-                "myExpiredLockTooltip": "Your previous lockup period has expired, so you no longer have any veHLDR or voting power. You will no longer get boosted yields on staked pools or on your locked 80% BAL / 20% WETH pool. However, you’ll still get the minimum 1.0x rate. Tap the plus icon to extend your lock on 80HLDR-20WNEAR LP tokens to get veHLDR for higher yields and voting power. Tap the minus icon to redeem your LP tokens."
+                "myExpiredLockTooltip": "Your previous lockup period has expired, so you no longer have any veHLDR or voting power. You will no longer get boosted yields on staked pools or on your locked 80% HLDR / 20% WNEAR pool. However, you’ll still get the minimum 1.0x rate. Tap the plus icon to extend your lock on 80HLDR-20WNEAR LP tokens to get veHLDR for higher yields and voting power. Tap the minus icon to redeem your LP tokens."
             }
         },
         "communityVeBAL": {
@@ -770,7 +770,7 @@
                     },
                     "noVeBal": {
                         "title": "You need some veHLDR to vote on gauges",
-                        "description": "Get veHLDR by locking up LP tokens from the 80% BAL / 20% WETH pool."
+                        "description": "Get veHLDR by locking up LP tokens from the 80% HLDR / 20% wNEAR pool."
                     },
                     "veBalLockTooShort": {
                         "title": "veHLDR not locked for 7 days.",

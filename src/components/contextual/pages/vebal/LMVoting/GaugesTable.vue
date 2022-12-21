@@ -172,7 +172,7 @@ function redirectToPool(gauge: VotingGaugeWithVotes) {
       }"
       :pin="{
         pinOn: 'address',
-        pinnedData: ['0xE867AD0a48e8f815DC0cda2CDb275e0F163A480b']
+        pinnedData: ['0x4d2c52eEeA7fc6fb9c6BdBa073310557367a2d1e']
       }"
     >
       <template v-slot:chainColumnHeader>
