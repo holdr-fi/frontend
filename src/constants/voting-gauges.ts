@@ -64,35 +64,6 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     }
   },
   {
-    // HLDR80-20wNEAR
-    address: '0x2aF73Eb0c4188B27D3914467857fE2C6d016c5D3',
-    network: 1313161554,
-    pool: {
-      id: '0x190185164382d388ef829a3ad67998ab5792eea3000200000000000000000010',
-      address: '0x190185164382d388ef829a3ad67998ab5792eea3',
-      poolType: 'Weighted',
-      symbol: 'HLDR80-20wNEAR',
-      tokens: [
-        {
-          address: '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA',
-          weight: '0.8',
-          symbol: 'HLDR'
-        },
-        {
-          address: '0x6BB0c4d909a84d118B5e6c4b17117e79E621ae94',
-          weight: '0.2',
-          symbol: 'wNEAR'
-        }
-      ]
-    },
-    tokenLogoURIs: {
-      '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA':
-        'https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png',
-      '0x6BB0c4d909a84d118B5e6c4b17117e79E621ae94':
-        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/near/info/logo.png'
-    }
-  },
-  {
     // HLDR50-USDC25-WETH25
     address: '0xe1bC70BA4D240d4c85ae0D395459A5fF824BD2b8',
     network: 1313161554,

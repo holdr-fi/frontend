@@ -99,6 +99,30 @@
         "symbol": "wNEAR",
         "decimals": 18,
         "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/near/info/logo.png"
+      },
+      {
+        "address": "0x9f1f933c660a1dc856f0e0fe058435879c5ccef0",
+        "chainId": 1313161554,
+        "name": "Bastion",
+        "symbol": "BSTN",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/bstn.svg"
+      },
+      {
+        "address": "0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f",
+        "chainId": 1313161554,
+        "name": "Aurigami",
+        "symbol": "PLY",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/ply.svg"
+      },
+      {
+        "address": "0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
+        "chainId": 1313161554,
+        "name": "Trisolaris",
+        "symbol": "TRI",
+        "decimals": 18,
+        "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/tri.svg"
       }
     ]
   }
