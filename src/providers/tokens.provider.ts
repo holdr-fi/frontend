@@ -22,6 +22,7 @@ import symbolKeys from '@/constants/symbol.keys';
 import { TOKENS } from '@/constants/tokens';
 import { bnum, includesAddress, isSameAddress } from '@/lib/utils';
 import { TokenPrices } from '@/services/coingecko/api/price.service';
+import { coingeckoService } from '@/services/coingecko/coingecko.service';
 import { configService } from '@/services/config/config.service';
 import { ContractAllowancesMap } from '@/services/token/concerns/allowances.concern';
 import { BalanceMap } from '@/services/token/concerns/balances.concern';
@@ -448,6 +449,8 @@ export default {
     /**
      * LIFECYCLE
      */
+
+    /* SOLACE_INFO: This is where we inject the tokens and prices we want to use in the app. */
     onBeforeMount(async () => {
       const tokensToInject = compact([
         configService.network.addresses.stETH,
@@ -462,6 +465,22 @@ export default {
         await injectPrices({
           '0xEc1Fdb4E9f07111103F1EB3a60C314bd8E657c0d': {
             usd: 1
+          }
+        });
+      }
+
+      if (configService.network.chainId === 1313161554) {
+        const tokenMap = await coingeckoService.prices.getTokens([
+          configService.network.addresses.near
+        ]);
+        const injectMap = {};
+        injectMap[configService.network.addresses.wnear] = {
+          usd: tokenMap[configService.network.addresses.near].usd
+        };
+        await injectPrices({
+          ...injectMap,
+          '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA': {
+            usd: 0.023
           }
         });
       }
