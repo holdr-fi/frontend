@@ -213,7 +213,7 @@ export default defineComponent({
     APRTooltip,
     StakingIncentivesCard,
     StakingProvider,
-    ApyVisionPoolLink
+    // ApyVisionPoolLink
   },
 
   setup() {
