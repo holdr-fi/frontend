@@ -136,11 +136,12 @@ function handleAddressChange(newAddress: string): void {
 function tokenWeight(address: string): number {
   if (isStableLike(props.pool.poolType)) return 0;
   if (!props.pool?.onchain?.tokens) return 0;
+  if (!props.pool?.onchain?.tokens[address]?.weight) return 0;
 
   if (isSameAddress(address, nativeAsset.address)) {
     return props.pool.onchain.tokens[wrappedNativeAsset.value.address].weight;
   }
-
+  // HOLDR_TODO: 0x480edf7ecb52ef9eace2346b84f29795429aa9c9 is an address that should not be in the pool, it is what made this result undefined, and some weights are undefined
   return props.pool.onchain.tokens[address].weight;
 }
 

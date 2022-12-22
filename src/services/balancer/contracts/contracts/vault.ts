@@ -171,8 +171,9 @@ export default class Vault {
     }
 
     vaultMultiCaller.call('poolTokens', this.address, 'getPoolTokens', [id]);
-    result = await vaultMultiCaller.execute(result);
+    result = await vaultMultiCaller.execute(result); // HOLDR_TODO: this is returning 3 tokens for a 2 token pool (usdc-usdt stable pool), and no weights field is returned
 
+    console.log('result', result);
     return this.formatPoolData(result, type, tokens, poolAddress);
   }
 

@@ -35,9 +35,12 @@ const props = defineProps<Props>();
 const { tokens, balances, balanceFor, getTokens } = useTokens();
 const { fNum2, toFiat } = useNumbers();
 const { isWalletReady } = useWeb3();
-const { isStableLikePool, isStablePhantomPool, isMigratablePool } = usePool(
-  toRef(props, 'pool')
-);
+const {
+  isStableLikePool,
+  isStablePhantomPool,
+  isComposableStablePool,
+  isMigratablePool
+} = usePool(toRef(props, 'pool'));
 const {
   userData: { stakedSharesForProvidedPool }
 } = useStaking();
@@ -161,7 +164,7 @@ function navigateToPoolMigration(pool: Pool) {
         </h5>
       </div>
     </template>
-    <div class="px-4 py-2">
+    <div class="px-4 py-2" v-if="!isComposableStablePool">
       <div
         v-for="(address, index) in tokenAddresses"
         :key="address"

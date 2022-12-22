@@ -18,7 +18,7 @@
                 {{ tokenMeta.symbol }}
               </span>
               <span
-                v-if="!isStableLikePool"
+                v-if="!isStableLikePool && !isComposableStablePool"
                 class="font-medium text-gray-400 text-xs mt-px ml-1"
               >
                 {{
@@ -263,11 +263,13 @@ export default defineComponent({
     /**
      * COMPUTED
      */
-    const pool = computed(() => poolQuery.data.value);
+    const pool = computed(() => {
+      console.log('poolQuery.data.value', poolQuery.data.value)
+      return poolQuery.data.value});
     const {
       isStableLikePool,
       isLiquidityBootstrappingPool,
-      isStablePhantomPool
+      isStablePhantomPool,isComposableStablePool
     } = usePool(poolQuery.data);
 
     const noInitLiquidity = computed(
@@ -317,6 +319,7 @@ export default defineComponent({
     );
 
     const titleTokens = computed(() => {
+      console.log('pool.value', pool.value)
       if (!pool.value) return [];
       if (!pool.value?.onchain?.tokens) return [];
 
@@ -455,6 +458,7 @@ export default defineComponent({
       historicalPrices,
       snapshots,
       isLoadingSnapshots,
+      isComposableStablePool,
       loadingPool,
       titleTokens,
       isWalletReady,

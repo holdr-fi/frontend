@@ -81,6 +81,8 @@ export default function usePoolQuery(
       }
     });
 
+    console.log('balancerSubgraphService.pools result', pool);
+
     if (isBlocked(pool)) throw new Error('Pool not allowed');
 
     const isStablePhantomPool = isStablePhantom(pool.poolType);
@@ -108,6 +110,8 @@ export default function usePoolQuery(
       pool.poolType,
       poolTokenMeta
     );
+
+    console.log('onchainData', onchainData);
 
     const [decoratedPool] = await balancerSubgraphService.pools.decorate(
       [{ ...pool, onchain: onchainData }],
