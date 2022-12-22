@@ -211,7 +211,7 @@ export default defineComponent({
     GauntletIcon,
     APRTooltip,
     StakingIncentivesCard,
-    StakingProvider,
+    StakingProvider
     // ApyVisionPoolLink
   },
 
@@ -242,7 +242,10 @@ export default defineComponent({
 
     // list of tokens that do not need prices fetched for
     const exemptedTokens = computed(() => [
-      configService.network.addresses.wnear
+      configService.network.addresses.wnear,
+      // USDT-USDC Composable Stable Pool LP token
+      '0x480Edf7Ecb52Ef9eaCe2346b84f29795429Aa9c9',
+      '0x480Edf7Ecb52Ef9eaCe2346b84f29795429Aa9c9'.toLowerCase()
     ]);
 
     const doesPoolHaveExemptedTokens = computed(() =>
