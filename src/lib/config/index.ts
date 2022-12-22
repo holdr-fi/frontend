@@ -1,7 +1,7 @@
 import { Network } from '@balancer-labs/sdk';
 
 import arbitrum from './arbitrum.json';
-import aurora from './aurora.json'; // SOLACE_TODO: Add Aurora subgraph gauge
+import aurora from './aurora.json'; // HOLDR_TODO: Add Aurora subgraph gauge
 import aurora_testnet from './aurora_testnet.json';
 import docker from './docker.json';
 import homestead from './homestead.json';

@@ -13,7 +13,7 @@ import { isMumbai } from './useNetwork';
 export default function useVotingGauges() {
   // Hard coded list of voting gauges
 
-  // SOLACE_TODO_WARN: HARDCODED
+  // HOLDR_TODO_WARN: HARDCODED
   const _votingGauges = computed((): VotingGauge[] =>
     isMumbai.value
       ? (MUMBAI_VOTING_GAUGES as VotingGauge[])

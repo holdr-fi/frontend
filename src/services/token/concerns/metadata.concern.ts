@@ -35,7 +35,7 @@ export default class MetadataConcern {
       address => !includesAddress(existingAddresses, address)
     );
     if (unknownAddresses.length > 0) {
-      const onchainMeta = await this.getMetaOnchain(unknownAddresses); // SOLACE_TODO: change veSWP to veHLDR for all chains
+      const onchainMeta = await this.getMetaOnchain(unknownAddresses); // HOLDR_TODO: change veSWP to veHLDR for all chains
       metaDict = { ...metaDict, ...onchainMeta };
     }
 

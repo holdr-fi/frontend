@@ -52,7 +52,7 @@ function formatToken({ address, symbol }: { address: string; symbol: string }) {
 }
 
 const trendingPairs = computed(() => {
-  // SOLACE_TODO: no tradePairSnapshots from subgraph found from this function for some reason
+  // HOLDR_TODO: no tradePairSnapshots from subgraph found from this function for some reason
   console.log('tradePairSnapshots', tradePairSnapshots);
   return (tradePairSnapshots.value || []).map(pairSnapshot => [
     formatToken(pairSnapshot.pair.token0),

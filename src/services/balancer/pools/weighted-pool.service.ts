@@ -59,7 +59,7 @@ export default class WeightedPoolService {
     const seedTokens = this.calculateTokenWeights(tokens);
     const swapFeeScaled = scale(new BigNumber(swapFee), 18);
 
-    // SOLACE_EDIT - Added array of zero address here, because WeightedPoolV2.create requires 'rateProvider address[]' array.
+    // HOLDR_EDIT - Added array of zero address here, because WeightedPoolV2.create requires 'rateProvider address[]' array.
     const params = [
       name,
       symbol,
@@ -72,7 +72,7 @@ export default class WeightedPoolService {
       owner
     ];
 
-    // SOLACE_EDIT - Used WeightedPoolFactoryV2 ABI, and commented out WeightedPoolFactoryV1 ABI.
+    // HOLDR_EDIT - Used WeightedPoolFactoryV2 ABI, and commented out WeightedPoolFactoryV1 ABI.
     return sendTransaction(
       provider,
       weightedPoolFactoryAddress,
@@ -209,7 +209,7 @@ export default class WeightedPoolService {
   }
 }
 
-// SOLACE_EDIT - Pasted WeightedPoolFactory V2 ABI here, to replace WeightedPoolFactory V1 ABI in calling WeightedPool.create tx.
+// HOLDR_EDIT - Pasted WeightedPoolFactory V2 ABI here, to replace WeightedPoolFactory V1 ABI in calling WeightedPool.create tx.
 const WeightedPoolFactoryV2ABI = [
   {
     inputs: [

@@ -72,6 +72,7 @@ export default function usePoolQuery(
   const queryKey = QUERY_KEYS.Pools.Current(id, gaugeAddresses);
 
   const queryFn = async () => {
+    // HOLDR_TODO: check subgraph, it doesn't seem to return the right tokenList length for usdc-usdt stable pool
     let [pool] = await balancerSubgraphService.pools.get({
       where: {
         id: id.toLowerCase(),
