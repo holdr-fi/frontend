@@ -123,14 +123,6 @@
         "symbol": "TRI",
         "decimals": 18,
         "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/tri.svg"
-      },
-      {
-        "address": "0x480Edf7Ecb52Ef9eaCe2346b84f29795429Aa9c9",
-        "chainId": 1313161554,
-        "name": "Holdr USDC-USDT Stable LP Token",
-        "symbol": "hUSDC-USDT",
-        "decimals": 18,
-        "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png"
       }
     ]
   }
