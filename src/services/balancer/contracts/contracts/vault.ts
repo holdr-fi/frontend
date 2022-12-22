@@ -7,6 +7,8 @@ import { Contract } from 'ethers';
 import { pick } from 'lodash';
 
 import {
+  isComposableStable,
+  isComposableStableLike,
   isStableLike,
   isStablePhantom,
   isTradingHaltable,
@@ -80,50 +82,51 @@ export default class Vault {
     } else if (isStableLike(type)) {
       poolMulticaller.call('amp', poolAddress, 'getAmplificationParameter');
 
-      if (isStablePhantom(type)) {
+      if (isComposableStableLike(type)) {
         // Overwrite totalSupply with virtualSupply for StablePhantom pools
         poolMulticaller.call('totalSupply', poolAddress, 'getVirtualSupply');
-
-        Object.keys(tokens).forEach((token, i) => {
-          poolMulticaller.call(`linearPools.${token}.id`, token, 'getPoolId');
-          poolMulticaller.call(
-            `linearPools.${token}.priceRate`,
-            token,
-            'getRate'
-          );
-          poolMulticaller.call(
-            `tokenRates[${i}]`,
-            poolAddress,
-            'getTokenRate',
-            [token]
-          );
-          poolMulticaller.call(
-            `linearPools.${token}.mainToken.address`,
-            token,
-            'getMainToken'
-          );
-          poolMulticaller.call(
-            `linearPools.${token}.mainToken.index`,
-            token,
-            'getMainIndex'
-          );
-          poolMulticaller.call(
-            `linearPools.${token}.wrappedToken.address`,
-            token,
-            'getWrappedToken'
-          );
-          poolMulticaller.call(
-            `linearPools.${token}.wrappedToken.index`,
-            token,
-            'getWrappedIndex'
-          );
-          poolMulticaller.call(
-            `linearPools.${token}.wrappedToken.rate`,
-            token,
-            'getWrappedTokenRate'
-          );
-        });
+        if (isComposableStable(type)) {
+          // Overwrite totalSupply with actualSupply for ComposableStable pools
+          poolMulticaller.call('totalSupply', poolAddress, 'getActualSupply');
+        }
       }
+
+      Object.keys(tokens).forEach((token, i) => {
+        poolMulticaller.call(`linearPools.${token}.id`, token, 'getPoolId');
+        poolMulticaller.call(
+          `linearPools.${token}.priceRate`,
+          token,
+          'getRate'
+        );
+        poolMulticaller.call(`tokenRates[${i}]`, poolAddress, 'getTokenRate', [
+          token
+        ]);
+        poolMulticaller.call(
+          `linearPools.${token}.mainToken.address`,
+          token,
+          'getMainToken'
+        );
+        poolMulticaller.call(
+          `linearPools.${token}.mainToken.index`,
+          token,
+          'getMainIndex'
+        );
+        poolMulticaller.call(
+          `linearPools.${token}.wrappedToken.address`,
+          token,
+          'getWrappedToken'
+        );
+        poolMulticaller.call(
+          `linearPools.${token}.wrappedToken.index`,
+          token,
+          'getWrappedIndex'
+        );
+        poolMulticaller.call(
+          `linearPools.${token}.wrappedToken.rate`,
+          token,
+          'getWrappedTokenRate'
+        );
+      });
     }
 
     result = await poolMulticaller.execute(result);

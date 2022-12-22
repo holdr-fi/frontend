@@ -35,7 +35,10 @@ export function isStablePhantom(poolType: PoolType): boolean {
 
 export function isStableLike(poolType: PoolType): boolean {
   return (
-    isStable(poolType) || isMetaStable(poolType) || isStablePhantom(poolType)
+    isStable(poolType) ||
+    isMetaStable(poolType) ||
+    isStablePhantom(poolType) ||
+    isComposableStable(poolType)
   );
 }
 
@@ -66,6 +69,10 @@ export function isWeightedLike(poolType: PoolType): boolean {
 
 export function isComposableStable(poolType: PoolType): boolean {
   return poolType === PoolType.ComposableStable;
+}
+
+export function isComposableStableLike(poolType: PoolType): boolean {
+  return isStablePhantom(poolType) || isComposableStable(poolType);
 }
 
 export function isTradingHaltable(poolType: PoolType): boolean {
@@ -245,6 +252,9 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
   const isStableLikePool = computed(
     (): boolean => !!pool.value && isStableLike(pool.value.poolType)
   );
+  const isComposableStableLikePool = computed(
+    (): boolean => !!pool.value && isComposableStableLike(pool.value.poolType)
+  );
   const isWeightedPool = computed(
     (): boolean => !!pool.value && isWeighted(pool.value.poolType)
   );
@@ -283,6 +293,7 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
     isMetaStablePool,
     isStablePhantomPool,
     isComposableStablePool,
+    isComposableStableLikePool,
     isStableLikePool,
     isWeightedPool,
     isWeightedLikePool,

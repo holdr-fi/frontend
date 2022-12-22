@@ -14,7 +14,8 @@ export type FactoryType =
   | 'stablePool'
   | 'managedPool'
   | 'liquidityBootstrappingPool'
-  | 'boostedPool';
+  | 'boostedPool'
+  | 'composableStablePool';
 
 export type Pools = {
   IdsMap: Partial<
