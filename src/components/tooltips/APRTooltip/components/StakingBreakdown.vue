@@ -72,7 +72,7 @@ const breakdownItems = computed(
   (): Array<any> => {
     const items: Array<any> = [];
 
-    items.push(['Min BAL', minBalAPR.value], ['Max BAL', maxBalAPR.value]);
+    items.push(['Min HLDR', minBalAPR.value], ['Max HLDR', maxBalAPR.value]);
 
     if (hasRewardTokens.value) items.push(['Rewards', rewardTokensAPR.value]);
 

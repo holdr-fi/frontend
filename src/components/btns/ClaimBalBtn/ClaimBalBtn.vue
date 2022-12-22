@@ -59,7 +59,7 @@ async function claimTx() {
     :actionFn="claimTx"
     :onConfirmFn="gaugesQuery.refetch.value"
     action="claim"
-    :summary="`${t('claim')} ${fNum2(props.amount, FNumFormats.token)} BAL`"
+    :summary="`${t('claim')} ${fNum2(props.amount, FNumFormats.token)} HLDR`"
     :confirmingLabel="$t('claiming')"
   />
 </template>

@@ -53,6 +53,14 @@
         block
       />
       <BalBtn
+        v-if="
+          trading.isPleaseWrapFirst.value || trading.isPleaseSwapInNear.value
+        "
+        label="Change Tokens"
+        block
+        @click.prevent="handleTradeButtonForNEAR"
+      />
+      <BalBtn
         v-else
         :label="$t('preview')"
         :disabled="tradeDisabled"
@@ -181,6 +189,7 @@ import { TOKENS } from '@/constants/tokens';
 import { lsGet } from '@/lib/utils';
 import { WrapType } from '@/lib/utils/balancer/wrapper';
 import { isRequired } from '@/lib/utils/validations';
+import { configService } from '@/services/config/config.service';
 import { ApiErrorCodes } from '@/services/gnosis/errors/OperatorError';
 import useWeb3 from '@/services/web3/useWeb3';
 
@@ -261,15 +270,8 @@ export default defineComponent({
         trading.isGnosisTrade.value && trading.gnosis.hasValidationError.value;
       const hasBalancerErrors =
         trading.isBalancerTrade.value && isHighPriceImpact.value;
-      const notSwappable =
-        trading.isPleaseWrapFirst.value || trading.isPleaseSwapInNear.value;
 
-      return (
-        hasValidationError ||
-        hasGnosisErrors ||
-        hasBalancerErrors ||
-        notSwappable
-      );
+      return hasValidationError || hasGnosisErrors || hasBalancerErrors;
     });
 
     const title = computed(() => {
@@ -344,14 +346,15 @@ export default defineComponent({
 
       if (trading.wrapType.value === WrapType.PleaseWrapFirst) {
         return {
-          header: 'Wrap Near first',
-          body: 'Please wrap NEAR into wNEAR, then perform your trade with wNEAR.'
+          header: 'Wrap NEAR first',
+          body:
+            'Please wrap NEAR into wNEAR, then perform your trade with wNEAR.'
         };
       }
 
       if (trading.wrapType.value === WrapType.PleaseSwapInNear) {
         return {
-          header: 'Swap in Near',
+          header: 'Swap in NEAR',
           body: 'Please swap into wNEAR, then unwrap wNEAR into NEAR.'
         };
       }
@@ -383,6 +386,18 @@ export default defineComponent({
     function handleErrorButtonClick() {
       if (trading.sor.validationErrors.value.highPriceImpact) {
         dismissedErrors.value.highPriceImpact = true;
+      }
+    }
+
+    async function handleTradeButtonForNEAR(): Promise<void> {
+      if (trading.wrapType.value === WrapType.PleaseWrapFirst) {
+        setTokenInAddress(configService.network.addresses.near);
+        setTokenOutAddress(configService.network.addresses.wnear);
+      } else if (trading.wrapType.value === WrapType.PleaseSwapInNear) {
+        setTokenInAddress(configService.network.addresses.wnear);
+        setTokenOutAddress(configService.network.addresses.near);
+      } else {
+        return;
       }
     }
 
@@ -459,6 +474,7 @@ export default defineComponent({
       // methods
       trade,
       switchToWETH,
+      handleTradeButtonForNEAR,
       handleErrorButtonClick
     };
   }
