@@ -293,7 +293,36 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x4988a896b1227218e4A686fdE5EabdcAbd91571f':
         'https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png'
     }
-  }
+  },
+  {
+    // USDT-USDC Weighted Pool
+    address: '0xbC4B15225b06429ADCC990788b01C17aDbb1b315',
+    network: 1313161554,
+    pool: {
+      id: '0x4b5648133ea518c3ac47f7159cf998c6ff15f435000200000000000000000024',
+      address: '0x4b5648133eA518C3Ac47f7159cF998c6ff15F435',
+      poolType: 'Weighted',
+      symbol: 'USDC50-USDT50',
+      tokens: [
+        {
+          address: '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802',
+          weight: '0.5',
+          symbol: 'USDC'
+        },
+        {
+          address: '0x4988a896b1227218e4A686fdE5EabdcAbd91571f',
+          weight: '0.5',
+          symbol: 'USDT'
+        }
+      ]
+    },
+    tokenLogoURIs: {
+      '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802':
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
+      '0x4988a896b1227218e4A686fdE5EabdcAbd91571f':
+        'https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png'
+    }
+  },
 ] as VotingGauge[];
 
 export const KOVAN_VOTING_GAUGES: VotingGauge[] = (CHANGED_ALL_VOTING_GAUGES as VotingGauge[]).filter(
