@@ -41,7 +41,6 @@ import useWeb3 from '@/services/web3/useWeb3';
 import { TokenInfo } from '@/types/TokenList';
 
 import useEthers from '../useEthers';
-import useFathom from '../useFathom';
 import useNumbers, { FNumFormats } from '../useNumbers';
 import useTokens from '../useTokens';
 import useTransactions, { TransactionAction } from '../useTransactions';
@@ -129,7 +128,6 @@ export default function useSor({
   // COMPOSABLES
   const { getProvider: getWeb3Provider, appNetworkConfig } = useWeb3();
   const provider = computed(() => getWeb3Provider());
-  const { trackGoal, Goals } = useFathom();
   const { txListener } = useEthers();
   const { addTransaction } = useTransactions();
   const { fNum2 } = useNumbers();
@@ -520,7 +518,6 @@ export default function useSor({
       onTxConfirmed: () => {
         trading.value = false;
         latestTxHash.value = tx.hash;
-        trackGoal(Goals.Swapped);
       },
       onTxFailed: () => {
         trading.value = false;
@@ -529,7 +526,6 @@ export default function useSor({
   }
 
   async function trade(successCallback?: () => void) {
-    trackGoal(Goals.ClickSwap);
     trading.value = true;
     confirming.value = true;
     state.submissionError = null;

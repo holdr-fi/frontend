@@ -16,7 +16,7 @@ import tallyLogo from '@/assets/images/connectors/tally.svg';
 import trustwalletLogo from '@/assets/images/connectors/trustwallet.svg';
 import walletconnectLogo from '@/assets/images/connectors/walletconnect.svg';
 import walletlinkLogo from '@/assets/images/connectors/walletlink.svg';
-import useFathom from '@/composables/useFathom';
+import { networkId } from '@/composables/useNetwork';
 import { lsGet, lsSet } from '@/lib/utils';
 import i18n from '@/plugins/i18n';
 
@@ -66,7 +66,6 @@ type PluginState = {
 
 export default {
   install: async app => {
-    const { trackGoal, Goals } = useFathom();
     const alreadyConnectedAccount = ref(lsGet('connectedWallet', null));
     const alreadyConnectedProvider = ref(lsGet('connectedProvider', null));
     // this data provided is properly typed to all consumers
@@ -179,8 +178,6 @@ export default {
           lsSet('connectedWallet', account.value);
           lsSet('connectedProvider', wallet);
           pluginState.walletState = 'connected';
-
-          trackGoal(Goals.ConnectedWallet);
         }
       } catch (err) {
         console.error(err);
@@ -220,6 +217,13 @@ export default {
     app.provide(Web3ProviderSymbol, payload);
   }
 };
+
+export async function verifyNetwork(signer: JsonRpcSigner) {
+  const userNetwork = await signer.getChainId();
+  if (userNetwork.toString() !== networkId.value.toString()) {
+    throw new Error('Wallet network does not match app network.');
+  }
+}
 
 export function getConnectorName(connectorId: string): string {
   if (connectorId === 'injectedMetamask') {
