@@ -46,6 +46,7 @@
     "balancerHelpers": "",
     "merkleOrchard": "",
     "batchRelayer": "",
+    "batchRelayerV4": "",
     "veBAL": "",
     "balancerMinter": "",
     "veDelegationProxy": "",
