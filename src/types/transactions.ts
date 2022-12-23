@@ -33,4 +33,7 @@ export type TransactionActionInfo = {
   confirmingLabel: string;
   stepTooltip: string;
   action: () => Promise<TransactionResponse>;
+  isSignAction?: boolean;
+  isStakeAction?: boolean;
+  isUnstakeAction?: boolean;
 };

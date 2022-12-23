@@ -57,6 +57,7 @@ export default function usePoolQuery(
     const requiresAllowlisting =
       isStableLike(pool.poolType) || isManaged(pool.poolType);
     const isOwnedByUser =
+      pool.owner &&
       isAddress(account.value) &&
       getAddress(pool.owner) === getAddress(account.value);
     const isAllowlisted =

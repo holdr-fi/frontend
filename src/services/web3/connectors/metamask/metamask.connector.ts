@@ -2,6 +2,23 @@ import { WalletError } from '@/types';
 
 import { Connector } from '../connector';
 
+export function getInjectedProvider() {
+  const ethereum: any = window.ethereum;
+  let provider = ethereum || (window as any).web3?.currentProvider;
+
+  // if multiple providers are injected and one of them is Metamask, prefer Metamask
+  if (ethereum?.providers?.length) {
+    ethereum.providers.forEach(p => {
+      if (p.isMetaMask) provider = p;
+    });
+  }
+  return provider;
+}
+
+export function hasInjectedProvider(): boolean {
+  return !!getInjectedProvider();
+}
+
 export class MetamaskConnector extends Connector {
   id = 'injectedMetamask';
   async connect() {

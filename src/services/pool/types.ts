@@ -46,6 +46,19 @@ export interface PoolToken {
   symbol?: string;
 }
 
+type Currency = 'eth' | 'usd';
+
+type Price = {
+  [currency in Currency]?: string;
+};
+
+export interface Token {
+  address: string;
+  decimals?: number;
+  symbol?: string;
+  price?: Price;
+}
+
 // PoolToken data from onchain call
 export interface RawPoolTokens {
   balances: BigNumber[];

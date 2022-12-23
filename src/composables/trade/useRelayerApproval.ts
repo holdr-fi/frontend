@@ -18,13 +18,15 @@ const vaultAddress = configService.network.addresses.vault;
 export enum Relayer {
   GNOSIS = 'Gnosis',
   LIDO = 'Lido',
-  BATCH = 'Batch'
+  BATCH = 'Batch',
+  BATCH_V4 = 'BATCH_V4'
 }
 
-const relayerAddressMap = {
+export const relayerAddressMap = {
   [Relayer.GNOSIS]: GP_RELAYER_CONTRACT_ADDRESS,
   [Relayer.LIDO]: configService.network.addresses.lidoRelayer,
-  [Relayer.BATCH]: configService.network.addresses.batchRelayer
+  [Relayer.BATCH]: configService.network.addresses.batchRelayer,
+  [Relayer.BATCH_V4]: configService.network.addresses.batchRelayerV4
 };
 
 export default function useRelayerApproval(

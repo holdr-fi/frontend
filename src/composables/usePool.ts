@@ -4,7 +4,12 @@ import { computed, Ref } from 'vue';
 
 import { POOL_MIGRATIONS } from '@/components/forms/pool_actions/MigrateForm/constants';
 import { POOLS } from '@/constants/pools';
-import { bnum, includesAddress, isSameAddress } from '@/lib/utils';
+import {
+  bnum,
+  includesAddress,
+  isSameAddress,
+  removeAddress
+} from '@/lib/utils';
 import { includesWstEth } from '@/lib/utils/balancer/lido';
 import { configService } from '@/services/config/config.service';
 import { AnyPool, Pool, PoolAPRs, PoolToken } from '@/services/pool/types';
@@ -42,6 +47,14 @@ export function isStableLike(poolType: PoolType): boolean {
   );
 }
 
+export function isComposableStable(poolType: PoolType): boolean {
+  return poolType === PoolType.ComposableStable;
+}
+
+export function isComposableStableLike(poolType: PoolType): boolean {
+  return isStablePhantom(poolType) || isComposableStable(poolType);
+}
+
 export function isUnknownType(poolType: any): boolean {
   return !Object.values(PoolType).includes(poolType);
 }
@@ -59,20 +72,24 @@ export function isManaged(poolType: PoolType): boolean {
   return poolType === PoolType.Investment;
 }
 
+/**
+ * Checks if the pool is to be considered 'deep'. Deep pools are pools that the
+ * UI treats differently because it understands that it contains nested pools.
+ * This is used to enable the generalised deep pool join/exit flow for example.
+ */
+export function isDeep(pool: Pool): boolean {
+  const treatAsDeep = [
+    '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007' // usdt-usdc (aurora)
+  ];
+
+  return treatAsDeep.includes(pool.id);
+}
 export function isWeightedLike(poolType: PoolType): boolean {
   return (
     isWeighted(poolType) ||
     isManaged(poolType) ||
     isLiquidityBootstrapping(poolType)
   );
-}
-
-export function isComposableStable(poolType: PoolType): boolean {
-  return poolType === PoolType.ComposableStable;
-}
-
-export function isComposableStableLike(poolType: PoolType): boolean {
-  return isStablePhantom(poolType) || isComposableStable(poolType);
 }
 
 export function isTradingHaltable(poolType: PoolType): boolean {
@@ -136,7 +153,7 @@ export function orderedPoolTokens(
 
   return tokens
     .slice()
-    .sort((a, b) => parseFloat(b.weight) - parseFloat(a.weight));
+    .sort((a, b) => parseFloat(b.weight ?? '0') - parseFloat(a.weight ?? '0'));
 }
 
 /**
@@ -204,6 +221,21 @@ export function removePreMintedBPT(pool: Pool): Pool {
   );
   return pool;
 }
+export function tokensListExclBpt(pool: Pool): string[] {
+  return removeAddress(pool.address, pool.tokensList);
+}
+
+export function bptPriceFor(pool: Pool): string {
+  return bnum(pool.totalLiquidity)
+    .div(pool.totalShares)
+    .toString();
+}
+
+export function fiatValueOf(pool: Pool, shares: string): string {
+  return bnum(shares)
+    .times(bptPriceFor(pool))
+    .toString();
+}
 
 /**
  * COMPOSABLE
@@ -261,6 +293,9 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
   const isWeightedLikePool = computed(
     (): boolean => !!pool.value && isWeightedLike(pool.value.poolType)
   );
+  const isDeepPool = computed(
+    (): boolean => !!pool.value && isDeep(pool.value)
+  );
   const isManagedPool = computed(
     (): boolean => !!pool.value && isManaged(pool.value.poolType)
   );
@@ -304,6 +339,7 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
     isWstETHPool,
     noInitLiquidityPool,
     lpTokens,
+    isDeepPool,
     // methods
     isStable,
     isMetaStable,

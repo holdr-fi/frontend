@@ -35,6 +35,10 @@ export function toUnixTimestamp(jsTimestamp: number): number {
   return Math.round(jsTimestamp / oneSecondInMs);
 }
 
+export function getTimestampSecondsFromNow(secs: number): number {
+  return Math.ceil(Date.now() / 1000) + secs;
+}
+
 export function toUtcTime(date: Date) {
   return Date.UTC(
     date.getUTCFullYear(),
