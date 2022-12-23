@@ -89,7 +89,7 @@ export function scale(
   return unscaled.times(scaleMul);
 }
 
-export function shortenLabel(str, segLength = 4) {
+export function shortenLabel(str: string, segLength = 4) {
   const firstSegment = str.substring(0, segLength + 2);
   const lastSegment = str.substring(str.length, str.length - segLength);
   return `${firstSegment}...${lastSegment}`;
@@ -149,4 +149,50 @@ export function includesAddress(addresses: string[], address: string): boolean {
   if (!address) return false;
   addresses = addresses.map(a => (a ? getAddress(a) : ''));
   return addresses.includes(getAddress(address));
+}
+
+export function indexOfAddress(addresses: string[], address: string): number {
+  if (!address) return -1;
+  addresses = addresses.map(a => (a ? getAddress(a) : ''));
+  return addresses.indexOf(getAddress(address));
+}
+
+export function selectByAddress<T>(
+  map: Record<string, T>,
+  address: string
+): T | undefined {
+  const foundAddress = Object.keys(map).find(itemAddress => {
+    if (isSameAddress(itemAddress, address)) {
+      return true;
+    }
+  });
+  if (foundAddress) return map[foundAddress];
+}
+
+export function findByAddress<T>(
+  items: Array<T>,
+  address: string,
+  key = 'address'
+): T | undefined {
+  return items.find(item => isSameAddress(item[key], address));
+}
+
+export function removeAddress(address: string, addresses: string[]): string[] {
+  return addresses.filter(a => !isSameAddress(a, address));
+}
+
+/**
+ * Wraps an async function with loading=true and then loading=false for a given
+ * reactive ref.
+ *
+ * @param {Function} fn - The async function to track if loading or finished.
+ * @param {Ref<boolean>} toggle - The reactive property tracking loading state.
+ */
+export async function trackLoading(
+  fn: () => Promise<any>,
+  toggle: Ref<boolean>
+) {
+  toggle.value = true;
+  await fn();
+  toggle.value = false;
 }
