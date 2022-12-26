@@ -85,10 +85,10 @@ export default class Vault {
       if (isComposableStableLike(type)) {
         // Overwrite totalSupply with virtualSupply for StablePhantom pools
         poolMulticaller.call('totalSupply', poolAddress, 'getVirtualSupply');
-        if (isComposableStable(type)) {
-          // Overwrite totalSupply with actualSupply for ComposableStable pools
-          poolMulticaller.call('totalSupply', poolAddress, 'getActualSupply');
-        }
+        // if (isComposableStable(type)) {
+        //   // Overwrite totalSupply with actualSupply for ComposableStable pools
+        //   poolMulticaller.call('totalSupply', poolAddress, 'getActualSupply');
+        // }
       }
 
       Object.keys(tokens).forEach((token, i) => {
