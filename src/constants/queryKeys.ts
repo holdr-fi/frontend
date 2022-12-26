@@ -61,49 +61,49 @@ const QUERY_KEYS = {
       'user',
       { networkId, account, id }
     ],
-    Joins: {
-      QueryJoin: (
-        amountsIn: Ref<unknown>,
-        hasFetchedPoolsForSor: Ref<unknown>,
-        isSingleAssetJoin: Ref<unknown>
-      ) => [
-        ...QUERY_JOIN_ROOT_KEY,
-        {
-          amountsIn,
-          hasFetchedPoolsForSor,
-          isSingleAssetJoin
-        }
-      ]
-    },
-    Exits: {
-      QueryExit: (
-        bptIn: Ref<unknown>,
-        hasFetchedPoolsForSor: Ref<unknown>,
-        isSingleAssetExit: Ref<unknown>,
-        singleAmountOut: unknown
-      ) => [
-        ...QUERY_EXIT_ROOT_KEY,
-        {
-          bptIn,
-          hasFetchedPoolsForSor,
-          isSingleAssetExit,
-          singleAmountOut
-        }
-      ],
-      SingleAssetMax: (
-        hasFetchedPoolsForSor: Ref<unknown>,
-        isSingleAssetExit: Ref<unknown>,
-        singleAmountOut: unknown
-      ) => [
-        POOLS_ROOT_KEY,
-        'singleAssetMax',
-        {
-          hasFetchedPoolsForSor,
-          isSingleAssetExit,
-          singleAmountOut
-        }
-      ]
-    }
+    // Joins: {
+    //   QueryJoin: (
+    //     amountsIn: Ref<unknown>,
+    //     hasFetchedPoolsForSor: Ref<unknown>,
+    //     isSingleAssetJoin: Ref<unknown>
+    //   ) => [
+    //     ...QUERY_JOIN_ROOT_KEY,
+    //     {
+    //       amountsIn,
+    //       hasFetchedPoolsForSor,
+    //       isSingleAssetJoin
+    //     }
+    //   ]
+    // },
+    // Exits: {
+    //   QueryExit: (
+    //     bptIn: Ref<unknown>,
+    //     hasFetchedPoolsForSor: Ref<unknown>,
+    //     isSingleAssetExit: Ref<unknown>,
+    //     singleAmountOut: unknown
+    //   ) => [
+    //     ...QUERY_EXIT_ROOT_KEY,
+    //     {
+    //       bptIn,
+    //       hasFetchedPoolsForSor,
+    //       isSingleAssetExit,
+    //       singleAmountOut
+    //     }
+    //   ],
+    //   SingleAssetMax: (
+    //     hasFetchedPoolsForSor: Ref<unknown>,
+    //     isSingleAssetExit: Ref<unknown>,
+    //     singleAmountOut: unknown
+    //   ) => [
+    //     POOLS_ROOT_KEY,
+    //     'singleAssetMax',
+    //     {
+    //       hasFetchedPoolsForSor,
+    //       isSingleAssetExit,
+    //       singleAmountOut
+    //     }
+    //   ]
+    // }
   },
   TokenLists: {
     All: (networkId: Ref<Network>) => ['tokenLists', 'all', { networkId }]
