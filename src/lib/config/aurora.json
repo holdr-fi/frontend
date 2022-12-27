@@ -56,7 +56,7 @@
     "veBAL": "0x5ed1e3D53AfdB0d0bc8661e056dffCD51c95bb9D",
     "veDelegationProxy": "0xB0b7387dFb2b086596FF75e05aC5D4846590e412",
     "veBALHelpers": "0xeaA4620EcfEeD4cfb2A9aBa02e55C3Ef4465bb47",
-    "feeDistributor": "",
+    "feeDistributor": "0x2E34ffC5B633e1C4c49545028Ce6B10fa146BB97",
     "bribe": "",
     "bribeVault": "",
     "rewardDistributor": "",

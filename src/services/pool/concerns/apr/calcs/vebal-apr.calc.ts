@@ -67,13 +67,13 @@ export class VeBalAprCalc {
           params: [this.balAddress, epochBeforeLast]
         })
         // HOLDR_COMMENT: Commented out following to remove invalid smart contract query.
-        // .call({
-        //   key: 'bbAUSDAmount',
-        //   address: this.config.network.addresses.feeDistributor,
-        //   function: 'getTokensDistributedInWeek',
-        //   abi: FeeDistributorABI,
-        //   params: [this.bbAUSDAddress, epochBeforeLast]
-        // })
+        .call({
+          key: 'bbAUSDAmount',
+          address: this.config.network.addresses.feeDistributor,
+          function: 'getTokensDistributedInWeek',
+          abi: FeeDistributorABI,
+          params: [this.bbAUSDAddress, epochBeforeLast]
+        })
         .call({
           key: 'veBalCurrentSupply',
           address: this.config.network.addresses.veBAL,
