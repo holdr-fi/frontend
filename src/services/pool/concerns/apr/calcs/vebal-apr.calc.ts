@@ -1,7 +1,6 @@
 import { getAddress } from '@ethersproject/address';
 import { formatUnits } from '@ethersproject/units';
 import BigNumber from 'bignumber.js';
-import { Console } from 'console';
 
 import { toUnixTimestamp } from '@/composables/useTime';
 import { getPreviousEpoch } from '@/composables/useVeBAL';

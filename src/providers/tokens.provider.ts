@@ -1,4 +1,5 @@
 import { getAddress, isAddress } from '@ethersproject/address';
+import axios from 'axios';
 import { compact, pick } from 'lodash';
 import {
   computed,
@@ -470,8 +471,13 @@ export default {
       }
 
       if (configService.network.chainId === 1313161554) {
-        const tokenMap = await coingeckoService.prices.getTokens([
-          configService.network.addresses.near
+        const [tokenMap, holdrPrice] = await Promise.all([
+          coingeckoService.prices.getTokens([
+            configService.network.addresses.near
+          ]),
+          axios.get(
+            'https://s3.us-west-2.amazonaws.com/price-feed.solace.fi.data/output/holdrPrice.json'
+          )
         ]);
         const injectMap = {};
         injectMap[configService.network.addresses.wnear] = {
@@ -480,7 +486,7 @@ export default {
         await injectPrices({
           ...injectMap,
           '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA': {
-            usd: 0.023
+            usd: holdrPrice?.data || 0.0
           }
         });
       }
