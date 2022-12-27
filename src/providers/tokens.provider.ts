@@ -130,7 +130,7 @@ export default {
       injectedTokens: {
         [networkConfig.nativeAsset.address]: nativeAsset
       },
-      // SOLACE_TODO: add any contracts that will ever need allowance
+      // HOLDR_TODO: add any contracts that will ever need allowance
       allowanceContracts: compact([
         networkConfig.addresses.vault,
         networkConfig.addresses.wstETH,
@@ -451,7 +451,7 @@ export default {
      * LIFECYCLE
      */
 
-    /* SOLACE_INFO: This is where we inject the tokens and prices we want to use in the app. */
+    /* HOLDR_INFO: This is where we inject the tokens and prices we want to use in the app. */
     onBeforeMount(async () => {
       const tokensToInject = compact([
         configService.network.addresses.stETH,

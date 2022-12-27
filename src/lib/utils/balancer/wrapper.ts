@@ -165,7 +165,7 @@ const unwrapLido = async (
     [amount]
   );
 
-/* SOLACE_INFO: Near token has 24 tokens, incompatible with Balancer protocol, 
+/* HOLDR_INFO: Near token has 24 tokens, incompatible with Balancer protocol, 
     so we created our own wrapped Near token with 6 decimals less to compile 
     with Balancer protocol, it might be confusing since the name of the official 
     Near token on the blockchain is called 'Wrapped Near'.

@@ -312,7 +312,7 @@ export default function useSor({
           wrapType.value,
           parseFixed(amount, tokenInDecimals)
         );
-        // SOLACE_INFO: special case if the wrap output is near, we need to format it with 24 decimals instead of wnear's 18
+        // HOLDR_INFO: special case if the wrap output is near, we need to format it with 24 decimals instead of wnear's 18
         if (
           tokenOutAddressInput.value == configService.network.addresses.near
         ) {

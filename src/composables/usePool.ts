@@ -39,6 +39,10 @@ export function isStableLike(poolType: PoolType): boolean {
   );
 }
 
+export function isComposableStable(poolType: PoolType): boolean {
+  return poolType === PoolType.ComposableStable;
+}
+
 export function isUnknownType(poolType: any): boolean {
   return !Object.values(PoolType).includes(poolType);
 }
@@ -232,6 +236,9 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
   const isMetaStablePool = computed(
     (): boolean => !!pool.value && isMetaStable(pool.value.poolType)
   );
+  const isComposableStablePool = computed(
+    (): boolean => !!pool.value && isComposableStable(pool.value.poolType)
+  );
   const isStablePhantomPool = computed(
     (): boolean => !!pool.value && isStablePhantom(pool.value.poolType)
   );
@@ -275,6 +282,7 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
     isStablePool,
     isMetaStablePool,
     isStablePhantomPool,
+    isComposableStablePool,
     isStableLikePool,
     isWeightedPool,
     isWeightedLikePool,
