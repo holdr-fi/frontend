@@ -136,6 +136,7 @@ function handleAddressChange(newAddress: string): void {
 function tokenWeight(address: string): number {
   if (isStableLike(props.pool.poolType)) return 0;
   if (!props.pool?.onchain?.tokens) return 0;
+  if (!props.pool?.onchain?.tokens[address]?.weight) return 0;
 
   if (isSameAddress(address, nativeAsset.address)) {
     return props.pool.onchain.tokens[wrappedNativeAsset.value.address].weight;

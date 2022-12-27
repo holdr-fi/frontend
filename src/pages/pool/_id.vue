@@ -18,7 +18,7 @@
                 {{ tokenMeta.symbol }}
               </span>
               <span
-                v-if="!isStableLikePool"
+                v-if="!isStableLikePool && !isComposableStablePool"
                 class="font-medium text-gray-400 text-xs mt-px ml-1"
               >
                 {{
@@ -84,7 +84,13 @@
           block
         />
         <BalAlert
-          v-if="!appLoading && !loadingPool && hasCustomToken"
+          v-if="
+            !appLoading &&
+              !loadingPool &&
+              hasCustomToken &&
+              !doesPoolHaveExemptedTokens &&
+              !isPoolExempted
+          "
           type="error"
           :title="$t('highRiskPool')"
           class="mt-2"
@@ -120,7 +126,7 @@
         <div class="grid grid-cols-1 gap-y-8">
           <div class="px-1 lg:px-0">
             <PoolChart
-              v-if="!doesPoolHaveExemptedTokens"
+              v-if="!doesPoolHaveExemptedTokens && !isPoolExempted"
               :pool="pool"
               :historicalPrices="historicalPrices"
               :snapshots="snapshots"
@@ -211,7 +217,7 @@ export default defineComponent({
     GauntletIcon,
     APRTooltip,
     StakingIncentivesCard,
-    StakingProvider,
+    StakingProvider
     // ApyVisionPoolLink
   },
 
@@ -245,12 +251,20 @@ export default defineComponent({
       configService.network.addresses.wnear
     ]);
 
+    const exemptedPools = computed(() => [
+      '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007' // usdc-usdt stablepool (aurora)
+    ]);
+
     const doesPoolHaveExemptedTokens = computed(() =>
       exemptedTokens.value.some(token =>
         titleTokens.value
           .map(t => t[0].toUpperCase())
           .includes(token.toUpperCase())
       )
+    );
+
+    const isPoolExempted = computed(() =>
+      exemptedPools.value.includes(route.params.id as string)
     );
 
     /**
@@ -266,8 +280,10 @@ export default defineComponent({
     const pool = computed(() => poolQuery.data.value);
     const {
       isStableLikePool,
+      isComposableStablePool,
       isLiquidityBootstrappingPool,
-      isStablePhantomPool
+      isStablePhantomPool,
+      removePreMintedBPT
     } = usePool(poolQuery.data);
 
     const noInitLiquidity = computed(
@@ -357,10 +373,14 @@ export default defineComponent({
       if (pool.value) {
         const tokensWithPrice = Object.keys(prices.value);
 
-        const tokens =
+        let tokens =
           isStablePhantomPool.value && pool.value.mainTokens
             ? pool.value.mainTokens
             : pool.value.tokensList;
+
+        tokens = isComposableStablePool.value
+          ? removePreMintedBPT(pool.value).tokensList
+          : tokens;
 
         return !tokens.every(token => includesAddress(tokensWithPrice, token));
       }
@@ -397,6 +417,7 @@ export default defineComponent({
 
     const hasCustomToken = computed(() => {
       const knownTokens = Object.keys(balancerTokenListTokens.value);
+
       return (
         !!pool.value &&
         !isLiquidityBootstrappingPool.value &&
@@ -462,6 +483,7 @@ export default defineComponent({
       feesManagedByGauntlet,
       swapFeeToolTip,
       isStableLikePool,
+      isComposableStablePool,
       isLiquidityBootstrappingPool,
       isCopperPool,
       isStablePhantomPool,
@@ -472,6 +494,7 @@ export default defineComponent({
       isL2,
       isStakablePool,
       doesPoolHaveExemptedTokens,
+      isPoolExempted,
       // methods,
       fNum2,
       onNewTx,

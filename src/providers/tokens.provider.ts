@@ -130,7 +130,7 @@ export default {
       injectedTokens: {
         [networkConfig.nativeAsset.address]: nativeAsset
       },
-      // HOLDR_TODO: add any contracts that will ever need allowance
+      // HOLDR_INFO: add any contracts that will ever need allowance
       allowanceContracts: compact([
         networkConfig.addresses.vault,
         networkConfig.addresses.wstETH,

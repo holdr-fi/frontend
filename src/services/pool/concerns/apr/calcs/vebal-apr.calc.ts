@@ -66,7 +66,7 @@ export class VeBalAprCalc {
           abi: FeeDistributorABI,
           params: [this.balAddress, epochBeforeLast]
         })
-        // HOLDR_COMMENT: Commented out following to remove invalid smart contract query.
+        // HOLDR_EDIT: Commented out following to remove invalid smart contract query.
         .call({
           key: 'bbAUSDAmount',
           address: this.config.network.addresses.feeDistributor,
@@ -80,7 +80,7 @@ export class VeBalAprCalc {
           function: 'totalSupply()',
           abi: veBalAbi
         });
-      // HOLDR_COMMENT: Commented out following to remove invalid smart contract query.
+      // HOLDR_EDIT: Commented out following to remove invalid smart contract query.
       // .call({
       //   key: 'bbaUSDPrice',
       //   address: this.bbAUSDAddress,

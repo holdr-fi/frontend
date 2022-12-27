@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue';
+import { computed, nextTick, ref, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { Rules } from '@/components/_global/BalTextInput/BalTextInput.vue';
+import { overflowProtected } from '@/components/_global/BalTextInput/helpers';
 import TokenSelectInput from '@/components/inputs/TokenSelectInput/TokenSelectInput.vue';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import useTokens from '@/composables/useTokens';
-import { bnum } from '@/lib/utils';
+import { bnum, isSameAddress } from '@/lib/utils';
 import { isLessThanOrEqualTo, isPositive } from '@/lib/utils/validations';
 import useWeb3 from '@/services/web3/useWeb3';
 import { HtmlInputEvent } from '@/types';
@@ -184,9 +185,16 @@ const priceImpactClass = computed(() =>
   (props.priceImpact || 0) >= 0.01 ? 'text-red-500' : ''
 );
 
+const decimalLimit = computed<number>(() => token.value?.decimals || 18);
+
 /**
  * METHODS
  */
+ function handleAmountChange(amount: InputValue) {
+  const safeAmount = overflowProtected(amount, decimalLimit.value);
+  emit('update:amount', safeAmount);
+}
+
 const setMax = () => {
   if (props.disableMax) return;
 
@@ -212,6 +220,16 @@ watchEffect(() => {
   _amount.value = props.amount;
   _address.value = props.address;
 });
+
+watch(_address, async (newAddress, oldAddress) => {
+  // If token address changes, we have to calculate new safe value based on new token's decimals
+  if (!isSameAddress(newAddress, oldAddress)) {
+    // wait for the token's decimals to be updated
+    await nextTick();
+    handleAmountChange(_amount.value);
+  }
+});
+
 </script>
 
 <template>
@@ -231,7 +249,7 @@ watchEffect(() => {
     inputAlignRight
     @blur="emit('blur', $event)"
     @input="emit('input', $event)"
-    @update:modelValue="emit('update:amount', $event)"
+    @update:model-value="handleAmountChange($event)"
     @update:isValid="emit('update:isValid', $event)"
     @keydown="emit('keydown', $event)"
   >

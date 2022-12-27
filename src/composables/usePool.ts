@@ -192,10 +192,14 @@ export function isVeBalPool(poolId: string): boolean {
  * @summary Remove pre-minted pool token address from tokensList
  */
 export function removePreMintedBPT(pool: Pool): Pool {
-  pool.tokensList = pool.tokensList.filter(
-    address => !isSameAddress(address, pool.address)
-  );
-  return pool;
+  const newPool = {
+    ...pool,
+    tokensList: pool.tokensList.filter(
+      address => !isSameAddress(address, pool.address)
+    )
+  };
+
+  return newPool;
 }
 
 /**
@@ -308,6 +312,7 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
     isMigratablePool,
     poolWeightsLabel,
     orderedTokenAddresses,
-    orderedPoolTokens
+    orderedPoolTokens,
+    removePreMintedBPT
   };
 }

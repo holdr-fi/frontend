@@ -84,6 +84,7 @@ export default class ExitParams {
     );
   }
 
+  // HOLDR_TODO: maybe add exit encoder for composable stable pool
   private txData(
     amountsOut: BigNumberish[],
     bptIn: BigNumberish,

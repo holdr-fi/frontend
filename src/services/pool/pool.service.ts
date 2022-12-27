@@ -123,15 +123,15 @@ export default class PoolService {
     if (isStable(this.pool.poolType)) return this.pool.tokens;
 
     return (this.pool.tokens = this.pool.tokens.sort(
-      (a, b) => parseFloat(b.weight) - parseFloat(a.weight)
+      (a, b) => parseFloat(b.weight || '0') - parseFloat(a.weight || '0')
     ));
   }
 
   public setFeesSnapshot(poolSnapshot: Pool | undefined): string {
     if (!poolSnapshot) return '0';
 
-    const feesSnapshot = bnum(this.pool.totalSwapFee)
-      .minus(poolSnapshot.totalSwapFee)
+    const feesSnapshot = bnum(this.pool.totalSwapFee || '0')
+      .minus(poolSnapshot.totalSwapFee || '0')
       .toString();
 
     return (this.pool.feesSnapshot = feesSnapshot);
@@ -140,8 +140,8 @@ export default class PoolService {
   public setVolumeSnapshot(poolSnapshot: Pool | undefined): string {
     if (!poolSnapshot) return '0';
 
-    const volumeSnapshot = bnum(this.pool.totalSwapVolume)
-      .minus(poolSnapshot.totalSwapVolume)
+    const volumeSnapshot = bnum(this.pool.totalSwapVolume || '0')
+      .minus(poolSnapshot.totalSwapVolume || '0')
       .toString();
 
     return (this.pool.volumeSnapshot = volumeSnapshot);

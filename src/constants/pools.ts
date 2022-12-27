@@ -399,6 +399,7 @@ const POOLS_AURORA: Pools = {
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
+      '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007', // USDT-USDC Stablepool
       '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000' // mai,
     ]
   },

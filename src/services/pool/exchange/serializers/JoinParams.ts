@@ -96,6 +96,7 @@ export default class JoinParams {
     );
   }
 
+  // HOLDR_TODO: add join encoder for composable stable pool
   private txData(amountsIn: BigNumberish[], minimumBPT: BigNumberish): string {
     if ((this.pool.value?.onchain?.totalSupply || '0') === '0') {
       return this.dataEncodeFn({ kind: 'Init', amountsIn });

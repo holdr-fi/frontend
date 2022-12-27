@@ -19,7 +19,7 @@ const { showRedirectModal, setShowRedirectModal } = useVeBAL();
 /**
  * COMPUTED
  */
-const mainnetURL = computed((): string => `${urlFor(Network.MAINNET)}/hldr`); // HOLDR_TODO: route to aurora domain when available
+const mainnetURL = computed((): string => `https://app.holdr.fi/#/vehldr`);
 
 /**
  * METHODS

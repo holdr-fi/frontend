@@ -334,7 +334,7 @@ async function getGaugeAddress(
 
   let votingGauges = await Promise.all(
     POOLS.map(async ({ id, network }) => {
-      // HOLDR_TODO: need voting gauges for all pools
+      // HOLDR_INFO: voting gauges for all pools
       const address = await getGaugeAddress(id, network);
       const pool = await getPoolInfo(id, network);
 
