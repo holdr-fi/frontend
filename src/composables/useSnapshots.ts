@@ -17,7 +17,7 @@ export function blockTime(): number {
       // Should be ~4s but this causes subgraph to return with unindexed block error.
       return 1;
     default:
-      return 13;
+      return 1;
   }
 }
 
