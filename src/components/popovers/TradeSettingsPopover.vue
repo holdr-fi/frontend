@@ -83,7 +83,6 @@ import { useStore } from 'vuex';
 
 import AppSlippageForm from '@/components/forms/AppSlippageForm.vue';
 import useEthereumTxType from '@/composables/useEthereumTxType';
-import useFathom from '@/composables/useFathom';
 import useNumbers from '@/composables/useNumbers';
 import { ethereumTxTypeOptions } from '@/constants/options';
 import useWeb3 from '@/services/web3/useWeb3';
@@ -116,7 +115,6 @@ export default defineComponent({
     const store = useStore();
     const { fNum } = useNumbers();
     const { explorerLinks, isEIP1559SupportedNetwork } = useWeb3();
-    const { trackGoal, Goals } = useFathom();
     const { ethereumTxType, setEthereumTxType } = useEthereumTxType();
 
     // COMPUTED
@@ -128,16 +126,7 @@ export default defineComponent({
     const setTransactionDeadline = transactionDeadline =>
       store.commit('app/setTransactionDeadline', transactionDeadline);
 
-    function onActivatorClick(): void {
-      if (context.value === TradeSettingsContext.trade) {
-        trackGoal(Goals.ClickTradeSettings);
-      } else if (context.value === TradeSettingsContext.invest) {
-        trackGoal(Goals.ClickInvestSettings);
-      }
-    }
-
     return {
-      Goals,
       // types,
       TradeSettingsContext,
       // computed
@@ -147,7 +136,6 @@ export default defineComponent({
       setTransactionDeadline,
       fNum,
       explorer: explorerLinks,
-      onActivatorClick,
       ethereumTxType,
       setEthereumTxType,
       ethereumTxTypeOptions

@@ -6,7 +6,6 @@
         'toggle-link px-6 rounded-l-lg',
         { [activeClasses]: !isTradePage }
       ]"
-      @click="trackGoal(Goals.ClickNavInvest)"
     >
       {{ $t('invest') }}
     </router-link>
@@ -16,7 +15,6 @@
         'toggle-link px-6 rounded-r-lg',
         { [activeClasses]: isTradePage }
       ]"
-      @click="trackGoal(Goals.ClickNavTrade)"
     >
       {{ $t('trade') }}
     </router-link>
@@ -26,8 +24,6 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
-
-import useFathom from '@/composables/useFathom';
 
 export default defineComponent({
   name: 'AppNavToggle',
@@ -40,13 +36,10 @@ export default defineComponent({
     const route = useRoute();
     const activeClasses = 'gradient-blue-l-to-r text-white rounded-lg';
     const isTradePage = computed(() => route.name === 'trade');
-    const { trackGoal, Goals } = useFathom();
 
     return {
       isTradePage,
-      activeClasses,
-      trackGoal,
-      Goals
+      activeClasses
     };
   }
 });

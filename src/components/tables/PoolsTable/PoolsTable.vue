@@ -9,7 +9,6 @@ import { PoolMigrationType } from '@/components/forms/pool_actions/MigrateForm/t
 import APRTooltip from '@/components/tooltips/APRTooltip/APRTooltip.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
 import useDarkMode from '@/composables/useDarkMode';
-import useFathom from '@/composables/useFathom';
 import useNumbers from '@/composables/useNumbers';
 import {
   absMaxApr,
@@ -63,7 +62,6 @@ const emit = defineEmits(['loadMore', 'triggerStake']);
 const { fNum2 } = useNumbers();
 const router = useRouter();
 const { t } = useI18n();
-const { trackGoal, Goals } = useFathom();
 const { darkMode } = useDarkMode();
 const { upToLargeBreakpoint, upToMediumBreakpoint } = useBreakpoints();
 
@@ -193,7 +191,6 @@ const stakablePoolIds = computed((): string[] => POOLS.Stakable.AllowList);
  * METHODS
  */
 function handleRowClick(pool: PoolWithShares) {
-  trackGoal(Goals.ClickPoolsTableRow);
   router.push({ name: 'pool', params: { id: pool.id } });
 }
 

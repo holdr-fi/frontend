@@ -5,7 +5,6 @@ import AppIcon from '@/components/images/AppIcon.vue';
 import AppLogo from '@/components/images/AppLogo.vue';
 import useAlerts from '@/composables/useAlerts';
 import useBreakpoints from '@/composables/useBreakpoints';
-import useFathom from '@/composables/useFathom';
 
 import AppNavActions from './AppNavActions.vue';
 import AppNavAlert from './AppNavAlert.vue';
@@ -20,7 +19,6 @@ const appNav = ref<HTMLDivElement>();
  * COMPOSABLES
  */
 const { bp, isDesktop } = useBreakpoints();
-const { trackGoal, Goals } = useFathom();
 const { currentAlert } = useAlerts();
 
 /**
@@ -53,10 +51,7 @@ onUnmounted(() => {
   <nav id="app-nav" ref="appNav" class="h-20 pl-4 pr-1 lg:px-6 sticky top-0">
     <div class="h-full flex items-center justify-between">
       <div class="flex items-center h-full">
-        <router-link
-          :to="{ name: 'home' }"
-          @click="trackGoal(Goals.ClickNavLogo)"
-        >
+        <router-link :to="{ name: 'home' }">
           <!-- <AppIcon v-if="['xs', 'sm', 'md'].includes(bp)" />
           <AppLogo v-else /> -->
           <img src="/images/logos/holdr-logo.svg" />

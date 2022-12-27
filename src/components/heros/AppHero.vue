@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router';
 import usePools from '@/composables/pools/usePools';
 import useStaking from '@/composables/staking/useStaking';
 import useDarkMode from '@/composables/useDarkMode';
-import useFathom from '@/composables/useFathom';
 import { useLock } from '@/composables/useLock';
 import { isL2 } from '@/composables/useNetwork';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
@@ -23,7 +22,6 @@ const {
   toggleWalletSelectModal,
   isWalletConnecting
 } = useWeb3();
-const { trackGoal, Goals } = useFathom();
 const { totalInvestedAmount, isLoadingUserPools } = usePools();
 const { darkMode } = useDarkMode();
 const { lockFiatValue, isLoadingLock } = useLock();
@@ -77,7 +75,6 @@ const isLoadingTotalValue = computed(
  */
 function onClickConnect() {
   toggleWalletSelectModal(true);
-  trackGoal(Goals.ClickHeroConnectWallet);
 }
 </script>
 
@@ -157,18 +154,6 @@ function onClickConnect() {
             @click="onClickConnect"
           >
             {{ $t('connectWallet') }}
-          </BalBtn>
-          <BalBtn
-            tag="a"
-            :href="EXTERNAL_LINKS.Balancer.Home"
-            target="_blank"
-            rel="noreferrer"
-            color="white"
-            outline
-            @click="trackGoal(Goals.ClickHeroLearnMore)"
-          >
-            {{ $t('learnMore') }}
-            <BalIcon name="arrow-up-right" size="sm" class="ml-1" />
           </BalBtn>
         </div>
       </template>
