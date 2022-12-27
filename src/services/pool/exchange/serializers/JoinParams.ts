@@ -3,13 +3,18 @@ import { AddressZero } from '@ethersproject/constants';
 import { parseUnits } from '@ethersproject/units';
 import { Ref } from 'vue';
 
-import { isManaged, isStableLike } from '@/composables/usePool';
+import {
+  isComposableStable,
+  isManaged,
+  isStableLike
+} from '@/composables/usePool';
 import { isSameAddress } from '@/lib/utils';
 import { encodeJoinStablePool } from '@/lib/utils/balancer/stablePoolEncoding';
 import { encodeJoinWeightedPool } from '@/lib/utils/balancer/weightedPoolEncoding';
 import ConfigService from '@/services/config/config.service';
 import { Pool } from '@/services/pool/types';
 
+import { ComposableStablePoolEncoder } from '../encoders/pool-composable-stable';
 import PoolExchange from '../exchange.service';
 
 export default class JoinParams {
@@ -18,6 +23,7 @@ export default class JoinParams {
   private isStableLikePool: boolean;
   private isManagedPool: boolean;
   private isSwapEnabled: boolean;
+  private isComposableStablePool: boolean;
   private dataEncodeFn: (data: any) => string;
   private fromInternalBalance = false;
 
@@ -28,6 +34,7 @@ export default class JoinParams {
     this.isManagedPool = isManaged(this.pool.value.poolType);
     this.isSwapEnabled =
       this.isManagedPool && !!this.pool.value?.onchain?.swapEnabled;
+    this.isComposableStablePool = isComposableStable(this.pool.value.poolType);
     this.dataEncodeFn = this.isStableLikePool
       ? encodeJoinStablePool
       : encodeJoinWeightedPool;
@@ -109,6 +116,11 @@ export default class JoinParams {
           kind: 'AllTokensInForExactBPTOut',
           bptAmountOut: minimumBPT
         });
+      } else if (this.isComposableStablePool) {
+        return ComposableStablePoolEncoder.joinExactTokensInForBPTOut(
+          amountsIn,
+          minimumBPT
+        );
       } else {
         return this.dataEncodeFn({
           kind: 'ExactTokensInForBPTOut',
