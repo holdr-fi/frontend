@@ -246,27 +246,6 @@ export default defineComponent({
       30
     );
 
-    // list of tokens that do not need prices fetched for
-    const exemptedTokens = computed(() => [
-      configService.network.addresses.wnear
-    ]);
-
-    const exemptedPools = computed(() => [
-      '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007' // usdc-usdt stablepool (aurora)
-    ]);
-
-    const doesPoolHaveExemptedTokens = computed(() =>
-      exemptedTokens.value.some(token =>
-        titleTokens.value
-          .map(t => t[0].toUpperCase())
-          .includes(token.toUpperCase())
-      )
-    );
-
-    const isPoolExempted = computed(() =>
-      exemptedPools.value.includes(route.params.id as string)
-    );
-
     /**
      * STATE
      */
@@ -278,6 +257,7 @@ export default defineComponent({
      * COMPUTED
      */
     const pool = computed(() => poolQuery.data.value);
+
     const {
       isStableLikePool,
       isComposableStablePool,
@@ -313,6 +293,27 @@ export default defineComponent({
         return t('ownerFeesTooltip');
       }
     });
+
+    // list of tokens that do not need prices fetched for
+    const exemptedTokens = computed(() => [
+      configService.network.addresses.wnear
+    ]);
+
+    const exemptedPools = computed(() => [
+      '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007' // usdc-usdt stablepool (aurora)
+    ]);
+
+    const doesPoolHaveExemptedTokens = computed(() =>
+      exemptedTokens.value.some(token =>
+        titleTokens.value
+          .map(t => t[0].toUpperCase())
+          .includes(token.toUpperCase())
+      )
+    );
+
+    const isPoolExempted = computed(() =>
+      exemptedPools.value.includes(route.params.id as string)
+    );
 
     const poolQueryLoading = computed(
       () =>
@@ -378,9 +379,9 @@ export default defineComponent({
             ? pool.value.mainTokens
             : pool.value.tokensList;
 
-        tokens = isComposableStablePool.value
-          ? removePreMintedBPT(pool.value).tokensList
-          : tokens;
+        if (isComposableStablePool.value === true) {
+          tokens = tokens.filter(address => address !== pool?.value?.address);
+        }
 
         return !tokens.every(token => includesAddress(tokensWithPrice, token));
       }
@@ -421,6 +422,7 @@ export default defineComponent({
       return (
         !!pool.value &&
         !isLiquidityBootstrappingPool.value &&
+        !isComposableStablePool.value &&
         !isStablePhantomPool.value &&
         pool.value.tokensList.some(
           address => !includesAddress(knownTokens, address)

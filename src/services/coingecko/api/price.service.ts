@@ -103,7 +103,13 @@ export class PriceService {
       return results;
     } catch (error) {
       console.error('Unable to fetch token prices', addresses, error);
-      throw error;
+      const emptyPrices = addresses.reduce((emptyPriceObject, address) => {
+        emptyPriceObject[address] = { ['usd']: 0 };
+        return emptyPriceObject;
+      }, {} as TokenPrices);
+      return emptyPrices;
+      // Holdr_edit - Returned zero object instead of throwing error, otherwise waste time refreshing page when
+      // throw error;
     }
   }
 

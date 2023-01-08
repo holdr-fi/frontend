@@ -6,7 +6,7 @@ import {
   isWeightedLike
 } from '@/composables/usePool';
 import { FiatCurrency } from '@/constants/currency';
-import { bnum } from '@/lib/utils';
+import { bnum, isSameAddress } from '@/lib/utils';
 import { TokenPrices } from '@/services/coingecko/api/price.service';
 import { AnyPool, OnchainTokenData, PoolToken } from '@/services/pool/types';
 
@@ -70,7 +70,10 @@ export default class LiquidityConcern {
   }
 
   public calcStableTotal(prices: TokenPrices, currency: FiatCurrency): string {
-    let tokens = this.poolTokens;
+    let tokens = this.poolTokens as PoolToken[];
+    tokens = tokens.filter(
+      token => !isSameAddress(token.address, this.pool.address)
+    );
 
     if (
       isStablePhantom(this.poolType) &&

@@ -250,6 +250,7 @@ watch(useNativeAsset, shouldUseNativeAsset => {
       class="mb-4"
       fixedToken
       :options="tokenOptions(i)"
+      :excludedTokens="[pool.address, pool.address.toLowerCase()]"
       @update:amount="handleAmountChange($event, i)"
       @update:address="handleAddressChange($event)"
     />

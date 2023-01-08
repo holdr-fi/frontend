@@ -66,6 +66,7 @@ function loadMorePoolSwaps() {
   <Table
     :tokens="pool ? pool.tokensList : []"
     :pool-swaps="poolSwaps"
+    :pool="pool"
     :is-loading="loading || isLoadingPoolSwaps"
     :is-loading-more="poolSwapsIsFetchingNextPage"
     :is-paginated="poolSwapsHasNextPage"

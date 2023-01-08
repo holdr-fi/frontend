@@ -8,13 +8,23 @@ export const MIN_FIAT_VALUE_POOL_MIGRATION = isMainnet.value ? 100_000 : 1; // 1
 // These can arise from pools with extremely low balances (e.g., completed LBPs)
 export const APR_THRESHOLD = 10_000;
 
+/**
+ * For proportional exits from ComposableStable pools the ExactBPTInForTokensOut
+ * exit type was removed. Therefore we have to use BPTInForExactTokensOut which
+ * makes proportional exits using a user's total BPT balance impossible. In
+ * order to 'fix' this we need to subtract a little bit from the bptIn value
+ * when calculating the ExactTokensOut. The variable below is that "little bit".
+ */
+export const SHALLOW_COMPOSABLE_STABLE_BUFFER = 1e6; // EVM scale, so this is 1 Mwei
+
 export type FactoryType =
   | 'oracleWeightedPool'
   | 'weightedPool'
   | 'stablePool'
   | 'managedPool'
   | 'liquidityBootstrappingPool'
-  | 'boostedPool';
+  | 'boostedPool'
+  | 'composableStablePool';
 
 export type Pools = {
   IdsMap: Partial<
@@ -400,6 +410,7 @@ const POOLS_AURORA: Pools = {
   Stable: {
     AllowList: [
       '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007', // USDT-USDC Stablepool
+      '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026', // USDT-USDC Stablepool 2
       '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000' // mai,
     ]
   },
@@ -408,7 +419,7 @@ const POOLS_AURORA: Pools = {
   },
   Factories: {
     '0xdd1591d7bdf0e3ddea4b4377cf03373700bed38e': 'weightedPool', // Weighted
-    '0xb2f941b85791e47faa6391cdef36a3bbad19b73e': 'stablePool',
+    '0xb2f941b85791e47faa6391cdef36a3bbad19b73e': 'composableStablePool',
     '0x1001e599ff9079717e176f224de7f1a27eacd3c2': 'liquidityBootstrappingPool'
   },
   Stakable: {
@@ -439,7 +450,7 @@ const POOLS_GENERIC: Pools = {
     Gauntlet: []
   },
   BlockList: [''],
-  ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
+  ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', ''],
   Stable: {
     AllowList: [
       '0x06df3b2bbb68adc8b0e302443692037ed9f91b42000000000000000000000063',

@@ -44,6 +44,12 @@ export interface PoolToken {
   weight: string;
   priceRate: string | null;
   symbol?: string;
+  token?: SubPoolMeta;
+}
+
+export interface SubPoolMeta {
+  pool: SubPool | null;
+  latestUSDPrice?: string;
 }
 
 // PoolToken data from onchain call
@@ -211,3 +217,29 @@ export interface PoolSnapshot {
 }
 
 export type PoolSnapshots = Record<number, PoolSnapshot>;
+
+export interface SubPool {
+  id: string;
+  address: string;
+  poolType: PoolType;
+  totalShares: string;
+  mainIndex: number;
+  tokens?: PoolToken[];
+}
+
+export interface RawOnchainPoolData {
+  decimals: number;
+  poolTokens: RawPoolTokens;
+  swapFee: BigNumber;
+  totalSupply: BigNumber;
+  weights?: BigNumber[];
+  swapEnabled?: boolean;
+  amp?: {
+    value: BigNumber;
+    precision: BigNumber;
+  };
+  linearPools?: Record<Address, RawLinearPoolData>;
+  tokenRates?: BigNumber[];
+}
+
+export type RawOnchainPoolDataMap = Record<string, RawOnchainPoolData>;

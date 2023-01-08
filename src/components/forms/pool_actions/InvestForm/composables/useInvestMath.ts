@@ -15,7 +15,9 @@ import {
 import { bnum, isSameAddress } from '@/lib/utils';
 import { balancerContractsService } from '@/services/balancer/contracts/balancer-contracts.service';
 import PoolCalculator from '@/services/pool/calculator/calculator.sevice';
+import PoolExchange from '@/services/pool/exchange/exchange.service';
 import { Pool } from '@/services/pool/types';
+import useWeb3 from '@/services/web3/useWeb3';
 import { BatchSwap } from '@/types';
 import { TokenInfo } from '@/types/TokenList';
 
@@ -32,8 +34,10 @@ export default function useInvestMath(
    * STATE
    */
   const proportionalAmounts = ref<string[]>([]);
+  const loadingData = ref(false);
   const batchSwap = ref<BatchSwap | null>(null);
   const batchSwapLoading = ref(false);
+  const queryBptOut = ref<string>('0');
 
   /**
    * COMPOSABLES
@@ -41,13 +45,18 @@ export default function useInvestMath(
   const { toFiat, fNum2 } = useNumbers();
   const { tokens, getToken, balances, balanceFor, nativeAsset } = useTokens();
   const { minusSlippageScaled } = useSlippage();
-  const { managedPoolWithTradingHalted, isStablePhantomPool } = usePool(pool);
+  const {
+    managedPoolWithTradingHalted,
+    isStablePhantomPool,
+    isComposableStableLikePool,
+    isShallowComposableStablePool
+  } = usePool(pool);
   const {
     promises: batchSwapPromises,
     processing: processingBatchSwaps,
     processAll: processBatchSwaps
   } = usePromiseSequence();
-
+  const { account, getProvider } = useWeb3();
   /**
    * Services
    */
@@ -58,6 +67,8 @@ export default function useInvestMath(
     'join',
     useNativeAsset
   );
+
+  const poolExchange = new PoolExchange(pool);
 
   /**
    * COMPUTED
@@ -126,6 +137,7 @@ export default function useInvestMath(
           .toNumber() || 0
       );
     } catch (error) {
+      console.log('priceImpact error');
       return 1;
     }
   });
@@ -170,13 +182,17 @@ export default function useInvestMath(
             .abs()
             .toString()
         : '0';
+    } else if (
+      isShallowComposableStablePool.value &&
+      bnum(queryBptOut.value).gt(0)
+    ) {
+      _bptOut = queryBptOut.value;
     } else {
+      if (!hasAmounts.value) return '0';
       _bptOut = poolCalculator
         .exactTokensInForBPTOut(fullAmounts.value)
         .toString();
     }
-
-    console.log('query BPT', _bptOut.toString());
 
     return _bptOut;
   });
@@ -207,7 +223,7 @@ export default function useInvestMath(
   );
 
   const supportsPropotionalOptimization = computed(
-    (): boolean => !isStablePhantomPool.value
+    (): boolean => !isComposableStableLikePool.value
   );
 
   /**
@@ -254,12 +270,46 @@ export default function useInvestMath(
     batchSwapLoading.value = false;
   }
 
+  // Holdr_comment - this function fails for wstETH/cbETH pool on app.balancer.fi, so doesn't seem to do anything useful
+  /**
+   * Fetches expected BPT out using queryJoin and overrides bptOut value derived
+   * from JS maths. Only used shallow ComposableStable pools due to issue with
+   * cached priceRates.
+   *
+   * Note: This was originally seen with BAL#208 failures on join calls of the
+   * Polygon MaticX pool.
+   */
+  async function getQueryBptOut() {
+    if (!isShallowComposableStablePool.value) return;
+
+    try {
+      loadingData.value = true;
+      const result = await poolExchange.queryJoin(
+        getProvider(),
+        account.value,
+        fullAmounts.value,
+        tokenAddresses.value,
+        '0'
+      );
+
+      queryBptOut.value = result.bptOut.toString();
+      loadingData.value = false;
+    } catch (error) {
+      console.error('Failed to fetch query bptOut', error);
+    }
+  }
+
+  /**
+   * WATCHERS
+   */
   watch(fullAmounts, async (newAmounts, oldAmounts) => {
     const changedIndex = newAmounts.findIndex(
       (amount, i) => oldAmounts[i] !== amount
     );
 
     if (changedIndex >= 0) {
+      await getQueryBptOut();
+
       if (shouldFetchBatchSwap.value) {
         batchSwapPromises.value.push(getBatchSwap);
         if (!processingBatchSwaps.value) processBatchSwaps();

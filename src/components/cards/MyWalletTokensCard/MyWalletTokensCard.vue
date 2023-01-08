@@ -6,7 +6,7 @@ import { useRoute } from 'vue-router';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import { usePool } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
-import { bnum, isSameAddress } from '@/lib/utils';
+import { bnum, isSameAddress, removeAddress } from '@/lib/utils';
 import { Pool } from '@/services/pool/types';
 
 // Components
@@ -35,7 +35,9 @@ const emit = defineEmits<{
 /**
  * COMPOSABLES
  */
-const { isWethPool, isStablePhantomPool } = usePool(toRef(props, 'pool'));
+const { isWethPool, isStablePhantomPool, isComposableStablePool } = usePool(
+  toRef(props, 'pool')
+);
 const { balanceFor, nativeAsset, wrappedNativeAsset } = useTokens();
 const { fNum2, toFiat } = useNumbers();
 const route = useRoute();

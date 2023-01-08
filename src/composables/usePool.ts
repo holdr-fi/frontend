@@ -1,13 +1,25 @@
 import { Network } from '@balancer-labs/sdk';
 import { getAddress } from 'ethers/lib/utils';
+import { cloneDeep } from 'lodash';
 import { computed, Ref } from 'vue';
 
 import { POOL_MIGRATIONS } from '@/components/forms/pool_actions/MigrateForm/constants';
 import { POOLS } from '@/constants/pools';
-import { bnum, includesAddress, isSameAddress } from '@/lib/utils';
+import {
+  bnum,
+  includesAddress,
+  isSameAddress,
+  removeAddress
+} from '@/lib/utils';
 import { includesWstEth } from '@/lib/utils/balancer/lido';
 import { configService } from '@/services/config/config.service';
-import { AnyPool, Pool, PoolAPRs, PoolToken } from '@/services/pool/types';
+import {
+  AnyPool,
+  Pool,
+  PoolAPRs,
+  PoolToken,
+  SubPool
+} from '@/services/pool/types';
 import { PoolType } from '@/services/pool/types';
 import { hasBalEmissions } from '@/services/staking/utils';
 
@@ -25,8 +37,42 @@ export function isStable(poolType: PoolType): boolean {
   return poolType === PoolType.Stable;
 }
 
+export function isDeep(pool: Pool): boolean {
+  const treatAsDeep = [
+    '0x13acd41c585d7ebb4a9460f7c8f50be60dc080cd00000000000000000000005f', // bb-a-USD1 (goerli)
+    '0x3d5981bdd8d3e49eb7bbdc1d2b156a3ee019c18e0000000000000000000001a7', // bb-a-USD2 (goerli)
+    '0x48e6b98ef6329f8f0a30ebb8c7c960330d64808500000000000000000000075b', // bb-am-USD (polygon)
+    '0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb20000000000000000000000fe', // bb-a-USD1 (mainnet)
+    '0xa13a9247ea42d743238089903570127dda72fe4400000000000000000000035d', // bb-a-USD2 (mainnet)
+    '0x3d5981bdd8d3e49eb7bbdc1d2b156a3ee019c18e0000000000000000000001a7', // bb-a-USD2 (goerli)
+    '0x25accb7943fd73dda5e23ba6329085a3c24bfb6a000200000000000000000387', // wstETH/bb-a-USD (mainnet)
+    '0x5b3240b6be3e7487d61cd1 afdfc7fe4fa1d81e6400000000000000000000037b', // dola/bb-a-USD (mainnet)
+    '0xb54b2125b711cd183edd3dd09433439d5396165200000000000000000000075e', // miMATIC/bb-am-USD (polygon)
+    '0x4ce0bd7debf13434d3ae127430e9bd4291bfb61f00020000000000000000038b', // STG/bba-usd (mainnet)
+    '0x334c96d792e4b26b841d28f53235281cec1be1f200020000000000000000038a', // rETH/bba-usd (mainnet)
+    '0x53bc3cba3832ebecbfa002c12023f8ab1aa3a3a0000000000000000000000411', // TUSD/bb-a-usd (mainnet)
+    '0x4c8d2e60863e8d7e1033eda2b3d84e92a641802000000000000000000000040f' // FRAX/aave-usdc (mainnet)
+  ];
+  return treatAsDeep.includes(pool.id);
+}
+
 export function isMetaStable(poolType: PoolType): boolean {
   return poolType === PoolType.MetaStable;
+}
+
+export function isComposableStable(poolType: PoolType): boolean {
+  return poolType === PoolType.ComposableStable;
+}
+export function isComposableStableLike(poolType: PoolType): boolean {
+  return isStablePhantom(poolType) || isComposableStable(poolType);
+}
+export function preMintedBptIndex(pool: Pool): number | void {
+  return pool.tokens.findIndex(token => token.address === pool.address);
+}
+export function isPreMintedBptType(poolType: PoolType): boolean {
+  // Currently equivalent to isComposableStableLike but will be extended later
+  // with managed and composable weighted pools.
+  return isStablePhantom(poolType) || isComposableStable(poolType);
 }
 
 export function isStablePhantom(poolType: PoolType): boolean {
@@ -35,12 +81,11 @@ export function isStablePhantom(poolType: PoolType): boolean {
 
 export function isStableLike(poolType: PoolType): boolean {
   return (
-    isStable(poolType) || isMetaStable(poolType) || isStablePhantom(poolType)
+    isStable(poolType) ||
+    isMetaStable(poolType) ||
+    isStablePhantom(poolType) ||
+    isComposableStable(poolType)
   );
-}
-
-export function isComposableStable(poolType: PoolType): boolean {
-  return poolType === PoolType.ComposableStable;
 }
 
 export function isUnknownType(poolType: any): boolean {
@@ -109,7 +154,7 @@ export function lpTokensFor(pool: AnyPool): string[] {
 export function orderedTokenAddresses(pool: AnyPool): string[] {
   const sortedTokens = orderedPoolTokens(
     pool.poolType,
-    pool.address,
+    pool.address.toLowerCase(),
     pool.tokens
   );
   return sortedTokens.map(token => getAddress(token?.address || ''));
@@ -123,7 +168,7 @@ export function orderedPoolTokens(
   poolAddress: string,
   tokens: Pick<PoolToken, 'address' | 'weight'>[]
 ): Partial<PoolToken>[] {
-  if (isStablePhantom(poolType))
+  if (isStablePhantom(poolType) || isComposableStable(poolType))
     return tokens.filter(token => token.address !== poolAddress);
   if (isStableLike(poolType)) return tokens;
 
@@ -192,14 +237,10 @@ export function isVeBalPool(poolId: string): boolean {
  * @summary Remove pre-minted pool token address from tokensList
  */
 export function removePreMintedBPT(pool: Pool): Pool {
-  const newPool = {
-    ...pool,
-    tokensList: pool.tokensList.filter(
-      address => !isSameAddress(address, pool.address)
-    )
-  };
-
-  return newPool;
+  pool.tokensList = pool.tokensList.filter(
+    address => !isSameAddress(address, pool.address)
+  );
+  return pool;
 }
 
 /**
@@ -240,9 +281,6 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
   const isMetaStablePool = computed(
     (): boolean => !!pool.value && isMetaStable(pool.value.poolType)
   );
-  const isComposableStablePool = computed(
-    (): boolean => !!pool.value && isComposableStable(pool.value.poolType)
-  );
   const isStablePhantomPool = computed(
     (): boolean => !!pool.value && isStablePhantom(pool.value.poolType)
   );
@@ -268,6 +306,18 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
   const isWethPool = computed(
     (): boolean => !!pool.value && isWeth(pool.value)
   );
+  const isComposableStablePool = computed(
+    (): boolean => !!pool.value && isComposableStable(pool.value.poolType)
+  );
+  const isDeepPool = computed(
+    (): boolean => !!pool.value && isDeep(pool.value)
+  );
+  const isShallowComposableStablePool = computed(
+    (): boolean => isComposableStablePool.value && !isDeepPool.value
+  );
+  const isComposableStableLikePool = computed(
+    (): boolean => !!pool.value && isComposableStableLike(pool.value.poolType)
+  );
   const isWstETHPool = computed(
     (): boolean => !!pool.value && includesWstEth(pool.value.tokensList)
   );
@@ -286,10 +336,13 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
     isStablePool,
     isMetaStablePool,
     isStablePhantomPool,
-    isComposableStablePool,
     isStableLikePool,
     isWeightedPool,
     isWeightedLikePool,
+    isShallowComposableStablePool,
+    isComposableStablePool,
+    isComposableStableLikePool,
+    isDeepPool,
     isManagedPool,
     isLiquidityBootstrappingPool,
     managedPoolWithTradingHalted,
@@ -315,4 +368,66 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
     orderedPoolTokens,
     removePreMintedBPT
   };
+}
+
+/**
+ * Removes pre-minted pool token from tokensList.
+ *
+ * @param {Pool} pool - Pool to get tokensList from.
+ * @returns tokensList excluding pre-minted BPT address.
+ */
+
+export function tokensListExclBpt(pool: Pool): string[] {
+  return removeAddress(pool.address, pool.tokensList);
+}
+/**
+ * Returns a new (cloned) pool with pre-minted pool tokens removed from both tokensList and tokenTree.
+ */
+
+export function removeBptFrom(pool: Pool): Pool {
+  const newPool = cloneDeep(pool);
+  newPool.tokensList = tokensListExclBpt(pool);
+  newPool.tokens = newPool.tokens.filter(
+    token => !isSameAddress(newPool.address, token.address)
+  );
+  newPool.tokens.forEach(token => {
+    if (token.token?.pool) {
+      removeBptFromPoolTokenTree(token.token.pool);
+    }
+  });
+  return newPool;
+}
+/**
+ * Updates the passed subPool by removing its pre-minted tokens.
+ */
+
+export function removeBptFromPoolTokenTree(pool: SubPool) {
+  if (pool.tokens) {
+    removeBptFromTokens(pool);
+    pool.tokens.forEach(token => {
+      if (token.token?.pool) {
+        removeBptFromPoolTokenTree(token.token.pool);
+      }
+    });
+  }
+  return pool;
+}
+/**
+ * Updates the passed subPool by removing the preminted token from tokens and updating mainIndex accordingly.
+ */
+
+export function removeBptFromTokens(pool: SubPool) {
+  if (!pool.tokens) {
+    return;
+  }
+  const premintedIndex = pool.tokens.findIndex(token =>
+    isSameAddress(pool.address, token.address)
+  );
+  if (premintedIndex === -1) return;
+  // Remove preminted token by index
+  pool.tokens.splice(premintedIndex, 1);
+  // Fix mainIndex after removing premintedBPT
+  if (pool.mainIndex && premintedIndex < pool.mainIndex) {
+    pool.mainIndex -= 1;
+  }
 }

@@ -114,7 +114,9 @@ export default defineComponent({
     <div class="top-banner" v-if="showTopBanner">
       <div></div>
       <div class="banner-text">
-        <div class="my-auto">Balancer DAO officially approved Holdr's Friendly Fork status</div>
+        <div class="my-auto">
+          Balancer DAO officially approved Holdr's Friendly Fork status
+        </div>
         <BalBtn
           size="xs"
           target="_blank"
@@ -126,7 +128,9 @@ export default defineComponent({
         >
       </div>
       <div class="banner-text">
-        <BalBtn size="xs" @click="showTopBanner = false" color="white">Close</BalBtn>
+        <BalBtn size="xs" @click="showTopBanner = false" color="white"
+          >Close</BalBtn
+        >
       </div>
     </div>
     <component :is="layout" />
