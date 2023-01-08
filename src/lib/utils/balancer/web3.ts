@@ -32,8 +32,7 @@ export async function sendTransaction(
   action: string,
   params: any[],
   overrides: Record<string, any> = {},
-  forceEthereumLegacyTxType = false,
-  customGasLimitNumber?: number
+  forceEthereumLegacyTxType = false
 ): Promise<TransactionResponse> {
   console.log('Sending transaction');
   console.log('Contract', contractAddress);
@@ -47,18 +46,12 @@ export async function sendTransaction(
 
   try {
     // Gas estimation
+    const gasLimitNumber = await contractWithSigner.estimateGas[action](
+      ...params,
+      paramsOverrides
+    );
 
-    let gasLimit = 0;
-
-    if (!customGasLimitNumber) {
-      const gasLimitNumber = await contractWithSigner.estimateGas[action](
-        ...params,
-        paramsOverrides
-      );
-      gasLimit = gasLimitNumber.toNumber();
-    } else {
-      gasLimit = customGasLimitNumber;
-    }
+    const gasLimit = gasLimitNumber.toNumber();
 
     paramsOverrides.gasLimit = Math.floor(gasLimit * (1 + GAS_LIMIT_BUFFER));
 

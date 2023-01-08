@@ -55,8 +55,7 @@ export default class ExchangeService {
     account: string,
     amountsIn: string[],
     tokensIn: string[],
-    bptOut = '0',
-    customGasLimitNumber?: number
+    bptOut = '0'
   ): Promise<TransactionResponse> {
     const txParams = this.joinParams.serialize(
       account,
@@ -72,9 +71,7 @@ export default class ExchangeService {
       Vault__factory.abi,
       'joinPool',
       txParams,
-      { value },
-      false,
-      customGasLimitNumber
+      { value }
     );
   }
 
@@ -112,8 +109,7 @@ export default class ExchangeService {
     tokensOut: string[],
     bptIn: string,
     exitTokenIndex: number | null,
-    exactOut: boolean,
-    customGasLimitNumber?: number
+    exactOut: boolean
   ): Promise<TransactionResponse> {
     const txParams = this.exitParams.serialize(
       account,
@@ -129,10 +125,7 @@ export default class ExchangeService {
       this.vaultAddress,
       Vault__factory.abi,
       'exitPool',
-      txParams,
-      {},
-      false,
-      customGasLimitNumber
+      txParams
     );
   }
 

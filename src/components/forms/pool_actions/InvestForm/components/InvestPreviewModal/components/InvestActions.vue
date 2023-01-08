@@ -176,8 +176,7 @@ async function submit(): Promise<TransactionResponse> {
         account.value,
         fullAmounts.value,
         props.tokenAddresses,
-        formatUnits(bptOut.value, props.pool?.onchain?.decimals || 18),
-        505000
+        formatUnits(bptOut.value, props.pool?.onchain?.decimals || 18)
       );
     }
 
