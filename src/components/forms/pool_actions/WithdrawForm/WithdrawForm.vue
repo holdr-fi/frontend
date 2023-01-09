@@ -51,6 +51,7 @@ const {
 const withdrawMath = useWithdrawMath(
   toRef(props, 'pool'),
   isProportional,
+  tokensOut,
   tokenOut,
   tokenOutIndex
 );

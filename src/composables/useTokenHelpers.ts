@@ -11,7 +11,7 @@ export function useTokenHelpers() {
   /**
    * COMPOSABLES
    */
-  const { getToken } = useTokens();
+  const { getToken, wrappedNativeAsset, nativeAsset } = useTokens();
 
   /**
    * COMPUTED
@@ -27,11 +27,21 @@ export function useTokenHelpers() {
     return isSameAddress(address, balAddress.value);
   }
 
+  function replaceWethWithEth(addresses: string[]): string[] {
+    return addresses.map(address => {
+      if (isSameAddress(address, wrappedNativeAsset.value.address)) {
+        return nativeAsset.address;
+      }
+      return address;
+    });
+  }
+
   return {
     // computed
     balAddress,
     balToken,
     // methods
-    isBalAddress
+    isBalAddress,
+    replaceWethWithEth
   };
 }

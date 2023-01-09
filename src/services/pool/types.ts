@@ -35,7 +35,9 @@ export enum PoolType {
   MetaStable = 'MetaStable',
   StablePhantom = 'StablePhantom',
   LiquidityBootstrapping = 'LiquidityBootstrapping',
-  ComposableStable = 'ComposableStable'
+  ComposableStable = 'ComposableStable',
+  AaveLinear = 'AaveLinear',
+  ERC4626Linear = 'ERC4626Linear'
 }
 
 export interface PoolToken {

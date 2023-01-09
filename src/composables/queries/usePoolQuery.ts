@@ -84,9 +84,9 @@ export default function usePoolQuery(
 
     if (isBlocked(pool)) throw new Error('Pool not allowed');
 
-    const isStablePhantomPool = isStablePhantom(pool.poolType);
-    const isComposableStablePool = isComposableStable(pool.poolType);
-    const isPreMintedBptTypePool = isPreMintedBptType(pool.poolType);
+    const isStablePhantomPool = isStablePhantom(pool.poolType) || false;
+    const isComposableStablePool = isComposableStable(pool.poolType) || false;
+    const isPreMintedBptTypePool = isPreMintedBptType(pool.poolType) || false;
 
     // Removes BPT token from Stable Phantom Pool token type
     if (isStablePhantomPool) {

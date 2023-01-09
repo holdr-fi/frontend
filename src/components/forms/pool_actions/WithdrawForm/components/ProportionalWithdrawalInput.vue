@@ -98,7 +98,7 @@ function handleSliderChange(newVal: number): void {
 
 async function handleSliderEnd(): Promise<void> {
   if (shouldFetchBatchSwap.value) {
-    await props.math.getSwap();
+    await props.math.fetchExitData();
   }
 }
 

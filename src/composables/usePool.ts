@@ -1,6 +1,6 @@
 import { Network } from '@balancer-labs/sdk';
-import { getAddress } from 'ethers/lib/utils';
-import { cloneDeep } from 'lodash';
+import { isAddress, getAddress } from 'ethers/lib/utils';
+import { uniq, uniqWith, cloneDeep } from 'lodash';
 import { computed, Ref } from 'vue';
 
 import { POOL_MIGRATIONS } from '@/components/forms/pool_actions/MigrateForm/constants';
@@ -23,7 +23,7 @@ import {
 import { PoolType } from '@/services/pool/types';
 import { hasBalEmissions } from '@/services/staking/utils';
 
-import { urlFor } from './useNetwork';
+import { isTestnet, isMainnet, urlFor } from './useNetwork';
 import useNumbers, { FNumFormats, numF } from './useNumbers';
 
 /**
@@ -33,9 +33,43 @@ export function addressFor(poolId: string): string {
   return getAddress(poolId.slice(0, 42));
 }
 
+export function isLinear(poolType: PoolType): boolean {
+  return (
+    poolType === PoolType.AaveLinear || poolType === PoolType.ERC4626Linear
+  );
+}
+
 export function isStable(poolType: PoolType): boolean {
   return poolType === PoolType.Stable;
 }
+
+export function isMetaStable(poolType: PoolType): boolean {
+  return poolType === PoolType.MetaStable;
+}
+
+export function isStablePhantom(poolType: PoolType): boolean {
+  return poolType === PoolType.StablePhantom;
+}
+
+export function isComposableStable(poolType: PoolType): boolean {
+  return poolType === PoolType.ComposableStable;
+}
+
+export function isComposableStableLike(poolType: PoolType): boolean {
+  return isStablePhantom(poolType) || isComposableStable(poolType);
+}
+
+export function isPreMintedBptType(poolType: PoolType): boolean {
+  // Currently equivalent to isComposableStableLike but will be extended later
+  // with managed and composable weighted pools.
+  return isStablePhantom(poolType) || isComposableStable(poolType);
+}
+
+/**
+ * Checks if the pool is to be considered 'deep'. Deep pools are pools that the
+ * UI treats differently because it understands that it contains nested pools.
+ * This is used to enable the generalised deep pool join/exit flow for example.
+ */
 
 export function isDeep(pool: Pool): boolean {
   const treatAsDeep = [
@@ -56,27 +90,8 @@ export function isDeep(pool: Pool): boolean {
   return treatAsDeep.includes(pool.id);
 }
 
-export function isMetaStable(poolType: PoolType): boolean {
-  return poolType === PoolType.MetaStable;
-}
-
-export function isComposableStable(poolType: PoolType): boolean {
-  return poolType === PoolType.ComposableStable;
-}
-export function isComposableStableLike(poolType: PoolType): boolean {
-  return isStablePhantom(poolType) || isComposableStable(poolType);
-}
-export function preMintedBptIndex(pool: Pool): number | void {
-  return pool.tokens.findIndex(token => token.address === pool.address);
-}
-export function isPreMintedBptType(poolType: PoolType): boolean {
-  // Currently equivalent to isComposableStableLike but will be extended later
-  // with managed and composable weighted pools.
-  return isStablePhantom(poolType) || isComposableStable(poolType);
-}
-
-export function isStablePhantom(poolType: PoolType): boolean {
-  return poolType === PoolType.StablePhantom;
+export function isShallowComposableStable(pool: Pool): boolean {
+  return isComposableStable(pool.poolType) && !isDeep(pool);
 }
 
 export function isStableLike(poolType: PoolType): boolean {
@@ -134,6 +149,10 @@ export function noInitLiquidity(pool: AnyPool): boolean {
   return bnum(pool?.onchain?.totalSupply || '0').eq(0);
 }
 
+export function preMintedBptIndex(pool: Pool): number | void {
+  return pool.tokens.findIndex(token => token.address === pool.address);
+}
+
 /**
  * @returns tokens that can be used to invest or withdraw from a pool
  */
@@ -159,6 +178,8 @@ export function orderedTokenAddresses(pool: AnyPool): string[] {
   );
   return sortedTokens.map(token => getAddress(token?.address || ''));
 }
+
+type TokenProperties = Pick<PoolToken, 'address' | 'weight'>;
 
 /**
  * @summary Orders pool tokens by weight if weighted pool
@@ -234,140 +255,135 @@ export function isVeBalPool(poolId: string): boolean {
 }
 
 /**
- * @summary Remove pre-minted pool token address from tokensList
+ * @summary Checks if given token address is BAL 80/20 pool (veBAL)
  */
-export function removePreMintedBPT(pool: Pool): Pool {
-  pool.tokensList = pool.tokensList.filter(
-    address => !isSameAddress(address, pool.address)
-  );
-  return pool;
+export function isVeBalPoolAddress(address: string): boolean {
+  const veBALPoolAddress = POOLS.IdsMap['80HLDR-20WNEAR']?.slice(0, 42);
+  if (!veBALPoolAddress) return false;
+
+  return isSameAddress(veBALPoolAddress, address);
+}
+
+interface TokenTreeOpts {
+  includeLinearUnwrapped?: boolean;
+  includePreMintedBpt?: boolean;
 }
 
 /**
- * COMPOSABLE
+ * Parse token tree and extract all token addresses.
+ *
+ * @param {PoolToken[]} tokenTree - A pool's token tree.
+ * @param {TokenTreeOpts} options
+ * @returns {string[]} Array of token addresses in tree.
  */
-export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
-  const { fNum2 } = useNumbers();
+export function tokenTreeNodes(
+  tokenTree: PoolToken[],
+  options: TokenTreeOpts = { includeLinearUnwrapped: false }
+): string[] {
+  const addresses: string[] = [];
 
-  /**
-   * Returns pool weights label
-   */
-  function poolWeightsLabel(pool: Pool): string {
-    if (!pool?.onchain?.tokens) return '';
-
-    if (isStableLike(pool.poolType)) {
-      return Object.values(pool.onchain.tokens)
-        .map(token => token.symbol)
-        .join(', ');
+  for (const token of tokenTree) {
+    addresses.push(token.address);
+    if (token.token?.pool?.tokens) {
+      if (
+        !options.includeLinearUnwrapped &&
+        isLinear(token.token.pool.poolType)
+      ) {
+        addresses.push(
+          token.token.pool.tokens[token.token.pool.mainIndex].address
+        );
+      } else {
+        const nestedTokens = tokenTreeNodes(token.token.pool?.tokens, options);
+        addresses.push(...nestedTokens);
+      }
     }
-
-    return Object.values(pool.onchain.tokens)
-      .map(
-        token =>
-          `${fNum2(token.weight, {
-            style: 'percent',
-            maximumFractionDigits: 0
-          })} ${token.symbol}`
-      )
-      .join(', ');
   }
 
-  /**
-   * COMPUTED
-   */
-  const isStablePool = computed(
-    (): boolean => !!pool.value && isStable(pool.value.poolType)
-  );
-  const isMetaStablePool = computed(
-    (): boolean => !!pool.value && isMetaStable(pool.value.poolType)
-  );
-  const isStablePhantomPool = computed(
-    (): boolean => !!pool.value && isStablePhantom(pool.value.poolType)
-  );
-  const isStableLikePool = computed(
-    (): boolean => !!pool.value && isStableLike(pool.value.poolType)
-  );
-  const isWeightedPool = computed(
-    (): boolean => !!pool.value && isWeighted(pool.value.poolType)
-  );
-  const isWeightedLikePool = computed(
-    (): boolean => !!pool.value && isWeightedLike(pool.value.poolType)
-  );
-  const isManagedPool = computed(
-    (): boolean => !!pool.value && isManaged(pool.value.poolType)
-  );
-  const isLiquidityBootstrappingPool = computed(
-    (): boolean => !!pool.value && isLiquidityBootstrapping(pool.value.poolType)
-  );
-  const managedPoolWithTradingHalted = computed(
-    (): boolean =>
-      !!pool.value && isManagedPool.value && !pool.value.onchain?.swapEnabled
-  );
-  const isWethPool = computed(
-    (): boolean => !!pool.value && isWeth(pool.value)
-  );
-  const isComposableStablePool = computed(
-    (): boolean => !!pool.value && isComposableStable(pool.value.poolType)
-  );
-  const isDeepPool = computed(
-    (): boolean => !!pool.value && isDeep(pool.value)
-  );
-  const isShallowComposableStablePool = computed(
-    (): boolean => isComposableStablePool.value && !isDeepPool.value
-  );
-  const isComposableStableLikePool = computed(
-    (): boolean => !!pool.value && isComposableStableLike(pool.value.poolType)
-  );
-  const isWstETHPool = computed(
-    (): boolean => !!pool.value && includesWstEth(pool.value.tokensList)
-  );
-  const noInitLiquidityPool = computed(
-    () => !!pool.value && noInitLiquidity(pool.value)
-  );
+  return uniq(addresses);
+}
 
-  const lpTokens = computed(() => {
-    if (!pool.value) return [];
+/**
+ * Parse token tree and extract all leaf token addresses.
+ *
+ * @param {PoolToken[]} tokenTree - A pool's token tree.
+ * @param {TokenTreeOpts} options
+ * @returns {string[]} Array of token addresses in tree.
+ */
+export function tokenTreeLeafs(
+  tokenTree: PoolToken[],
+  options: TokenTreeOpts = { includeLinearUnwrapped: false }
+): string[] {
+  const addresses: string[] = [];
 
-    return lpTokensFor(pool.value);
+  for (const token of tokenTree) {
+    if (token.token?.pool?.tokens) {
+      if (
+        !options.includeLinearUnwrapped &&
+        isLinear(token.token.pool.poolType)
+      ) {
+        addresses.push(
+          token.token.pool.tokens[token.token.pool.mainIndex].address
+        );
+      } else {
+        const nestedTokens = tokenTreeLeafs(token.token.pool.tokens, options);
+        addresses.push(...removeAddress(token.address, nestedTokens));
+      }
+    } else if (!token.token?.pool?.poolType) {
+      addresses.push(token.address);
+    }
+  }
+
+  return uniq(addresses);
+}
+
+function isSubPool(poolOrToken: Pool | SubPool): poolOrToken is SubPool {
+  return (poolOrToken as SubPool).mainIndex !== undefined;
+}
+
+/**
+ * Get all unique token tree tokens as flat array.
+ *
+ * @param {PoolToken[]} tokenTree - A pool's token tree.
+ * @param {TokenTreeOpts} options
+ * @returns {PoolToken[]} Flat array of tokens in tree.
+ */
+export function flatTokenTree(
+  pool: Pool | SubPool,
+  options: TokenTreeOpts = {
+    includeLinearUnwrapped: false,
+    includePreMintedBpt: false
+  }
+): PoolToken[] {
+  const tokens: PoolToken[] = [];
+
+  if (!options.includePreMintedBpt && !isSubPool(pool)) {
+    pool = removeBptFrom(pool);
+  }
+
+  const nestedTokens = pool?.tokens || [];
+
+  nestedTokens.forEach(token => {
+    if (!isSameAddress(pool.address, token.address)) {
+      tokens.push(token);
+    }
+
+    if (token.token?.pool?.tokens) {
+      if (
+        !options.includeLinearUnwrapped &&
+        isLinear(token.token.pool.poolType)
+      ) {
+        tokens.push(token.token.pool.tokens[token.token.pool.mainIndex]);
+      } else {
+        const nestedTokens = flatTokenTree(token.token.pool, options);
+        tokens.push(...nestedTokens);
+      }
+    }
   });
 
-  return {
-    // computed
-    isStablePool,
-    isMetaStablePool,
-    isStablePhantomPool,
-    isStableLikePool,
-    isWeightedPool,
-    isWeightedLikePool,
-    isShallowComposableStablePool,
-    isComposableStablePool,
-    isComposableStableLikePool,
-    isDeepPool,
-    isManagedPool,
-    isLiquidityBootstrappingPool,
-    managedPoolWithTradingHalted,
-    isWethPool,
-    isWstETHPool,
-    noInitLiquidityPool,
-    lpTokens,
-    // methods
-    isStable,
-    isMetaStable,
-    isStablePhantom,
-    isStableLike,
-    isWeighted,
-    isLiquidityBootstrapping,
-    isWeightedLike,
-    isTradingHaltable,
-    isWeth,
-    noInitLiquidity,
-    lpTokensFor,
-    isMigratablePool,
-    poolWeightsLabel,
-    orderedTokenAddresses,
-    orderedPoolTokens,
-    removePreMintedBPT
-  };
+  // Avoid duplicated tokens with the same address
+  return uniqWith(tokens, (token1, token2) =>
+    isSameAddress(token1.address, token2.address)
+  );
 }
 
 /**
@@ -376,10 +392,10 @@ export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
  * @param {Pool} pool - Pool to get tokensList from.
  * @returns tokensList excluding pre-minted BPT address.
  */
-
 export function tokensListExclBpt(pool: Pool): string[] {
   return removeAddress(pool.address, pool.tokensList);
 }
+
 /**
  * Returns a new (cloned) pool with pre-minted pool tokens removed from both tokensList and tokenTree.
  */
@@ -430,4 +446,210 @@ export function removeBptFromTokens(pool: SubPool) {
   if (pool.mainIndex && premintedIndex < pool.mainIndex) {
     pool.mainIndex -= 1;
   }
+}
+
+export function findMainTokenAddress(pool: SubPool | null) {
+  if (!pool || !pool.tokens) return '';
+  return pool.tokens[pool.mainIndex].address;
+}
+
+/**
+ * Find token in token tree with address.
+ *
+ * @param {Pool} pool - A pool
+ * @param {string} tokenAddress - Address of token to find in tree.
+ * @param {TokenTreeOpts} options
+ */
+export function findTokenInTree(
+  pool: Pool,
+  tokenAddress: string,
+  options: TokenTreeOpts = { includeLinearUnwrapped: false }
+): PoolToken | undefined {
+  const tokens = flatTokenTree(pool, options);
+  return tokens.find(token => isSameAddress(token.address, tokenAddress));
+}
+
+/**
+ * @summary Check if pool should be accessible in UI
+ */
+export function isBlocked(pool: Pool, account: string): boolean {
+  const requiresAllowlisting =
+    isStableLike(pool.poolType) || isManaged(pool.poolType);
+  const isOwnedByUser =
+    pool.owner && isAddress(account) && isSameAddress(pool.owner, account);
+  const isAllowlisted =
+    POOLS.Stable.AllowList.includes(pool.id) ||
+    POOLS.Investment.AllowList.includes(pool.id);
+
+  return (
+    !isTestnet.value && requiresAllowlisting && !isAllowlisted && !isOwnedByUser
+  );
+}
+
+/**
+ * Approximate BPT price using total liquidity calculated via Coingecko prices
+ * and subgraph total shares. Cannot be relied on to be 100% accurate.
+ *
+ * @returns USD value of 1 BPT
+ */
+export function bptPriceFor(pool: Pool): string {
+  return bnum(pool.totalLiquidity)
+    .div(pool.totalShares)
+    .toString();
+}
+
+/**
+ * Calculate USD value of shares using approx. BPT price function.
+ *
+ * @returns USD value of shares.
+ */
+export function fiatValueOf(pool: Pool, shares: string): string {
+  return bnum(shares)
+    .times(bptPriceFor(pool))
+    .toString();
+}
+
+/**
+ * @summary Remove pre-minted pool token address from tokensList
+ */
+export function removePreMintedBPT(pool: Pool): Pool {
+  pool.tokensList = pool.tokensList.filter(
+    address => !isSameAddress(address, pool.address)
+  );
+  return pool;
+}
+
+/**
+ * COMPOSABLE
+ */
+export function usePool(pool: Ref<AnyPool> | Ref<undefined>) {
+  const { fNum2 } = useNumbers();
+
+  /**
+   * Returns pool weights label
+   */
+  function poolWeightsLabel(pool: Pool): string {
+    if (!pool?.onchain?.tokens) return '';
+
+    if (isStableLike(pool.poolType)) {
+      return Object.values(pool.onchain.tokens)
+        .map(token => token.symbol)
+        .join(', ');
+    }
+
+    return Object.values(pool.onchain.tokens)
+      .map(
+        token =>
+          `${fNum2(token.weight, {
+            style: 'percent',
+            maximumFractionDigits: 0
+          })} ${token.symbol}`
+      )
+      .join(', ');
+  }
+
+  /**
+   * COMPUTED
+   */
+  /**
+   * COMPUTED
+   */
+  const isStablePool = computed(
+    (): boolean => !!pool.value && isStable(pool.value.poolType)
+  );
+  const isMetaStablePool = computed(
+    (): boolean => !!pool.value && isMetaStable(pool.value.poolType)
+  );
+  const isStablePhantomPool = computed(
+    (): boolean => !!pool.value && isStablePhantom(pool.value.poolType)
+  );
+  const isComposableStablePool = computed(
+    (): boolean => !!pool.value && isComposableStable(pool.value.poolType)
+  );
+  const isDeepPool = computed(
+    (): boolean => !!pool.value && isDeep(pool.value)
+  );
+  const isShallowComposableStablePool = computed(
+    (): boolean => isComposableStablePool.value && !isDeepPool.value
+  );
+  const isStableLikePool = computed(
+    (): boolean => !!pool.value && isStableLike(pool.value.poolType)
+  );
+  const isComposableStableLikePool = computed(
+    (): boolean => !!pool.value && isComposableStableLike(pool.value.poolType)
+  );
+  const isPreMintedBptPool = computed(
+    (): boolean => !!pool.value && isPreMintedBptType(pool.value.poolType)
+  );
+  const isWeightedPool = computed(
+    (): boolean => !!pool.value && isWeighted(pool.value.poolType)
+  );
+  const isWeightedLikePool = computed(
+    (): boolean => !!pool.value && isWeightedLike(pool.value.poolType)
+  );
+  const isManagedPool = computed(
+    (): boolean => !!pool.value && isManaged(pool.value.poolType)
+  );
+  const isLiquidityBootstrappingPool = computed(
+    (): boolean => !!pool.value && isLiquidityBootstrapping(pool.value.poolType)
+  );
+  const managedPoolWithTradingHalted = computed(
+    (): boolean =>
+      !!pool.value && isManagedPool.value && !pool.value.onchain?.swapEnabled
+  );
+  const isWethPool = computed(
+    (): boolean => !!pool.value && isWeth(pool.value)
+  );
+  const isMainnetWstETHPool = computed(
+    (): boolean =>
+      !!pool.value && includesWstEth(pool.value.tokensList) && isMainnet.value
+  );
+  const noInitLiquidityPool = computed(
+    () => !!pool.value && noInitLiquidity(pool.value)
+  );
+  const lpTokens = computed(() => {
+    if (!pool.value) return [];
+
+    return lpTokensFor(pool.value);
+  });
+
+  return {
+    // computed
+    isStablePool,
+    isMetaStablePool,
+    isStablePhantomPool,
+    isStableLikePool,
+    isWeightedPool,
+    isWeightedLikePool,
+    isShallowComposableStablePool,
+    isComposableStablePool,
+    isComposableStableLikePool,
+    isDeepPool,
+    isManagedPool,
+    isLiquidityBootstrappingPool,
+    managedPoolWithTradingHalted,
+    isWethPool,
+    isMainnetWstETHPool,
+    isPreMintedBptPool,
+    noInitLiquidityPool,
+    lpTokens,
+    // methods
+    isStable,
+    isMetaStable,
+    isStablePhantom,
+    isStableLike,
+    isWeighted,
+    isLiquidityBootstrapping,
+    isWeightedLike,
+    isTradingHaltable,
+    isPreMintedBptType,
+    isWeth,
+    noInitLiquidity,
+    lpTokensFor,
+    isMigratablePool,
+    poolWeightsLabel,
+    orderedTokenAddresses,
+    orderedPoolTokens,
+    removePreMintedBPT
+  };
 }

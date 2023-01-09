@@ -40,8 +40,6 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
-    'simple-import-sort/imports': 'warn',
-    'simple-import-sort/exports': 'warn'
   },
 
   overrides: [
