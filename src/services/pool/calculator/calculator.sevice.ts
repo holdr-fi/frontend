@@ -151,6 +151,23 @@ export default class CalculatorService {
       buffer: number;
     }
   ): Amounts {
+    console.log(this.action, 'sendTokens (bpt token)', this[`sendTokens`]);
+    console.log(
+      this.action,
+      'receiveTokens ([pool tokens])',
+      this[`receiveTokens`]
+    );
+    console.log(
+      this.action,
+      'sendRatios (poolTokenBalances)',
+      this[`sendRatios`]
+    );
+    console.log(
+      this.action,
+      'receiveRatios (total supply of each token in this pool)',
+      this[`receiveRatios`]
+    );
+
     if (fixedAmount.trim() === '')
       return { send: [], receive: [], fixedToken: 0 };
 
@@ -159,6 +176,9 @@ export default class CalculatorService {
     const fixedToken = this.allTokens.value[fixedTokenAddress];
     const fixedDenormAmount = parseUnits(fixedAmount, fixedToken?.decimals);
     const fixedRatio = this.ratioOf(type, index);
+
+    console.log(this.action, 'fixedTokenAddress', fixedTokenAddress);
+
     const amounts = {
       send: this.sendTokens.map(() => ''),
       receive: this.receiveTokens.map(() => ''),
@@ -168,10 +188,21 @@ export default class CalculatorService {
     amounts[type][index] = fixedAmount;
 
     [this.sendRatios, this.receiveRatios].forEach((ratios, ratioType) => {
+      console.log(this.action, 'running loop - index', ratioType);
       ratios.forEach((ratio, i) => {
+        console.log(this.action, 'running inner loop - index', i);
         if (i !== index || type !== types[ratioType]) {
+          console.log(
+            this.action,
+            'inner loop - passed if statement',
+            i,
+            index,
+            type,
+            types[ratioType]
+          );
           const tokenAddress = this.tokenOf(types[ratioType], i);
           const token = this.allTokens.value[tokenAddress];
+          console.log('inner loop - token address', tokenAddress);
           let amount;
           if (fixedRatioOverride) {
             amount = fixedDenormAmount
@@ -182,11 +213,31 @@ export default class CalculatorService {
               .div(fixedRatioOverride.value);
           } else {
             amount = fixedDenormAmount.mul(ratio).div(fixedRatio);
+            console.log(
+              this.action,
+              'inner loop - fixedDenormAmount.mul(ratio).div(fixedRatio)'
+            );
+            console.log(
+              this.action,
+              'inner loop - fixedDenormAmount',
+              fixedDenormAmount
+            );
+            console.log(this.action, 'inner loop - ratio', ratio);
+            console.log(this.action, 'inner loop - fixedRatio', fixedRatio);
           }
           amounts[types[ratioType]][i] = formatUnits(amount, token?.decimals);
+          console.log(
+            this.action,
+            'inner loop - amounts[types[ratioType]][i]',
+            amount,
+            token?.decimals,
+            formatUnits(amount, token?.decimals)
+          );
         }
       });
     });
+
+    console.log(this.action, 'amounts', amounts);
 
     return amounts;
   }
@@ -200,6 +251,7 @@ export default class CalculatorService {
   }
 
   public ratioOf(type: string, index: number) {
+    console.log(this.action, 'ratioOf', type, index, this[`${type}Ratios`]);
     return this[`${type}Ratios`][index];
   }
 
@@ -225,6 +277,15 @@ export default class CalculatorService {
     const normalizedBalances = Object.values(this.poolTokens).map(
       t => t.balance
     );
+    console.log(
+      this.action,
+      'poolTokenBalances',
+      this.poolTokens,
+      this.poolTokenDecimals,
+      normalizedBalances.map((balance, i) =>
+        parseUnits(balance, this.poolTokenDecimals[i])
+      )
+    );
     return normalizedBalances.map((balance, i) =>
       parseUnits(balance, this.poolTokenDecimals[i])
     );
@@ -240,6 +301,12 @@ export default class CalculatorService {
   }
 
   public get poolTotalSupply(): BigNumber {
+    console.log(
+      this.action,
+      'poolTotalSupply',
+      this.pool.value?.onchain?.totalSupply,
+      this.poolDecimals
+    );
     return parseUnits(
       this.pool.value?.onchain?.totalSupply || '0',
       this.poolDecimals
@@ -281,6 +348,14 @@ export default class CalculatorService {
   }
 
   public get sendRatios(): BigNumberish[] {
+    console.log(
+      this.action,
+      'sendRatios function',
+      'join',
+      this.poolTokenBalances,
+      'exit',
+      this.poolTotalSupply
+    );
     if (this.action === 'join') return this.poolTokenBalances;
     return [this.poolTotalSupply];
   }
