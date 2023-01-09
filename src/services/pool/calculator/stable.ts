@@ -3,7 +3,6 @@ import { BigNumber, BigNumberish } from '@ethersproject/bignumber';
 import { formatUnits, parseUnits } from '@ethersproject/units';
 import * as SDK from '@georgeroman/balancer-v2-pools';
 import OldBigNumber from 'bignumber.js';
-import { BN } from 'bn.js';
 
 import { bnum, isSameAddress, selectByAddress } from '@/lib/utils';
 
@@ -262,16 +261,11 @@ export default class Stable {
     priceRate: string | null = null,
     decimals = 18
   ): OldBigNumber {
-    if (priceRate === null) {
-      priceRate = '1';
-    } else {
-      // Limit price rate to 6 decimal points to avoid parseUnits bug where provide value with more decimals than decimals to parse to. 'fractional component exceeds decimals' error otherwise?
-      priceRate = parseFloat(priceRate)
-        .toFixed(6)
-        .toString();
-    }
+    if (priceRate === null) priceRate = '1';
+    // Limit result to 7 significant digits, or else run into downstream 'fractional component exceeds decimal' error
     const denormAmount = bnum(parseUnits(normalizedAmount, decimals).toString())
       .times(priceRate)
+      .sd(7)
       .toFixed(0, OldBigNumber.ROUND_UP);
 
     return bnum(denormAmount.toString());
@@ -283,14 +277,7 @@ export default class Stable {
     priceRate: string | null,
     rounding: OldBigNumber.RoundingMode
   ): OldBigNumber {
-    if (priceRate === null) {
-      priceRate = '1';
-    } else {
-      // Limit price rate to 6 decimal points to avoid parseUnits bug where provide value with more decimals than decimals to parse to. 'fractional component exceeds decimals' error otherwise?
-      priceRate = parseFloat(priceRate)
-        .toFixed(6)
-        .toString();
-    }
+    if (priceRate === null) priceRate = '1';
 
     const amountAfterPriceRate = bnum(amount)
       .div(priceRate)
@@ -298,7 +285,9 @@ export default class Stable {
 
     const normalizedAmount = bnum(amountAfterPriceRate)
       .div(parseUnits('1', 18).toString())
+      .sd(7)
       .toFixed(decimals, rounding);
+
     const scaledAmount = parseUnits(normalizedAmount, decimals);
 
     return bnum(scaledAmount.toString());

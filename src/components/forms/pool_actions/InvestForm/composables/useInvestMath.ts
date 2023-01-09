@@ -137,7 +137,7 @@ export default function useInvestMath(
           .toNumber() || 0
       );
     } catch (error) {
-      console.log('priceImpact error');
+      console.error('useInvestMath priceImpact error: ', error);
       return 1;
     }
   });
