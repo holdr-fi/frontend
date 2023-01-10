@@ -27,7 +27,10 @@ function getHorizontalStickyClass(index: number) {
 <template>
   <tbody>
     <tr
-      :class="['bg-white z-10 row-bg group', { 'cursor-pointer': onRowClick }]"
+      :class="[
+        'bg-white z-10 row-bg group',
+        { 'cursor-pointer': !!props.onRowClick },
+      ]"
     >
       <td
         :class="[

@@ -102,7 +102,11 @@ export class PriceService {
 
       return results;
     } catch (error) {
-      console.error('Unable to fetch token prices', addresses, error);
+      console.error(
+        'Unable to fetch token prices from coingecko',
+        addresses,
+        error
+      );
       const emptyPrices = addresses.reduce((emptyPriceObject, address) => {
         emptyPriceObject[address] = { ['usd']: 0 };
         return emptyPriceObject;
@@ -154,7 +158,11 @@ export class PriceService {
       );
       return results;
     } catch (error) {
-      console.error('Unable to fetch token prices', addresses, error);
+      console.error(
+        'Unable to fetch token prices from coingecko',
+        addresses,
+        error
+      );
       throw error;
     }
   }

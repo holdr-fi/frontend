@@ -263,6 +263,11 @@ export default function useUserStakingData(
         `Attempted to get staked shares, however useStaking was initialised without a pool address.`
       );
     }
+    if (!account.value) {
+      throw new Error(
+        `Attempted to get staked shares, however user account is undefined.`
+      );
+    }
     const gaugeAddress = await getGaugeAddress(
       getAddress(poolAddress.value),
       getProvider()
