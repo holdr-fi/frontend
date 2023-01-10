@@ -7,6 +7,9 @@ import { Contract } from 'ethers';
 import { pick } from 'lodash';
 
 import {
+  isComposableStable,
+  isComposableStableLike,
+  isDeep,
   isStableLike,
   isStablePhantom,
   isTradingHaltable,
@@ -123,6 +126,15 @@ export default class Vault {
             'getWrappedTokenRate'
           );
         });
+      }
+
+      if (isComposableStableLike(type)) {
+        // Overwrite totalSupply with virtualSupply for StablePhantom pools
+        poolMulticaller.call('totalSupply', poolAddress, 'getVirtualSupply');
+        if (isComposableStable(type)) {
+          // Overwrite totalSupply with actualSupply for ComposableStable pools
+          poolMulticaller.call('totalSupply', poolAddress, 'getActualSupply');
+        }
       }
     }
 

@@ -94,6 +94,7 @@ function handleSliderChange(newVal: number): void {
     .times(fractionBasisPoints)
     .div(10000)
     .toFixed(props.pool?.onchain?.decimals || 18);
+  // console.log('propBptIn', propBptIn.value)
 }
 
 async function handleSliderEnd(): Promise<void> {

@@ -213,6 +213,13 @@ export default function useWithdrawMath(
       'send',
       fixedRatioOverride
     );
+    // console.log('proportionalPoolTokenAmounts: ', {
+    //   shouldUseBptBuffer: shouldUseBptBuffer.value,
+    //   evmGuideBptIn: evmGuideBptIn.value.toString(),
+    //   fixedRatioOverride: fixedRatioOverride,
+    //   propBptIn: propBptIn.value,
+    //   receive: receive
+    // });
     return receive;
   });
 
