@@ -212,7 +212,10 @@ export default class Stable {
     // that requires balances be scaled by the token decimals and not 18
     // scaledBalances already use priceRate
     const balances = this.scaledBalances.map((balance, i) => {
-      const normalizedBalance = formatUnits(balance.toString(), 18);
+      const normalizedBalanceUnparsed = formatUnits(balance.toString(), 18);
+      const normalizedBalance = parseFloat(normalizedBalanceUnparsed)
+        .toFixed(this.calc.poolTokenDecimals[i])
+        .toString();
       const denormBalance = parseUnits(
         normalizedBalance,
         this.calc.poolTokenDecimals[i]
@@ -260,10 +263,8 @@ export default class Stable {
     decimals = 18
   ): OldBigNumber {
     if (priceRate === null) priceRate = '1';
-    // HOLDR_INFO: Limit result to 7 significant digits, or else run into downstream 'fractional component exceeds decimal' error
     const denormAmount = bnum(parseUnits(normalizedAmount, decimals).toString())
       .times(priceRate)
-      .sd(7)
       .toFixed(0, OldBigNumber.ROUND_UP);
 
     return bnum(denormAmount.toString());
@@ -283,7 +284,6 @@ export default class Stable {
 
     const normalizedAmount = bnum(amountAfterPriceRate)
       .div(parseUnits('1', 18).toString())
-      .sd(7)
       .toFixed(decimals, rounding);
 
     const scaledAmount = parseUnits(normalizedAmount, decimals);
