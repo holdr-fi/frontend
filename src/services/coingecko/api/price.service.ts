@@ -7,6 +7,7 @@ import { returnChecksum } from '@/lib/decorators/return-checksum.decorator';
 import { includesAddress } from '@/lib/utils';
 import { retryPromiseWithDelay } from '@/lib/utils/promise';
 import { configService as _configService } from '@/services/config/config.service';
+import { lsGet, lsSet } from '@/lib/utils';
 
 import { CoingeckoClient } from '../coingecko.client';
 import {
@@ -100,6 +101,8 @@ export class PriceService {
         results[this.nativeAssetAddress] = await this.getNativeAssetPrice();
       }
 
+      lsSet('tokenPrices', results);
+
       return results;
     } catch (error) {
       console.error(
@@ -111,7 +114,9 @@ export class PriceService {
         emptyPriceObject[address] = { ['usd']: 0 };
         return emptyPriceObject;
       }, {} as TokenPrices);
-      return emptyPrices;
+      const lsTokenPrices = lsGet('tokenPrices', emptyPrices);
+
+      return lsTokenPrices;
       // Holdr_edit - Returned zero object instead of throwing error, otherwise waste time refreshing page when
       // throw error;
     }
@@ -159,7 +164,7 @@ export class PriceService {
       return results;
     } catch (error) {
       console.error(
-        'Unable to fetch token prices from coingecko',
+        'Unable to fetch historical token prices from coingecko',
         addresses,
         error
       );
