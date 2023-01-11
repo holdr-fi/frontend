@@ -33,10 +33,6 @@ const props = withDefaults(defineProps<Props>(), {
 const { tokens, balances, balanceFor } = useTokens();
 const { fNum2, toFiat } = useNumbers();
 const { isStablePhantomPool } = usePool(toRef(props, 'pool'));
-const {
-  userData: { stakedSharesForProvidedPool }
-} = useStaking();
-
 /**
  * SERVICES
  */
@@ -56,7 +52,6 @@ const bptBalance = computed((): string => balanceFor(props.pool.address));
 const propTokenAmounts = computed((): string[] => {
   const { receive } = poolCalculator.propAmountsGiven(
     bnum(bptBalance.value)
-      .plus(stakedSharesForProvidedPool.value)
       .toString(),
     0,
     'send'
