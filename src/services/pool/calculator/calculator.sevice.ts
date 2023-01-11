@@ -4,7 +4,12 @@ import { formatUnits, parseUnits } from '@ethersproject/units';
 import OldBigNumber from 'bignumber.js';
 import { Ref, ref } from 'vue';
 
-import { isStable, isStableLike, isStablePhantom } from '@/composables/usePool';
+import {
+  isStable,
+  isStableLike,
+  isStablePhantom,
+  isComposableStableLike
+} from '@/composables/usePool';
 import { bnum, isSameAddress } from '@/lib/utils';
 import { configService } from '@/services/config/config.service';
 import { OnchainTokenDataMap, Pool } from '@/services/pool/types';
@@ -104,11 +109,11 @@ export default class CalculatorService {
       let hasBalance = true;
       let balance;
       if (token === this.config.network.nativeAsset.address) {
-        balance = bnum(this.balances.value[token])
+        balance = bnum(this.balances.value[getAddress(token)])
           .minus(this.config.network.nativeAsset.minTransactionBuffer)
           .toString();
       } else {
-        balance = this.balances.value[token] || '0';
+        balance = this.balances.value[getAddress(token)] || '0';
       }
       const amounts = this.propAmountsGiven(balance, tokenIndex, type);
 
@@ -159,7 +164,6 @@ export default class CalculatorService {
     const fixedToken = this.allTokens.value[fixedTokenAddress];
     const fixedDenormAmount = parseUnits(fixedAmount, fixedToken?.decimals);
     const fixedRatio = this.ratioOf(type, index);
-
     const amounts = {
       send: this.sendTokens.map(() => ''),
       receive: this.receiveTokens.map(() => ''),
@@ -269,6 +273,10 @@ export default class CalculatorService {
 
   public get isStablePhantomPool(): boolean {
     return isStablePhantom(this.pool.value.poolType);
+  }
+
+  public get isComposableStableLikePool(): boolean {
+    return isComposableStableLike(this.pool.value.poolType);
   }
 
   public get sendTokens(): string[] {

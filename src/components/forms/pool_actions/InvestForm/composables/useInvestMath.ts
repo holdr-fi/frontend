@@ -36,7 +36,6 @@ export default function useInvestMath(
   const proportionalAmounts = ref<string[]>([]);
   const loadingData = ref(false);
   const batchSwap = ref<BatchSwap | null>(null);
-  const batchSwapLoading = ref(false);
   const queryBptOut = ref<string>('0');
 
   /**
@@ -143,12 +142,12 @@ export default function useInvestMath(
   });
 
   const highPriceImpact = computed((): boolean => {
-    if (batchSwapLoading.value) return false;
+    if (loadingData.value) return false;
     return bnum(priceImpact.value).isGreaterThanOrEqualTo(HIGH_PRICE_IMPACT);
   });
 
   const rektPriceImpact = computed((): boolean => {
-    if (batchSwapLoading.value) return false;
+    if (loadingData.value) return false;
     return bnum(priceImpact.value).isGreaterThanOrEqualTo(REKT_PRICE_IMPACT);
   });
 
@@ -258,7 +257,7 @@ export default function useInvestMath(
   }
 
   async function getBatchSwap(): Promise<void> {
-    batchSwapLoading.value = true;
+    loadingData.value = true;
     batchSwap.value = await queryBatchSwapTokensIn(
       sor,
       balancerContractsService.vault.instance as any,
@@ -267,7 +266,7 @@ export default function useInvestMath(
       pool.value.address.toLowerCase()
     );
 
-    batchSwapLoading.value = false;
+    loadingData.value = false;
   }
 
   // Holdr_comment - this function fails for wstETH/cbETH pool on app.balancer.fi, so doesn't seem to do anything useful
@@ -344,7 +343,7 @@ export default function useInvestMath(
     hasNoBalances,
     hasAllTokens,
     shouldFetchBatchSwap,
-    batchSwapLoading,
+    loadingData,
     supportsPropotionalOptimization,
     // methods
     maximizeAmounts,
