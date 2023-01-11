@@ -43,7 +43,7 @@ const {
   fiatAmounts,
   proportionalAmounts,
   shouldFetchBatchSwap,
-  loadingAmountsOut
+  loadingData
 } = toRefs(props.math);
 
 const { slider } = useWithdrawalState(toRef(props, 'pool'));
@@ -126,7 +126,7 @@ onBeforeMount(() => {
           <WithdrawalTokenSelect :pool="pool" />
           <div class="flex-grow text-right text-xl font-numeric">
             <BalLoadingBlock
-              v-if="loadingAmountsOut"
+              v-if="loadingData"
               class="w-20 h-8 float-right"
             />
             <span v-else>{{ missingPrices ? '-' : fiatTotalLabel }}</span>
@@ -177,7 +177,7 @@ onBeforeMount(() => {
           <div
             class="flex flex-col flex-grow items-end text-right pl-2 font-numeric"
           >
-            <BalLoadingBlock v-if="loadingAmountsOut" class="w-20 h-12" />
+            <BalLoadingBlock v-if="loadingData" class="w-20 h-12" />
             <template v-else>
               <span class="break-words text-xl">
                 {{ fNum2(proportionalAmounts[i], FNumFormats.token) }}

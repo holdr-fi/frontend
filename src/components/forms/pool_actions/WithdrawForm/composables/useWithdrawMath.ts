@@ -69,10 +69,8 @@ export default function useWithdrawMath(
   const evmGuideBptIn = ref<string>('0');
 
   const batchSwap = ref<BatchSwapOut | null>(null);
-  const batchSwapLoading = ref(false);
 
   const batchRelayerSwap = ref<any | null>(null);
-  const batchRelayerSwapLoading = ref(false);
 
   // This array can be set by either a queryExit, a regular batch swap result
   // or a batch relayer result, if the batch swap returns 0.
@@ -509,10 +507,6 @@ export default function useWithdrawMath(
     (): string => pool.value?.wrappedTokens?.[tokenOutIndex.value] || ''
   );
 
-  const loadingAmountsOut = computed(
-    (): boolean => batchSwapLoading.value || batchRelayerSwapLoading.value
-  );
-
   /**
    * METHODS
    */
@@ -869,7 +863,6 @@ export default function useWithdrawMath(
     batchSwapKind,
     shouldUseBatchRelayer,
     batchRelayerSwap,
-    loadingAmountsOut,
     loadingData,
     // methods
     initMath,
