@@ -4,7 +4,7 @@ import { formatUnits, parseUnits } from '@ethersproject/units';
 import * as SDK from '@georgeroman/balancer-v2-pools';
 import OldBigNumber from 'bignumber.js';
 
-import { bnum, isSameAddress, selectByAddress } from '@/lib/utils';
+import { bnum, selectByAddress, isSameAddress } from '@/lib/utils';
 
 import Calculator from './calculator.sevice';
 import { PiOptions } from './calculator.sevice';
@@ -27,9 +27,7 @@ export default class Stable {
       const ampAdjusted = this.adjustAmp(amp);
       const amounts = this.calc.pool.value.tokens
         .filter(({ address }) => address !== this.calc.pool.value.address)
-        .map(({ priceRate }, i) => {
-          return this.scaleInput(tokenAmounts[i], priceRate);
-        });
+        .map(({ priceRate }, i) => this.scaleInput(tokenAmounts[i], priceRate));
 
       const bptOut = SDK.StableMath._calcBptOutGivenExactTokensIn(
         ampAdjusted,
@@ -262,7 +260,7 @@ export default class Stable {
     decimals = 18
   ): OldBigNumber {
     if (priceRate === null) priceRate = '1';
-    // Limit result to 7 significant digits, or else run into downstream 'fractional component exceeds decimal' error
+    // HOLDR_INFO: Limit result to 7 significant digits, or else run into downstream 'fractional component exceeds decimal' error
     const denormAmount = bnum(parseUnits(normalizedAmount, decimals).toString())
       .times(priceRate)
       .sd(7)

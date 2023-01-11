@@ -320,12 +320,12 @@ onBeforeMount(async () => {
         </BalBtn>
       </BalFlexGrid> -->
 
-      <template v-if="isWalletReady">
+      <!-- <template v-if="isWalletReady">
         <h2 :class="['font-body font-bold text-2xl mt-8']">
           {{ $t('pages.claim.titles.legacyIncentives') }}
         </h2>
         <LegacyClaims />
-      </template>
+      </template> -->
     </div>
   </div>
 </template>

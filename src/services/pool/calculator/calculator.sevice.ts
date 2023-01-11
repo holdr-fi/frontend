@@ -189,7 +189,7 @@ export default class CalculatorService {
             amount = fixedDenormAmount.mul(ratio).div(fixedRatio);
           }
           amounts[types[ratioType]][i] = formatUnits(
-            amount.mul(999).div(1000), // Holdr bandaid solution to BAL#207 for proportional composable pool exit. Issue is that token amounts out is just slightly too big, so bandaid is to remove 0.1% from token amounts out.
+            amount.mul(999).div(1000), // HOLDR_INFO: bandaid solution to BAL#207 for proportional composable pool exit. Issue is that token amounts out is just slightly too big, so bandaid is to remove 0.1% from token amounts out.
             token?.decimals
           );
         }
