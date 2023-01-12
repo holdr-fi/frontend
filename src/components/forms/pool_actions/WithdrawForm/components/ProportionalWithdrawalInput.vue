@@ -5,7 +5,7 @@ import { computed, onBeforeMount, toRef, toRefs, watch } from 'vue';
 import usePoolTransfers from '@/composables/contextual/pool-transfers/usePoolTransfers';
 // Composables
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
-import { isStablePhantom, usePool } from '@/composables/usePool';
+import { isDeep, isStablePhantom, usePool } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import { bnum } from '@/lib/utils';
 // Types
@@ -59,7 +59,7 @@ const { fNum2 } = useNumbers();
  */
 const tokens = computed(
   (): TokenInfoMap => {
-    if (isStablePhantom(props.pool.poolType)) {
+    if (isStablePhantom(props.pool.poolType) || isDeep(props.pool)) {
       return getTokens(props.pool.mainTokens || []);
     }
     return getTokens(props.pool.tokensList);

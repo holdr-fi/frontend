@@ -117,6 +117,7 @@ export default function useUserPoolsQuery(
         const poolTokenMeta = getTokens(decoratedPool.tokensList);
 
         const onchainData = await balancerContractsService.vault.getPoolData(
+          decoratedPool,
           decoratedPool.id,
           decoratedPool.poolType,
           poolTokenMeta
