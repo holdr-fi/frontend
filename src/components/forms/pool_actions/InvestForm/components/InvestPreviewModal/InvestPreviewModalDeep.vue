@@ -8,7 +8,7 @@ import { Pool } from '@/services/pool/types';
 import { TokenInfoMap } from '@/types/TokenList';
 
 import InvestSummary from './components/InvestSummary.vue';
-import TokenAmounts from '@/components/forms/pool_actions/InvestForm/components/InvestPreviewModal/components/TokenAmounts.vue';
+import TokenAmounts from '../../../shared/TokenAmounts.vue';
 import InvestActionsDeep from './components/InvestActionsDeep.vue';
 import useJoinPool from '@/composables/pools/useJoinPool';
 import { useIntervalFn } from '@vueuse/shared';

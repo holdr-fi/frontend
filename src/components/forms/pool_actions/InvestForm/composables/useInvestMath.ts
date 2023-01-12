@@ -1,4 +1,7 @@
-import { queryBatchSwapTokensIn, SOR } from '@balancer-labs/sdk';
+import {
+  queryBatchSwapTokensIn,
+  SOR
+} from '../../../../../forked_node_modules/balancer-labs/sdk';
 import { parseUnits } from '@ethersproject/units';
 import { BigNumber } from 'ethers';
 import { computed, Ref, ref, watch } from 'vue';

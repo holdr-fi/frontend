@@ -327,8 +327,15 @@
                 "investment": "Confirm investment in wallet"
             },
             "titles": {
-                "confirmed": "Investment confirmed",
-                "default": "Investment preview"
+                "tokenIn": "You’re providing",
+                "tokenOut": "You’re expected to receive",
+                "confirmed": "Add liquidity confirmed",
+                "default": "Add liquidity preview"
+            },
+            "summary": {
+                "total": "Total",
+                "confirmed": "Add liquidity confirmed",
+                "default": "Add liquidity preview"
             },
             "tooltips": {
                 "approval": "You must approve {0} to invest this token on Holdr. Approvals are required once per token, per wallet."
@@ -1197,6 +1204,10 @@
     "whichPools": "Which liquidity pools should be used when you make a trade.",
     "withdraw": {
         "label": "Withdraw",
+        "tabs": {
+            "poolTokens": "Pool tokens (proportional)",
+            "singleToken": "Single token"
+        },
         "tooltips": {
             "priceImpact": "Withdrawing custom amounts causes the internal prices of the pool to change, as if you were swapping tokens. The higher the price impact the more you'll spend in swap fees."
         },
