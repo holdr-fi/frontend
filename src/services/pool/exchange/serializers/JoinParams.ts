@@ -1,3 +1,4 @@
+import { defaultAbiCoder } from '@ethersproject/abi';
 import { BigNumberish } from '@ethersproject/bignumber';
 import { AddressZero } from '@ethersproject/constants';
 import { parseUnits } from '@ethersproject/units';
@@ -6,9 +7,11 @@ import { Ref } from 'vue';
 import {
   isComposableStable,
   isManaged,
-  isStableLike
+  isStableLike,
+  preMintedBptIndex
 } from '@/composables/usePool';
 import { isSameAddress } from '@/lib/utils';
+import { encodeJoinComposableStablePool } from '@/lib/utils/balancer/composableStablePoolEncoding';
 import { encodeJoinStablePool } from '@/lib/utils/balancer/stablePoolEncoding';
 import { encodeJoinWeightedPool } from '@/lib/utils/balancer/weightedPoolEncoding';
 import ConfigService from '@/services/config/config.service';
@@ -36,8 +39,17 @@ export default class JoinParams {
       this.isManagedPool && !!this.pool.value?.onchain?.swapEnabled;
     this.isComposableStablePool = isComposableStable(this.pool.value.poolType);
     this.dataEncodeFn = this.isStableLikePool
-      ? encodeJoinStablePool
+      ? isComposableStable(exchange.pool.value.poolType)
+        ? encodeJoinComposableStablePool
+        : encodeJoinStablePool
       : encodeJoinWeightedPool;
+    // console.log(
+    //   'defaultAbiCoder: ',
+    //   defaultAbiCoder.decode(
+    //     ['uint256', 'uint256[]', 'uint256'],
+    //     '0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000002064be2696a2db491a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000095103ebebaf204df1000000000000000000000000000000000000000000000015d57405c478467182'
+    //   )
+    // );
   }
 
   public serialize(
@@ -54,13 +66,33 @@ export default class JoinParams {
     const txData = this.txData(parsedAmountsIn, parsedBptOut);
     const assets = this.parseTokensIn(tokensIn);
 
+    const poolTokenItselfIndex = preMintedBptIndex(this.pool.value);
+    const maxAmountsIn = [...parsedAmountsIn];
+
+    if (
+      isComposableStable(this.pool.value.poolType) &&
+      poolTokenItselfIndex !== undefined
+    ) {
+      // maxAmountsIn.splice(poolTokenItselfIndex, 1);
+      // maxAmountsIn.splice(
+      //   0,
+      //   0,
+      //   parseUnits('0', this.pool.value.onchain?.decimals || 18)
+      // );
+      maxAmountsIn.splice(
+        poolTokenItselfIndex,
+        0,
+        parseUnits('0', this.pool.value.onchain?.decimals || 18)
+      );
+    }
+
     return [
       this.pool.value.id,
       account,
       account,
       {
         assets,
-        maxAmountsIn: parsedAmountsIn,
+        maxAmountsIn,
         userData: txData,
         fromInternalBalance: this.fromInternalBalance
       }
@@ -97,13 +129,28 @@ export default class JoinParams {
 
   private parseTokensIn(tokensIn: string[]): string[] {
     const nativeAsset = this.config.network.nativeAsset;
-
-    return tokensIn.map(address =>
+    const poolTokenItselfIndex = preMintedBptIndex(this.pool.value);
+    const tokensInProcessed = tokensIn.map(address =>
       isSameAddress(address, nativeAsset.address) ? AddressZero : address
     );
+
+    // Maintain 'assets' ordering for ComposableStablePool - poolAddress first, then other tokens sorted numerically?
+    if (
+      isComposableStable(this.pool.value.poolType) &&
+      poolTokenItselfIndex !== undefined
+    ) {
+      // tokensInProcessed.splice(poolTokenItselfIndex, 1);
+      // tokensInProcessed.splice(0, 0, this.pool.value.address);
+      tokensInProcessed.splice(
+        poolTokenItselfIndex,
+        0,
+        this.pool.value.address
+      );
+    }
+
+    return tokensInProcessed;
   }
 
-  // HOLDR_TODO: add join encoder for composable stable pool
   private txData(amountsIn: BigNumberish[], minimumBPT: BigNumberish): string {
     if ((this.pool.value?.onchain?.totalSupply || '0') === '0') {
       return this.dataEncodeFn({ kind: 'Init', amountsIn });
@@ -116,11 +163,6 @@ export default class JoinParams {
           kind: 'AllTokensInForExactBPTOut',
           bptAmountOut: minimumBPT
         });
-      } else if (this.isComposableStablePool) {
-        return ComposableStablePoolEncoder.joinExactTokensInForBPTOut(
-          amountsIn,
-          minimumBPT
-        );
       } else {
         return this.dataEncodeFn({
           kind: 'ExactTokensInForBPTOut',

@@ -261,7 +261,11 @@ function aprLabelFor(pool: PoolWithShares): string {
         <div v-if="!isLoading" class="px-6 py-4 flex items-center">
           <TokenPills
             :tokens="
-              orderedPoolTokens(pool.poolType, pool.address, pool.tokens)
+              orderedPoolTokens(
+                pool.poolType,
+                pool.address.toLowerCase(),
+                pool.tokens
+              )
             "
             :isStablePool="isStableLike(pool.poolType)"
             :selectedTokens="selectedTokens"

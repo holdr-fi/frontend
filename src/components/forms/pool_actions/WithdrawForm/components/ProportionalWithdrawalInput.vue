@@ -5,7 +5,7 @@ import { computed, onBeforeMount, toRef, toRefs, watch } from 'vue';
 import usePoolTransfers from '@/composables/contextual/pool-transfers/usePoolTransfers';
 // Composables
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
-import { isStablePhantom, usePool } from '@/composables/usePool';
+import { isDeep, isStablePhantom, usePool } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import { bnum } from '@/lib/utils';
 // Types
@@ -43,7 +43,7 @@ const {
   fiatAmounts,
   proportionalAmounts,
   shouldFetchBatchSwap,
-  loadingAmountsOut
+  loadingData
 } = toRefs(props.math);
 
 const { slider } = useWithdrawalState(toRef(props, 'pool'));
@@ -59,7 +59,7 @@ const { fNum2 } = useNumbers();
  */
 const tokens = computed(
   (): TokenInfoMap => {
-    if (isStablePhantom(props.pool.poolType)) {
+    if (isStablePhantom(props.pool.poolType) || isDeep(props.pool)) {
       return getTokens(props.pool.mainTokens || []);
     }
     return getTokens(props.pool.tokensList);
@@ -94,11 +94,12 @@ function handleSliderChange(newVal: number): void {
     .times(fractionBasisPoints)
     .div(10000)
     .toFixed(props.pool?.onchain?.decimals || 18);
+  // console.log('propBptIn', propBptIn.value)
 }
 
 async function handleSliderEnd(): Promise<void> {
   if (shouldFetchBatchSwap.value) {
-    await props.math.getSwap();
+    await props.math.fetchExitData();
   }
 }
 
@@ -125,7 +126,7 @@ onBeforeMount(() => {
           <WithdrawalTokenSelect :pool="pool" />
           <div class="flex-grow text-right text-xl font-numeric">
             <BalLoadingBlock
-              v-if="loadingAmountsOut"
+              v-if="loadingData"
               class="w-20 h-8 float-right"
             />
             <span v-else>{{ missingPrices ? '-' : fiatTotalLabel }}</span>
@@ -176,7 +177,7 @@ onBeforeMount(() => {
           <div
             class="flex flex-col flex-grow items-end text-right pl-2 font-numeric"
           >
-            <BalLoadingBlock v-if="loadingAmountsOut" class="w-20 h-12" />
+            <BalLoadingBlock v-if="loadingData" class="w-20 h-12" />
             <template v-else>
               <span class="break-words text-xl">
                 {{ fNum2(proportionalAmounts[i], FNumFormats.token) }}

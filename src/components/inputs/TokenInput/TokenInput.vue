@@ -2,7 +2,7 @@
 import { computed, nextTick, ref, watch, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { Rules } from '@/components/_global/BalTextInput/BalTextInput.vue';
+import { Rules } from '@/types';
 import { overflowProtected } from '@/components/_global/BalTextInput/helpers';
 import TokenSelectInput from '@/components/inputs/TokenSelectInput/TokenSelectInput.vue';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';

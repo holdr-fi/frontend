@@ -9,7 +9,7 @@ import useWeb3 from '@/services/web3/useWeb3';
 import AppNavAccountBtn from './AppNavAccountBtn.vue';
 import AppNavActivityBtn from './AppNavActivityBtn/AppNavActivityBtn.vue';
 // Comment out to remove dropdown menu showing currently on Ethereum chain, when actually not
-// import AppNavNetworkSelect from './AppNavNetworkSelect.vue'; 
+// import AppNavNetworkSelect from './AppNavNetworkSelect.vue';
 
 /**
  * COMPOSABLES
@@ -39,7 +39,7 @@ const hideNetworkSelect = computed(() => connector.value?.id === 'gnosis');
       <span class="hidden lg:inline-block" v-text="$t('connectWallet')" />
       <span class="lg:hidden" v-text="$t('connect')" />
     </BalBtn>
-    <AppNavNetworkSelect v-if="!hideNetworkSelect" />
+    <!-- <AppNavNetworkSelect v-if="!hideNetworkSelect" /> -->
     <BalBtn
       v-if="isMobile"
       color="white"

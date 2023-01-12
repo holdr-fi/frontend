@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
  * COMPUTED
  */
 const tabs = computed(() =>
-  isStablePhantomPool.value
+  isDeepPool.value || isStablePhantomPool.value
     ? [
         {
           value: PoolTransactionsTab.ALL_ACTIVITY,
@@ -54,21 +54,24 @@ const tabs = computed(() =>
 /**
  * COMPOSABLES
  */
-const { isStablePhantomPool } = usePool(toRef(props, 'pool'));
+const { isStablePhantomPool, isDeepPool } = usePool(toRef(props, 'pool'));
 const { t } = useI18n();
 
 /**
  * STATE
  */
 const activeTab = ref(tabs.value[0].value);
+
+const title = computed((): string => {
+  if (isDeepPool.value || isStablePhantomPool.value) return t('poolActivity');
+
+  return t('liquidityProvision');
+});
 </script>
 
 <template>
   <div>
-    <h4
-      v-text="$t('poolTransactions.tabs.allInvestments')"
-      class="px-4 lg:px-0 mb-5"
-    />
+    <h4 class="px-4 lg:px-0 mb-5" v-text="title" />
     <div
       class="px-4 sm:px-0 flex justify-between items-end border-b dark:border-gray-900 mb-6"
     >
@@ -76,7 +79,7 @@ const activeTab = ref(tabs.value[0].value);
     </div>
   </div>
 
-  <template v-if="isStablePhantomPool">
+  <template v-if="isStablePhantomPool || isDeepPool">
     <BoostedActivities
       v-if="activeTab === PoolTransactionsTab.ALL_ACTIVITY"
       :pool-activity-type="PoolTransactionsTab.ALL_ACTIVITY"

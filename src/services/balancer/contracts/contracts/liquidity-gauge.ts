@@ -55,6 +55,7 @@ export class LiquidityGauge {
   }
 
   async balance(account: string): Promise<string> {
+    if (this.address === AddressZero) return '0';
     return this.instance.balanceOf(getAddress(account));
   }
 

@@ -85,12 +85,6 @@ export default class Web3Service {
   ): Promise<TransactionResponse> {
     const signer = this.userProvider.value.getSigner();
     const contract = new Contract(contractAddress, abi, signer);
-    console.log('web3 service contractWithSigner', contract);
-
-    console.log('Contract: ', contractAddress);
-    console.log('Action: ', action);
-    console.log('Params: ', params);
-
     try {
       const gasPriceSettings = await gasPriceService.getGasSettingsForContractCall(
         contract,
@@ -140,10 +134,6 @@ export default class Web3Service {
     params: any[] = [],
     options: Record<string, any> = {}
   ): Promise<T> {
-    console.log('Sending transaction');
-    console.log('Contract', contractAddress);
-    console.log('Action', `"${action}"`);
-    console.log('Params', params);
     const signer = this.userProvider.value.getSigner();
     const contract = new Contract(contractAddress, abi, signer);
     const contractWithSigner = contract.connect(signer);

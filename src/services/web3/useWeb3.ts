@@ -7,7 +7,7 @@ import useNetwork from '@/composables/useNetwork';
 import QUERY_KEYS from '@/constants/queryKeys';
 
 import { configService } from '../config/config.service';
-import { rpcProviderService } from '../rpc-provider/rpc-provider.service';
+// import { rpcProviderService } from '../rpc-provider/rpc-provider.service';
 import { switchToAppNetwork } from './utils/helpers';
 import { Web3Plugin, Web3ProviderSymbol } from './web3.plugin';
 import { web3Service } from './web3.service';
@@ -22,7 +22,8 @@ function setBlockNumber(n: number): void {
 }
 
 /** INIT STATE */
-rpcProviderService.initBlockListener(setBlockNumber);
+// Commented out to prevent 'websocket-provider.js?7b64:46 WebSocket connection to 'ws://localhost:8546/' failed: ' error
+// rpcProviderService.initBlockListener(setBlockNumber);
 
 export default function useWeb3() {
   const {

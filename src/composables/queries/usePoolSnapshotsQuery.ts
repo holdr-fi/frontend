@@ -9,7 +9,7 @@ import { coingeckoService } from '@/services/coingecko/coingecko.service';
 import { PoolSnapshots } from '@/services/pool/types';
 
 import useNetwork from '../useNetwork';
-import { isStablePhantom } from '../usePool';
+import { isComposableStable, isStablePhantom } from '../usePool';
 import usePoolQuery from './usePoolQuery';
 
 /**
@@ -52,8 +52,9 @@ export default function usePoolSnapshotsQuery(
     let prices: HistoricalPrices = {};
 
     const isStablePhantomPool = isStablePhantom(pool.value.poolType);
+    const isComposableStablePool = isComposableStable(pool.value.poolType);
 
-    if (isStablePhantomPool) {
+    if (isStablePhantomPool || isComposableStablePool) {
       snapshots = await balancerSubgraphService.poolSnapshots.get(id, days);
 
       return {

@@ -20,6 +20,7 @@ export const isPolygon = computed(() => networkId.value === Network.POLYGON);
 export const isArbitrum = computed(() => networkId.value === Network.ARBITRUM);
 export const isKovan = computed(() => networkId.value === Network.KOVAN);
 export const isRinkeby = computed(() => networkId.value === Network.RINKEBY);
+export const isGoerli = computed(() => networkId.value === Network.GÖRLI);
 export const isAurora = computed(() => Number(networkId.value) === 1313161554);
 export const isAuroraTestnet = computed(
   () => Number(networkId.value) === 1313161555
@@ -27,6 +28,7 @@ export const isAuroraTestnet = computed(
 export const isMumbai = computed(() => Number(networkId.value) === 80001);
 
 export const isL2 = computed(() => isPolygon.value || isArbitrum.value);
+export const isTestnet = computed(() => isGoerli.value);
 
 /**
  * METHODS

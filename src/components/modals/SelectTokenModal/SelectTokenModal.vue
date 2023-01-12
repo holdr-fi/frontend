@@ -220,6 +220,8 @@ export default defineComponent({
       ...(props.includeEther ? [] : [nativeAsset.address])
     ]);
 
+    console.log('excludedTokens: ', excludedTokens);
+
     /**
      * METHODS
      */

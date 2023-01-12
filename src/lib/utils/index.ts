@@ -150,3 +150,25 @@ export function includesAddress(addresses: string[], address: string): boolean {
   addresses = addresses.map(a => (a ? getAddress(a) : ''));
   return addresses.includes(getAddress(address));
 }
+
+export function removeAddress(address: string, addresses: string[]): string[] {
+  return addresses.filter(a => !isSameAddress(a, address));
+}
+
+export function indexOfAddress(addresses: string[], address: string): number {
+  if (!address) return -1;
+  addresses = addresses.map(a => (a ? getAddress(a) : ''));
+  return addresses.indexOf(getAddress(address));
+}
+
+export function selectByAddress<T>(
+  map: Record<string, T>,
+  address: string
+): T | undefined {
+  const foundAddress = Object.keys(map).find(itemAddress => {
+    if (isSameAddress(itemAddress, address)) {
+      return true;
+    }
+  });
+  if (foundAddress) return map[foundAddress];
+}

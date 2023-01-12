@@ -7,9 +7,10 @@ import { useI18n } from 'vue-i18n';
 import { ColumnDefinition } from '@/components/_global/BalTable/BalTable.vue';
 import useBreakpoints from '@/composables/useBreakpoints';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
+import { preMintedBptIndex, tokensListExclBpt } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import { bnum } from '@/lib/utils';
-import { PoolActivity, PoolActivityType } from '@/services/pool/types';
+import { Pool, PoolActivity, PoolActivityType } from '@/services/pool/types';
 import useWeb3 from '@/services/web3/useWeb3';
 
 /**
@@ -34,6 +35,7 @@ type ActivityRow = {
 
 type Props = {
   tokens: string[];
+  pool: Pool;
   poolActivities: PoolActivity[];
   isLoading?: boolean;
   isLoadingMore?: boolean;
@@ -106,8 +108,14 @@ const activityRows = computed<ActivityRow[]>(() =>
   props.isLoading
     ? []
     : props.poolActivities.map(({ type, timestamp, tx, amounts }) => {
+        const poolTokenItselfIndex = preMintedBptIndex(props.pool);
+
+        const amountExcludedPoolTokenItself = amounts.filter(
+          (amount, index) => index !== poolTokenItselfIndex
+        );
+
         const isJoin = type === 'Join';
-        const value = getJoinExitValue(amounts);
+        const value = getJoinExitValue(amountExcludedPoolTokenItself);
 
         return {
           label: isJoin ? t('invest') : t('withdraw.label'),
@@ -120,7 +128,7 @@ const activityRows = computed<ActivityRow[]>(() =>
           formattedDate: t('timeAgo', [formatDistanceToNow(timestamp)]),
           tx,
           type,
-          tokenAmounts: getJoinExitDetails(amounts)
+          tokenAmounts: getJoinExitDetails(amountExcludedPoolTokenItself)
         };
       })
 );
@@ -148,7 +156,7 @@ function getJoinExitValue(amounts: PoolActivity['amounts']) {
 
 function getJoinExitDetails(amounts: PoolActivity['amounts']) {
   return amounts.map((amount, index) => {
-    const address = getAddress(props.tokens[index]);
+    const address = getAddress(tokensListExclBpt(props.pool)[index]);
     const token = getToken(address);
     const symbol = token ? token.symbol : address;
     const amountNumber = parseFloat(amount);

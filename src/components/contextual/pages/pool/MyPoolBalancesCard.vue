@@ -60,7 +60,11 @@ const poolCalculator = new PoolCalculator(
 /**
  * COMPUTED
  */
-const bptBalance = computed((): string => balanceFor(props.pool.address));
+const bptBalance = computed((): string =>
+  bnum(balanceFor(props.pool.address))
+    .plus(stakedSharesForProvidedPool.value)
+    .toString()
+);
 
 const poolTokens = computed(() =>
   Object.values(getTokens(props.pool.tokensList))

@@ -8,10 +8,20 @@ import StakePreviewModal from '@/components/contextual/stake/StakePreviewModal.v
 // Components
 import TokenInput from '@/components/inputs/TokenInput/TokenInput.vue';
 import usePoolTransfers from '@/composables/contextual/pool-transfers/usePoolTransfers';
-import { isStableLike, isStablePhantom, usePool } from '@/composables/usePool';
+import {
+  isDeep,
+  isStableLike,
+  isStablePhantom,
+  usePool
+} from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import { LOW_LIQUIDITY_THRESHOLD } from '@/constants/poolLiquidity';
-import { bnum, isSameAddress } from '@/lib/utils';
+import {
+  bnum,
+  selectByAddress,
+  indexOfAddress,
+  isSameAddress
+} from '@/lib/utils';
 import { isRequired } from '@/lib/utils/validations';
 import StakingProvider from '@/providers/local/staking/staking.provider';
 // Types
@@ -75,7 +85,7 @@ const {
   maximizeAmounts,
   optimizeAmounts,
   proportionalAmounts,
-  batchSwapLoading
+  loadingData
 } = investMath;
 
 const {
@@ -110,7 +120,7 @@ const poolHasLowLiquidity = computed((): boolean =>
 );
 
 const investmentTokens = computed((): string[] => {
-  if (isStablePhantom(props.pool.poolType)) {
+  if (isStablePhantom(props.pool.poolType) || isDeep(props.pool)) {
     return props.pool.mainTokens || [];
   }
   return props.pool.tokensList;
@@ -136,13 +146,17 @@ function handleAddressChange(newAddress: string): void {
 function tokenWeight(address: string): number {
   if (isStableLike(props.pool.poolType)) return 0;
   if (!props.pool?.onchain?.tokens) return 0;
-  if (!props.pool?.onchain?.tokens[address]?.weight) return 0;
 
   if (isSameAddress(address, nativeAsset.address)) {
-    return props.pool.onchain.tokens[wrappedNativeAsset.value.address].weight;
+    return (
+      selectByAddress(
+        props.pool.onchain.tokens,
+        wrappedNativeAsset.value.address
+      )?.weight || 1
+    );
   }
 
-  return props.pool.onchain.tokens[address].weight;
+  return selectByAddress(props.pool.onchain.tokens, address)?.weight || 1;
 }
 
 function propAmountFor(index: number): string {
@@ -189,7 +203,7 @@ function setNativeAsset(to: NativeAsset): void {
       ? wrappedNativeAsset.value.address
       : nativeAsset.address;
 
-  const indexOfAsset = tokenAddresses.value.indexOf(fromAddress);
+  const indexOfAsset = indexOfAddress(tokenAddresses.value, fromAddress);
 
   if (indexOfAsset >= 0) {
     tokenAddresses.value[indexOfAsset] = toAddress;
@@ -250,6 +264,7 @@ watch(useNativeAsset, shouldUseNativeAsset => {
       class="mb-4"
       fixedToken
       :options="tokenOptions(i)"
+      :excludedTokens="[pool.address, pool.address.toLowerCase()]"
       @update:amount="handleAmountChange($event, i)"
       @update:address="handleAddressChange($event)"
     />
@@ -288,10 +303,7 @@ watch(useNativeAsset, shouldUseNativeAsset => {
         :label="$t('preview')"
         color="gradient"
         :disabled="
-          !hasAmounts ||
-            !hasValidInputs ||
-            isMismatchedNetwork ||
-            batchSwapLoading
+          !hasAmounts || !hasValidInputs || isMismatchedNetwork || loadingData
         "
         block
         @click="showInvestPreview = true"

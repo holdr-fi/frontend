@@ -39,7 +39,7 @@ const navLinks = [
   { label: t('invest'), path: '/' },
   { label: t('trade'), path: '/trade' },
   { label: 'veHLDR', path: '/vehldr' },
-  { label: 'Bribe', path: '/bribe' },
+  // { label: 'Bribe', path: '/bribe' },
   { label: t('claim'), path: '/claim' },
   // { label: 'HLDR Token Launch', path: '/lbp' }
   // { label: 'Analytics', path: '/analytics' }

@@ -115,7 +115,7 @@ export const TOKENS_KOVAN: TokenConstants = {
 
 export const TOKENS_AURORA: TokenConstants = {
   Popular: {
-    Symbols: ['WBTC', 'DAI', 'USDC', 'BAL', 'AAVE', 'WETH']
+    Symbols: ['WBTC', 'DAI', 'USDC', 'WETH', 'HLDR', 'WNEAR', 'USDT']
   },
   Addresses: {
     nativeAsset: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
