@@ -315,6 +315,10 @@
     "investWithdraw": "Invest & Withdraw",
     "investment": {
         "label": "Investment",
+        "tabs": {
+            "poolTokens": "Pool tokens",
+            "singleToken": "Single token"
+        },
         "preview": {
             "loadingLabel": {
                 "approval": "Confirm approval in wallet",
@@ -338,7 +342,12 @@
             "lowLiquidity": {
                 "description": "Add assets proportionally to the pool weights or the price impact will be high and you will likely get REKT and lose money.",
                 "title": "Be careful: This pool has low liquidity"
-            }
+            },
+            "noPoolTokensToJoinWith": {
+                "title": "You have no pool tokens to join with",
+                "description": "This option would usually allow you to add pool tokens in any combination or proportionally to reduce price impact. \n\nHowever, since your connected wallet doesn’t have any pool tokens, go to the ‘Single token’ tab above to add liquidity to this pool with non-pool tokens. "
+            },
+            "noBalanceSomeTokens": "No wallet balance for some pool tokens"
         },
         "error": {
             "rektPriceImpact": {
@@ -658,6 +667,7 @@
     "swapFeeManager": "Swap fee manager",
     "switchNetwork": "Switch network",
     "symbol": "Symbol",
+    "thereWasAnError": "There was an error",
     "veBAL": {
         "hero": {
             "eyebrow": "Introducing veHLDR",

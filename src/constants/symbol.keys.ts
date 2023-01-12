@@ -3,6 +3,8 @@ export default {
     App: 'providers.app',
     TokenLists: 'providers.tokenLists',
     Tokens: 'providers.tokens',
-    Staking: 'providers.staking'
+    Staking: 'providers.staking',
+    JoinPool: 'provider.joinPool',
+    ExitPool: 'provider.exitPool'
   }
 };
