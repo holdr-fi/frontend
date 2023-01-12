@@ -1,4 +1,3 @@
-import { Network } from '@balancer-labs/sdk';
 import { Contract } from '@ethersproject/contracts';
 import { ErrorCode } from '@ethersproject/logger';
 import {
@@ -6,7 +5,6 @@ import {
   TransactionResponse,
   Web3Provider
 } from '@ethersproject/providers';
-import { resolveENSAvatar } from '@tomfrench/ens-avatar-resolver';
 import { ComputedRef } from 'vue';
 
 import { logFailedTx } from '@/lib/utils/logging';

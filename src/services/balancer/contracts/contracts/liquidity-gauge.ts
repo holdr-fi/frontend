@@ -54,8 +54,7 @@ export class LiquidityGauge {
     return tx;
   }
 
-  async balance(account: string): Promise<string> {
-    if (this.address === AddressZero) return '0';
+  async balance(account: string): Promise<BigNumber> {
     return this.instance.balanceOf(getAddress(account));
   }
 
