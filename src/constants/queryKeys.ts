@@ -58,6 +58,11 @@ const QUERY_KEYS = {
       'swaps',
       'user',
       { networkId, account, id }
+    ],
+    HistoricalPrices: (networkId: Ref<Network>, id: string) => [
+      POOLS_ROOT_KEY,
+      'historicalPrices',
+      { networkId, id }
     ]
   },
   TokenLists: {
