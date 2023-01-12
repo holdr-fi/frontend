@@ -8,7 +8,8 @@ import {
   isStable,
   isStableLike,
   isStablePhantom,
-  isComposableStableLike
+  isComposableStableLike,
+  isDeep
 } from '@/composables/usePool';
 import { bnum, isSameAddress } from '@/lib/utils';
 import { configService } from '@/services/config/config.service';
@@ -61,7 +62,7 @@ export default class CalculatorService {
     opts: PiOptions = { exactOut: false, tokenIndex: 0 }
   ): OldBigNumber {
     if (this.isStableLikePool) {
-      if (this.isStablePhantomPool) {
+      if (this.isStablePhantomPool || isDeep(this.pool.value)) {
         return this.stablePhantom.priceImpact(tokenAmounts, opts);
       } else {
         return this.stable.priceImpact(tokenAmounts, opts);

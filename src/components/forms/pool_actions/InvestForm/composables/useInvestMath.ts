@@ -48,7 +48,8 @@ export default function useInvestMath(
     managedPoolWithTradingHalted,
     isStablePhantomPool,
     isComposableStableLikePool,
-    isShallowComposableStablePool
+    isShallowComposableStablePool,
+    isDeepPool
   } = usePool(pool);
   const {
     promises: batchSwapPromises,
@@ -175,7 +176,7 @@ export default function useInvestMath(
   const fullBPTOut = computed((): string => {
     let _bptOut: string;
 
-    if (isStablePhantomPool.value) {
+    if (isStablePhantomPool.value || isDeepPool.value) {
       _bptOut = batchSwap.value
         ? bnum(batchSwap.value.amountTokenOut)
             .abs()
@@ -218,7 +219,10 @@ export default function useInvestMath(
   );
 
   const shouldFetchBatchSwap = computed(
-    (): boolean => pool.value && isStablePhantomPool.value && hasAmounts.value
+    (): boolean =>
+      pool.value &&
+      (isStablePhantomPool.value || isDeepPool.value) &&
+      hasAmounts.value
   );
 
   const supportsPropotionalOptimization = computed(

@@ -386,6 +386,7 @@
         "title": "Token incentives"
     },
     "liquidityProviderCopy": "People who provide liquidity to eligible liquidity pools or trade on eligible token pairs receive weekly $HLDR distributions as incentives. $HLDR token holders own the protocol and can help shape its future by voting on governance proposals.",
+    "liquidityProvision": "Liquidity provision",
     "loading": "Loading...",
     "loadingBestPrice": "Looking for the best price...",
     "loadMore": "Load more",
