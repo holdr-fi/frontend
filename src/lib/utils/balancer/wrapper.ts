@@ -20,7 +20,7 @@ export enum WrapType {
 
 export const wrapNearSymbolMap = {
   NEAR: 'wNEAR',
-  stnear: 'wstnear'
+  stNEAR: 'wstNEAR'
 };
 
 const wrapNearAddressMap = {
