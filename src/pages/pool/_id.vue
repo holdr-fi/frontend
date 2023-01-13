@@ -135,15 +135,12 @@
           </div>
           <div class="mb-4 px-1 lg:px-0">
             <PoolStatCards :pool="pool" :loading="loadingPool" />
-            <!-- <ApyVisionPoolLink
-              v-if="!loadingPool"
-              :poolId="pool?.id"
-              :titleTokens="titleTokens"
-            /> -->
           </div>
           <div class="mb-4">
             <h4 v-text="$t('poolComposition')" class="px-4 lg:px-0 mb-4" />
-            <PoolBalancesCard :pool="pool" :loading="loadingPool" />
+            <!-- <PoolBalancesCard :pool="pool" :loading="loadingPool" /> -->
+            <BalLoadingBlock v-if="loadingPool" class="h-64" />
+            <PoolCompositionCard v-else-if="pool" :pool="pool" />
           </div>
           <div>
             <PoolTransactionsCard :pool="pool" :loading="loadingPool" />
@@ -218,7 +215,6 @@ export default defineComponent({
     APRTooltip,
     StakingIncentivesCard,
     StakingProvider
-    // ApyVisionPoolLink
   },
 
   setup() {
