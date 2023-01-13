@@ -136,6 +136,7 @@ export default {
         networkConfig.addresses.wstETH,
         configService.network.addresses.veBAL,
         configService.network.addresses.wnear,
+        configService.network.addresses.wstnear,
         configService.network.addresses.bribe,
         configService.network.addresses.bribeVault
       ]),
@@ -480,8 +481,15 @@ export default {
           )
         ]);
         const injectMap = {};
+        const nearUsd = tokenMap[configService.network.addresses.near].usd;
         injectMap[configService.network.addresses.wnear] = {
-          usd: tokenMap[configService.network.addresses.near].usd
+          usd: nearUsd
+        };
+        injectMap[configService.network.addresses.stnear] = {
+          usd: nearUsd
+        };
+        injectMap[configService.network.addresses.wstnear] = {
+          usd: nearUsd
         };
         await injectPrices({
           ...injectMap,
