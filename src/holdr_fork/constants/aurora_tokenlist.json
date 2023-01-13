@@ -123,6 +123,22 @@
         "symbol": "TRI",
         "decimals": 18,
         "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/tri.svg"
+      },
+      {
+        "address": "0x120908185dC7f4d4AE8B32C376484406cC16731A",
+        "chainId": 1313161554,
+        "name": "Wrapped stNEAR",
+        "symbol": "wstNEAR",
+        "decimals": 18,
+        "logoURI": "https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407"
+      },
+      {
+        "address": "0x07f9f7f963c5cd2bbffd30ccfb964be114332e30",
+        "chainId": 1313161554,
+        "name": "Staked NEAR",
+        "symbol": "stNEAR",
+        "decimals": 18,
+        "logoURI": "https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407"
       }
     ]
   }
