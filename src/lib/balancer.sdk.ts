@@ -1,6 +1,7 @@
 // import { BalancerSDK, BalancerSdkConfig, Network } from '@balancer-labs/sdk';
 // import { Sor } from '../forked_node_modules/balancer-labs/sdk'
 import { configService } from '@/services/config/config.service';
+import { ref } from 'vue';
 
 import {
   BalancerSDK,
