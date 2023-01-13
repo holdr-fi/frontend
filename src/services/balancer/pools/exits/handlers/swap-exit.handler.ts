@@ -173,7 +173,7 @@ export class SwapExitHandler implements ExitPoolHandler {
   private async getGasPrice(signer: JsonRpcSigner): Promise<BigNumber> {
     let price: number;
 
-    const gasPriceParams = await this.gasPriceService.getGasPrice();
+    const gasPriceParams = await this.gasPriceService.getLatest();
     if (gasPriceParams) {
       price = gasPriceParams.price;
     } else {
