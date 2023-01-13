@@ -1,5 +1,6 @@
+import { getAddress } from '@ethersproject/address';
 import { formatFixed, parseFixed } from '@ethersproject/bignumber';
-import { Zero } from '@ethersproject/constants';
+import { AddressZero, Zero } from '@ethersproject/constants';
 import { TransactionResponse, Web3Provider } from '@ethersproject/providers';
 import { BigNumber, BigNumberish } from 'ethers';
 
@@ -14,8 +15,26 @@ export enum WrapType {
   Wrap,
   Unwrap,
   PleaseWrapFirst,
-  PleaseSwapInNear
+  PleaseSwapInFirst
 }
+
+export const wrapNearSymbolMap = {
+  NEAR: 'wNEAR',
+  stNEAR: 'wstNEAR'
+};
+
+const wrapNearAddressMap = {
+  [getAddress(configService.network.addresses.near)]: getAddress(
+    configService.network.addresses.wnear
+  ),
+  [getAddress(configService.network.addresses.stnear)]: getAddress(
+    configService.network.addresses.wstnear
+  )
+};
+
+export const getWrapNearAddressMap = (address: string): string => {
+  return wrapNearAddressMap[getAddress(address)] ?? AddressZero;
+};
 
 export const isNativeAssetWrap = (
   tokenIn: string,
@@ -28,17 +47,29 @@ export const isNativeAssetWrap = (
 
 export const getWrapAction = (tokenIn: string, tokenOut: string): WrapType => {
   const nativeAddress = configService.network.nativeAsset.address;
-  const { weth, stETH, wstETH, near, wnear } = configService.network.addresses;
+  const {
+    weth,
+    stETH,
+    wstETH,
+    near,
+    wnear,
+    stnear,
+    wstnear
+  } = configService.network.addresses;
 
   if (tokenIn === nativeAddress && tokenOut === weth) return WrapType.Wrap;
   if (tokenIn === stETH && tokenOut === wstETH) return WrapType.Wrap;
   if (tokenIn === near && tokenOut === wnear) return WrapType.Wrap;
   if (tokenIn === near && tokenOut !== wnear) return WrapType.PleaseWrapFirst;
+  if (tokenIn === stnear && tokenOut !== wstnear)
+    return WrapType.PleaseWrapFirst;
 
   if (tokenOut === nativeAddress && tokenIn === weth) return WrapType.Unwrap;
   if (tokenOut === stETH && tokenIn === wstETH) return WrapType.Unwrap;
   if (tokenOut === near && tokenIn === wnear) return WrapType.Unwrap;
-  if (tokenOut === near && tokenIn !== wnear) return WrapType.PleaseSwapInNear;
+  if (tokenOut === near && tokenIn !== wnear) return WrapType.PleaseSwapInFirst;
+  if (tokenOut === stnear && tokenIn !== wstnear)
+    return WrapType.PleaseSwapInFirst;
 
   return WrapType.NonWrap;
 };
@@ -49,7 +80,7 @@ export const getWrapOutput = (
   wrapAmount: BigNumberish
 ): BigNumber => {
   if (wrapType === WrapType.NonWrap) throw new Error('Invalid wrap type');
-  const { weth, wstETH, wnear } = configService.network.addresses;
+  const { weth, wstETH, wnear, wstnear } = configService.network.addresses;
 
   if (wrapper === weth) return BigNumber.from(wrapAmount);
   if (wrapper === wstETH) {
@@ -57,13 +88,13 @@ export const getWrapOutput = (
       ? getWstETHByStETH(wrapAmount)
       : getStETHByWstETH(wrapAmount);
   }
-  if (wrapper === wnear) {
+  if (wrapper === wnear || wrapper === wstnear) {
     return wrapType === WrapType.Wrap
       ? BigNumber.from(wrapAmount)
           .div('1000000')
           .mul('1000000')
       : wrapType === WrapType.PleaseWrapFirst ||
-        wrapType === WrapType.PleaseSwapInNear
+        wrapType === WrapType.PleaseSwapInFirst
       ? Zero
       : BigNumber.from(wrapAmount).mul('1000000');
   }
@@ -76,13 +107,15 @@ export async function wrap(
   wrapper: string,
   amount: BigNumber
 ): Promise<TransactionResponse> {
+  const { weth, wstETH, wnear, wstnear } = configService.network.addresses;
+
   try {
-    if (wrapper === configs[network].addresses.weth) {
+    if (wrapper === weth) {
       return wrapNative(network, web3, amount);
-    } else if (wrapper === configs[network].addresses.wstETH) {
+    } else if (wrapper === wstETH) {
       return wrapLido(network, web3, amount);
-    } else if (wrapper === configs[network].addresses.wnear) {
-      return wrapNear(network, web3, amount);
+    } else if (wrapper === wnear || wrapper === wstnear) {
+      return wrapNear(wrapper, network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');
   } catch (e) {
@@ -97,13 +130,15 @@ export async function unwrap(
   wrapper: string,
   amount: BigNumber
 ): Promise<TransactionResponse> {
+  const { weth, wstETH, wnear, wstnear } = configService.network.addresses;
+
   try {
-    if (wrapper === configs[network].addresses.weth) {
+    if (wrapper === weth) {
       return unwrapNative(network, web3, amount);
-    } else if (wrapper === configs[network].addresses.wstETH) {
+    } else if (wrapper === wstETH) {
       return unwrapLido(network, web3, amount);
-    } else if (wrapper === configs[network].addresses.wnear) {
-      return unwrapNear(network, web3, amount);
+    } else if (wrapper === wnear || wrapper === wstnear) {
+      return unwrapNear(wrapper, network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');
   } catch (e) {
@@ -171,26 +206,28 @@ const unwrapLido = async (
     Near token on the blockchain is called 'Wrapped Near'.
 */
 const wrapNear = async (
+  nearContractAddress: string,
   network: string,
   web3: Web3Provider,
   amount: BigNumber
 ): Promise<TransactionResponse> =>
   sendTransaction(
     web3,
-    configs[network].addresses.wnear,
+    nearContractAddress,
     ['function deposit(uint256 amount) nonpayable'],
     'deposit',
     [amount]
   );
 
 const unwrapNear = async (
+  nearContractAddress: string,
   network: string,
   web3: Web3Provider,
   amount: BigNumber
 ): Promise<TransactionResponse> =>
   sendTransaction(
     web3,
-    configs[network].addresses.wnear,
+    nearContractAddress,
     ['function withdraw(uint256 amount) nonpayable'],
     'withdraw',
     [amount]

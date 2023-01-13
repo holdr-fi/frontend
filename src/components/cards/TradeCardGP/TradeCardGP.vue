@@ -54,7 +54,7 @@
       />
       <BalBtn
         v-if="
-          trading.isPleaseWrapFirst.value || trading.isPleaseSwapInNear.value
+          trading.isPleaseWrapFirst.value || trading.isPleaseSwapInFirst.value
         "
         label="Change Tokens"
         block
@@ -187,9 +187,12 @@ import useNumbers, { FNumFormats } from '@/composables/useNumbers';
 import useTokens from '@/composables/useTokens';
 import { TOKENS } from '@/constants/tokens';
 import { lsGet } from '@/lib/utils';
-import { WrapType } from '@/lib/utils/balancer/wrapper';
+import {
+  getWrapNearAddressMap,
+  wrapNearSymbolMap,
+  WrapType
+} from '@/lib/utils/balancer/wrapper';
 import { isRequired } from '@/lib/utils/validations';
-import { configService } from '@/services/config/config.service';
 import { ApiErrorCodes } from '@/services/gnosis/errors/OperatorError';
 import useWeb3 from '@/services/web3/useWeb3';
 
@@ -346,16 +349,23 @@ export default defineComponent({
 
       if (trading.wrapType.value === WrapType.PleaseWrapFirst) {
         return {
-          header: 'Wrap NEAR first',
-          body:
-            'Please wrap NEAR into wNEAR, then perform your trade with wNEAR.'
+          header: `Wrap ${trading.tokenIn.value.symbol} first`,
+          body: `Please wrap ${trading.tokenIn.value.symbol} into ${
+            wrapNearSymbolMap[trading.tokenIn.value.symbol]
+          }, then perform your trade with ${
+            wrapNearSymbolMap[trading.tokenIn.value.symbol]
+          }.`
         };
       }
 
-      if (trading.wrapType.value === WrapType.PleaseSwapInNear) {
+      if (trading.wrapType.value === WrapType.PleaseSwapInFirst) {
         return {
-          header: 'Swap in NEAR',
-          body: 'Please swap into wNEAR, then unwrap wNEAR into NEAR.'
+          header: `Swap in ${trading.tokenOut.value.symbol}`,
+          body: `Please swap into ${
+            wrapNearSymbolMap[trading.tokenOut.value.symbol]
+          }, then unwrap ${
+            wrapNearSymbolMap[trading.tokenOut.value.symbol]
+          } into ${trading.tokenOut.value.symbol}.`
         };
       }
 
@@ -391,11 +401,15 @@ export default defineComponent({
 
     async function handleTradeButtonForNEAR(): Promise<void> {
       if (trading.wrapType.value === WrapType.PleaseWrapFirst) {
-        setTokenInAddress(configService.network.addresses.near);
-        setTokenOutAddress(configService.network.addresses.wnear);
-      } else if (trading.wrapType.value === WrapType.PleaseSwapInNear) {
-        setTokenInAddress(configService.network.addresses.wnear);
-        setTokenOutAddress(configService.network.addresses.near);
+        setTokenInAddress(trading.tokenIn.value.address);
+        setTokenOutAddress(
+          getWrapNearAddressMap[trading.tokenIn.value.address]
+        );
+      } else if (trading.wrapType.value === WrapType.PleaseSwapInFirst) {
+        setTokenInAddress(
+          getWrapNearAddressMap[trading.tokenOut.value.address]
+        );
+        setTokenOutAddress(trading.tokenOut.value.address);
       } else {
         return;
       }
