@@ -403,11 +403,11 @@ export default defineComponent({
       if (trading.wrapType.value === WrapType.PleaseWrapFirst) {
         setTokenInAddress(trading.tokenIn.value.address);
         setTokenOutAddress(
-          getWrapNearAddressMap[trading.tokenIn.value.address]
+          getWrapNearAddressMap(trading.tokenIn.value.address)
         );
       } else if (trading.wrapType.value === WrapType.PleaseSwapInFirst) {
         setTokenInAddress(
-          getWrapNearAddressMap[trading.tokenOut.value.address]
+          getWrapNearAddressMap(trading.tokenOut.value.address)
         );
         setTokenOutAddress(trading.tokenOut.value.address);
       } else {

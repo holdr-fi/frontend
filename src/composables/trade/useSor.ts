@@ -312,7 +312,7 @@ export default function useSor({
           parseFixed(amount, tokenInDecimals)
         );
         // HOLDR_INFO: special case if the wrap output is near or similar, we need to format it with 24 decimals instead of wnear's 18
-        if (getWrapNearAddressMap[tokenOutAddressInput.value] != AddressZero) {
+        if (getWrapNearAddressMap(tokenOutAddressInput.value) != AddressZero) {
           tokenOutAmountInput.value = formatFixed(outputAmount, 24);
         } else {
           tokenOutAmountInput.value = formatFixed(
