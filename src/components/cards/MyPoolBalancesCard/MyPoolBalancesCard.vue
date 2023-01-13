@@ -83,6 +83,7 @@ const tokenAddresses = computed((): string[] => {
 });
 
 const fiatTotal = computed(() => {
+  if (tokenAddresses.value.length == 0) return '0';
   const fiatValue = tokenAddresses.value
     .map((address, i) => toFiat(propTokenAmounts.value[i], address))
     .reduce((total, value) =>

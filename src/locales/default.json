@@ -5,6 +5,7 @@
     "actions": "Actions",
     "activity": "Activity",
     "addToken": "Add a token",
+    "addLiquidity": "Add Liquidity",
     "alerts": {
         "allowances-fetch-error": "Failed to fetch token allowances.",
         "balances-fetch-error": "Failed to fetch token balances.",

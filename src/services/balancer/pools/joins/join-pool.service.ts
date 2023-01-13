@@ -8,7 +8,7 @@ import { SwapJoinHandler } from './handlers/swap-join.handler';
 import {
   JoinParams,
   JoinPoolHandler,
-  QueryOutput,
+  QueryOutput
 } from './handlers/join-pool.handler';
 import { GeneralisedJoinHandler } from './handlers/generalised-join.handler';
 

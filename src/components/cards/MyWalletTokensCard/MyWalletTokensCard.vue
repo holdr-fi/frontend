@@ -70,6 +70,7 @@ const tokensForTotal = computed((): string[] => {
 });
 
 const fiatTotal = computed(() => {
+  if (tokensForTotal.value.length == 0) return '0';
   const fiatValue = tokensForTotal.value
     .map(address => {
       if (pageContext.value === 'invest') {
