@@ -492,8 +492,6 @@ export default {
           usd: stNearUsd
         };
 
-        console.log(nearUsd, stNearUsd)
-
         await injectPrices({
           ...injectMap,
           '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA': {
