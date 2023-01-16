@@ -65,6 +65,7 @@ export class GeneralisedJoinHandler implements JoinPoolHandler {
       signerAddress,
       wrapLeafTokens,
       slippage,
+      signer,
       relayerSignature
     );
 
