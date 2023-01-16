@@ -171,7 +171,7 @@ const provider = (props: Props) => {
 
   // Calculates total fiat value in for all amountsIn with Coingecko prices.
   const fiatValueIn = computed((): string => {
-    if (amountsIn.value.length == 0) return '0';
+    if (amountsIn.value.length == 0 || !amountsIn.value) return '0';
     const fiatValuesIn = amountsIn.value.map(amountIn =>
       toFiat(amountIn.value || 0, amountIn.address)
     );

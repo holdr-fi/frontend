@@ -56,10 +56,17 @@ export class PriceService {
       const response = await this.client.get<PriceResponse>(
         `/simple/price?ids=${this.nativeAssetId}&vs_currencies=${this.fiatParam}`
       );
+
+      lsSet('nativeAssetPrice', response[this.nativeAssetId]);
+
       return response[this.nativeAssetId];
     } catch (error) {
       console.error('Unable to fetch Ether price', error);
-      throw error;
+
+      const emptyPrice: Price = { ['usd']: 0 };
+      const lsNativeAssetPrice = lsGet('nativeAssetPrice', emptyPrice);
+      return lsNativeAssetPrice;
+      // throw error;
     }
   }
 
