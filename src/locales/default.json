@@ -1246,5 +1246,37 @@
     "yourBalanceInPool": "Your balance in this pool",
     "trendingPairs": "Trending pairs",
     "chooseAPair": "Please select a valid pair",
-    "youCanInvest": "You can invest"
+    "youCanInvest": "You can invest",
+    "poolChart": {
+        "defaultTitle": {
+            "tvl": "Current TVL"
+        },
+        "period": {
+            "all": "All time",
+            "days": "{0} days",
+            "title": "Time period"
+        },
+        "tabs": {
+            "fees": "Fees",
+            "tvl": "TVL",
+            "volume": "Volume"
+        }
+    },
+    "yes": "Yes",
+    "none": "None",
+    "poolAttrs": {
+        "feesFixed": "fixed forever",
+        "feesEditableGovernance": "this may be edited via Governance",
+        "feesEditableOwner": "this may be edited by the Pool Owner",
+        "immutable": "This pool is immutable. No attributes can ever be changed.",
+        "immutableFeesEditableByGovernance": "The attributes of this pool are immutable, except for swap fees which can be edited via Governance.",
+        "immutableFeesEditableByOwner": "The attributes of this pool are immutable, except for swap fees which can be edited by the Pool Owner."
+    },
+    "myWalletCard": {
+        "title": {
+            "poolTokens": "Pool tokens (lowest price impact)",
+            "otherTokens": "Other tokens (higher price impact)"
+        }
+    },
+    "poolActivity": "Pool activity"
 }

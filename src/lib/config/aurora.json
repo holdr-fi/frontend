@@ -13,6 +13,7 @@
   "explorer": "https://aurorascan.dev/",
   "explorerName": "AuroraScan",
   "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/balancer_aurora_fork",
+  "balancerApi": "",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "subgraphs": {
     "aave": "",

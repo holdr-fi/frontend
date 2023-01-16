@@ -12,6 +12,7 @@
   "explorer": "https://testnet.aurorascan.dev/",
   "explorerName": "AuroraScan",
   "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/solace_pool",
+  "balancerApi": "",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "subgraphs": {
     "aave": "",
