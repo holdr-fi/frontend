@@ -1278,5 +1278,7 @@
             "otherTokens": "Other tokens (higher price impact)"
         }
     },
-    "poolActivity": "Pool activity"
+    "poolActivity": "Pool activity",
+    "youProvide": "You provide",
+    "youReceive": "You receive"
 }

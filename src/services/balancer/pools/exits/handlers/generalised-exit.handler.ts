@@ -64,6 +64,7 @@ export class GeneralisedExitHandler implements ExitPoolHandler {
       evmAmountIn.toString(),
       signerAddress,
       slippage,
+      signer,
       relayerSignature
     );
     if (!this.lastExitRes) throw new Error('Failed to query exit.');

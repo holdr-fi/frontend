@@ -161,6 +161,9 @@ export class PriceService {
         start,
         aggregateBy
       );
+
+      lsSet('historicalTokenPrices', results);
+
       return results;
     } catch (error) {
       console.error(
@@ -168,7 +171,19 @@ export class PriceService {
         addresses,
         error
       );
-      throw error;
+      const emptyHistoricalPrices = addresses.reduce(
+        (emptyPriceObject, address) => {
+          emptyPriceObject[address] = [];
+          return emptyPriceObject;
+        },
+        {} as HistoricalPrices
+      );
+      const lsHistoricalTokenPrices = lsGet(
+        'historicalTokenPrices',
+        emptyHistoricalPrices
+      );
+      return lsHistoricalTokenPrices;
+      // throw error;
     }
   }
 
