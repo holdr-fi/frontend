@@ -349,7 +349,9 @@ const provider = (props: Props) => {
     txState,
     txInProgress,
     approvalActions,
+    approving: relayerApproval.approving,
     missingPricesIn,
+    shouldApproveRelayer,
 
     // Methods
     setAmountsIn,

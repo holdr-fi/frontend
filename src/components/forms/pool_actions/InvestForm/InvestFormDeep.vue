@@ -54,6 +54,9 @@ const {
   hasValidInputs,
   hasAmountsIn,
   queryError,
+  approvalActions,
+  shouldApproveRelayer,
+  approving,
   setAmountsIn,
   addTokensIn
 } = useJoinPool();
@@ -144,10 +147,10 @@ watch([isSingleAssetJoin, poolTokensWithBalance], ([isSingleAsset]) => {
       :poolTokensWithoutBalance="poolTokensWithoutBalance"
     />
 
-    <InvestFormTotalsDeep />
+    <InvestFormTotalsDeep v-if="!shouldApproveRelayer" />
 
     <div
-      v-if="highPriceImpact"
+      v-if="highPriceImpact && shouldApproveRelayer"
       class="p-2 pb-2 mt-5 rounded-lg border dark:border-gray-700 high-price-impact"
     >
       <BalCheckbox
@@ -170,7 +173,7 @@ watch([isSingleAssetJoin, poolTokensWithBalance], ([isSingleAsset]) => {
 
     <div class="mt-4">
       <BalBtn
-        v-if="isWalletReady"
+        v-if="isWalletReady && !shouldApproveRelayer"
         :label="$t('preview')"
         color="gradient"
         :disabled="
@@ -182,6 +185,14 @@ watch([isSingleAssetJoin, poolTokensWithBalance], ([isSingleAsset]) => {
         "
         block
         @click="showInvestPreview = true"
+      />
+      <BalActionSteps
+        v-if="
+          isWalletReady && shouldApproveRelayer && approvalActions.length > 0
+        "
+        :actions="approvalActions"
+        :isLoading="approving"
+        :loadingLabel="approvalActions[0].loadingLabel"
       />
     </div>
 
