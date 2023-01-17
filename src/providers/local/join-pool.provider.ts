@@ -70,6 +70,7 @@ const provider = (props: Props) => {
   const priceImpact = ref<number>(0);
   const highPriceImpactAccepted = ref<boolean>(false);
   const txError = ref<string>('');
+  const canQueryJoin = ref<boolean>(false);
 
   const debounceQueryJoin = debounce(queryJoin, 1000, { leading: true });
 
@@ -218,6 +219,10 @@ const provider = (props: Props) => {
     amountsIn.value = _amountsIn;
   }
 
+  function setCanQueryJoinFlag(toggle: boolean) {
+    canQueryJoin.value = toggle;
+  }
+
   /**
    * Adds amountsIn with no value for array of token addresses.
    *
@@ -252,9 +257,9 @@ const provider = (props: Props) => {
    */
   async function queryJoin() {
     // If form is empty or inputs are not valid, clear the price impact and
-    // batch relayer not approved,
+    // canQueryJoin flag not checked,
     // return early
-    if (!hasAmountsIn.value || shouldApproveRelayer.value) {
+    if (!hasAmountsIn.value || !canQueryJoin.value) {
       priceImpact.value = 0;
       return;
     }
@@ -352,6 +357,7 @@ const provider = (props: Props) => {
     approving: relayerApproval.approving,
     missingPricesIn,
     shouldApproveRelayer,
+    canQueryJoin,
 
     // Methods
     setAmountsIn,
@@ -359,6 +365,7 @@ const provider = (props: Props) => {
     resetAmounts,
     join,
     resetTxState,
+    setCanQueryJoinFlag,
 
     // queries
     queryJoinQuery

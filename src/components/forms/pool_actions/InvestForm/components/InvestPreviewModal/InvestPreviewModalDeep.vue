@@ -60,6 +60,8 @@ const {
   txInProgress,
   queryJoinQuery,
   missingPricesIn,
+  canQueryJoin,
+  shouldApproveRelayer,
   resetAmounts
 } = useJoinPool();
 
@@ -203,7 +205,7 @@ useIntervalFn(() => {
       :hideAmountShare="isSingleAssetJoin"
     />
     <TokenAmounts
-      v-if="showTokensOut"
+      v-if="showTokensOut && canQueryJoin"
       showZeroAmounts
       :title="$t('investment.preview.titles.tokenOut')"
       class="mt-4"
@@ -223,6 +225,7 @@ useIntervalFn(() => {
     />
 
     <InvestSummary
+      v-if="canQueryJoin"
       :pool="pool"
       :fiatTotal="missingPricesIn ? '-' : fiatValueIn"
       :priceImpact="priceImpact"
@@ -230,7 +233,23 @@ useIntervalFn(() => {
     />
 
     <BalAlert
-      v-if="rektPriceImpact"
+      v-if="shouldApproveRelayer"
+      type="info"
+      title="Approve the Batch Relayer first"
+      description="You need to give Holdr permission to add liquidity on your behalf. This is a one-time approval."
+      class="mt-6 mb-2"
+    />
+
+    <BalAlert
+      v-else-if="!canQueryJoin"
+      type="info"
+      title="Approve the following tokens"
+      description="You need to approve the amount of each token you are adding liquidity with so Holdr can simulate the transaction and give you the best outcome."
+      class="mt-6 mb-2"
+    />
+
+    <BalAlert
+      v-if="rektPriceImpact && canQueryJoin"
       type="error"
       :title="$t('investment.error.rektPriceImpact.title')"
       :description="$t('investment.error.rektPriceImpact.description')"

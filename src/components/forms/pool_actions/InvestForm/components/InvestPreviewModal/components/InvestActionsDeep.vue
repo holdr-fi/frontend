@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
   TransactionReceipt,
-  TransactionResponse,
+  TransactionResponse
 } from '@ethersproject/abstract-provider';
-import { computed, onUnmounted, ref, toRef } from 'vue';
+import { computed, onMounted, onUnmounted, ref, toRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import BalActionSteps from '@/components/_global/BalActionSteps/BalActionSteps.vue';
@@ -55,7 +55,8 @@ const {
   join,
   txState,
   resetTxState,
-  approvalActions: joinPoolApprovalActions,
+  setCanQueryJoinFlag,
+  approvalActions: joinPoolApprovalActions
 } = useJoinPool();
 
 const approvalActions = ref(joinPoolApprovalActions.value);
@@ -82,8 +83,8 @@ const actions = computed((): TransactionActionInfo[] => [
     loadingLabel: t('investment.preview.loadingLabel.investment'),
     confirmingLabel: t('confirming'),
     action: submit,
-    stepTooltip: t('investmentTooltip'),
-  },
+    stepTooltip: t('investmentTooltip')
+  }
 ]);
 
 const isStakablePool = computed((): boolean => {
@@ -103,12 +104,12 @@ async function handleTransaction(tx): Promise<void> {
     action: 'invest',
     summary: t('transactionSummary.investInPool', [
       fNum2(fiatValueOut.value, FNumFormats.fiat),
-      poolWeightsLabel(props.pool),
+      poolWeightsLabel(props.pool)
     ]),
     details: {
       total: fNum2(fiatValueOut.value, FNumFormats.fiat),
-      pool: props.pool,
-    },
+      pool: props.pool
+    }
   });
 
   await txListener(tx, {
@@ -124,9 +125,20 @@ async function handleTransaction(tx): Promise<void> {
     onTxFailed: () => {
       console.error('Invest failed');
       txState.confirming = false;
-    },
+    }
   });
 }
+
+const stepsCallbackFn = (currentActionIdx: number, totalActions: number) => {
+  // if currentAction is the last one (add liquidity), enable queryJoinFlag
+  setCanQueryJoinFlag(currentActionIdx >= totalActions - 1);
+};
+
+onMounted(() => {
+  setCanQueryJoinFlag(
+    [...approvalActions.value, ...tokenApprovalActions].length == 0
+  );
+});
 
 onUnmounted(() => {
   // Reset tx state after Invest Modal is closed. Ready for another Invest transaction
@@ -157,6 +169,7 @@ async function submit(): Promise<TransactionResponse> {
       v-if="!txState.confirmed || !txState.receipt"
       :actions="actions"
       :disabled="rektPriceImpact"
+      :stepsCallbackFn="stepsCallbackFn"
     />
     <div v-else>
       <ConfirmationIndicator :txReceipt="txState.receipt" />
