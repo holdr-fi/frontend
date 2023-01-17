@@ -4,9 +4,9 @@ import { useRoute } from 'vue-router';
 
 // Composables
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
-import { usePool } from '@/composables/usePool';
+import { usePool, flatTokenTree } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
-import { bnum, isSameAddress, removeAddress } from '@/lib/utils';
+import { bnum, isSameAddress } from '@/lib/utils';
 import { Pool } from '@/services/pool/types';
 
 // Components
@@ -50,7 +50,8 @@ const tokenAddresses = computed((): string[] => {
     return props.pool.mainTokens || [];
   }
 
-  return props.pool.tokensList;
+  return flatTokenTree(props.pool).map(poolToken => poolToken.address);
+  // return props.pool.tokensList;
 });
 
 const tokensForTotal = computed((): string[] => {
