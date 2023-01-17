@@ -252,8 +252,9 @@ const provider = (props: Props) => {
    */
   async function queryJoin() {
     // If form is empty or inputs are not valid, clear the price impact and
+    // batch relayer not approved,
     // return early
-    if (!hasAmountsIn.value) {
+    if (!hasAmountsIn.value || shouldApproveRelayer.value) {
       priceImpact.value = 0;
       return;
     }
