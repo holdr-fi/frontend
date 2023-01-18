@@ -211,6 +211,12 @@ function aprLabelFor(pool: PoolWithShares): string {
 
   return totalAprLabel(poolAPRs, pool.boost);
 }
+
+function iconAddresses(pool: PoolWithShares) {
+  return POOLS.Metadata[pool.id]?.hasIcon
+    ? [pool.address]
+    : orderedTokenAddresses(pool);
+}
 </script>
 
 <template>
@@ -254,11 +260,15 @@ function aprLabelFor(pool: PoolWithShares): string {
       </template>
       <template v-slot:iconColumnCell="pool">
         <div v-if="!isLoading" class="px-6 py-4">
-          <BalAssetSet :addresses="orderedTokenAddresses(pool)" :width="100" />
+          <BalAssetSet :addresses="iconAddresses(pool)" :width="100" />
         </div>
       </template>
       <template v-slot:poolNameCell="pool">
         <div v-if="!isLoading" class="px-6 py-4 flex items-center">
+          <div v-if="POOLS.Metadata[pool.id]" class="text-left">
+            {{ POOLS.Metadata[pool.id].name }}
+          </div>
+          <div v-else>
           <TokenPills
             :tokens="
               orderedPoolTokens(
@@ -270,6 +280,7 @@ function aprLabelFor(pool: PoolWithShares): string {
             :isStablePool="isStableLike(pool.poolType)"
             :selectedTokens="selectedTokens"
           />
+        </div>
           <BalChip
             v-if="pool?.isNew"
             color="red"

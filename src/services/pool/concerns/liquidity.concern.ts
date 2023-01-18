@@ -18,7 +18,7 @@ export default class LiquidityConcern {
   poolTokens: OnchainTokenInfo[] | PoolToken[];
 
   constructor(public pool: AnyPool, private readonly poolType = pool.poolType) {
-    this.poolTokens = this.onchainPoolTokens || this.pool.tokens;
+    this.poolTokens = this.pool.tokens || this.onchainPoolTokens;
   }
 
   public calcTotal(prices: TokenPrices, currency: FiatCurrency): string {
@@ -89,12 +89,16 @@ export default class LiquidityConcern {
       const token = tokens[i];
       const address = getAddress(token.address);
 
-      // if a token's price is unknown, ignore it
-      // it will be computed at the next step
-      if (!prices[address]) {
+      let price = 0;
+      if (token.priceRate) {
+        price = parseFloat(token.priceRate);
+      } else if (!prices[address]) {
+        // if a token's price is unknown, ignore it
+        // it will be computed at the next step
         continue;
+      } else {
+        price = prices[address][currency];
       }
-      const price = prices[address][currency];
       const balance = token.balance;
 
       const value = bnum(balance).times(price);
@@ -112,7 +116,7 @@ export default class LiquidityConcern {
         const address = getAddress(token.address);
         // if a token's price is known, skip it
         // it has been taken into account in the prev step
-        if (prices[address]) {
+        if (prices[address] || token.priceRate) {
           continue;
         }
         const balance = token.balance;
