@@ -310,9 +310,10 @@ export default class Vault {
       poolData.swapEnabled = rawData.swapEnabled;
     }
 
-    if (rawData?.linearPools) {
-      poolData.linearPools = this.formatLinearPools(rawData.linearPools);
-    }
+    // Holdr - comment out because we do not have a Linear Pool factory for Holdr
+    // if (rawData?.linearPools) {
+    //   poolData.linearPools = this.formatLinearPools(rawData.linearPools);
+    // }
 
     if (rawData.tokenRates) {
       poolData.tokenRates = rawData.tokenRates.map(rate =>
