@@ -28,7 +28,7 @@ const slider = reactive({
   val: 1000,
   max: 1000,
   min: 0,
-  interval: 1,
+  interval: 1
 });
 
 /**
@@ -46,7 +46,7 @@ const {
   propAmountsOut,
   exitTokenInfo,
   fiatAmountsOut,
-  fiatTotalOut,
+  fiatTotalOut
 } = useExitPool();
 const { t } = useI18n();
 
@@ -60,8 +60,23 @@ const sliderProps = computed(() => {
     interval: slider.interval,
     min: slider.min,
     tooltip: 'none',
-    disabled: !hasBpt.value,
+    disabled: !hasBpt.value
   };
+});
+
+const percentageLabel = computed(() => {
+  try {
+    if (!hasBpt.value) return '100';
+
+    return bnum(bptIn.value)
+      .div(bptBalance.value)
+      .times(100)
+      .integerValue(BigNumber.ROUND_CEIL)
+      .toString();
+  } catch (error) {
+    console.error(error);
+    return '0';
+  }
 });
 
 /**
@@ -122,6 +137,22 @@ onBeforeMount(() => {
       :tokenValue="fiatTotalOut"
       @update:amount="handleAmountChange"
       @update:slider="handleSliderChange"
+      hideFooter
+    />
+    <div class="flex mt-2 text-sm text-gray-500">
+      <span>
+        {{ $t('proportionalWithdrawal') }}
+      </span>
+      <span class="flex-grow text-right">{{ percentageLabel }}%</span>
+    </div>
+    <BalRangeInput
+      v-model="slider.val"
+      :max="slider.max"
+      :interval="slider.interval"
+      :min="slider.min"
+      tooltip="none"
+      :disabled="!hasBpt"
+      @update:modelValue="handleSliderChange"
     />
     <div class="label">{{ t('youReceive') }}</div>
     <div class="token-amounts">
