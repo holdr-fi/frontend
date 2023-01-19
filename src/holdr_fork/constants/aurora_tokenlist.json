@@ -146,7 +146,7 @@
       "name": "auUSDC",
       "symbol": "auUSDC",
       "decimals": 8,
-      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
+      "logoURI": "https://raw.githubusercontent.com/trisolaris-labs/tokens/master/assets/0x4f0d864b1ABf4B701799a0b30b57A22dFEB5917b/logo.svg"
     },
     {
       "address": "0xaD5A2437Ff55ed7A8Cad3b797b3eC7c5a19B1c54",
@@ -154,7 +154,7 @@
       "name": "auUSDT",
       "symbol": "auUSDT",
       "decimals": 8,
-      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png"
+      "logoURI": "https://raw.githubusercontent.com/trisolaris-labs/tokens/master/assets/0xaD5A2437Ff55ed7A8Cad3b797b3eC7c5a19B1c54/logo.svg"
     }
   ]
 }
