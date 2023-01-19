@@ -57,13 +57,13 @@ onMounted(() => resetTabs());
             <h4>{{ $t('investInPool') }}</h4>
             <TradeSettingsPopover :context="TradeSettingsContext.invest" />
           </div>
-          <BalTabs
+          <!-- <BalTabs
             v-if="isDeepPool && isPreMintedBptPool"
             v-model="activeTab"
             :tabs="tabs"
             class="p-0 m-0 -mb-px whitespace-nowrap"
             noPad
-          />
+          /> -->
         </div>
       </template>
       <template v-if="isDeepPool">

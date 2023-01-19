@@ -3,7 +3,7 @@ import { computed, toRef } from 'vue';
 
 import useWithdrawMath from '@/components/forms/pool_actions/WithdrawForm/composables/useWithdrawMath';
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
-import { lpTokensFor } from '@/composables/usePool';
+import { lpTokensFor, flatTokenTree } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import { bnum, isSameAddress } from '@/lib/utils';
 import { Pool } from '@/services/pool/types';
@@ -34,7 +34,9 @@ const { isWalletReady, toggleWalletSelectModal } = useWeb3();
  * COMPUTED
  */
 const fiatTotal = computed(() => {
-  const fiatValue = lpTokensFor(props.pool)
+  // const fiatValue = lpTokensFor(props.pool)
+  const fiatValue = flatTokenTree(props.pool)
+    .map(poolToken => poolToken.address)
     .map(address => {
       let tokenBalance = '0';
 
