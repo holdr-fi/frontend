@@ -136,6 +136,7 @@ export default {
         networkConfig.addresses.wstETH,
         configService.network.addresses.veBAL,
         configService.network.addresses.wnear,
+        configService.network.addresses.wstnear,
         configService.network.addresses.bribe,
         configService.network.addresses.bribeVault
       ]),
@@ -473,16 +474,24 @@ export default {
       if (configService.network.chainId === 1313161554) {
         const [tokenMap, holdrPrice] = await Promise.all([
           coingeckoService.prices.getTokens([
-            configService.network.addresses.near
+            getAddress(configService.network.addresses.near),
+            getAddress(configService.network.addresses.stnear)
           ]),
           axios.get(
             'https://s3.us-west-2.amazonaws.com/price-feed.solace.fi.data/output/holdrPrice.json'
           )
         ]);
         const injectMap = {};
+        const nearUsd = tokenMap[getAddress(configService.network.addresses.near)].usd;
         injectMap[configService.network.addresses.wnear] = {
-          usd: tokenMap[configService.network.addresses.near].usd
+          usd: nearUsd
         };
+
+        const stNearUsd = tokenMap[getAddress(configService.network.addresses.stnear)].usd;
+        injectMap[configService.network.addresses.wstnear] = {
+          usd: stNearUsd
+        };
+
         await injectPrices({
           ...injectMap,
           '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA': {

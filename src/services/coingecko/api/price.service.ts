@@ -5,6 +5,7 @@ import { twentyFourHoursInSecs } from '@/composables/useTime';
 import { TOKENS } from '@/constants/tokens';
 import { returnChecksum } from '@/lib/decorators/return-checksum.decorator';
 import { includesAddress } from '@/lib/utils';
+import { lsGet, lsSet } from '@/lib/utils';
 import { retryPromiseWithDelay } from '@/lib/utils/promise';
 import { configService as _configService } from '@/services/config/config.service';
 import { lsGet, lsSet } from '@/lib/utils';
@@ -190,7 +191,6 @@ export class PriceService {
         emptyHistoricalPrices
       );
       return lsHistoricalTokenPrices;
-      // throw error;
     }
   }
 

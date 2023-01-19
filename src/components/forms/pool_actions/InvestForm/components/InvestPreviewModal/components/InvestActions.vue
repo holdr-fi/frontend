@@ -13,7 +13,7 @@ import BalActionSteps from '@/components/_global/BalActionSteps/BalActionSteps.v
 import ConfirmationIndicator from '@/components/web3/ConfirmationIndicator.vue';
 import useStaking from '@/composables/staking/useStaking';
 import useEthers from '@/composables/useEthers';
-import { usePool } from '@/composables/usePool';
+import { isComposableStable, usePool } from '@/composables/usePool';
 import { dateTimeLabelFor } from '@/composables/useTime';
 import useTokenApprovalActions from '@/composables/useTokenApprovalActions';
 import useTransactions from '@/composables/useTransactions';
@@ -123,14 +123,17 @@ const transactionInProgress = computed(
  */
 
 async function handleTransaction(tx): Promise<void> {
+  const excludeWeights = isComposableStable(props.pool.poolType);
   addTransaction({
     id: tx.hash,
     type: 'tx',
     action: 'invest',
-    summary: t('transactionSummary.investInPool', [
-      fiatTotalLabel.value,
-      poolWeightsLabel(props.pool)
-    ]),
+    summary: !excludeWeights
+      ? t('transactionSummary.investInPool', [
+          fiatTotalLabel.value,
+          poolWeightsLabel(props.pool)
+        ])
+      : `${fiatTotalLabel.value} in pool`,
     details: {
       total: fiatTotalLabel.value,
       pool: props.pool

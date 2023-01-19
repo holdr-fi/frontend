@@ -51,6 +51,7 @@ export async function sendTransaction(
     );
 
     const gasLimit = gasLimitNumber.toNumber();
+
     paramsOverrides.gasLimit = Math.floor(gasLimit * (1 + GAS_LIMIT_BUFFER));
 
     if (

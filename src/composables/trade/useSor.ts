@@ -30,6 +30,7 @@ import {
 import { getStETHByWstETH, isStEthAddress } from '@/lib/utils/balancer/lido';
 import { swapIn, swapOut } from '@/lib/utils/balancer/swapper';
 import {
+  getWrapNearAddressMap,
   getWrapOutput,
   unwrap,
   wrap,
@@ -312,10 +313,8 @@ export default function useSor({
           wrapType.value,
           parseFixed(amount, tokenInDecimals)
         );
-        // HOLDR_INFO: special case if the wrap output is near, we need to format it with 24 decimals instead of wnear's 18
-        if (
-          tokenOutAddressInput.value == configService.network.addresses.near
-        ) {
+        // HOLDR_INFO: special case if the wrap output is near or similar, we need to format it with 24 decimals instead of wnear's 18
+        if (getWrapNearAddressMap(tokenOutAddressInput.value) != AddressZero) {
           tokenOutAmountInput.value = formatFixed(outputAmount, 24);
         } else {
           tokenOutAmountInput.value = formatFixed(
@@ -333,8 +332,8 @@ export default function useSor({
         } else if (wrapType.value === WrapType.Unwrap) {
           oppositeWrapType = WrapType.Wrap;
         } else if (wrapType.value === WrapType.PleaseWrapFirst) {
-          oppositeWrapType = WrapType.PleaseSwapInNear;
-        } else if (wrapType.value === WrapType.PleaseSwapInNear) {
+          oppositeWrapType = WrapType.PleaseSwapInFirst;
+        } else if (wrapType.value === WrapType.PleaseSwapInFirst) {
           oppositeWrapType = WrapType.PleaseWrapFirst;
         }
 

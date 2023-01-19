@@ -416,6 +416,8 @@ const POOLS_AURORA: Pools = {
     // unknown user-created pools with junk tokens
     '0xd1b29fa60ba1cae5847f1ed95b6d86749f392bd0000200000000000000000021',
     '0x07b9b56eaf45ed79564ec2672328d50024601308000200000000000000000025',
+    // usdc-usdt stable pool before composable stable pool ready for user interaction
+    '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026',
     // wNEAR - USDC/USDT deep weighted pool
     '0x96cb1a4f2ff409eb7f1bed9e8e67799b66eb5b2e000200000000000000000027',
     // hb-a-USD
