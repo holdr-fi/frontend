@@ -8,7 +8,6 @@ import { includesAddress } from '@/lib/utils';
 import { lsGet, lsSet } from '@/lib/utils';
 import { retryPromiseWithDelay } from '@/lib/utils/promise';
 import { configService as _configService } from '@/services/config/config.service';
-import { lsGet, lsSet } from '@/lib/utils';
 
 import { CoingeckoClient } from '../coingecko.client';
 import {

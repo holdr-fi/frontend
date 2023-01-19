@@ -312,27 +312,6 @@ export default defineComponent({
       }
     });
 
-    // list of tokens that do not need prices fetched for
-    const exemptedTokens = computed(() => [
-      configService.network.addresses.wnear
-    ]);
-
-    const exemptedPools = computed(() => [
-      '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007' // usdc-usdt stablepool (aurora)
-    ]);
-
-    const doesPoolHaveExemptedTokens = computed(() =>
-      exemptedTokens.value.some(token =>
-        titleTokens.value
-          .map(t => t[0].toUpperCase())
-          .includes(token.toUpperCase())
-      )
-    );
-
-    const isPoolExempted = computed(() =>
-      exemptedPools.value.includes(route.params.id as string)
-    );
-
     const poolQueryLoading = computed(
       () =>
         poolQuery.isLoading.value ||
