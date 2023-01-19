@@ -37,7 +37,11 @@ const { currency } = useUserSettings();
           {{ $t('total') }}
         </div>
         <div class="summary-table-number">
-          {{ fNum2(fiatTotal, FNumFormats.fiat) }}
+          {{
+            fNum2(fiatTotal, FNumFormats.fiat) === '$NaN'
+              ? '-'
+              : fNum2(fiatTotal, FNumFormats.fiat)
+          }}
           <BalTooltip
             :text="$t('tooltips.invest.total', [currency.toUpperCase()])"
             icon-size="sm"

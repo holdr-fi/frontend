@@ -47,6 +47,8 @@ export interface PoolToken {
   priceRate: string | null;
   symbol?: string;
   token?: SubPoolMeta;
+  decimals?: number;
+  isExemptFromYieldProtocolFee?: boolean;
 }
 
 export interface SubPoolMeta {

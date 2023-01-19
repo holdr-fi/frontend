@@ -26,6 +26,11 @@ export type FactoryType =
   | 'boostedPool'
   | 'composableStablePool';
 
+type PoolMetadata = {
+  name: string;
+  hasIcon: boolean;
+};
+
 export type Pools = {
   IdsMap: Partial<
     Record<'staBAL' | 'bbAaveUSD' | '80HLDR-20WNEAR' | 'B-80BAL-20WETH', string>
@@ -52,6 +57,7 @@ export type Pools = {
   Stakable: {
     AllowList: string[];
   };
+  Metadata: Record<string, PoolMetadata>;
 };
 
 const POOLS_KOVAN: Pools = {
@@ -119,7 +125,8 @@ const POOLS_KOVAN: Pools = {
       '0x647c1fd457b95b75d0972ff08fe01d7d7bda05df000200000000000000000001',
       '0x8fd162f338b770f7e879030830cde9173367f3010000000000000000000004d8'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_MAINNET: Pools = {
@@ -217,7 +224,8 @@ const POOLS_MAINNET: Pools = {
       '0x85370d9e3bb111391cc89f6de344e801760461830002000000000000000001ef',
       '0xa7ff759dbef9f3efdd1d59beee44b966acafe214000200000000000000000180'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_POLYGON: Pools = {
@@ -283,7 +291,8 @@ const POOLS_POLYGON: Pools = {
       '0xfeadd389a5c427952d8fdb8057d6c8ba1156cc5600020000000000000000001e',
       '0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_ARBITRUM: Pools = {
@@ -340,7 +349,8 @@ const POOLS_ARBITRUM: Pools = {
       '0xcc65a812ce382ab909a11e434dbf75b34f1cc59d000200000000000000000001',
       '0xe1b40094f1446722c424c598ac412d590e0b3ffb000200000000000000000076'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_MUMBAI: Pools = {
@@ -375,7 +385,8 @@ const POOLS_MUMBAI: Pools = {
     AllowList: [
       '0xf695b07661b2a8b83c52bab38d37dfefdeb4dfbb000200000000000000000000'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_AURORA: Pools = {
@@ -404,14 +415,25 @@ const POOLS_AURORA: Pools = {
     '0xe6aa6d040b662e001a4a4dd7a9678e39944d8c2e00010000000000000000000e',
     // unknown user-created pools with junk tokens
     '0xd1b29fa60ba1cae5847f1ed95b6d86749f392bd0000200000000000000000021',
-    '0x07b9b56eaf45ed79564ec2672328d50024601308000200000000000000000025'
+    '0x07b9b56eaf45ed79564ec2672328d50024601308000200000000000000000025',
+    // wNEAR - USDC/USDT deep weighted pool
+    '0x96cb1a4f2ff409eb7f1bed9e8e67799b66eb5b2e000200000000000000000027',
+    // hb-a-USD
+    '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b',
+    // hb-a-USDT
+    '0x0005b732f5434dbd39cc353d5795e71833820e6700000000000000000000002a',
+    // hb-a-USDC
+    '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029'
   ],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
       '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007', // USDT-USDC Stablepool
       '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026', // USDT-USDC Stablepool 2
-      '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000' // mai,
+      '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000', // mai,
+      '0x0005b732f5434dbd39cc353d5795e71833820e6700000000000000000000002a', // USDT-auUSDT
+      '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029', // USDC-auUSDC
+      '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b' // hb-a-usdt - hb-a-usdc
     ]
   },
   Investment: {
@@ -435,6 +457,12 @@ const POOLS_AURORA: Pools = {
       '0x4b5648133ea518c3ac47f7159cf998c6ff15f435000200000000000000000024',
       '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026'
     ]
+  },
+  Metadata: {
+    '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b': {
+      name: 'Holdr Aurigami Boosted USD',
+      hasIcon: true
+    }
   }
 };
 
@@ -512,7 +540,8 @@ const POOLS_GENERIC: Pools = {
   },
   Stakable: {
     AllowList: []
-  }
+  },
+  Metadata: {}
 };
 const POOLS_MAP = {
   [Network.KOVAN]: POOLS_KOVAN,

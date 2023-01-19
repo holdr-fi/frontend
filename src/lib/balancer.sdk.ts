@@ -1,6 +1,7 @@
 // import { BalancerSDK, BalancerSdkConfig, Network } from '@balancer-labs/sdk';
 // import { Sor } from '../forked_node_modules/balancer-labs/sdk'
 import { configService } from '@/services/config/config.service';
+import { ref } from 'vue';
 
 import {
   BalancerSDK,
@@ -127,5 +128,18 @@ const balancer = new BalancerSDK(balancerConfig);
 
 // balancer.sor.poolCacher.poolDataService.network.addresses.contracts.vault =
 // '0x0FFf9f3044244048802B5AB4540e2014d1C0688A';
+
+export const hasFetchedPoolsForSor = ref(false);
+
+export async function fetchPoolsForSor() {
+  if (hasFetchedPoolsForSor.value) return;
+
+  console.time('fetchPoolsForSor');
+  await balancer.swaps.fetchPools();
+  hasFetchedPoolsForSor.value = true;
+  console.timeEnd('fetchPoolsForSor');
+}
+
+if (process.env.NODE_ENV !== 'test') fetchPoolsForSor();
 
 export { balancer };

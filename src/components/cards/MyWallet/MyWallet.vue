@@ -13,13 +13,17 @@ import useMyWalletTokens from '@/composables/useMyWalletTokens';
 import useNativeBalance from '@/composables/useNativeBalance';
 
 type Props = {
+  excludedTokens?: string[];
   // If pool prop is provided, Tokens are grouped into:
   // 'Pool tokens in wallet' and 'Other tokens in wallet'
   pool?: AnyPool;
+  includeNativeAsset?: boolean;
 };
 
 const props = withDefaults(defineProps<Props>(), {
-  pool: undefined
+  excludedTokens: () => [],
+  pool: undefined,
+  includeNativeAsset: false,
 });
 
 const { isWalletReady, toggleWalletSelectModal } = useWeb3();

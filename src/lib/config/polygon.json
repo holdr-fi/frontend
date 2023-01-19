@@ -14,6 +14,7 @@
   "explorer": "https://polygonscan.com",
   "explorerName": "Polygonscan",
   "subgraph": "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-polygon-v2",
+  "balancerApi": "",
   "poolsUrlV2": "",
   "subgraphs": {
     "aave": "https://api.thegraph.com/subgraphs/name/aave/aave-v2-matic",

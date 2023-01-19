@@ -12,6 +12,7 @@
   "explorer": "",
   "explorerName": "",
   "subgraph": "http://localhost:8000/subgraphs/name/balancer-labs/balancer-v2",
+  "balancerApi": "",
   "poolsUrlV1": "",
   "poolsUrlV2": "",
   "subgraphs": {
