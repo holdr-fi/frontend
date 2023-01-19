@@ -22,6 +22,7 @@ import i18n from '@/plugins/i18n';
 import { rpcProviderService } from '../rpc-provider/rpc-provider.service';
 import { Connector } from './connectors/connector';
 import { web3Service } from './web3.service';
+import { networkId } from '@/composables/useNetwork';
 
 export type Wallet =
   | 'metamask'
@@ -62,6 +63,15 @@ type PluginState = {
   connector: any;
   walletState: WalletState;
 };
+
+export async function verifyNetwork(signer: JsonRpcSigner) {
+  const userNetwork = await signer.getChainId();
+  if (userNetwork.toString() !== networkId.value.toString()) {
+    throw new Error('Wallet network does not match app network.');
+  }
+}
+
+export const isBlocked = ref(false);
 
 export default {
   install: async app => {

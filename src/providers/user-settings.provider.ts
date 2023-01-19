@@ -26,6 +26,7 @@ export interface UserSettingsProviderResponse {
   currency: Ref<FiatCurrency>;
   slippage: Ref<string>;
   slippageScaled: ComputedRef<string>;
+  slippageBsp: ComputedRef<number>;
   setCurrency: (newCurrency: FiatCurrency) => void;
   setSlippage: (newSlippage: string) => void;
 }
@@ -55,6 +56,8 @@ const slippageScaled = computed((): string =>
   parseUnits(state.slippage, 18).toString()
 );
 
+const slippageBsp = computed<number>(() => parseFloat(state.slippage) * 10000);
+
 /**
  * METHODS
  */
@@ -81,7 +84,8 @@ export default {
       // methods
       setCurrency,
       setSlippage,
-      slippageScaled
+      slippageScaled,
+      slippageBsp
     });
 
     return () => slots.default();

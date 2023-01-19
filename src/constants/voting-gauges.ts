@@ -265,7 +265,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
         'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/tri.svg'
     }
   },
-  // ComposableStablePool, not currently supported in frontend.
+  // ComposableStablePool with incorrect amplification factor
   // {
   //   // USDT-USDC Stablepool
   //   address: '0x652DabE7b0b724d828DC51c08a8c59db9e018F70',
@@ -324,6 +324,36 @@ export const CHANGED_ALL_VOTING_GAUGES = [
         'https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png'
     }
   },
+  // ComposableStablePool
+  {
+    // USDT-USDC Stablepool
+    address: '0x27F3aDA711aF13Ff70D1f75063ebFC511A627c02',
+    network: 1313161554,
+    pool: {
+      id: '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026',
+      address: '0xcb14c0bd41e6829caf3ebffe866592b338eed02c',
+      poolType: 'Stable',
+      symbol: 'USDC-USDT',
+      tokens: [
+        {
+          address: '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802',
+          weight: 'null',
+          symbol: 'USDC'
+        },
+        {
+          address: '0x4988a896b1227218e4A686fdE5EabdcAbd91571f',
+          weight: 'null',
+          symbol: 'USDT'
+        }
+      ]
+    },
+    tokenLogoURIs: {
+      '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802':
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
+      '0x4988a896b1227218e4A686fdE5EabdcAbd91571f':
+        'https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png'
+    }
+  }
 ] as VotingGauge[];
 
 export const KOVAN_VOTING_GAUGES: VotingGauge[] = (CHANGED_ALL_VOTING_GAUGES as VotingGauge[]).filter(

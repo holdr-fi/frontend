@@ -28,9 +28,9 @@ function isActive(page: string): boolean {
     <DesktopLinkItem to="/vehldr" :active="isActive('vehldr')">
       veHLDR
     </DesktopLinkItem>
-    <DesktopLinkItem to="/bribe" :active="isActive('bribe')">
+    <!-- <DesktopLinkItem to="/bribe" :active="isActive('bribe')">
       Bribe
-    </DesktopLinkItem>
+    </DesktopLinkItem> -->
     <DesktopLinkItem to="/claim" :active="isActive('claim')">
       <!-- <div class="flex items-center">
         {{ $t('claim') }}

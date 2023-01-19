@@ -1,4 +1,3 @@
-import { Network } from '@balancer-labs/sdk';
 import { Contract } from '@ethersproject/contracts';
 import { ErrorCode } from '@ethersproject/logger';
 import {
@@ -6,7 +5,6 @@ import {
   TransactionResponse,
   Web3Provider
 } from '@ethersproject/providers';
-import { resolveENSAvatar } from '@tomfrench/ens-avatar-resolver';
 import { ComputedRef } from 'vue';
 
 import { logFailedTx } from '@/lib/utils/logging';
@@ -85,12 +83,6 @@ export default class Web3Service {
   ): Promise<TransactionResponse> {
     const signer = this.userProvider.value.getSigner();
     const contract = new Contract(contractAddress, abi, signer);
-    console.log('web3 service contractWithSigner', contract);
-
-    console.log('Contract: ', contractAddress);
-    console.log('Action: ', action);
-    console.log('Params: ', params);
-
     try {
       const gasPriceSettings = await gasPriceService.getGasSettingsForContractCall(
         contract,
@@ -140,10 +132,6 @@ export default class Web3Service {
     params: any[] = [],
     options: Record<string, any> = {}
   ): Promise<T> {
-    console.log('Sending transaction');
-    console.log('Contract', contractAddress);
-    console.log('Action', `"${action}"`);
-    console.log('Params', params);
     const signer = this.userProvider.value.getSigner();
     const contract = new Contract(contractAddress, abi, signer);
     const contractWithSigner = contract.connect(signer);

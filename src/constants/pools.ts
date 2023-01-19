@@ -8,13 +8,28 @@ export const MIN_FIAT_VALUE_POOL_MIGRATION = isMainnet.value ? 100_000 : 1; // 1
 // These can arise from pools with extremely low balances (e.g., completed LBPs)
 export const APR_THRESHOLD = 10_000;
 
+/**
+ * For proportional exits from ComposableStable pools the ExactBPTInForTokensOut
+ * exit type was removed. Therefore we have to use BPTInForExactTokensOut which
+ * makes proportional exits using a user's total BPT balance impossible. In
+ * order to 'fix' this we need to subtract a little bit from the bptIn value
+ * when calculating the ExactTokensOut. The variable below is that "little bit".
+ */
+export const SHALLOW_COMPOSABLE_STABLE_BUFFER = 1e6; // EVM scale, so this is 1 Mwei
+
 export type FactoryType =
   | 'oracleWeightedPool'
   | 'weightedPool'
   | 'stablePool'
   | 'managedPool'
   | 'liquidityBootstrappingPool'
-  | 'boostedPool';
+  | 'boostedPool'
+  | 'composableStablePool';
+
+type PoolMetadata = {
+  name: string;
+  hasIcon: boolean;
+};
 
 export type Pools = {
   IdsMap: Partial<
@@ -42,6 +57,7 @@ export type Pools = {
   Stakable: {
     AllowList: string[];
   };
+  Metadata: Record<string, PoolMetadata>;
 };
 
 const POOLS_KOVAN: Pools = {
@@ -109,7 +125,8 @@ const POOLS_KOVAN: Pools = {
       '0x647c1fd457b95b75d0972ff08fe01d7d7bda05df000200000000000000000001',
       '0x8fd162f338b770f7e879030830cde9173367f3010000000000000000000004d8'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_MAINNET: Pools = {
@@ -207,7 +224,8 @@ const POOLS_MAINNET: Pools = {
       '0x85370d9e3bb111391cc89f6de344e801760461830002000000000000000001ef',
       '0xa7ff759dbef9f3efdd1d59beee44b966acafe214000200000000000000000180'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_POLYGON: Pools = {
@@ -273,7 +291,8 @@ const POOLS_POLYGON: Pools = {
       '0xfeadd389a5c427952d8fdb8057d6c8ba1156cc5600020000000000000000001e',
       '0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_ARBITRUM: Pools = {
@@ -330,7 +349,8 @@ const POOLS_ARBITRUM: Pools = {
       '0xcc65a812ce382ab909a11e434dbf75b34f1cc59d000200000000000000000001',
       '0xe1b40094f1446722c424c598ac412d590e0b3ffb000200000000000000000076'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_MUMBAI: Pools = {
@@ -365,7 +385,8 @@ const POOLS_MUMBAI: Pools = {
     AllowList: [
       '0xf695b07661b2a8b83c52bab38d37dfefdeb4dfbb000200000000000000000000'
     ]
-  }
+  },
+  Metadata: {}
 };
 
 const POOLS_AURORA: Pools = {
@@ -404,13 +425,17 @@ const POOLS_AURORA: Pools = {
     // hb-a-USDT
     '0x0005b732f5434dbd39cc353d5795e71833820e6700000000000000000000002a',
     // hb-a-USDC
-    '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029',
+    '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029'
   ],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
       '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007', // USDT-USDC Stablepool
-      '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000' // mai,
+      '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026', // USDT-USDC Stablepool 2
+      '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000', // mai,
+      '0x0005b732f5434dbd39cc353d5795e71833820e6700000000000000000000002a', // USDT-auUSDT
+      '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029', // USDC-auUSDC
+      '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b' // hb-a-usdt - hb-a-usdc
     ]
   },
   Investment: {
@@ -418,7 +443,7 @@ const POOLS_AURORA: Pools = {
   },
   Factories: {
     '0xdd1591d7bdf0e3ddea4b4377cf03373700bed38e': 'weightedPool', // Weighted
-    '0xb2f941b85791e47faa6391cdef36a3bbad19b73e': 'stablePool',
+    '0xb2f941b85791e47faa6391cdef36a3bbad19b73e': 'composableStablePool',
     '0x1001e599ff9079717e176f224de7f1a27eacd3c2': 'liquidityBootstrappingPool'
   },
   Stakable: {
@@ -431,8 +456,15 @@ const POOLS_AURORA: Pools = {
       '0x2524a4d5588d15e10b7495edd548cc53b18db78000020000000000000000001e',
       '0x4ab6f40241f01c9f6dcf8cc154d54b05477551c700010000000000000000001b',
       '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007',
-      '0x4b5648133ea518c3ac47f7159cf998c6ff15f435000200000000000000000024'
+      '0x4b5648133ea518c3ac47f7159cf998c6ff15f435000200000000000000000024',
+      '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026'
     ]
+  },
+  Metadata: {
+    '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b': {
+      name: 'Holdr Aurigami Boosted USD',
+      hasIcon: true
+    }
   }
 };
 
@@ -449,7 +481,7 @@ const POOLS_GENERIC: Pools = {
     Gauntlet: []
   },
   BlockList: [''],
-  ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
+  ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', ''],
   Stable: {
     AllowList: [
       '0x06df3b2bbb68adc8b0e302443692037ed9f91b42000000000000000000000063',
@@ -510,7 +542,8 @@ const POOLS_GENERIC: Pools = {
   },
   Stakable: {
     AllowList: []
-  }
+  },
+  Metadata: {}
 };
 const POOLS_MAP = {
   [Network.KOVAN]: POOLS_KOVAN,

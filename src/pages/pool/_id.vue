@@ -135,15 +135,12 @@
           </div>
           <div class="mb-4 px-1 lg:px-0">
             <PoolStatCards :pool="pool" :loading="loadingPool" />
-            <!-- <ApyVisionPoolLink
-              v-if="!loadingPool"
-              :poolId="pool?.id"
-              :titleTokens="titleTokens"
-            /> -->
           </div>
           <div class="mb-4">
             <h4 v-text="$t('poolComposition')" class="px-4 lg:px-0 mb-4" />
-            <PoolBalancesCard :pool="pool" :loading="loadingPool" />
+            <!-- <PoolBalancesCard :pool="pool" :loading="loadingPool" /> -->
+            <BalLoadingBlock v-if="loadingPool" class="h-64" />
+            <PoolCompositionCard v-else-if="pool" :pool="pool" />
           </div>
           <div>
             <PoolTransactionsCard :pool="pool" :loading="loadingPool" />
@@ -218,7 +215,6 @@ export default defineComponent({
     APRTooltip,
     StakingIncentivesCard,
     StakingProvider
-    // ApyVisionPoolLink
   },
 
   setup() {
@@ -245,7 +241,7 @@ export default defineComponent({
       route.params.id as string,
       30
     );
-
+    
     // HOLDR_INFO: list of tokens that do not need prices fetched for
     const exemptedTokens = computed(() => [
       configService.network.addresses.wnear,
@@ -267,7 +263,7 @@ export default defineComponent({
     const isPoolExempted = computed(() =>
       exemptedPools.value.includes(route.params.id as string)
     );
-
+    
     /**
      * STATE
      */
@@ -279,6 +275,7 @@ export default defineComponent({
      * COMPUTED
      */
     const pool = computed(() => poolQuery.data.value);
+
     const {
       isStableLikePool,
       isComposableStablePool,
@@ -314,6 +311,27 @@ export default defineComponent({
         return t('ownerFeesTooltip');
       }
     });
+
+    // list of tokens that do not need prices fetched for
+    const exemptedTokens = computed(() => [
+      configService.network.addresses.wnear
+    ]);
+
+    const exemptedPools = computed(() => [
+      '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007' // usdc-usdt stablepool (aurora)
+    ]);
+
+    const doesPoolHaveExemptedTokens = computed(() =>
+      exemptedTokens.value.some(token =>
+        titleTokens.value
+          .map(t => t[0].toUpperCase())
+          .includes(token.toUpperCase())
+      )
+    );
+
+    const isPoolExempted = computed(() =>
+      exemptedPools.value.includes(route.params.id as string)
+    );
 
     const poolQueryLoading = computed(
       () =>
@@ -379,9 +397,9 @@ export default defineComponent({
             ? pool.value.mainTokens
             : pool.value.tokensList;
 
-        tokens = isComposableStablePool.value
-          ? removePreMintedBPT(pool.value).tokensList
-          : tokens;
+        if (isComposableStablePool.value === true) {
+          tokens = tokens.filter(address => address !== pool?.value?.address);
+        }
 
         return !tokens.every(token => includesAddress(tokensWithPrice, token));
       }
@@ -422,6 +440,7 @@ export default defineComponent({
       return (
         !!pool.value &&
         !isLiquidityBootstrappingPool.value &&
+        !isComposableStablePool.value &&
         !isStablePhantomPool.value &&
         pool.value.tokensList.some(
           address => !includesAddress(knownTokens, address)

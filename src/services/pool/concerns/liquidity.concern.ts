@@ -6,7 +6,7 @@ import {
   isWeightedLike
 } from '@/composables/usePool';
 import { FiatCurrency } from '@/constants/currency';
-import { bnum } from '@/lib/utils';
+import { bnum, isSameAddress } from '@/lib/utils';
 import { TokenPrices } from '@/services/coingecko/api/price.service';
 import { AnyPool, OnchainTokenData, PoolToken } from '@/services/pool/types';
 
@@ -18,7 +18,7 @@ export default class LiquidityConcern {
   poolTokens: OnchainTokenInfo[] | PoolToken[];
 
   constructor(public pool: AnyPool, private readonly poolType = pool.poolType) {
-    this.poolTokens = this.onchainPoolTokens || this.pool.tokens;
+    this.poolTokens = this.pool.tokens || this.onchainPoolTokens;
   }
 
   public calcTotal(prices: TokenPrices, currency: FiatCurrency): string {
@@ -70,7 +70,10 @@ export default class LiquidityConcern {
   }
 
   public calcStableTotal(prices: TokenPrices, currency: FiatCurrency): string {
-    let tokens = this.poolTokens;
+    let tokens = this.poolTokens as PoolToken[];
+    tokens = tokens.filter(
+      token => !isSameAddress(token.address, this.pool.address)
+    );
 
     if (
       isStablePhantom(this.poolType) &&
@@ -86,12 +89,16 @@ export default class LiquidityConcern {
       const token = tokens[i];
       const address = getAddress(token.address);
 
-      // if a token's price is unknown, ignore it
-      // it will be computed at the next step
-      if (!prices[address]) {
+      let price = 0;
+      if (token.priceRate) {
+        price = parseFloat(token.priceRate);
+      } else if (!prices[address]) {
+        // if a token's price is unknown, ignore it
+        // it will be computed at the next step
         continue;
+      } else {
+        price = prices[address][currency];
       }
-      const price = prices[address][currency];
       const balance = token.balance;
 
       const value = bnum(balance).times(price);
@@ -109,7 +116,7 @@ export default class LiquidityConcern {
         const address = getAddress(token.address);
         // if a token's price is known, skip it
         // it has been taken into account in the prev step
-        if (prices[address]) {
+        if (prices[address] || token.priceRate) {
           continue;
         }
         const balance = token.balance;

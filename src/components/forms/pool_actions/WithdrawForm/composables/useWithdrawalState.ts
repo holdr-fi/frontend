@@ -3,12 +3,13 @@ import { computed, reactive, Ref, toRefs } from 'vue';
 import useRelayerApproval, {
   Relayer
 } from '@/composables/trade/useRelayerApproval';
-import { isStablePhantom } from '@/composables/usePool';
+import { isDeep, isStablePhantom } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import { isSameAddress } from '@/lib/utils';
 import i18n from '@/plugins/i18n';
 import { Pool } from '@/services/pool/types';
 import { BaseContent } from '@/types';
+import { TransactionReceipt } from '@ethersproject/abstract-provider';
 
 /**
  * TYPES
@@ -24,6 +25,13 @@ type WithdrawalState = {
   highPriceImpactAccepted: boolean;
   submitting: boolean;
   sorReady: boolean;
+  tx: {
+    init: boolean;
+    confirming: boolean;
+    confirmed: boolean;
+    confirmedAt: string;
+    receipt?: TransactionReceipt;
+  };
   slider: {
     val: number;
     max: number;
@@ -43,6 +51,12 @@ const state = reactive<WithdrawalState>({
   highPriceImpactAccepted: false,
   submitting: false,
   sorReady: false,
+  tx: {
+    init: false,
+    confirming: false,
+    confirmed: false,
+    confirmedAt: ''
+  },
   slider: {
     val: 1000,
     max: 1000,
@@ -57,6 +71,15 @@ const state = reactive<WithdrawalState>({
  */
 export function setError(error: WithdrawalError | null): void {
   state.error = error;
+}
+
+export function resetTxState(): void {
+  state.tx = {
+    init: false,
+    confirming: false,
+    confirmed: false,
+    confirmedAt: ''
+  };
 }
 
 export function parseError(error: WithdrawalError): BaseContent {
@@ -76,6 +99,10 @@ export function parseError(error: WithdrawalError): BaseContent {
   }
 }
 
+const txInProgress = computed(
+  (): boolean => state.tx.init || state.tx.confirming || state.tx.confirmed
+);
+
 export default function useWithdrawalState(pool: Ref<Pool | undefined>) {
   /**
    * COMPOSABLES
@@ -88,9 +115,10 @@ export default function useWithdrawalState(pool: Ref<Pool | undefined>) {
    */
   const tokensOut = computed(() => {
     if (!pool.value) return [];
-    const poolTokens = isStablePhantom(pool.value.poolType)
-      ? pool.value.mainTokens || []
-      : pool.value.tokensList;
+    const poolTokens =
+      isStablePhantom(pool.value.poolType) || isDeep(pool.value)
+        ? pool.value.mainTokens || []
+        : pool.value.tokensList;
 
     if (!state.isProportional && state.tokenOut === nativeAsset.address)
       // replace WETH with ETH
@@ -120,9 +148,11 @@ export default function useWithdrawalState(pool: Ref<Pool | undefined>) {
     tokensOut,
     tokenOutIndex,
     batchRelayerApproval,
+    txInProgress,
     // methods
     maxSlider,
     setError,
-    parseError
+    parseError,
+    resetTxState
   };
 }

@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 
 // Composables
 import useNumbers, { FNumFormats } from '@/composables/useNumbers';
-import { usePool } from '@/composables/usePool';
+import { usePool, flatTokenTree } from '@/composables/usePool';
 import useTokens from '@/composables/useTokens';
 import { bnum, isSameAddress } from '@/lib/utils';
 import { Pool } from '@/services/pool/types';
@@ -50,7 +50,8 @@ const tokenAddresses = computed((): string[] => {
     return props.pool.mainTokens || [];
   }
 
-  return props.pool.tokensList;
+  return flatTokenTree(props.pool).map(poolToken => poolToken.address);
+  // return props.pool.tokensList;
 });
 
 const tokensForTotal = computed((): string[] => {
@@ -68,6 +69,7 @@ const tokensForTotal = computed((): string[] => {
 });
 
 const fiatTotal = computed(() => {
+  if (tokensForTotal.value.length == 0) return '0';
   const fiatValue = tokensForTotal.value
     .map(address => {
       if (pageContext.value === 'invest') {

@@ -6,6 +6,10 @@ export const oneHourInMs = 60 * oneMinInMs;
 export const oneDayInMs = 24 * oneHourInMs;
 export const oneWeekInMs = 7 * oneDayInMs;
 
+export const oneSecond = 1;
+export const oneMinInSecs = 60 * oneSecond;
+export const oneHourInSecs = 60 * oneMinInSecs;
+
 export const twentyFourHoursInMs = 24 * oneHourInMs;
 export const twentyFourHoursInSecs = twentyFourHoursInMs / oneSecondInMs;
 
@@ -56,6 +60,10 @@ export function getPreviousThursday(date: Date = new Date()): Date {
     minutes: date.getMinutes(),
     seconds: date.getSeconds()
   });
+}
+
+export function getTimestampSecondsFromNow(secs: number): number {
+  return Math.ceil(Date.now() / 1000) + secs;
 }
 
 export default function useTime() {

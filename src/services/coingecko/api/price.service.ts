@@ -8,6 +8,7 @@ import { includesAddress } from '@/lib/utils';
 import { lsGet, lsSet } from '@/lib/utils';
 import { retryPromiseWithDelay } from '@/lib/utils/promise';
 import { configService as _configService } from '@/services/config/config.service';
+import { lsGet, lsSet } from '@/lib/utils';
 
 import { CoingeckoClient } from '../coingecko.client';
 import {
@@ -56,10 +57,17 @@ export class PriceService {
       const response = await this.client.get<PriceResponse>(
         `/simple/price?ids=${this.nativeAssetId}&vs_currencies=${this.fiatParam}`
       );
+
+      lsSet('nativeAssetPrice', response[this.nativeAssetId]);
+
       return response[this.nativeAssetId];
     } catch (error) {
       console.error('Unable to fetch Ether price', error);
-      throw error;
+
+      const emptyPrice: Price = { ['usd']: 0 };
+      const lsNativeAssetPrice = lsGet('nativeAssetPrice', emptyPrice);
+      return lsNativeAssetPrice;
+      // throw error;
     }
   }
 
@@ -161,6 +169,9 @@ export class PriceService {
         start,
         aggregateBy
       );
+
+      lsSet('historicalTokenPrices', results);
+
       return results;
     } catch (error) {
       console.error(
@@ -168,7 +179,18 @@ export class PriceService {
         addresses,
         error
       );
-      throw error;
+      const emptyHistoricalPrices = addresses.reduce(
+        (emptyPriceObject, address) => {
+          emptyPriceObject[address] = [];
+          return emptyPriceObject;
+        },
+        {} as HistoricalPrices
+      );
+      const lsHistoricalTokenPrices = lsGet(
+        'historicalTokenPrices',
+        emptyHistoricalPrices
+      );
+      return lsHistoricalTokenPrices;
     }
   }
 

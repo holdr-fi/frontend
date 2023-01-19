@@ -13,13 +13,13 @@ import useTokenApprovalActions from '@/composables/useTokenApprovalActions';
 import useTokens from '@/composables/useTokens';
 import { bnum } from '@/lib/utils';
 import { getGaugeAddress } from '@/providers/local/staking/staking.provider';
-import { PoolWithShares } from '@/services/pool/types';
+import { AnyPool } from '@/services/pool/types';
 import useWeb3 from '@/services/web3/useWeb3';
 import { TransactionActionInfo } from '@/types/transactions';
 
 export type StakeAction = 'stake' | 'unstake';
 type Props = {
-  pool: PoolWithShares;
+  pool: AnyPool;
   action: StakeAction;
 };
 
@@ -170,7 +170,7 @@ function handleClose() {
           </span>
         </BalStack>
         <BalAssetSet
-          :addresses="pool.tokenAddresses"
+          :addresses="pool.tokensList"
           :width="assetRowWidth"
           :size="32"
         />

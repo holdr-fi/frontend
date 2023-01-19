@@ -16,7 +16,9 @@ import useWeb3 from '@/services/web3/useWeb3';
 
 import useApp from '../useApp';
 import {
+  isComposableStable,
   isManaged,
+  isPreMintedBptType,
   isStableLike,
   isStablePhantom,
   lpTokensFor
@@ -82,12 +84,22 @@ export default function usePoolQuery(
 
     if (isBlocked(pool)) throw new Error('Pool not allowed');
 
-    const isStablePhantomPool = isStablePhantom(pool.poolType);
+    const isStablePhantomPool = isStablePhantom(pool.poolType) || false;
+    const isComposableStablePool = isComposableStable(pool.poolType) || false;
+    const isPreMintedBptTypePool = isPreMintedBptType(pool.poolType) || false;
 
+    // Removes BPT token from Stable Phantom Pool token type
     if (isStablePhantomPool) {
       const poolService = new PoolService(pool);
       poolService.removePreMintedBPT();
       await poolService.setLinearPools();
+      pool = poolService.pool;
+    }
+
+    // Removes BPT token from Composable Stable Pool type
+    if (isComposableStablePool) {
+      const poolService = new PoolService(pool);
+      poolService.removePreMintedBPT();
       pool = poolService.pool;
     }
 
@@ -103,6 +115,7 @@ export default function usePoolQuery(
     // performed in the decoration step.
     const poolTokenMeta = getTokens(pool.tokensList);
     const onchainData = await balancerContractsService.vault.getPoolData(
+      pool,
       id,
       pool.poolType,
       poolTokenMeta
@@ -119,7 +132,7 @@ export default function usePoolQuery(
 
     let unwrappedTokens: Pool['unwrappedTokens'];
 
-    if (isStablePhantomPool && onchainData.linearPools != null) {
+    if (isPreMintedBptTypePool && onchainData.linearPools != null) {
       unwrappedTokens = Object.entries(onchainData.linearPools).map(
         ([, linearPool]) => linearPool.unwrappedTokenAddress
       );

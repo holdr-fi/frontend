@@ -17,18 +17,15 @@ type Props = {
  * Props
  */
 const props = defineProps<Props>();
-
 const emit = defineEmits<{
   (e: 'maximize'): void;
   (e: 'optimize'): void;
 }>();
-
 /**
  * COMPOSABLES
  */
 const { fNum2 } = useNumbers();
 const { isWalletReady } = useWeb3();
-
 const {
   fiatTotal,
   hasNoBalances,
@@ -37,10 +34,9 @@ const {
   highPriceImpact,
   maximized,
   optimized,
-  batchSwapLoading,
+  loadingData,
   supportsPropotionalOptimization
 } = toRefs(props.math);
-
 /**
  * COMPUTED
  */
@@ -48,7 +44,6 @@ const priceImpactClasses = computed(() => ({
   'dark:bg-gray-800': !highPriceImpact.value,
   'bg-red-500 dark:bg-red-500 text-white divide-red-400': highPriceImpact.value
 }));
-
 const optimizeBtnClasses = computed(() => ({
   'text-gradient': !highPriceImpact.value,
   'text-red-500 px-2 py-1 bg-white rounded-lg': highPriceImpact.value
@@ -79,7 +74,7 @@ const optimizeBtnClasses = computed(() => ({
       <div class="p-2">{{ $t('priceImpact') }}</div>
       <div class="data-table-number-col">
         <div class="flex">
-          <span v-if="!batchSwapLoading">
+          <span v-if="!loadingData">
             {{ fNum2(priceImpact, FNumFormats.percent) }}
           </span>
           <BalLoadingBlock v-else class="w-10" />

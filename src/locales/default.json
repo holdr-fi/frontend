@@ -5,6 +5,7 @@
     "actions": "Actions",
     "activity": "Activity",
     "addToken": "Add a token",
+    "addLiquidity": "Add Liquidity",
     "alerts": {
         "allowances-fetch-error": "Failed to fetch token allowances.",
         "balances-fetch-error": "Failed to fetch token balances.",
@@ -103,6 +104,7 @@
     "coingeckoPricingTooltip": "The data for this graph is pulled from our pricing provider, CoinGecko.",
     "communitySwapFeeLabel": "Delegated swap fees; currently fixed: <b>{0}</b>",
     "composition": "Composition",
+    "composableStablePool": "Composable Stable Pool",
     "configuration": "Configuration",
     "confirm": "Confirm",
     "confirming": "Confirming...",
@@ -314,6 +316,10 @@
     "investWithdraw": "Invest & Withdraw",
     "investment": {
         "label": "Investment",
+        "tabs": {
+            "poolTokens": "Pool tokens",
+            "singleToken": "Single token"
+        },
         "preview": {
             "loadingLabel": {
                 "approval": "Confirm approval in wallet",
@@ -322,8 +328,15 @@
                 "investment": "Confirm investment in wallet"
             },
             "titles": {
-                "confirmed": "Investment confirmed",
-                "default": "Investment preview"
+                "tokenIn": "You’re providing",
+                "tokenOut": "You’re expected to receive",
+                "confirmed": "Add liquidity confirmed",
+                "default": "Add liquidity preview"
+            },
+            "summary": {
+                "total": "Total",
+                "confirmed": "Add liquidity confirmed",
+                "default": "Add liquidity preview"
             },
             "tooltips": {
                 "approval": "You must approve {0} to invest this token on Holdr. Approvals are required once per token, per wallet."
@@ -337,7 +350,12 @@
             "lowLiquidity": {
                 "description": "Add assets proportionally to the pool weights or the price impact will be high and you will likely get REKT and lose money.",
                 "title": "Be careful: This pool has low liquidity"
-            }
+            },
+            "noPoolTokensToJoinWith": {
+                "title": "You have no pool tokens to join with",
+                "description": "This option would usually allow you to add pool tokens in any combination or proportionally to reduce price impact. \n\nHowever, since your connected wallet doesn’t have any pool tokens, go to the ‘Single token’ tab above to add liquidity to this pool with non-pool tokens. "
+            },
+            "noBalanceSomeTokens": "No wallet balance for some pool tokens"
         },
         "error": {
             "rektPriceImpact": {
@@ -385,6 +403,7 @@
         "title": "Token incentives"
     },
     "liquidityProviderCopy": "People who provide liquidity to eligible liquidity pools or trade on eligible token pairs receive weekly $HLDR distributions as incentives. $HLDR token holders own the protocol and can help shape its future by voting on governance proposals.",
+    "liquidityProvision": "Liquidity provision",
     "loading": "Loading...",
     "loadingBestPrice": "Looking for the best price...",
     "loadMore": "Load more",
@@ -656,6 +675,7 @@
     "swapFeeManager": "Swap fee manager",
     "switchNetwork": "Switch network",
     "symbol": "Symbol",
+    "thereWasAnError": "There was an error",
     "veBAL": {
         "hero": {
             "eyebrow": "Introducing veHLDR",
@@ -1185,6 +1205,10 @@
     "whichPools": "Which liquidity pools should be used when you make a trade.",
     "withdraw": {
         "label": "Withdraw",
+        "tabs": {
+            "poolTokens": "Pool tokens (proportional)",
+            "singleToken": "Single token"
+        },
         "tooltips": {
             "priceImpact": "Withdrawing custom amounts causes the internal prices of the pool to change, as if you were swapping tokens. The higher the price impact the more you'll spend in swap fees."
         },
@@ -1222,5 +1246,39 @@
     "yourBalanceInPool": "Your balance in this pool",
     "trendingPairs": "Trending pairs",
     "chooseAPair": "Please select a valid pair",
-    "youCanInvest": "You can invest"
+    "youCanInvest": "You can invest",
+    "poolChart": {
+        "defaultTitle": {
+            "tvl": "Current TVL"
+        },
+        "period": {
+            "all": "All time",
+            "days": "{0} days",
+            "title": "Time period"
+        },
+        "tabs": {
+            "fees": "Fees",
+            "tvl": "TVL",
+            "volume": "Volume"
+        }
+    },
+    "yes": "Yes",
+    "none": "None",
+    "poolAttrs": {
+        "feesFixed": "fixed forever",
+        "feesEditableGovernance": "this may be edited via Governance",
+        "feesEditableOwner": "this may be edited by the Pool Owner",
+        "immutable": "This pool is immutable. No attributes can ever be changed.",
+        "immutableFeesEditableByGovernance": "The attributes of this pool are immutable, except for swap fees which can be edited via Governance.",
+        "immutableFeesEditableByOwner": "The attributes of this pool are immutable, except for swap fees which can be edited by the Pool Owner."
+    },
+    "myWalletCard": {
+        "title": {
+            "poolTokens": "Pool tokens (lowest price impact)",
+            "otherTokens": "Other tokens (higher price impact)"
+        }
+    },
+    "poolActivity": "Pool activity",
+    "youProvide": "You provide",
+    "youReceive": "You receive"
 }

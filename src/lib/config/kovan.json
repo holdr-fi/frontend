@@ -12,6 +12,7 @@
   "explorer": "https://kovan.etherscan.io",
   "explorerName": "Etherscan",
   "subgraph": "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-kovan-v2",
+  "balancerApi": "",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "subgraphs": {
     "aave": "https://api.thegraph.com/subgraphs/name/aave/protocol-v2-kovan",

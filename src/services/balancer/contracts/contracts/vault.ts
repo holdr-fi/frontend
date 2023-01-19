@@ -7,6 +7,9 @@ import { Contract } from 'ethers';
 import { pick } from 'lodash';
 
 import {
+  isComposableStable,
+  isComposableStableLike,
+  isDeep,
   isStableLike,
   isStablePhantom,
   isTradingHaltable,
@@ -15,7 +18,7 @@ import {
 import VaultAbi from '@/lib/abi/VaultAbi.json';
 import { isSameAddress } from '@/lib/utils';
 import { Multicaller } from '@/lib/utils/balancer/contract';
-import { PoolType } from '@/services/pool/types';
+import { Pool, PoolType } from '@/services/pool/types';
 import {
   LinearPoolDataMap,
   OnchainPoolData,
@@ -48,6 +51,7 @@ export default class Vault {
   }
 
   public async getPoolData(
+    pool: Pool,
     id: string,
     type: PoolType,
     tokens: TokenInfoMap
@@ -124,6 +128,99 @@ export default class Vault {
           );
         });
       }
+
+      if (isComposableStableLike(type)) {
+        // Overwrite totalSupply with virtualSupply for StablePhantom pools
+        poolMulticaller.call('totalSupply', poolAddress, 'getVirtualSupply');
+        if (isComposableStable(type)) {
+          // Overwrite totalSupply with actualSupply for ComposableStable pools
+          poolMulticaller.call('totalSupply', poolAddress, 'getActualSupply');
+        }
+      }
+
+      if (isDeep(pool)) {
+        Object.keys(tokens).forEach((token, i) => {
+          poolMulticaller.call(`linearPools.${token}.id`, token, 'getPoolId');
+          poolMulticaller.call(
+            `linearPools.${token}.priceRate`,
+            token,
+            'getRate'
+          );
+          poolMulticaller.call(
+            `tokenRates[${i}]`,
+            poolAddress,
+            'getTokenRate',
+            [token]
+          );
+          poolMulticaller.call(
+            `linearPools.${token}.mainToken.address`,
+            token,
+            'getMainToken'
+          );
+          poolMulticaller.call(
+            `linearPools.${token}.mainToken.index`,
+            token,
+            'getMainIndex'
+          );
+          poolMulticaller.call(
+            `linearPools.${token}.wrappedToken.address`,
+            token,
+            'getWrappedToken'
+          );
+          poolMulticaller.call(
+            `linearPools.${token}.wrappedToken.index`,
+            token,
+            'getWrappedIndex'
+          );
+          poolMulticaller.call(
+            `linearPools.${token}.wrappedToken.rate`,
+            token,
+            'getWrappedTokenRate'
+          );
+        });
+      }
+    }
+
+    if (isDeep(pool) && result.linearPools) {
+      const wrappedTokensMap: Record<string, string> = {};
+
+      Object.keys(result.linearPools).forEach(address => {
+        if (!result.linearPools) return;
+        const linearPool: RawLinearPoolData = result.linearPools[address];
+
+        vaultMultiCaller.call(
+          `linearPools.${address}.tokenData`,
+          this.address,
+          'getPoolTokens',
+          [linearPool.id]
+        );
+
+        wrappedTokensMap[address] = linearPool.wrappedToken.address;
+      });
+
+      Object.entries(wrappedTokensMap).forEach(([address, wrappedToken]) => {
+        // The method to fetch the unwrapped asset of a linear pool can be
+        // different depending on if it's an ERC4626 or StaticAToken interface.
+        // Here we just try both methods and merge the result in formatting.
+        poolMulticaller.call(
+          `linearPools.${address}.unwrappedTokenAddress`,
+          wrappedToken,
+          'ATOKEN'
+        );
+        poolMulticaller.call(
+          `linearPools.${address}.unwrappedERC4626Address`,
+          wrappedToken,
+          'asset'
+        );
+
+        poolMulticaller.call(
+          `linearPools.${address}.totalSupply`,
+          address,
+          'getVirtualSupply'
+        );
+      });
+
+      result = await poolMulticaller.execute(result);
     }
 
     result = await poolMulticaller.execute(result);
@@ -213,9 +310,10 @@ export default class Vault {
       poolData.swapEnabled = rawData.swapEnabled;
     }
 
-    if (rawData?.linearPools) {
-      poolData.linearPools = this.formatLinearPools(rawData.linearPools);
-    }
+    // Holdr - comment out because we do not have a Linear Pool factory for Holdr
+    // if (rawData?.linearPools) {
+    //   poolData.linearPools = this.formatLinearPools(rawData.linearPools);
+    // }
 
     if (rawData.tokenRates) {
       poolData.tokenRates = rawData.tokenRates.map(rate =>
@@ -274,7 +372,10 @@ export default class Vault {
         totalSupply
       } = linearPools[address];
 
-      const unwrappedAddress = unwrappedTokenAddress || unwrappedERC4626Address;
+      const unwrappedAddress =
+        unwrappedTokenAddress ||
+        unwrappedERC4626Address ||
+        wrappedToken.address;
 
       _linearPools[address.toLowerCase()] = {
         id,

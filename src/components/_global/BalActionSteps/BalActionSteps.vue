@@ -38,6 +38,7 @@ type Props = {
   // override action state loading label
   // for all steps
   loadingLabel?: string;
+  stepsCallbackFn?: (index: number, totalSteps: number) => void;
 };
 
 /**
@@ -46,7 +47,8 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   isLoading: false,
-  loadingLabel: ''
+  loadingLabel: '',
+  stepsCallbackFn: () => undefined
 });
 
 const emit = defineEmits<{
@@ -193,6 +195,10 @@ async function handleTransaction(
         emit('success', { receipt, confirmedAt: state.confirmedAt });
       } else {
         currentActionIndex.value += 1;
+      }
+
+      if (props.stepsCallbackFn) {
+        props.stepsCallbackFn(currentActionIndex.value, actions.value.length);
       }
 
       state.confirming = false;

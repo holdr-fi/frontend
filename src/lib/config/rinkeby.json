@@ -12,6 +12,7 @@
   "explorer": "https://rinkeby.etherscan.io",
   "explorerName": "Etherscan",
   "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/bebe",
+  "balancerApi": "",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "subgraphs": {
     "aave": "",

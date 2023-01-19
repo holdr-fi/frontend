@@ -3,10 +3,11 @@ import { useRoute } from 'vue-router';
 
 // Composables
 import usePoolQuery from '@/composables/queries/usePoolQuery';
-import { isStablePhantom } from '@/composables/usePool';
-import useTokens from '@/composables/useTokens';
+import { isDeep, isStablePhantom } from '@/composables/usePool';
 import { includesAddress } from '@/lib/utils';
 import { Pool } from '@/services/pool/types';
+import { isQueryLoading } from '@/composables/queries/useQueryHelpers';
+import useTokens from '@/composables/useTokens';
 
 /**
  * STATE
@@ -16,7 +17,7 @@ const transfersAllowed = ref(true);
 
 export default function usePoolTransfers() {
   const route = useRoute();
-  const id = ref<string>(route.params.id as string);
+  const id = (route.params.id as string).toLowerCase();
 
   /**
    * COMPOSABLES
@@ -26,7 +27,7 @@ export default function usePoolTransfers() {
   /**
    * QUERIES
    */
-  const poolQuery = usePoolQuery(id.value);
+  const poolQuery = usePoolQuery(id);
 
   /**
    * COMPUTED
@@ -35,12 +36,7 @@ export default function usePoolTransfers() {
     return poolQuery.data.value;
   });
 
-  const poolQueryLoading = computed(
-    (): boolean =>
-      (poolQuery.isLoading.value as boolean) ||
-      (poolQuery.isIdle.value as boolean) ||
-      (poolQuery.error.value as boolean)
-  );
+  const poolQueryLoading = computed((): boolean => isQueryLoading(poolQuery));
 
   const loadingPool = computed(
     (): boolean => poolQueryLoading.value || !pool.value
@@ -48,7 +44,7 @@ export default function usePoolTransfers() {
 
   const tokenAddresses = computed(() => {
     if (pool.value) {
-      if (isStablePhantom(pool.value.poolType)) {
+      if (isStablePhantom(pool.value.poolType) || isDeep(pool.value)) {
         return pool.value.mainTokens || [];
       }
       return pool.value?.tokensList || [];
@@ -65,6 +61,7 @@ export default function usePoolTransfers() {
 
   return {
     pool,
+    poolQuery,
     loadingPool,
     useNativeAsset,
     missingPrices,

@@ -41,7 +41,6 @@ export async function sendTransaction(
   const signer = web3.getSigner();
   const contract = new Contract(contractAddress, abi, web3);
   const contractWithSigner = contract.connect(signer);
-  console.log('balancer/web3 contractWithSigner', contractWithSigner);
   const paramsOverrides = { ...overrides };
 
   try {
@@ -113,10 +112,6 @@ export async function callStatic(
   params: any[],
   overrides = {}
 ) {
-  console.log('Sending transaction');
-  console.log('Contract', contractAddress);
-  console.log('Action', `"${action}"`);
-  console.log('Params', params);
   const signer = web3.getSigner();
   const contract = new Contract(contractAddress, abi, web3);
   const contractWithSigner = contract.connect(signer);
