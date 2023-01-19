@@ -266,35 +266,35 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     }
   },
   // ComposableStablePool with incorrect amplification factor
-  // {
-  //   // USDT-USDC Stablepool
-  //   address: '0x652DabE7b0b724d828DC51c08a8c59db9e018F70',
-  //   network: 1313161554,
-  //   pool: {
-  //     id: '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007',
-  //     address: '0x480edf7ecb52ef9eace2346b84f29795429aa9c9',
-  //     poolType: 'Stable',
-  //     symbol: 'USDC-USDT',
-  //     tokens: [
-  //       {
-  //         address: '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802',
-  //         weight: 'null',
-  //         symbol: 'USDC'
-  //       },
-  //       {
-  //         address: '0x4988a896b1227218e4A686fdE5EabdcAbd91571f',
-  //         weight: 'null',
-  //         symbol: 'USDT'
-  //       }
-  //     ]
-  //   },
-  //   tokenLogoURIs: {
-  //     '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802':
-  //       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
-  //     '0x4988a896b1227218e4A686fdE5EabdcAbd91571f':
-  //       'https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png'
-  //   }
-  // },
+  {
+    // USDT-USDC Stablepool
+    address: '0x652DabE7b0b724d828DC51c08a8c59db9e018F70',
+    network: 1313161554,
+    pool: {
+      id: '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007',
+      address: '0x480edf7ecb52ef9eace2346b84f29795429aa9c9',
+      poolType: 'Stable',
+      symbol: 'USDC-USDT',
+      tokens: [
+        {
+          address: '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802',
+          weight: 'null',
+          symbol: 'USDC'
+        },
+        {
+          address: '0x4988a896b1227218e4A686fdE5EabdcAbd91571f',
+          weight: 'null',
+          symbol: 'USDT'
+        }
+      ]
+    },
+    tokenLogoURIs: {
+      '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802':
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
+      '0x4988a896b1227218e4A686fdE5EabdcAbd91571f':
+        'https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png'
+    }
+  },
   {
     // USDT-USDC Weighted Pool
     address: '0xbC4B15225b06429ADCC990788b01C17aDbb1b315',
