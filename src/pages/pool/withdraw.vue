@@ -60,13 +60,13 @@ onMounted(() => resetTabs());
             <h4>{{ $t('withdrawFromPool') }}</h4>
             <TradeSettingsPopover :context="TradeSettingsContext.invest" />
           </div>
-          <BalTabs
+          <!-- <BalTabs
             v-if="isDeepPool && isPreMintedBptPool"
             v-model="activeTab"
             :tabs="tabs"
             class="p-0 m-0 -mb-px whitespace-nowrap"
             noPad
-          />
+          /> -->
         </div>
       </template>
       <ExitPoolProvider

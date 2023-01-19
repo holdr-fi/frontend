@@ -187,14 +187,6 @@ watch([isSingleAssetJoin, poolTokensWithBalance], ([isSingleAsset]) => {
         block
         @click="showInvestPreview = true"
       />
-      <!-- <BalActionSteps
-        v-if="
-          isWalletReady && shouldApproveRelayer && approvalActions.length > 0
-        "
-        :actions="approvalActions"
-        :isLoading="approving"
-        :loadingLabel="approvalActions[0].loadingLabel"
-      /> -->
     </div>
 
     <StakingProvider :poolAddress="pool.address">

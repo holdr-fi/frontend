@@ -168,7 +168,7 @@ function navigateToPoolMigration(pool: Pool) {
         </h5>
       </div>
     </template>
-    <div class="px-4 py-2" v-if="!isComposableStablePool">
+    <div class="px-4 py-2">
       <div
         v-for="(address, index) in tokenAddresses"
         :key="address"
