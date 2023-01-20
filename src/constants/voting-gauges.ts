@@ -60,7 +60,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     },
     tokenLogoURIs: {
       '0x5ed1e3D53AfdB0d0bc8661e056dffCD51c95bb9D':
-        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.png'
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.svg'
     }
   },
   {
@@ -92,7 +92,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     },
     tokenLogoURIs: {
       '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA':
-        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.png',
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.svg',
       '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802':
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
       '0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB':
