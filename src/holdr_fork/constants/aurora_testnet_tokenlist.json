@@ -1,48 +1,48 @@
 {
-    "name": "Solace",
-    "timestamp": "2022-06-09T00:00:00.000Z",
-    "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png",
-    "keywords": [
-      "solace",
-      "listed"
-    ],
-    "version": {
-      "major": 1,
-      "minor": 0,
-      "patch": 0
+  "name": "Solace",
+  "timestamp": "2022-06-09T00:00:00.000Z",
+  "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.png",
+  "keywords": [
+    "solace",
+    "listed"
+  ],
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "tokens": [
+    {
+      "address": "0x3D9d7843B3da0E95429BaD2B5165C5B13269F386",
+      "chainId": 1313161555,
+      "name": "USDT",
+      "symbol": "USDT",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png"
     },
-    "tokens": [
-      {
-        "address": "0x3D9d7843B3da0E95429BaD2B5165C5B13269F386",
-        "chainId": 1313161555,
-        "name": "USDT",
-        "symbol": "USDT",
-        "decimals": 18,
-        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png"
-      },
-      {
-        "address": "0x4cae534FA3bf04eaF17D854f7c6A7D851E277665",
-        "chainId": 1313161555,
-        "name": "Aurora",
-        "symbol": "Aurora",
-        "decimals": 18,
-        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/aurora/assets/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/logo.png"
-      },
-      {
-        "address": "0x6D80Dc92E4599ADBaE3E4797EBE79c29d0f4c344",
-        "chainId": 1313161555,
-        "name": "WBTC",
-        "symbol": "WBTC",
-        "decimals": 18,
-        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/17d956dc22e8c9895dd52d93dea7ec6cdb2d882a/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png"
-      },
-      {
-        "address": "0x8caCbA163be8070760F6DdADA7461a558519A9F1",
-        "chainId": 1313161555,
-        "name": "WETH",
-        "symbol": "WETH",
-        "decimals": 18,
-        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png"
-      }
-    ]
-  }
+    {
+      "address": "0x4cae534FA3bf04eaF17D854f7c6A7D851E277665",
+      "chainId": 1313161555,
+      "name": "Aurora",
+      "symbol": "Aurora",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/aurora/assets/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/logo.png"
+    },
+    {
+      "address": "0x6D80Dc92E4599ADBaE3E4797EBE79c29d0f4c344",
+      "chainId": 1313161555,
+      "name": "WBTC",
+      "symbol": "WBTC",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/17d956dc22e8c9895dd52d93dea7ec6cdb2d882a/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png"
+    },
+    {
+      "address": "0x8caCbA163be8070760F6DdADA7461a558519A9F1",
+      "chainId": 1313161555,
+      "name": "WETH",
+      "symbol": "WETH",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png"
+    }
+  ]
+}
