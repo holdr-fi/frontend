@@ -1,7 +1,7 @@
 {
   "name": "Solace",
   "timestamp": "2022-06-09T00:00:00.000Z",
-  "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png",
+  "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.png",
   "keywords": [
     "solace",
     "listed"
@@ -34,7 +34,7 @@
       "name": "solace",
       "symbol": "SOLACE",
       "decimals": 18,
-      "logoURI": "https://raw.githubusercontent.com/solace-fi/brand-kit/main/circle-sign/solace-circle-medium.png"
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.png"
     },
     {
       "address": "0x86E5B6485e28E52a0dEEd28Cc10772FeB9c4C400",
