@@ -15,6 +15,7 @@ export type VotingGauge = {
     poolType: PoolType;
     symbol: string | undefined;
     tokens: Pick<PoolToken, 'address' | 'weight' | 'symbol'>[];
+    deprecated?: boolean;
   };
   tokenLogoURIs: Record<string, string | undefined>;
 };
@@ -271,6 +272,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     address: '0x652DabE7b0b724d828DC51c08a8c59db9e018F70',
     network: 1313161554,
     pool: {
+      deprecated: true,
       id: '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007',
       address: '0x480edf7ecb52ef9eace2346b84f29795429aa9c9',
       poolType: 'Stable',

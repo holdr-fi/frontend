@@ -201,6 +201,10 @@ function redirectToPool(gauge: VotingGaugeWithVotes) {
       </template>
       <template v-slot:poolCompositionCell="{ pool }">
         <div v-if="!isLoading" class="px-6 py-4 flex items-center">
+          <div v-if="pool.deprecated" class="text-left">
+            Deprecated Pool, please remove votes
+          </div>
+          <div v-else>
           <TokenPills
             :tokens="
               orderedPoolTokens(pool.poolType, pool.address, pool.tokens)
@@ -209,6 +213,7 @@ function redirectToPool(gauge: VotingGaugeWithVotes) {
               isStableLike(pool.poolType) || isUnknownType(pool.poolType)
             "
           />
+        </div>
         </div>
       </template>
       <template v-slot:nextPeriodVotesCell="gauge">
