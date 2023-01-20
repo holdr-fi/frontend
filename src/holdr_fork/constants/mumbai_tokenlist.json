@@ -1,7 +1,7 @@
 {
   "name": "Solace",
   "timestamp": "2022-06-09T00:00:00.000Z",
-  "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.png",
+  "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.svg",
   "keywords": [
     "solace",
     "listed"
@@ -18,7 +18,7 @@
       "name": "Solace Swap Governance Token",
       "symbol": "SWP",
       "decimals": 18,
-      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.png"
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.svg"
     },
     {
       "address": "0x0Ab2e51763E84c5473C8001b39F745dfE8d4f9f9",
@@ -42,7 +42,7 @@
       "name": "Holdr Governance Token",
       "symbol": "HLDR",
       "decimals": 18,
-      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.png"
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/holdr-token-colored.svg"
     },
     {
       "address": "0x701beEf241d4EFe9263bFCEf298329F874Ac4e77",
