@@ -302,6 +302,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     address: '0xbC4B15225b06429ADCC990788b01C17aDbb1b315',
     network: 1313161554,
     pool: {
+      deprecated: true,
       id: '0x4b5648133ea518c3ac47f7159cf998c6ff15f435000200000000000000000024',
       address: '0x4b5648133eA518C3Ac47f7159cF998c6ff15F435',
       poolType: 'Weighted',
