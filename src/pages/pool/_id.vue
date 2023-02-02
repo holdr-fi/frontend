@@ -89,7 +89,7 @@
               !loadingPool &&
               hasCustomToken &&
               !doesPoolHaveExemptedTokens &&
-              !isPoolExempted
+              !isPoolExemptedFromErrors
           "
           type="error"
           :title="$t('highRiskPool')"
@@ -126,7 +126,7 @@
         <div class="grid grid-cols-1 gap-y-8">
           <div class="px-1 lg:px-0">
             <PoolChart
-              v-if="!doesPoolHaveExemptedTokens && !isPoolExempted"
+              v-if="!doesPoolHaveExemptedTokens && !isPoolExemptedFromErrors"
               :pool="pool"
               :historicalPrices="historicalPrices"
               :snapshots="snapshots"
@@ -249,6 +249,7 @@ export default defineComponent({
     ]);
 
     const exemptedPools = computed(() => [
+      '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026', //usdc-usdt stablepool v2 (aurora)
       '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007' // usdc-usdt stablepool (aurora)
     ]);
 
@@ -260,7 +261,7 @@ export default defineComponent({
       )
     );
 
-    const isPoolExempted = computed(() =>
+    const isPoolExemptedFromErrors = computed(() =>
       exemptedPools.value.includes(route.params.id as string)
     );
     
@@ -493,7 +494,7 @@ export default defineComponent({
       isL2,
       isStakablePool,
       doesPoolHaveExemptedTokens,
-      isPoolExempted,
+      isPoolExemptedFromErrors,
       // methods,
       fNum2,
       onNewTx,
