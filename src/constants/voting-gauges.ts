@@ -356,6 +356,34 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x4988a896b1227218e4A686fdE5EabdcAbd91571f':
         'https://raw.githubusercontent.com/trustwallet/assets/ad3cfa2e1c8e4b295cd81d64ecc5ab2a9514f79e/blockchains/binance/assets/USDT-6D8/logo.png'
     }
+  },
+  {
+    address: '0x0CAC594Da930BF6Ec5dCc0c771aFb052B5c0fE99',
+    network: 1313161554,
+    pool: {
+      id: '0x5fdfdf63e1d3c4c466578602ea127decf024f39400020000000000000000002c',
+      address: '0x5fdfdf63e1d3c4c466578602ea127decf024f394',
+      poolType: 'Weighted',
+      symbol: '80PLY-20wstNEAR',
+      tokens: [
+        {
+          address: '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f',
+          weight: '0.80',
+          symbol: 'PLY'
+        },
+        {
+          address: '0x120908185dC7f4d4AE8B32C376484406cC16731A',
+          weight: '0.20',
+          symbol: 'wstNEAR'
+        }
+      ]
+    },
+    tokenLogoURIs: {
+      '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f':
+        'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/ply.svg',
+      '0x120908185dC7f4d4AE8B32C376484406cC16731A':
+        'https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407'
+    }
   }
 ] as VotingGauge[];
 
