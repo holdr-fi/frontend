@@ -73,7 +73,7 @@ const poolTokens = computed(() =>
 const propTokenAmounts = computed((): string[] => {
   const { receive } = poolCalculator.propAmountsGiven(
     bnum(bptBalance.value)
-      .plus(stakedSharesForProvidedPool.value)
+      // .plus(stakedSharesForProvidedPool.value)
       .toString(),
     0,
     'send'
@@ -105,14 +105,15 @@ const tokenAddresses = computed((): string[] => {
   return props.pool.tokensList;
 });
 
-const fiatValue = computed(() =>
-  tokenAddresses.value
+const fiatValue = computed(() =>{
+  if (tokenAddresses.value.length == 0) return '0';
+  return tokenAddresses.value
     .map((address, i) => toFiat(propTokenAmounts.value[i], address))
     .reduce((total, value) =>
       bnum(total)
         .plus(value)
         .toString()
-    )
+    )}
 );
 
 const showMigrateButton = computed(
