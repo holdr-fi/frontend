@@ -9,7 +9,7 @@
   "rpc": "https://testnet.aurora.dev",
   "ws": "",
   "loggingRpc": "https://testnet.aurora.dev",
-  "explorer": "https://testnet.aurorascan.dev/",
+  "explorer": "https://testnet.aurorascan.dev",
   "explorerName": "AuroraScan",
   "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/solace_pool",
   "balancerApi": "",

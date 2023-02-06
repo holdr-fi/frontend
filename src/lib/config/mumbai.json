@@ -10,7 +10,7 @@
   "publicRpc": "https://matic-mumbai.chainstacklabs.com",
   "ws": "",
   "loggingRpc": "https://matic-mumbai.chainstacklabs.com",
-  "explorer": "https://mumbai.polygonscan.com/",
+  "explorer": "https://mumbai.polygonscan.com",
   "explorerName": "Mumbai Polygonscan",
   "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/solace-swap-test",
   "balancerApi": "",

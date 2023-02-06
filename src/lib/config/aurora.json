@@ -10,7 +10,7 @@
   "publicRpc": "https://mainnet.aurora.dev",
   "ws": "",
   "loggingRpc": "https://mainnet.aurora.dev",
-  "explorer": "https://aurorascan.dev/",
+  "explorer": "https://aurorascan.dev",
   "explorerName": "AuroraScan",
   "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/balancer_aurora_fork",
   "balancerApi": "",
