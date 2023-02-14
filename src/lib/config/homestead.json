@@ -49,6 +49,8 @@
     "wnear": "",
     "stnear": "",
     "wstnear": "",
+    "meta": "",
+    "wmeta": "",
     "lidoRelayer": "0xdcdbf71A870cc60C6F9B621E28a7D3Ffd6Dd4965",
     "MockFlashLoanReceiver": "",
     "balancerHelpers": "0x5aDDCCa35b7A0D07C74063c48700C8590E87864E",

@@ -245,7 +245,8 @@ export default defineComponent({
     // HOLDR_INFO: list of tokens that do not need prices fetched for
     const exemptedTokens = computed(() => [
       configService.network.addresses.wnear,
-      configService.network.addresses.wstnear
+      configService.network.addresses.wstnear,
+      configService.network.addresses.wmeta,
     ]);
 
     const exemptedPools = computed(() => [

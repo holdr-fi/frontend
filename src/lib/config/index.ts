@@ -58,6 +58,8 @@ export interface Config {
     wnear: string;
     stnear: string;
     wstnear: string;
+    meta: string;
+    wmeta: string;
     lidoRelayer: string;
     balancerHelpers: string;
     batchRelayer: string;

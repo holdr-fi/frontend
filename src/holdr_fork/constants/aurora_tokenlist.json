@@ -114,7 +114,7 @@
       "name": "Aurigami",
       "symbol": "PLY",
       "decimals": 18,
-      "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/ply.svg"
+      "logoURI": "https://app.aurigami.finance/assets/auply-8a8b9647.svg"
     },
     {
       "address": "0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
@@ -155,6 +155,22 @@
       "symbol": "auUSDT",
       "decimals": 8,
       "logoURI": "https://raw.githubusercontent.com/trisolaris-labs/tokens/master/assets/0xaD5A2437Ff55ed7A8Cad3b797b3eC7c5a19B1c54/logo.svg"
+    },
+    {
+      "address": "0xc21Ff01229e982d7c8b8691163B0A3Cb8F357453",
+      "chainId": 1313161554,
+      "name": "META",
+      "symbol": "META",
+      "decimals": 24,
+      "logoURI": "https://github.com/aurora-is-near/bridge-assets/blob/master/tokens/%24meta.svg"
+    },
+    {
+      "address": "0x71B61b0c931Cad9E9a3Cae116C5f48A865c0fC7B",
+      "chainId": 1313161554,
+      "name": "wMETA",
+      "symbol": "wMETA",
+      "decimals": 18,
+      "logoURI": "https://github.com/aurora-is-near/bridge-assets/blob/master/tokens/%24meta.svg"
     }
   ]
 }

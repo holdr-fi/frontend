@@ -44,6 +44,8 @@
     "wnear": "",
     "stnear": "",
     "wstnear": "",
+    "meta": "",
+    "wmeta": "",
     "lidoRelayer": "",
     "MockFlashLoanReceiver": "",
     "balancerHelpers": "",

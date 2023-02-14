@@ -135,10 +135,11 @@ export default {
         networkConfig.addresses.vault,
         networkConfig.addresses.wstETH,
         configService.network.addresses.veBAL,
+        configService.network.addresses.bribe,
+        configService.network.addresses.bribeVault,
         configService.network.addresses.wnear,
         configService.network.addresses.wstnear,
-        configService.network.addresses.bribe,
-        configService.network.addresses.bribeVault
+        configService.network.addresses.wmeta
       ]),
       injectedPrices: {}
     });
@@ -475,21 +476,30 @@ export default {
         const [tokenMap, holdrPrice] = await Promise.all([
           coingeckoService.prices.getTokens([
             getAddress(configService.network.addresses.near),
-            getAddress(configService.network.addresses.stnear)
+            getAddress(configService.network.addresses.stnear),
+            getAddress(configService.network.addresses.meta)
           ]),
           axios.get(
             'https://s3.us-west-2.amazonaws.com/price-feed.solace.fi.data/output/holdrPrice.json'
           )
         ]);
         const injectMap = {};
-        const nearUsd = tokenMap[getAddress(configService.network.addresses.near)].usd;
+        const nearUsd =
+          tokenMap[getAddress(configService.network.addresses.near)].usd;
         injectMap[configService.network.addresses.wnear] = {
           usd: nearUsd
         };
 
-        const stNearUsd = tokenMap[getAddress(configService.network.addresses.stnear)].usd;
+        const stNearUsd =
+          tokenMap[getAddress(configService.network.addresses.stnear)].usd;
         injectMap[configService.network.addresses.wstnear] = {
           usd: stNearUsd
+        };
+
+        const wMETAUsd =
+          tokenMap[getAddress(configService.network.addresses.meta)].usd;
+        injectMap[configService.network.addresses.wmeta] = {
+          usd: wMETAUsd
         };
 
         await injectPrices({
