@@ -119,6 +119,7 @@ const excludedTokens = computed((): string[] => {
     nativeAsset.address,
     configService.network.addresses.near,
     configService.network.addresses.stnear,
+    configService.network.addresses.meta,
     ...tokensList.value
   ];
 });

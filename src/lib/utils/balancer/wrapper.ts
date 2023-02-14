@@ -24,6 +24,10 @@ export const wrapNearSymbolMap = {
   META: 'wMETA'
 };
 
+const matchAnyAddress = (address: string, addresses: string[]): boolean => {
+  return addresses.some(a => same(a, address));
+};
+
 const wrapNearAddressMap = {
   [getAddress(configService.network.addresses.near)]: getAddress(
     configService.network.addresses.wnear
@@ -112,7 +116,7 @@ export const getWrapOutput = (
       ? getWstETHByStETH(wrapAmount)
       : getStETHByWstETH(wrapAmount);
   }
-  if (same(wrapper, wnear) || same(wrapper, wstnear) || same(wrapper, wmeta)) {
+  if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta])) {
     return wrapType === WrapType.Wrap
       ? BigNumber.from(wrapAmount)
           .div('1000000')
@@ -144,11 +148,7 @@ export async function wrap(
       return wrapNative(network, web3, amount);
     } else if (same(wrapper, wstETH)) {
       return wrapLido(network, web3, amount);
-    } else if (
-      same(wrapper, wnear) ||
-      same(wrapper, wstnear) ||
-      same(wrapper, wmeta)
-    ) {
+    } else if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta])) {
       return wrapNearFrom24To18(wrapper, network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');
@@ -177,11 +177,7 @@ export async function unwrap(
       return unwrapNative(network, web3, amount);
     } else if (same(wrapper, wstETH)) {
       return unwrapLido(network, web3, amount);
-    } else if (
-      same(wrapper, wnear) ||
-      same(wrapper, wstnear) ||
-      same(wrapper, wmeta)
-    ) {
+    } else if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta])) {
       return unwrapNearFrom18To24(wrapper, network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');
@@ -247,7 +243,8 @@ const unwrapLido = async (
 /* HOLDR_INFO: Near token has 24 tokens, incompatible with Balancer protocol, 
     so we created our own wrapped Near token with 6 decimals less to compile 
     with Balancer protocol, it might be confusing since the name of the official 
-    Near token on the blockchain is called 'Wrapped Near'.
+    Near token on the blockchain is called 'Wrapped Near'. There are also plenty of other
+    tokens out there in the ecosystem that have 24 decimals, so we need to wrap them.
 */
 const wrapNearFrom24To18 = async (
   nearContractAddress: string,
