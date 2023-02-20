@@ -384,6 +384,34 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x120908185dC7f4d4AE8B32C376484406cC16731A':
         'https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407'
     }
+  },
+  {
+    address: '0x42e5781eae6711A20739c9f9A4d76F8977FaaD57',
+    network: 1313161554,
+    pool: {
+      id: '0xc2ed122265ffca6cf1dbae4af6c37d940fcdfa0e00020000000000000000002f',
+      address: '0xc2ed122265ffca6cf1dbae4af6c37d940fcdfa0e',
+      poolType: 'Weighted',
+      symbol: '20wstNEAR-80wMETA',
+      tokens: [
+        {
+          address: '0x71b61b0c931cad9e9a3cae116c5f48a865c0fc7b',
+          weight: '0.80',
+          symbol: 'wMETA'
+        },
+        {
+          address: '0x120908185dc7f4d4ae8b32c376484406cc16731a',
+          weight: '0.20',
+          symbol: 'wstNEAR'
+        }
+      ]
+    },
+    tokenLogoURIs: {
+      '0x71b61b0c931cad9e9a3cae116c5f48a865c0fc7b':
+        'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/5a01e8db7caf7cbbcb8bf8454e5763252be37277/tokens/%24meta.svg',
+      '0x120908185dc7f4d4ae8b32c376484406cc16731a':
+        'https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407'
+    }
   }
 ] as VotingGauge[];
 
