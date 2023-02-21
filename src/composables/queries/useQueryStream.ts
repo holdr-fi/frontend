@@ -140,7 +140,7 @@ export default function useQueryStreams(
     // if there is any. to do so we need to make it refetch on page changes
     // so we have to add a dependency to the query which tracks the page
     const otherQueryDependency = computed(() => {
-      return (query.waitFor || []).map(queryId => {
+      const res = (query.waitFor || []).map(queryId => {
         if (queryId.includes('.')) {
           return (
             internalData.value[initialQueryHash.value][queryId.split('.')[0]] ||
@@ -149,6 +149,7 @@ export default function useQueryStreams(
         }
         return internalData.value[queryId];
       });
+      return res;
     });
     const dependencies =
       query.init || query.type === 'page_dependent'
