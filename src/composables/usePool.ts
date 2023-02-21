@@ -88,7 +88,8 @@ export function isDeep(pool: Pool): boolean {
     '0x4c8d2e60863e8d7e1033eda2b3d84e92a641802000000000000000000000040f', // FRAX/aave-usdc (mainnet)
     // HLDR pools
     '0x96cb1a4f2ff409eb7f1bed9e8e67799b66eb5b2e000200000000000000000027', // wNEAR/USDC-USDT (aurora)
-    '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b' // hb-a-USD (aurora)
+    '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b', // hb-a-USD (aurora)
+    '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035' // Holdr Boosted Aurigami USD
   ];
   return treatAsDeep.includes(pool.id);
 }
