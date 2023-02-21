@@ -434,7 +434,8 @@ const POOLS_AURORA: Pools = {
       '0x3eb4098384377dafae15d63d57562bfecb956624000200000000000000000000', // mai,
       '0x0005b732f5434dbd39cc353d5795e71833820e6700000000000000000000002a', // USDT-auUSDT
       '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029', // USDC-auUSDC
-      '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b' // hb-a-usdt - hb-a-usdc
+      '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b', // hb-a-usdt - hb-a-usdc
+      '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035' // aurigami boosted pool (hb-a-usdt - hb-a-usdc composablestable)
     ]
   },
   Investment: {
