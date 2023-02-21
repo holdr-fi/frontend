@@ -71,6 +71,8 @@ export function isPreMintedBptType(poolType: PoolType): boolean {
  * This is used to enable the generalised deep pool join/exit flow for example.
  */
 
+// HOLDR_INFO: for future boosted or deep pools, add the pool address to the list below
+
 export function isDeep(pool: Pool): boolean {
   const treatAsDeep = [
     '0x13acd41c585d7ebb4a9460f7c8f50be60dc080cd00000000000000000000005f', // bb-a-USD1 (goerli)

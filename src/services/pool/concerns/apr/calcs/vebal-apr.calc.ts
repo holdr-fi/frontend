@@ -66,7 +66,6 @@ export class VeBalAprCalc {
           abi: FeeDistributorABI,
           params: [this.balAddress, epochBeforeLast]
         })
-        // HOLDR_EDIT: Commented out following to remove invalid smart contract query.
         .call({
           key: 'bbAUSDAmount',
           address: this.config.network.addresses.feeDistributor,
