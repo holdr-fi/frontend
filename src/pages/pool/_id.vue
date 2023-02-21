@@ -4,10 +4,18 @@
       <div class="col-span-2">
         <BalLoadingBlock v-if="loadingPool" class="h-16" />
         <div v-else class="px-4 lg:px-0 flex flex-col">
-          <div class="flex flex-wrap items-center -mt-2">
+          <h3 class="pool-title mb-2" v-if="!poolMetadata || !poolMetadata.name">
+            {{ poolTypeLabel }}
+          </h3>
+          <div v-else>
             <h3 class="pool-title">
-              {{ poolTypeLabel }}
-            </h3>
+            {{ poolMetadata.name }}
+          </h3>
+            <h6 class="mb-1">
+            {{ poolTypeLabel }}
+          </h6>
+          </div>
+          <div class="flex flex-wrap items-center -mt-2">
             <div
               v-for="([address, tokenMeta], i) in titleTokens"
               :key="i"
@@ -278,6 +286,8 @@ export default defineComponent({
      */
     const pool = computed(() => poolQuery.data.value);
 
+    const poolMetadata = computed(() => pool.value ? POOLS.Metadata[pool.value.id] : undefined)
+
     const {
       isStableLikePool,
       isComposableStablePool,
@@ -496,6 +506,7 @@ export default defineComponent({
       isStakablePool,
       doesPoolHaveExemptedTokens,
       isPoolExemptedFromErrors,
+      poolMetadata,
       // methods,
       fNum2,
       onNewTx,

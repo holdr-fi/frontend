@@ -466,6 +466,10 @@ const POOLS_AURORA: Pools = {
     '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b': {
       name: 'Holdr Aurigami Boosted USD',
       hasIcon: true
+    },
+    '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035': {
+      name: 'Holdr Boosted Aurigami USD',
+      hasIcon: true
     }
   }
 };
