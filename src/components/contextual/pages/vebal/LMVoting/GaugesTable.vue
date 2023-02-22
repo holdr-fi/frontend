@@ -204,8 +204,11 @@ function redirectToPool(gauge: VotingGaugeWithVotes) {
           <div v-if="pool.deprecated" class="text-left">
             Deprecated Pool, please remove votes
           </div>
+          <div v-else-if="pool.name" class="text-left">
+            {{ pool.name }}
+          </div>
           <div v-else>
-          <TokenPills
+            <TokenPills
             :tokens="
               orderedPoolTokens(pool.poolType, pool.address, pool.tokens)
             "

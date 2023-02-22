@@ -34,6 +34,9 @@ import {
   TokenInfoMap,
   TokenList
 } from '@/types/TokenList';
+import { Contract } from '@ethersproject/contracts';
+import useWeb3 from '@/services/web3/useWeb3';
+import { formatUnits } from 'ethers/lib/utils';
 
 /**
  * TYPES
@@ -110,6 +113,7 @@ export default {
      * COMPOSABLES
      */
     const { networkConfig } = useConfig();
+    const { getProvider } = useWeb3();
     const {
       allTokenLists,
       activeTokenLists,
@@ -473,7 +477,47 @@ export default {
       }
 
       if (configService.network.chainId === 1313161554) {
-        const [tokenMap, holdrPrice] = await Promise.all([
+        const rateProviderABI = [
+          {
+            inputs: [],
+            stateMutability: 'nonpayable',
+            type: 'constructor'
+          },
+          {
+            inputs: [],
+            name: 'getRate',
+            outputs: [
+              {
+                internalType: 'uint256',
+                name: 'rate',
+                type: 'uint256'
+              }
+            ],
+            stateMutability: 'view',
+            type: 'function'
+          }
+        ];
+
+        const auUSDCRateProvider = '0x247f8c7379C71d845687A7d9Ec642C3D09782Aa4';
+        const auUSDCRateProviderContract = new Contract(
+          auUSDCRateProvider,
+          rateProviderABI,
+          getProvider()
+        );
+
+        const auUSDTRateProvider = '0x9A1671e139332b7BfADc6E15360FD89da4399b52';
+        const auUSDTRateProviderContract = new Contract(
+          auUSDTRateProvider,
+          rateProviderABI,
+          getProvider()
+        );
+
+        const [
+          tokenMap,
+          holdrPrice,
+          bn_auUSDCPrice,
+          bn_auUSDTPrice
+        ] = await Promise.all([
           coingeckoService.prices.getTokens([
             getAddress(configService.network.addresses.near),
             getAddress(configService.network.addresses.stnear),
@@ -481,8 +525,11 @@ export default {
           ]),
           axios.get(
             'https://s3.us-west-2.amazonaws.com/price-feed.solace.fi.data/output/holdrPrice.json'
-          )
+          ),
+          auUSDCRateProviderContract.getRate(),
+          auUSDTRateProviderContract.getRate()
         ]);
+
         const injectMap = {};
         const nearUsd =
           tokenMap[getAddress(configService.network.addresses.near)].usd;
@@ -500,6 +547,16 @@ export default {
           tokenMap[getAddress(configService.network.addresses.meta)].usd;
         injectMap[configService.network.addresses.wmeta] = {
           usd: wMETAUsd
+        };
+
+        const auUSDCPrice = formatUnits(bn_auUSDCPrice, 18);
+        const auUSDTPrice = formatUnits(bn_auUSDTPrice, 18);
+
+        injectMap['0x4f0d864b1ABf4B701799a0b30b57A22dFEB5917b'] = {
+          usd: Number(auUSDCPrice)
+        };
+        injectMap['0xaD5A2437Ff55ed7A8Cad3b797b3eC7c5a19B1c54'] = {
+          usd: Number(auUSDTPrice)
         };
 
         await injectPrices({

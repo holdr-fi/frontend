@@ -425,7 +425,11 @@ const POOLS_AURORA: Pools = {
     // hb-a-USDT
     '0x0005b732f5434dbd39cc353d5795e71833820e6700000000000000000000002a',
     // hb-a-USDC
-    '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029'
+    '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029',
+    // usdt-auusdt
+    '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd000000000000000000000034',
+    // usdc-auusdc
+    '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e000000000000000000000031'
   ],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {

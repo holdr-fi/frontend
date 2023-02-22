@@ -16,6 +16,7 @@ export type VotingGauge = {
     symbol: string | undefined;
     tokens: Pick<PoolToken, 'address' | 'weight' | 'symbol'>[];
     deprecated?: boolean;
+    name?: string;
   };
   tokenLogoURIs: Record<string, string | undefined>;
 };
@@ -412,6 +413,30 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x120908185dc7f4d4ae8b32c376484406cc16731a':
         'https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407'
     }
+  },
+  {
+    address: '0x81D4104f79D40D89b31C3590472Ae12Da2BCDA41',
+    network: 1313161554,
+    pool: {
+      name: 'Holdr Aurigami Boosted USD Pool',
+      id: '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035',
+      address: '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17',
+      poolType: 'Stable',
+      symbol: 'hb-a-USD',
+      tokens: [
+        {
+          address: '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd',
+          weight: null,
+          symbol: 'hb-a-USDT'
+        },
+        {
+          address: '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e',
+          weight: null,
+          symbol: 'hb-a-USDC'
+        }
+      ]
+    },
+    tokenLogoURIs: {}
   }
 ] as VotingGauge[];
 
