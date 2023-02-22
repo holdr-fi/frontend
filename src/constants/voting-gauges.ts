@@ -262,7 +262,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x9f1f933c660a1dc856f0e0fe058435879c5ccef0':
         'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/bstn.svg',
       '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f':
-        'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/ply.svg',
+        'https://app.aurigami.finance/assets/ply-8a8b9647.svg',
       '0xFa94348467f64D5A457F75F8bc40495D33c65aBB':
         'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/tri.svg'
     }
@@ -381,7 +381,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     },
     tokenLogoURIs: {
       '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f':
-        'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/ply.svg',
+        'https://app.aurigami.finance/assets/ply-8a8b9647.svg',
       '0x120908185dC7f4d4AE8B32C376484406cC16731A':
         'https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407'
     }
@@ -440,7 +440,9 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd':
         'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usdt.png',
       '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e':
-        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usdc.png'
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usdc.png',
+      '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17':
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/boosted.png'
     }
   }
 ] as VotingGauge[];

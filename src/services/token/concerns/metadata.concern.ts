@@ -12,6 +12,12 @@ import {
 } from '@/types/TokenList';
 
 import TokenService from '../token.service';
+import { isMumbai } from './../../../composables/useNetwork';
+import {
+  AURORA_VOTING_GAUGES,
+  MUMBAI_VOTING_GAUGES,
+  VotingGauge
+} from '@/constants/voting-gauges';
 
 export default class MetadataConcern {
   constructor(private readonly service: TokenService) {}
@@ -77,11 +83,25 @@ export default class MetadataConcern {
       addresses.forEach(address => {
         set(metaDict, `${address}.address`, address);
         set(metaDict, `${address}.chainId`, parseInt(network));
-        set(
-          metaDict,
-          `${address}.logoURI`,
-          `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+        // HOLDR_INFO: check voting gauges in case there is a tokenURI there we can use
+        let vURI = '';
+        const votingGauges = isMumbai.value
+          ? (MUMBAI_VOTING_GAUGES as VotingGauge[])
+          : (AURORA_VOTING_GAUGES as VotingGauge[]);
+        const gaugeWithMatchingTokenURI = votingGauges.find(
+          gauge => gauge.tokenLogoURIs[address.toLowerCase()]
         );
+        if (
+          gaugeWithMatchingTokenURI &&
+          gaugeWithMatchingTokenURI.tokenLogoURIs[address.toLowerCase()]
+        ) {
+          vURI = String(
+            gaugeWithMatchingTokenURI.tokenLogoURIs[address.toLowerCase()]
+          );
+        } else {
+          vURI = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;
+        }
+        set(metaDict, `${address}.logoURI`, vURI);
         multi.call(`${address}.name`, address, 'name');
         multi.call(`${address}.symbol`, address, 'symbol');
         multi.call(`${address}.decimals`, address, 'decimals');
