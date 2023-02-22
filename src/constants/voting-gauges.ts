@@ -436,7 +436,12 @@ export const CHANGED_ALL_VOTING_GAUGES = [
         }
       ]
     },
-    tokenLogoURIs: {}
+    tokenLogoURIs: {
+      '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd':
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usdt.png',
+      '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e':
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usdc.png'
+    }
   }
 ] as VotingGauge[];
 

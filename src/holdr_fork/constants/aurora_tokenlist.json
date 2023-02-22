@@ -114,7 +114,7 @@
       "name": "Aurigami",
       "symbol": "PLY",
       "decimals": 18,
-      "logoURI": "https://app.aurigami.finance/assets/auply-8a8b9647.svg"
+      "logoURI": "https://app.aurigami.finance/assets/ply-8a8b9647.svg"
     },
     {
       "address": "0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
@@ -146,7 +146,7 @@
       "name": "auUSDC",
       "symbol": "auUSDC",
       "decimals": 8,
-      "logoURI": "https://raw.githubusercontent.com/trisolaris-labs/tokens/master/assets/0x4f0d864b1ABf4B701799a0b30b57A22dFEB5917b/logo.svg"
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/auUSDC.png"
     },
     {
       "address": "0xaD5A2437Ff55ed7A8Cad3b797b3eC7c5a19B1c54",
@@ -154,7 +154,7 @@
       "name": "auUSDT",
       "symbol": "auUSDT",
       "decimals": 8,
-      "logoURI": "https://raw.githubusercontent.com/trisolaris-labs/tokens/master/assets/0xaD5A2437Ff55ed7A8Cad3b797b3eC7c5a19B1c54/logo.svg"
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/auUSDT.png"
     },
     {
       "address": "0xc21Ff01229e982d7c8b8691163B0A3Cb8F357453",
