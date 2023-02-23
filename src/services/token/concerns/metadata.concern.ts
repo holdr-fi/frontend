@@ -89,14 +89,14 @@ export default class MetadataConcern {
           ? (MUMBAI_VOTING_GAUGES as VotingGauge[])
           : (AURORA_VOTING_GAUGES as VotingGauge[]);
         const gaugeWithMatchingTokenURI = votingGauges.find(
-          gauge => gauge.tokenLogoURIs[address.toLowerCase()]
+          gauge => gauge.tokenLogoURIs[getAddress(address)]
         );
         if (
           gaugeWithMatchingTokenURI &&
-          gaugeWithMatchingTokenURI.tokenLogoURIs[address.toLowerCase()]
+          gaugeWithMatchingTokenURI.tokenLogoURIs[getAddress(address)]
         ) {
           vURI = String(
-            gaugeWithMatchingTokenURI.tokenLogoURIs[address.toLowerCase()]
+            gaugeWithMatchingTokenURI.tokenLogoURIs[getAddress(address)]
           );
         } else {
           vURI = `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`;

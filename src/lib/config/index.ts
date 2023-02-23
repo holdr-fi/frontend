@@ -60,6 +60,10 @@ export interface Config {
     wstnear: string;
     meta: string;
     wmeta: string;
+    auUSDC: string;
+    auUSDT: string;
+    cUSDC: string;
+    cUSDT: string;
     lidoRelayer: string;
     balancerHelpers: string;
     batchRelayer: string;

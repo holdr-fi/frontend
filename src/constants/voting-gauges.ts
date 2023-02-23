@@ -182,7 +182,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
           symbol: 'wNEAR'
         },
         {
-          address: '0xf4eb217ba2454613b15dbdea6e5f22276410e89e',
+          address: '0xF4eB217Ba2454613b15dBdea6e5f22276410e89e',
           weight: '0.2',
           symbol: 'WBTC'
         }
@@ -191,7 +191,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     tokenLogoURIs: {
       '0x6BB0c4d909a84d118B5e6c4b17117e79E621ae94':
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/near/info/logo.png',
-      '0xf4eb217ba2454613b15dbdea6e5f22276410e89e':
+      '0xF4eB217Ba2454613b15dBdea6e5f22276410e89e':
         'https://raw.githubusercontent.com/trustwallet/assets/17d956dc22e8c9895dd52d93dea7ec6cdb2d882a/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png'
     }
   },
@@ -240,12 +240,12 @@ export const CHANGED_ALL_VOTING_GAUGES = [
           symbol: 'AURORA'
         },
         {
-          address: '0x9f1f933c660a1dc856f0e0fe058435879c5ccef0',
+          address: '0x9f1F933C660a1DC856F0E0Fe058435879c5CCEf0',
           weight: '0.25',
           symbol: 'BSTN'
         },
         {
-          address: '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f',
+          address: '0x09C9D464b58d96837f8d8b6f4d9fE4aD408d3A4f',
           weight: '0.25',
           symbol: 'PLY'
         },
@@ -259,9 +259,9 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     tokenLogoURIs: {
       '0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79':
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/aurora/assets/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/logo.png',
-      '0x9f1f933c660a1dc856f0e0fe058435879c5ccef0':
+      '0x9f1F933C660a1DC856F0E0Fe058435879c5CCEf0':
         'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/bstn.svg',
-      '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f':
+      '0x09C9D464b58d96837f8d8b6f4d9fE4aD408d3A4f':
         'https://app.aurigami.finance/assets/ply-8a8b9647.svg',
       '0xFa94348467f64D5A457F75F8bc40495D33c65aBB':
         'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/master/tokens/tri.svg'
@@ -368,7 +368,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       symbol: '80PLY-20wstNEAR',
       tokens: [
         {
-          address: '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f',
+          address: '0x09C9D464b58d96837f8d8b6f4d9fE4aD408d3A4f',
           weight: '0.80',
           symbol: 'PLY'
         },
@@ -380,7 +380,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       ]
     },
     tokenLogoURIs: {
-      '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f':
+      '0x09C9D464b58d96837f8d8b6f4d9fE4aD408d3A4f':
         'https://app.aurigami.finance/assets/ply-8a8b9647.svg',
       '0x120908185dC7f4d4AE8B32C376484406cC16731A':
         'https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407'
@@ -396,21 +396,21 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       symbol: '20wstNEAR-80wMETA',
       tokens: [
         {
-          address: '0x71b61b0c931cad9e9a3cae116c5f48a865c0fc7b',
+          address: '0x71B61b0c931Cad9E9a3Cae116C5f48A865c0fC7B',
           weight: '0.80',
           symbol: 'wMETA'
         },
         {
-          address: '0x120908185dc7f4d4ae8b32c376484406cc16731a',
+          address: '0x120908185dC7f4d4AE8B32C376484406cC16731A',
           weight: '0.20',
           symbol: 'wstNEAR'
         }
       ]
     },
     tokenLogoURIs: {
-      '0x71b61b0c931cad9e9a3cae116c5f48a865c0fc7b':
+      '0x71B61b0c931Cad9E9a3Cae116C5f48A865c0fC7B':
         'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/5a01e8db7caf7cbbcb8bf8454e5763252be37277/tokens/%24meta.svg',
-      '0x120908185dc7f4d4ae8b32c376484406cc16731a':
+      '0x120908185dC7f4d4AE8B32C376484406cC16731A':
         'https://assets.coingecko.com/coins/images/24250/small/st-NEAR-token-white-dark-purple-circle.png?1657601407'
     }
   },
@@ -418,30 +418,61 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     address: '0x81D4104f79D40D89b31C3590472Ae12Da2BCDA41',
     network: 1313161554,
     pool: {
-      name: 'Holdr Aurigami Boosted USD Pool',
+      name: 'Holdr Aurigami Boosted StablePool',
       id: '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035',
       address: '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17',
       poolType: 'Stable',
       symbol: 'hb-a-USD',
       tokens: [
         {
-          address: '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd',
+          address: '0x01B02b2eB5dD299DB4A8c089D34dA0796B0021DD',
           weight: null,
           symbol: 'hb-a-USDT'
         },
         {
-          address: '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e',
+          address: '0x42E661a89C6258e70c6AAe77f3061f9f7d4A918E',
           weight: null,
           symbol: 'hb-a-USDC'
         }
       ]
     },
     tokenLogoURIs: {
-      '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd':
+      '0x01B02b2eB5dD299DB4A8c089D34dA0796B0021DD':
         'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usdt.png',
-      '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e':
+      '0x42E661a89C6258e70c6AAe77f3061f9f7d4A918E':
         'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usdc.png',
-      '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17':
+      '0x0eE0b472B996B8FD565C319CcDBDadCdd3e98C17':
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/boosted.png'
+    }
+  },
+  {
+    address: '0x731E05231df818E0B3f5617Efe8D51E915b83914',
+    network: 1313161554,
+    pool: {
+      name: 'Holdr Bastion Boosted StablePool',
+      id: '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038',
+      address: '0x118c81ddecadb13608b90634ec1135b8e27f3590',
+      poolType: 'Stable',
+      symbol: 'hb-b-USD',
+      tokens: [
+        {
+          address: '0x19252cE2f1c296E25bAd5D241e3C5AFE78C864EB',
+          weight: null,
+          symbol: 'hb-b-USDT'
+        },
+        {
+          address: '0x079a5925D6c334799D1252775cab9BD3aCe26822',
+          weight: null,
+          symbol: 'hb-b-USDC'
+        }
+      ]
+    },
+    tokenLogoURIs: {
+      '0x19252cE2f1c296E25bAd5D241e3C5AFE78C864EB':
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-b-usdt.png',
+      '0x079a5925D6c334799D1252775cab9BD3aCe26822':
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-b-usdc.png',
+      '0x118c81ddEcADb13608B90634eC1135B8e27f3590':
         'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/boosted.png'
     }
   }

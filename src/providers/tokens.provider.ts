@@ -552,10 +552,10 @@ export default {
         const auUSDCPrice = formatUnits(bn_auUSDCPrice, 18);
         const auUSDTPrice = formatUnits(bn_auUSDTPrice, 18);
 
-        injectMap['0x4f0d864b1ABf4B701799a0b30b57A22dFEB5917b'] = {
+        injectMap[getAddress(configService.network.addresses.auUSDC)] = {
           usd: Number(auUSDCPrice)
         };
-        injectMap['0xaD5A2437Ff55ed7A8Cad3b797b3eC7c5a19B1c54'] = {
+        injectMap[getAddress(configService.network.addresses.auUSDT)] = {
           usd: Number(auUSDTPrice)
         };
 
