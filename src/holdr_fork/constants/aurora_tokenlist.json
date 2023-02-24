@@ -171,6 +171,38 @@
       "symbol": "wMETA",
       "decimals": 18,
       "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/5a01e8db7caf7cbbcb8bf8454e5763252be37277/tokens/%24meta.svg"
+    },
+    {
+      "address": "0x0eE0b472B996B8FD565C319CcDBDadCdd3e98C17",
+      "chainId": 1313161554,
+      "name": "hb-a-USD",
+      "symbol": "hb-a-USD",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usd.png"
+    },
+    {
+      "address": "0x118c81ddEcADb13608B90634eC1135B8e27f3590",
+      "chainId": 1313161554,
+      "name": "hb-b-USD",
+      "symbol": "hb-b-USD",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-b-usd.png"
+    },
+    {
+      "address": "0x845E15A441CFC1871B7AC610b0E922019BaD9826",
+      "chainId": 1313161554,
+      "name": "cUSDT",
+      "symbol": "cUSDT",
+      "decimals": 8,
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/cusdt.png"
+    },
+    {
+      "address": "0xe5308dc623101508952948b141fD9eaBd3337D99",
+      "chainId": 1313161554,
+      "name": "cUSDC",
+      "symbol": "cUSDC",
+      "decimals": 8,
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/cusdc.png"
     }
   ]
 }

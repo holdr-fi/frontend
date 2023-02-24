@@ -442,7 +442,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x42E661a89C6258e70c6AAe77f3061f9f7d4A918E':
         'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usdc.png',
       '0x0eE0b472B996B8FD565C319CcDBDadCdd3e98C17':
-        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/boosted.png'
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-a-usd.png'
     }
   },
   {
@@ -473,7 +473,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x079a5925D6c334799D1252775cab9BD3aCe26822':
         'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-b-usdc.png',
       '0x118c81ddEcADb13608B90634eC1135B8e27f3590':
-        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/boosted.png'
+        'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-b-usd.png'
     }
   }
 ] as VotingGauge[];
