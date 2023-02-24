@@ -460,13 +460,21 @@ export default {
     /* HOLDR_INFO: This is where we inject the tokens for their metadata we want to use in the app. */
     onBeforeMount(async () => {
       const tokensToInject = compact([
+        configService.network.addresses.auUSDC,
+        configService.network.addresses.auUSDT,
+        configService.network.addresses.cUSDC,
+        configService.network.addresses.cUSDT,
         configService.network.addresses.stETH,
         configService.network.addresses.wstETH,
         configService.network.addresses.veBAL,
         TOKENS.Addresses.BAL,
         TOKENS.Addresses.wNativeAsset
       ]);
-      await injectTokens(tokensToInject);
+      const auroraSpecificTokens = [
+        '0x0eE0b472B996B8FD565C319CcDBDadCdd3e98C17',
+        '0x118c81ddEcADb13608B90634eC1135B8e27f3590'
+      ];
+      await injectTokens([...tokensToInject, ...auroraSpecificTokens]);
 
       state.loading = false;
     });
