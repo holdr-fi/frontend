@@ -457,7 +457,7 @@ export default {
      * LIFECYCLE
      */
 
-    /* HOLDR_INFO: This is where we inject the tokens and prices we want to use in the app. */
+    /* HOLDR_INFO: This is where we inject the tokens for their metadata we want to use in the app. */
     onBeforeMount(async () => {
       const tokensToInject = compact([
         configService.network.addresses.stETH,
@@ -467,105 +467,6 @@ export default {
         TOKENS.Addresses.wNativeAsset
       ]);
       await injectTokens(tokensToInject);
-
-      if (configService.network.chainId === 80001) {
-        await injectPrices({
-          '0xEc1Fdb4E9f07111103F1EB3a60C314bd8E657c0d': {
-            usd: 1
-          }
-        });
-      }
-
-      if (configService.network.chainId === 1313161554) {
-        const rateProviderABI = [
-          {
-            inputs: [],
-            stateMutability: 'nonpayable',
-            type: 'constructor'
-          },
-          {
-            inputs: [],
-            name: 'getRate',
-            outputs: [
-              {
-                internalType: 'uint256',
-                name: 'rate',
-                type: 'uint256'
-              }
-            ],
-            stateMutability: 'view',
-            type: 'function'
-          }
-        ];
-
-        const auUSDCRateProvider = '0x247f8c7379C71d845687A7d9Ec642C3D09782Aa4';
-        const auUSDCRateProviderContract = new Contract(
-          auUSDCRateProvider,
-          rateProviderABI,
-          getProvider()
-        );
-
-        const auUSDTRateProvider = '0x9A1671e139332b7BfADc6E15360FD89da4399b52';
-        const auUSDTRateProviderContract = new Contract(
-          auUSDTRateProvider,
-          rateProviderABI,
-          getProvider()
-        );
-
-        const [
-          tokenMap,
-          holdrPrice,
-          bn_auUSDCPrice,
-          bn_auUSDTPrice
-        ] = await Promise.all([
-          coingeckoService.prices.getTokens([
-            getAddress(configService.network.addresses.near),
-            getAddress(configService.network.addresses.stnear),
-            getAddress(configService.network.addresses.meta)
-          ]),
-          axios.get(
-            'https://s3.us-west-2.amazonaws.com/price-feed.solace.fi.data/output/holdrPrice.json'
-          ),
-          auUSDCRateProviderContract.getRate(),
-          auUSDTRateProviderContract.getRate()
-        ]);
-
-        const injectMap = {};
-        const nearUsd =
-          tokenMap[getAddress(configService.network.addresses.near)].usd;
-        injectMap[configService.network.addresses.wnear] = {
-          usd: nearUsd
-        };
-
-        const stNearUsd =
-          tokenMap[getAddress(configService.network.addresses.stnear)].usd;
-        injectMap[configService.network.addresses.wstnear] = {
-          usd: stNearUsd
-        };
-
-        const wMETAUsd =
-          tokenMap[getAddress(configService.network.addresses.meta)].usd;
-        injectMap[configService.network.addresses.wmeta] = {
-          usd: wMETAUsd
-        };
-
-        const auUSDCPrice = formatUnits(bn_auUSDCPrice, 18);
-        const auUSDTPrice = formatUnits(bn_auUSDTPrice, 18);
-
-        injectMap[getAddress(configService.network.addresses.auUSDC)] = {
-          usd: Number(auUSDCPrice)
-        };
-        injectMap[getAddress(configService.network.addresses.auUSDT)] = {
-          usd: Number(auUSDTPrice)
-        };
-
-        await injectPrices({
-          ...injectMap,
-          '0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA': {
-            usd: holdrPrice?.data || 0.0
-          }
-        });
-      }
 
       state.loading = false;
     });
