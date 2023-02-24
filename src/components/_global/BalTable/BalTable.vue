@@ -142,6 +142,25 @@ const handleSort = (columnId: string | null, updateDirection = true) => {
   tableData.value = props.data;
 };
 
+const getSortedData = (
+  columnId: string | null,
+  _currentSortDirection: string | null
+) => {
+  const column = props.columns.find(column => column.id === columnId);
+  if (!column?.sortKey) return props.data;
+  if (columnId !== currentSortColumn.value) return props.data;
+  const sortedData = sortBy(
+    (props.data as any).value || props.data,
+    column.sortKey
+  );
+  if (_currentSortDirection === 'asc') {
+    return sortedData;
+  } else if (_currentSortDirection === 'desc') {
+    return sortedData.reverse();
+  }
+  return props.data;
+};
+
 function getAlignProperty(align: 'left' | 'right' | 'center' | undefined) {
   switch (align) {
     case 'left':
@@ -181,17 +200,21 @@ onMounted(() => {
  * COMPUTED
  */
 const unpinnedData = computed(() => {
-  if (!props.pin) return tableData.value;
-  return (tableData.value || []).filter(
+  const sorted = getSortedData(
+    currentSortColumn.value,
+    currentSortDirection.value
+  );
+  if (!props.pin) return sorted;
+  return (sorted || []).filter(
     data => !props.pin?.pinnedData.includes(data[props.pin.pinOn])
   );
 });
 
 const pinnedData = computed(() => {
   if (!props.pin) return [];
-  return (tableData.value || []).filter(data =>
-    props.pin?.pinnedData.includes(data[props.pin.pinOn])
-  );
+  return (
+    getSortedData(currentSortColumn.value, currentSortDirection.value) || []
+  ).filter(data => props.pin?.pinnedData.includes(data[props.pin.pinOn]));
 });
 
 const filteredColumns = computed(() =>
