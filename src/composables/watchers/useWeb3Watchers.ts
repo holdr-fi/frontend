@@ -102,6 +102,21 @@ export default function useWeb3Watchers() {
     }
   });
 
+  watch(isWalletReady, () => {
+    if (!isWalletReady) {
+      addAlert({
+        id: 'no-account',
+        label: 'Please connect your wallet to use this app properly',
+        type: AlertType.ERROR,
+        persistent: true,
+        actionLabel: 'Connect Wallet',
+        priority: AlertPriority.HIGH
+      });
+    } else {
+      removeAlert('no-account');
+    }
+  });
+
   watch(account, () => {
     if (includesAddress(BLOCKED_ADDRESSES, account.value)) {
       disconnectWallet();

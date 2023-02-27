@@ -14,6 +14,7 @@ import { Contract } from '@ethersproject/contracts';
 import { getAddress } from '@ethersproject/address';
 import axios from 'axios';
 import { formatUnits } from 'ethers/lib/utils';
+import useAlerts, { AlertPriority, AlertType } from '../useAlerts';
 
 /**
  * TYPES
@@ -34,7 +35,8 @@ export default function useTokenPricesQuery(
   options: UseQueryOptions<QueryResponse> = {}
 ) {
   const { networkId } = useNetwork();
-  const { getProvider } = useWeb3();
+  const { getProvider, isWalletReady, connectToAppNetwork } = useWeb3();
+  const { addAlert, removeAlert } = useAlerts();
 
   const queryKey = reactive(
     QUERY_KEYS.Tokens.Prices(networkId, addresses, pricesToInject)
@@ -84,6 +86,17 @@ export default function useTokenPricesQuery(
   /* HOLDR_INFO: This is where we inject the custom token prices we want to use in the app. */
   const fetchCustomPricesForHoldrProtocol = async (): Promise<TokenPrices> => {
     console.log('Fetching custom prices for Holdr Protocol');
+    if (!isWalletReady.value) {
+      addAlert({
+        id: 'no-account',
+        label: 'Please connect your wallet to use this app properly',
+        type: AlertType.ERROR,
+        persistent: true,
+        actionLabel: 'Connect Wallet',
+        priority: AlertPriority.HIGH
+      });
+      return {};
+    }
 
     const customPrices = {};
     if (configService.network.chainId === 80001) {
@@ -114,6 +127,7 @@ export default function useTokenPricesQuery(
         }
       ];
 
+      // aurigami
       const auUSDCRateProvider = '0x247f8c7379C71d845687A7d9Ec642C3D09782Aa4';
       const auUSDCRateProviderContract = new Contract(
         auUSDCRateProvider,
@@ -128,11 +142,28 @@ export default function useTokenPricesQuery(
         getProvider()
       );
 
+      // bastion
+      const cUSDCRateProvider = '0x22dC4E88cEa43fC873fb5620874A0c45cbBb3635';
+      const cUSDCRateProviderContract = new Contract(
+        cUSDCRateProvider,
+        rateProviderABI,
+        getProvider()
+      );
+
+      const cUSDTRateProvider = '0x9865F88daad003b6F10FF59C0446E3Cd263076Af';
+      const cUSDTRateProviderContract = new Contract(
+        cUSDTRateProvider,
+        rateProviderABI,
+        getProvider()
+      );
+
       const [
         tokenMap,
         holdrPrice,
         bn_auUSDCPrice,
-        bn_auUSDTPrice
+        bn_auUSDTPrice,
+        bn_cUSDCPrice,
+        bn_cUSDTPrice
       ] = await Promise.all([
         coingeckoService.prices.getTokens([
           getAddress(configService.network.addresses.near),
@@ -143,7 +174,9 @@ export default function useTokenPricesQuery(
           'https://s3.us-west-2.amazonaws.com/price-feed.solace.fi.data/output/holdrPrice.json'
         ),
         auUSDCRateProviderContract.getRate(),
-        auUSDTRateProviderContract.getRate()
+        auUSDTRateProviderContract.getRate(),
+        cUSDCRateProviderContract.getRate(),
+        cUSDTRateProviderContract.getRate()
       ]);
 
       const nearUsd =
@@ -164,6 +197,7 @@ export default function useTokenPricesQuery(
         usd: wMETAUsd
       };
 
+      // aurigami
       const auUSDCPrice = formatUnits(bn_auUSDCPrice, 18);
       const auUSDTPrice = formatUnits(bn_auUSDTPrice, 18);
 
@@ -172,6 +206,17 @@ export default function useTokenPricesQuery(
       };
       customPrices[getAddress(configService.network.addresses.auUSDT)] = {
         usd: Number(auUSDTPrice)
+      };
+
+      // bastion
+      const cUSDCPrice = formatUnits(bn_cUSDCPrice, 18);
+      const cUSDTPrice = formatUnits(bn_cUSDTPrice, 18);
+
+      customPrices[getAddress(configService.network.addresses.cUSDC)] = {
+        usd: Number(cUSDCPrice)
+      };
+      customPrices[getAddress(configService.network.addresses.cUSDT)] = {
+        usd: Number(cUSDTPrice)
       };
 
       customPrices['0x1aaee8F00D02fcdb10cF1F0caB651dC83318c7AA'] = {

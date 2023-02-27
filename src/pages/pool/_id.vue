@@ -79,7 +79,7 @@
             </BalTooltip>
           </div>
         </div>
-        <BalAlert
+        <!-- <BalAlert
           v-if="
             !appLoading &&
               !loadingPool &&
@@ -90,14 +90,14 @@
           :title="$t('noPriceInfo')"
           class="mt-2"
           block
-        />
+        /> -->
         <BalAlert
           v-if="
             !appLoading &&
               !loadingPool &&
               hasCustomToken &&
               !doesPoolHaveExemptedTokens &&
-              !isPoolExemptedFromErrors
+              !isPoolExemptedFromRiskAndPriceChart
           "
           type="error"
           :title="$t('highRiskPool')"
@@ -132,15 +132,15 @@
       <div class="hidden lg:block" />
       <div class="col-span-2 order-2 lg:order-1">
         <div class="grid grid-cols-1 gap-y-8">
-          <div class="px-1 lg:px-0">
+          <!-- <div class="px-1 lg:px-0">
             <PoolChart
-              v-if="!doesPoolHaveExemptedTokens && !isPoolExemptedFromErrors"
+              v-if="!doesPoolHaveExemptedTokens && !isPoolExemptedFromRiskAndPriceChart"
               :pool="pool"
               :historicalPrices="historicalPrices"
               :snapshots="snapshots"
               :loading="isLoadingSnapshots"
             />
-          </div>
+          </div> -->
           <div class="mb-4 px-1 lg:px-0">
             <PoolStatCards :pool="pool" :loading="loadingPool" />
           </div>
@@ -255,11 +255,18 @@ export default defineComponent({
       configService.network.addresses.wnear,
       configService.network.addresses.wstnear,
       configService.network.addresses.wmeta,
+      configService.network.addresses.auUSDC,
+      configService.network.addresses.auUSDT,
+      configService.network.addresses.cUSDC,
+      configService.network.addresses.cUSDT,
     ]);
 
     const exemptedPools = computed(() => [
       '0xcb14c0bd41e6829caf3ebffe866592b338eed02c000000000000000000000026', //usdc-usdt stablepool v2 (aurora)
-      '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007' // usdc-usdt stablepool (aurora)
+      '0x480edf7ecb52ef9eace2346b84f29795429aa9c9000000000000000000000007', // usdc-usdt stablepool (aurora)
+      '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035', // Holdr Boosted Aurigami USD
+      '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038', // Holdr Boosted Bastion USD
+      '0xc2ed122265ffca6cf1dbae4af6c37d940fcdfa0e00020000000000000000002f' // 20wstNEAR-80wMETA
     ]);
 
     const doesPoolHaveExemptedTokens = computed(() =>
@@ -270,7 +277,7 @@ export default defineComponent({
       )
     );
 
-    const isPoolExemptedFromErrors = computed(() =>
+    const isPoolExemptedFromRiskAndPriceChart = computed(() =>
       exemptedPools.value.includes(route.params.id as string)
     );
     
@@ -505,7 +512,7 @@ export default defineComponent({
       isL2,
       isStakablePool,
       doesPoolHaveExemptedTokens,
-      isPoolExemptedFromErrors,
+      isPoolExemptedFromRiskAndPriceChart,
       poolMetadata,
       // methods,
       fNum2,

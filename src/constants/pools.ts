@@ -482,11 +482,11 @@ const POOLS_AURORA: Pools = {
     //   hasIcon: true
     // },
     '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035': {
-      name: 'Holdr Aurigami Boosted StablePool',
+      name: 'Holdr Boosted Aurigami USD',
       hasIcon: true
     },
     '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038': {
-      name: 'Holdr Bastion Boosted StablePool',
+      name: 'Holdr Boosted Bastion USD',
       hasIcon: true
     }
   }

@@ -245,6 +245,15 @@ function iconAddresses(pool: PoolWithShares) {
         sortColumn: 'poolValue',
         sortDirection: 'desc'
       }"
+      :pin="{
+        pinOn: 'address',
+        pinnedData: [
+          '0x0eE0b472B996B8FD565C319CcDBDadCdd3e98C17',
+          '0x118c81ddEcADb13608B90634eC1135B8e27f3590',
+          '0xC2ED122265FFCa6CF1DbaE4AF6c37D940FcDFa0E',
+          '0x5FdFDF63E1D3c4c466578602Ea127DeCF024f394'
+        ]
+      }"
     >
       <template v-slot:iconColumnHeader>
         <div class="flex items-center">

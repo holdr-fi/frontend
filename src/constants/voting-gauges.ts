@@ -418,7 +418,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     address: '0x81D4104f79D40D89b31C3590472Ae12Da2BCDA41',
     network: 1313161554,
     pool: {
-      name: 'Holdr Aurigami Boosted StablePool',
+      name: 'Holdr Boosted Aurigami USD',
       id: '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035',
       address: '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17',
       poolType: 'Stable',
@@ -449,7 +449,7 @@ export const CHANGED_ALL_VOTING_GAUGES = [
     address: '0x731E05231df818E0B3f5617Efe8D51E915b83914',
     network: 1313161554,
     pool: {
-      name: 'Holdr Bastion Boosted StablePool',
+      name: 'Holdr Boosted Bastion USD',
       id: '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038',
       address: '0x118c81ddecadb13608b90634ec1135b8e27f3590',
       poolType: 'Stable',
