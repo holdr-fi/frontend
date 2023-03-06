@@ -7,6 +7,7 @@ npm run build
 aws s3 rm s3://app.holdr.fi --include "*" --recursive
 aws s3 cp --recursive dist/ s3://app.holdr.fi/
 aws cloudfront create-invalidation --distribution-id EDNURP3VXI325 --paths "/*"
+
 ```
 
 Deploy instructions for test.holdr.fi
@@ -16,6 +17,7 @@ npm run build
 aws s3 rm s3://test.holdr.fi --include "*" --recursive
 aws s3 cp --recursive dist/ s3://test.holdr.fi/
 aws cloudfront create-invalidation --distribution-id E2QM4CZ4H3ZSAQ --paths "/*"
+
 ```
 
 *Aurora fork deploy steps*

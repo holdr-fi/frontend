@@ -194,7 +194,7 @@
       "name": "auUSDC",
       "symbol": "auUSDC",
       "decimals": 8,
-      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/auUSDC.png"
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/auUSDC.svg"
     },
     {
       "address": "0xaD5A2437Ff55ed7A8Cad3b797b3eC7c5a19B1c54",
@@ -202,7 +202,7 @@
       "name": "auUSDT",
       "symbol": "auUSDT",
       "decimals": 8,
-      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/auUSDT.png"
+      "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/auUSDT.svg"
     }
   ]
 }
