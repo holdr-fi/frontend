@@ -42,10 +42,12 @@ export class VeBalAprCalc {
 
     const bptPrice = bnum(totalLiquidity).div(totalSupply);
 
-    return aggregateWeeklyRevenue
+    const apr = aggregateWeeklyRevenue
       .times(52)
       .div(bptPrice.times(veBalCurrentSupply))
       .toString();
+
+    return apr
   }
 
   private async getData(): Promise<{
@@ -57,6 +59,7 @@ export class VeBalAprCalc {
     const epochBeforeLast = toUnixTimestamp(getPreviousEpoch(1).getTime());
     const multicaller = new Multicaller();
 
+    // HOLDR_WARN: All values are being returned 0 from smart contract.
     if (this.config.network.addresses.feeDistributor !== '') {
       multicaller
         .call({
@@ -100,7 +103,7 @@ export class VeBalAprCalc {
     for (const key in result) {
       result[key] = formatUnits(result[key], 18);
     }
-
+    
     return result;
   }
 
