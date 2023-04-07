@@ -53,7 +53,7 @@ const balancerConfig = ((): BalancerSdkConfig => {
         network,
         rpcUrl: 'https://mainnet.aurora.dev',
         customSubgraphUrl:
-          'https://api.thegraph.com/subgraphs/name/kyzooghost/balancer_aurora_fork'
+          'https://api.thegraph.com/subgraphs/name/holdr-fi/aurora-swaps'
       };
     case '1313161555':
       return {
@@ -67,7 +67,7 @@ const balancerConfig = ((): BalancerSdkConfig => {
         network,
         rpcUrl: 'https://mainnet.aurora.dev',
         customSubgraphUrl:
-          'https://api.thegraph.com/subgraphs/name/kyzooghost/balancer_aurora_fork'
+          'https://api.thegraph.com/subgraphs/name/holdr-fi/aurora-swaps'
       };
   }
 })();

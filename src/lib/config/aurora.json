@@ -12,12 +12,12 @@
   "loggingRpc": "https://mainnet.aurora.dev",
   "explorer": "https://aurorascan.dev",
   "explorerName": "AuroraScan",
-  "subgraph": "https://api.thegraph.com/subgraphs/name/kyzooghost/balancer_aurora_fork",
+  "subgraph": "https://api.thegraph.com/subgraphs/name/holdr-fi/aurora-swaps",
   "balancerApi": "",
   "poolsUrlV2": "https://storageapi.fleek.co/johngrantuk-team-bucket/poolsRc02.json",
   "subgraphs": {
     "aave": "",
-    "gauge": "https://api.thegraph.com/subgraphs/name/kyzooghost/holdr-gauges-subgraph"
+    "gauge": "https://api.thegraph.com/subgraphs/name/holdr-fi/aurora-gauges"
   },
   "supportsEIP1559": false,
   "supportsElementPools": false,
