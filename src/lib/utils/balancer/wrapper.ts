@@ -21,7 +21,8 @@ export enum WrapType {
 export const wrapNearSymbolMap = {
   NEAR: 'wNEAR',
   stNEAR: 'wstNEAR',
-  META: 'wMETA'
+  META: 'wMETA',
+  NSTART: 'wNSTART'
 };
 
 const matchAnyAddress = (address: string, addresses: string[]): boolean => {
@@ -37,6 +38,9 @@ const wrapNearAddressMap = {
   ),
   [getAddress(configService.network.addresses.meta)]: getAddress(
     configService.network.addresses.wmeta
+  ),
+  [getAddress(configService.network.addresses.nstart)]: getAddress(
+    configService.network.addresses.wnstart
   )
 };
 
@@ -64,7 +68,9 @@ export const getWrapAction = (tokenIn: string, tokenOut: string): WrapType => {
     stnear,
     wstnear,
     meta,
-    wmeta
+    wmeta,
+    nstart,
+    wnstart
   } = configService.network.addresses;
 
   if (same(tokenIn, nativeAddress) && same(tokenOut, weth))
@@ -79,6 +85,9 @@ export const getWrapAction = (tokenIn: string, tokenOut: string): WrapType => {
   if (same(tokenIn, meta) && same(tokenOut, wmeta)) return WrapType.Wrap;
   if (same(tokenIn, meta) && !same(tokenOut, wmeta))
     return WrapType.PleaseWrapFirst;
+    if (same(tokenIn, nstart) && same(tokenOut, wnstart)) return WrapType.Wrap;
+    if (same(tokenIn, nstart) && !same(tokenOut, wnstart))
+      return WrapType.PleaseWrapFirst;
 
   if (same(tokenOut, nativeAddress) && same(tokenIn, weth))
     return WrapType.Unwrap;
@@ -91,6 +100,9 @@ export const getWrapAction = (tokenIn: string, tokenOut: string): WrapType => {
     return WrapType.PleaseSwapInFirst;
   if (same(tokenOut, meta) && same(tokenIn, wmeta)) return WrapType.Unwrap;
   if (same(tokenOut, meta) && !same(tokenIn, wmeta))
+    return WrapType.PleaseSwapInFirst;
+  if (same(tokenOut, nstart) && same(tokenIn, wnstart)) return WrapType.Unwrap;
+  if (same(tokenOut, nstart) && !same(tokenIn, wnstart))
     return WrapType.PleaseSwapInFirst;
 
   return WrapType.NonWrap;
@@ -107,7 +119,8 @@ export const getWrapOutput = (
     wstETH,
     wnear,
     wstnear,
-    wmeta
+    wmeta,
+    wnstart
   } = configService.network.addresses;
 
   if (same(wrapper, weth)) return BigNumber.from(wrapAmount);
@@ -116,7 +129,7 @@ export const getWrapOutput = (
       ? getWstETHByStETH(wrapAmount)
       : getStETHByWstETH(wrapAmount);
   }
-  if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta])) {
+  if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta, wnstart])) {
     return wrapType === WrapType.Wrap
       ? BigNumber.from(wrapAmount)
           .div('1000000')
@@ -140,7 +153,8 @@ export async function wrap(
     wstETH,
     wnear,
     wstnear,
-    wmeta
+    wmeta,
+    wnstart
   } = configService.network.addresses;
 
   try {
@@ -148,7 +162,7 @@ export async function wrap(
       return wrapNative(network, web3, amount);
     } else if (same(wrapper, wstETH)) {
       return wrapLido(network, web3, amount);
-    } else if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta])) {
+    } else if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta, wnstart])) {
       return wrapNearFrom24To18(wrapper, network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');
@@ -169,7 +183,8 @@ export async function unwrap(
     wstETH,
     wnear,
     wstnear,
-    wmeta
+    wmeta,
+    wnstart
   } = configService.network.addresses;
 
   try {
@@ -177,7 +192,7 @@ export async function unwrap(
       return unwrapNative(network, web3, amount);
     } else if (same(wrapper, wstETH)) {
       return unwrapLido(network, web3, amount);
-    } else if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta])) {
+    } else if (matchAnyAddress(wrapper, [wnear, wstnear, wmeta, wnstart])) {
       return unwrapNearFrom18To24(wrapper, network, web3, amount);
     }
     throw new Error('Unrecognised wrapper contract');

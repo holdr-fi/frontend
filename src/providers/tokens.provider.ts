@@ -143,7 +143,8 @@ export default {
         configService.network.addresses.bribeVault,
         configService.network.addresses.wnear,
         configService.network.addresses.wstnear,
-        configService.network.addresses.wmeta
+        configService.network.addresses.wmeta,
+        configService.network.addresses.wnstart,
       ]),
       injectedPrices: {}
     });

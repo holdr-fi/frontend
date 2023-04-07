@@ -255,6 +255,7 @@ export default defineComponent({
       configService.network.addresses.wnear,
       configService.network.addresses.wstnear,
       configService.network.addresses.wmeta,
+      configService.network.addresses.wnstart,
       configService.network.addresses.auUSDC,
       configService.network.addresses.auUSDT,
       configService.network.addresses.cUSDC,

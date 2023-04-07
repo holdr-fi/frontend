@@ -60,6 +60,8 @@ export interface Config {
     wstnear: string;
     meta: string;
     wmeta: string;
+    nstart: string;
+    wnstart: string;
     auUSDC: string;
     auUSDT: string;
     cUSDC: string;

@@ -168,7 +168,8 @@ export default function useTokenPricesQuery(
         coingeckoService.prices.getTokens([
           getAddress(configService.network.addresses.near),
           getAddress(configService.network.addresses.stnear),
-          getAddress(configService.network.addresses.meta)
+          getAddress(configService.network.addresses.meta),
+          getAddress(configService.network.addresses.nstart),
         ]),
         axios.get(
           'https://s3.us-west-2.amazonaws.com/price-feed.solace.fi.data/output/holdrPrice.json'
@@ -196,6 +197,12 @@ export default function useTokenPricesQuery(
       customPrices[configService.network.addresses.wmeta] = {
         usd: wMETAUsd
       };
+
+      const wNSTARTUsd =
+      tokenMap[getAddress(configService.network.addresses.nstart)].usd;
+    customPrices[configService.network.addresses.wnstart] = {
+      usd: wNSTARTUsd
+    };
 
       // aurigami
       const auUSDCPrice = formatUnits(bn_auUSDCPrice, 18);

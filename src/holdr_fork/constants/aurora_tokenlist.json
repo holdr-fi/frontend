@@ -203,6 +203,22 @@
       "symbol": "auUSDT",
       "decimals": 8,
       "logoURI": "https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/auUSDT.svg"
+    },
+    {
+      "address": "0x06aEBB0f3D9eBe9829E1B67bD3dd608F711D3412",
+      "chainId": 1313161554,
+      "name": "NSTART",
+      "symbol": "NSTART",
+      "decimals": 24,
+      "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/5a01e8db7caf7cbbcb8bf8454e5763252be37277/tokens/nstart.svg"
+    },
+    {
+      "address": "0xe2D4e5f10F1A9d3c08828c964980fd29971EEd15",
+      "chainId": 1313161554,
+      "name": "wNSTART",
+      "symbol": "wNSTART",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/aurora-is-near/bridge-assets/5a01e8db7caf7cbbcb8bf8454e5763252be37277/tokens/nstart.svg"
     }
   ]
 }
