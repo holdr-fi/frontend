@@ -120,6 +120,7 @@ const excludedTokens = computed((): string[] => {
     configService.network.addresses.near,
     configService.network.addresses.stnear,
     configService.network.addresses.meta,
+    configService.network.addresses.nstart,
     ...tokensList.value
   ];
 });
