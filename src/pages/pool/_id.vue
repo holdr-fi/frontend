@@ -91,6 +91,12 @@
           class="mt-2"
           block
         /> -->
+        <BalAlert v-if="isHiddenPool"
+          type="warning"
+          title="Interaction with this pool is limited."
+          class="mt-2"
+          block
+          />
         <BalAlert
           v-if="
             !appLoading &&
@@ -295,6 +301,8 @@ export default defineComponent({
     const pool = computed(() => poolQuery.data.value);
 
     const poolMetadata = computed(() => pool.value ? POOLS.Metadata[pool.value.id] : undefined)
+
+    const isHiddenPool = computed(() => POOLS.HideList.find((_pool) => _pool.toLowerCase() == pool.value?.id.toLowerCase()));
 
     const {
       isStableLikePool,
@@ -515,6 +523,7 @@ export default defineComponent({
       doesPoolHaveExemptedTokens,
       isPoolExemptedFromRiskAndPriceChart,
       poolMetadata,
+      isHiddenPool,
       // methods,
       fNum2,
       onNewTx,

@@ -6,7 +6,6 @@ import { useI18n } from 'vue-i18n';
 import { useStore } from 'vuex';
 
 import CustomPairPriceGraph from '@/components/contextual/pages/lbp/CustomPairPriceGraph.vue';
-import CustomTradePreviewModalGP from '@/components/contextual/pages/lbp/CustomTradePreviewModalGP.vue';
 import SoloTradePair from '@/components/contextual/pages/lbp/SoloTradePair.vue';
 import Col3Layout from '@/components/layouts/Col3Layout.vue';
 import TradeSettingsPopover, {
@@ -455,14 +454,14 @@ onBeforeUnmount(() => {
     </BalCard>
   </div>
 
-  <teleport to="#modal">
+  <!-- <teleport to="#modal">
     <CustomTradePreviewModalGP
       v-if="modalTradePreviewIsOpen"
       :trading="trading"
       @trade="trade"
       @close="handlePreviewModalClose"
     />
-  </teleport>
+  </teleport> -->
 
   <teleport to="#modal">
     <BalModal :show="showPriceGraphModal" @close="onPriceGraphModalClose">

@@ -29,6 +29,7 @@ export type FactoryType =
 type PoolMetadata = {
   name: string;
   hasIcon: boolean;
+  childPools: string[];
 };
 
 export type Pools = {
@@ -46,6 +47,7 @@ export type Pools = {
     Gauntlet: string[];
   };
   BlockList: string[];
+  HideList: string[];
   ExcludedPoolTypes: string[];
   Stable: {
     AllowList: string[];
@@ -92,6 +94,7 @@ const POOLS_KOVAN: Pools = {
     '0x28efa7f86341aa0ad534bdfb033edb4f4ac6adf700020000000000000000067e',
     '0x10ee90b9ff4b9a44a773107280c0ce083619286800020000000000000000067b'
   ],
+  HideList: [],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
@@ -149,6 +152,7 @@ const POOLS_MAINNET: Pools = {
     Gauntlet: []
   },
   BlockList: [''],
+  HideList: [],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
@@ -241,6 +245,7 @@ const POOLS_POLYGON: Pools = {
     Gauntlet: []
   },
   BlockList: [''],
+  HideList: [],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
@@ -308,6 +313,7 @@ const POOLS_ARBITRUM: Pools = {
     Gauntlet: []
   },
   BlockList: [''],
+  HideList: [],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
@@ -369,6 +375,7 @@ const POOLS_MUMBAI: Pools = {
     Gauntlet: []
   },
   BlockList: [''],
+  HideList: [],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
     AllowList: [
@@ -427,13 +434,19 @@ const POOLS_AURORA: Pools = {
     // hb-a-USDC
     '0xc51d0a9bcb17a126e1a9f4950b259498abeba1e9000000000000000000000029',
     // usdt-auusdt
-    '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd000000000000000000000034',
+    // '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd000000000000000000000034',
     // usdc-auusdc
-    '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e000000000000000000000031',
+    // '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e000000000000000000000031',
     // usdt-cusdt
-    '0x19252ce2f1c296e25bad5d241e3c5afe78c864eb000000000000000000000037',
+    // '0x19252ce2f1c296e25bad5d241e3c5afe78c864eb000000000000000000000037',
     // usdc-cusdc
-    '0x079a5925d6c334799d1252775cab9bd3ace26822000000000000000000000036'
+    // '0x079a5925d6c334799d1252775cab9bd3ace26822000000000000000000000036'
+  ],
+  HideList: [
+    '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd000000000000000000000034', // usdt-auusdt
+    '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e000000000000000000000031', // usdc-auusdc
+    '0x19252ce2f1c296e25bad5d241e3c5afe78c864eb000000000000000000000037', // usdt-cusdt
+    '0x079a5925d6c334799d1252775cab9bd3ace26822000000000000000000000036' // usdc-cusdc
   ],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', 'ERC4626Linear'],
   Stable: {
@@ -446,12 +459,12 @@ const POOLS_AURORA: Pools = {
       '0x2e884db6d985a4887954bb0a8f45682dc24ecb0d000000000000000000000030', // USDT-USDC composableStable
 
       '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035', // holdr boosted aurigami usd composable stable pool
-      // '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e000000000000000000000031', // USDC-auUSDC composableStable
-      // '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd000000000000000000000034', // USDT-auUSDT composableStable
+      '0x42e661a89c6258e70c6aae77f3061f9f7d4a918e000000000000000000000031', // USDC-auUSDC composableStable
+      '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd000000000000000000000034', // USDT-auUSDT composableStable
       
       '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038', // holdr boosted bastion usd composable stable pool
-      // '0x079a5925d6c334799d1252775cab9bd3ace26822000000000000000000000036', // usdt-cusdt
-      // '0x19252ce2f1c296e25bad5d241e3c5afe78c864eb000000000000000000000037'  // usdc-cusdc
+      '0x079a5925d6c334799d1252775cab9bd3ace26822000000000000000000000036', // usdt-cusdt
+      '0x19252ce2f1c296e25bad5d241e3c5afe78c864eb000000000000000000000037'  // usdc-cusdc
     ]
   },
   Investment: {
@@ -481,17 +494,15 @@ const POOLS_AURORA: Pools = {
     ]
   },
   Metadata: {
-    // '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b': {
-    //   name: 'Holdr Aurigami Boosted USD',
-    //   hasIcon: true
-    // },
     '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035': {
       name: 'Holdr Boosted Aurigami USD',
-      hasIcon: true
+      hasIcon: true,
+      childPools: ['0x42e661a89c6258e70c6aae77f3061f9f7d4a918e000000000000000000000031', '0x01b02b2eb5dd299db4a8c089d34da0796b0021dd000000000000000000000034' ]
     },
     '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038': {
       name: 'Holdr Boosted Bastion USD',
-      hasIcon: true
+      hasIcon: true,
+      childPools: ['0x19252ce2f1c296e25bad5d241e3c5afe78c864eb000000000000000000000037', '0x079a5925d6c334799d1252775cab9bd3ace26822000000000000000000000036' ]
     }
   }
 };
@@ -509,6 +520,7 @@ const POOLS_GENERIC: Pools = {
     Gauntlet: []
   },
   BlockList: [''],
+  HideList: [],
   ExcludedPoolTypes: ['Element', 'AaveLinear', 'Linear', ''],
   Stable: {
     AllowList: [

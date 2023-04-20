@@ -15,6 +15,7 @@ import {
 } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
+import { POOLS } from '@/constants/pools';
 
 import ConfirmationIndicator from '@/components/web3/ConfirmationIndicator.vue';
 import useEthers from '@/composables/useEthers';
@@ -232,7 +233,36 @@ watch(blockNumber, async () => {
     <BalActionSteps v-if="!withdrawalState.confirmed" :actions="actions" />
     <div v-else>
       <ConfirmationIndicator :txReceipt="withdrawalState.receipt" />
-      <BalBtn
+      <div v-if="POOLS.Metadata[props.pool.id]?.childPools.length > 0">
+        <BalAlert
+          type="success"
+          class="mt-4"
+          title="Please withdraw your pool tokens"
+          description="You have received tokens for underlying pools from this pool. Please withdraw from the underlying pools as well."
+        />
+        <BalBtn
+        v-for="(childPool, i) in POOLS.Metadata[props.pool.id]?.childPools" :key="i"
+        tag="router-link"
+        target="_blank"
+        :to="{ name: 'withdraw', params: { id: childPool } }"
+        color="gradient"
+        block
+        class="mt-2"
+        >
+          Withdraw {{ props.pool.tokens.find((t) => childPool.toLowerCase().includes(t.address.toLowerCase()))?.symbol ?? `Pool ${i}` }}
+        </BalBtn>
+        <BalBtn
+        tag="router-link"
+        :to="{ name: 'pool', params: { id: route.params.id } }"
+        color="gray"
+        outline
+        block
+        class="mt-2"
+      >
+        I finished withdrawing. Return to pool page.
+      </BalBtn>
+      </div>
+      <BalBtn v-else
         tag="router-link"
         :to="{ name: 'pool', params: { id: route.params.id } }"
         color="gray"

@@ -19,6 +19,7 @@ import { MIN_FIAT_VALUE_POOL_MIGRATION } from '@/constants/pools';
 import { bnum } from '@/lib/utils';
 import StakingProvider from '@/providers/local/staking/staking.provider';
 import useWeb3 from '@/services/web3/useWeb3';
+import { POOLS } from '@/constants/pools';
 
 // COMPOSABLES
 const router = useRouter();
@@ -46,6 +47,9 @@ const { upToMediumBreakpoint } = useBreakpoints();
 const { priceQueryLoading } = useTokens();
 
 // COMPUTED
+
+const adjustedInvestmentPools = computed(() => investmentPools.value.filter(pool => !POOLS.HideList.find((poolToHide) => poolToHide.toLowerCase() == pool.id.toLowerCase())) )
+
 const showMigrationColumn = computed(() =>
   userPools.value?.some(pool => {
     return (
@@ -146,7 +150,7 @@ function navigateToCreatePool() {
         </div>
       </div>
       <PoolsTable
-        :data="investmentPools"
+        :data="adjustedInvestmentPools"
         :noPoolsLabel="$t('noPoolsFound')"
         :isLoadingMore="isLoadingMore"
         @loadMore="loadMore"
