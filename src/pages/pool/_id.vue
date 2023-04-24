@@ -4,16 +4,19 @@
       <div class="col-span-2">
         <BalLoadingBlock v-if="loadingPool" class="h-16" />
         <div v-else class="px-4 lg:px-0 flex flex-col">
-          <h3 class="pool-title mb-2" v-if="!poolMetadata || !poolMetadata.name">
+          <h3
+            class="pool-title mb-2"
+            v-if="!poolMetadata || !poolMetadata.name"
+          >
             {{ poolTypeLabel }}
           </h3>
           <div v-else>
             <h3 class="pool-title">
-            {{ poolMetadata.name }}
-          </h3>
+              {{ poolMetadata.name }}
+            </h3>
             <h6 class="mb-1">
-            {{ poolTypeLabel }}
-          </h6>
+              {{ poolTypeLabel }}
+            </h6>
           </div>
           <div class="flex flex-wrap items-center -mt-2">
             <div
@@ -91,12 +94,22 @@
           class="mt-2"
           block
         /> -->
-        <BalAlert v-if="isHiddenPool"
+        <BalAlert
+          v-if="isHiddenPool && parentPool"
           type="warning"
-          title="Interaction with this pool is limited."
+          title="Interaction with this pool is limited. Deposits are routed through here."
           class="mt-2"
           block
-          />
+        >
+          <BalBtn
+            size="xs"
+            target="_blank"
+            tag="router-link"
+            :to="{ name: 'invest', params: { id: parentPool } }"
+            color="gradient"
+            >Learn More</BalBtn
+          >
+        </BalAlert>
         <BalAlert
           v-if="
             !appLoading &&
@@ -255,7 +268,7 @@ export default defineComponent({
       route.params.id as string,
       30
     );
-    
+
     // HOLDR_INFO: list of tokens that do not need prices fetched for
     const exemptedTokens = computed(() => [
       configService.network.addresses.wnear,
@@ -265,7 +278,7 @@ export default defineComponent({
       configService.network.addresses.auUSDC,
       configService.network.addresses.auUSDT,
       configService.network.addresses.cUSDC,
-      configService.network.addresses.cUSDT,
+      configService.network.addresses.cUSDT
     ]);
 
     const exemptedPools = computed(() => [
@@ -287,7 +300,7 @@ export default defineComponent({
     const isPoolExemptedFromRiskAndPriceChart = computed(() =>
       exemptedPools.value.includes(route.params.id as string)
     );
-    
+
     /**
      * STATE
      */
@@ -300,9 +313,30 @@ export default defineComponent({
      */
     const pool = computed(() => poolQuery.data.value);
 
-    const poolMetadata = computed(() => pool.value ? POOLS.Metadata[pool.value.id] : undefined)
+    const parentPool = computed(() => {
+      const poolsArray = Object.keys(POOLS.Metadata);
+      const poolsWithMetadata = poolsArray.map(
+        poolId => POOLS.Metadata[poolId]
+      );
+      let res;
+      poolsArray.forEach((p, i) => {
+        const childPool = poolsWithMetadata[i].childPools.find(
+          p => p.toLowerCase() == pool.value?.id.toLowerCase()
+        );
+        if (childPool) res = p;
+      });
+      return res;
+    });
 
-    const isHiddenPool = computed(() => POOLS.HideList.find((_pool) => _pool.toLowerCase() == pool.value?.id.toLowerCase()));
+    const poolMetadata = computed(() =>
+      pool.value ? POOLS.Metadata[pool.value.id] : undefined
+    );
+
+    const isHiddenPool = computed(() =>
+      POOLS.HideList.find(
+        _pool => _pool.toLowerCase() == pool.value?.id.toLowerCase()
+      )
+    );
 
     const {
       isStableLikePool,
@@ -524,6 +558,7 @@ export default defineComponent({
       isPoolExemptedFromRiskAndPriceChart,
       poolMetadata,
       isHiddenPool,
+      parentPool,
       // methods,
       fNum2,
       onNewTx,

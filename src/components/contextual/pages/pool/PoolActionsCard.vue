@@ -67,7 +67,13 @@ const fiatTotal = computed(() => {
   <div
     class="p-4 w-full bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-900"
   >
-    <div v-if="!POOLS.HideList.find((_pool) => _pool.toLowerCase() == pool.id.toLowerCase())">
+    <div
+      v-if="
+        !POOLS.HideList.find(
+          _pool => _pool.toLowerCase() == pool.id.toLowerCase()
+        )
+      "
+    >
       <div class="text-gray-500 text-sm">
         {{ $t('basedOnTokensInWallet') }}
       </div>
@@ -88,7 +94,12 @@ const fiatTotal = computed(() => {
       block
       @click="toggleWalletSelectModal"
     />
-    <BalBtn v-if="POOLS.HideList.find((_pool) => _pool.toLowerCase() == pool.id.toLowerCase())"
+    <BalBtn
+      v-if="
+        POOLS.HideList.find(
+          _pool => _pool.toLowerCase() == pool.id.toLowerCase()
+        )
+      "
       :tag="hasBpt ? 'router-link' : 'div'"
       :to="{ name: 'withdraw' }"
       :label="$t('withdraw.label')"
