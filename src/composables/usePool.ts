@@ -93,8 +93,8 @@ export function isDeep(pool: Pool): boolean {
     '0x0b13a7f8cad36cb3c05051e5b98b0df654b6b90e00000000000000000000002b', // hb-a-USD (aurora)
 
     // HLDR pools temporarily commented out
-    // '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035', // Holdr Boosted Aurigami USD
-    // '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038' // Holdr Boosted Bastion USD
+    '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035', // Holdr Boosted Aurigami USD
+    '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038' // Holdr Boosted Bastion USD
   ];
   return treatAsDeep.includes(pool.id);
 }

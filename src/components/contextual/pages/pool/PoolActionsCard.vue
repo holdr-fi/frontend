@@ -31,11 +31,15 @@ const { balanceFor, nativeAsset, wrappedNativeAsset } = useTokens();
 const { fNum2, toFiat } = useNumbers();
 const { isWalletReady, toggleWalletSelectModal } = useWeb3();
 
+const poolsToRedirectWithdrawFor = [
+  '0x0ee0b472b996b8fd565c319ccdbdadcdd3e98c17000000000000000000000035',
+  '0x118c81ddecadb13608b90634ec1135b8e27f3590000000000000000000000038'
+];
+
 /**
  * COMPUTED
  */
 const fiatTotal = computed(() => {
-  // const fiatValue = lpTokensFor(props.pool)
   const fiatValue = flatTokenTree(props.pool)
     .map(poolToken => poolToken.address)
     .map(address => {
@@ -115,6 +119,15 @@ const fiatTotal = computed(() => {
         block
       />
       <BalBtn
+        v-if="poolsToRedirectWithdrawFor.includes(pool.id.toLowerCase())"
+        tag="a"
+        :href="'https://clone.holdr.fi/#/pool/' + pool.id + '/withdraw'"
+        :label="$t('withdraw.label')"
+        color="gradient"
+        block
+      />
+      <BalBtn
+        v-else
         :tag="hasBpt ? 'router-link' : 'div'"
         :to="{ name: 'withdraw' }"
         :label="$t('withdraw.label')"
