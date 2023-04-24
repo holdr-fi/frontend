@@ -103,11 +103,10 @@
         >
           <BalBtn
             size="xs"
-            target="_blank"
             tag="router-link"
             :to="{ name: 'invest', params: { id: parentPool } }"
             color="gradient"
-            >Learn More</BalBtn
+            >Make Deposit</BalBtn
           >
         </BalAlert>
         <BalAlert
