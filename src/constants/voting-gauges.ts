@@ -475,6 +475,34 @@ export const CHANGED_ALL_VOTING_GAUGES = [
       '0x118c81ddEcADb13608B90634eC1135B8e27f3590':
         'https://raw.githubusercontent.com/holdr-fi/brand-kit/main/token/hb-b-usd.png'
     }
+  },
+  {
+    address: '0x5563E287bbce8378b8aE66Fd2dDa87c2060927e6',
+    network: 1313161554,
+    pool: {
+      id: '0xff22d6e501bea80a8b769de0347cf421485ffedd000200000000000000000039',
+      address: '0xff22d6e501bea80a8b769de0347cf421485ffedd',
+      poolType: 'Weighted',
+      symbol: 'wNSTART80-USDC20',
+      tokens: [
+        {
+          address: '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802',
+          weight: '0.2',
+          symbol: 'USDC'
+        },
+        {
+          address: '0xe2D4e5f10F1A9d3c08828c964980fd29971EEd15',
+          weight: '0.8',
+          symbol: 'wNSTART'
+        }
+      ]
+    },
+    tokenLogoURIs: {
+      '0xB12BFcA5A55806AaF64E99521918A4bf0fC40802':
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png',
+      '0xe2D4e5f10F1A9d3c08828c964980fd29971EEd15':
+        'https://raw.githubusercontent.com/aurora-is-near/bridge-assets/5a01e8db7caf7cbbcb8bf8454e5763252be37277/tokens/nstart.svg'
+    }
   }
 ] as VotingGauge[];
 
